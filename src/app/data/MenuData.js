@@ -1,5 +1,3 @@
-import { ChevronDown } from "lucide-react"
-import Link from "next/link"
 const data = [
     {
         "id": "684114c545f76b8ae5035bb8",
@@ -170,51 +168,4 @@ const data = [
     }
 ]
 
-const Menu = () => {
-  return (
-    <div className="flex justify-center items-center mt-5">
-      <ul className="flex direction-row gap-4">
-        {data &&
-          data.length > 0 &&
-          data.map((item) => (
-            <li key={item.id} className="relative group">
-              <Link
-                href={`/${item.url}`}
-                className="flex items-center gap-1 px-3 py-2 text-gray-700 hover:text-red-400 font-medium transition-colors"
-              >
-                {item.name}
-                {item?.children && item.children.length > 0 && (
-                  <ChevronDown
-                    size={16}
-                    className="transition-transform duration-200 group-hover:rotate-180 mt-1"
-                  />
-                )}
-              </Link>
-
-              {item?.children && item.children.length > 0 && (
-                <div
-                  className="absolute left-0 top-full opacity-0 invisible group-hover:visible group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300 ease-out bg-white shadow-lg rounded-md mt-2 z-50 min-w-[200px]"
-                >
-                  <ul className="py-2">
-                    {item.children[0].children.map((child) => (
-                      <li key={child.id}>
-                        <Link
-                          href={`/${child.url}`}
-                          className="block px-4 py-2 text-gray-600 hover:bg-gray-100 hover:text-red-400 transition-colors"
-                        >
-                          {child.name}
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-            </li>
-          ))}
-      </ul>
-    </div>
-  )
-}
-
-export default Menu
-
+export default data
