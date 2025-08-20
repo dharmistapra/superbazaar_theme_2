@@ -37,8 +37,6 @@ const Products = () => {
     </button>
         ))}
       </div>
-
-      {/* Slider */}
       <div className="relative">
         <SliderNavigation position="center" />
 
@@ -46,7 +44,7 @@ const Products = () => {
           grabCursor
           loop={true}
           slidesPerView="auto"
-          spaceBetween={20}
+          spaceBetween={1}
           autoplay={{
             delay: 2500,
             disableOnInteraction: false,
@@ -63,7 +61,7 @@ const Products = () => {
             640: { slidesPerView: 3 },
             768: { slidesPerView: 3 },
             1024: { slidesPerView: 3 },
-            1280: { slidesPerView: 4 },
+            1280: { slidesPerView: 5 },
           }}
         >
           {activeTabData?.products?.map((product, index) => (

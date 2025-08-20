@@ -6,7 +6,7 @@ import { ComapreButton, QuickViewButton, WishlistButton } from "./CardsButton"
 const ProductCard = ({ data }) => {
     return (
         <div className="group relative w-full bg-white  rounded-none sm:rounded-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 p-0 sm:p-2">
-            <div className="relative w-full h-55 sm:h-80 md:h-95">
+            <div className="relative w-full h-55 sm:h-80 md:h-100">
                 <Image
                     src={data?.image?.[0] || "/banner1.webp"}
                     alt={data?.name || "Product"}
