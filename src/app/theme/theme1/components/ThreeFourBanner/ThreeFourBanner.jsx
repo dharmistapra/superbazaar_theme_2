@@ -12,7 +12,7 @@ const ThreeFourBanner = ({ data ,bannergrid=4 }) => {
             <Image
               src={item?.image}
               alt={item?.title || "Banner"}
-              width={400}
+              width={400}   
               height={400}
               className="w-full object-cover"
             />

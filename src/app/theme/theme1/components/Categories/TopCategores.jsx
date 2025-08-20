@@ -24,27 +24,39 @@ const data = [
 const Topcategories = () => {
     return (
         <div className="container mx-auto px-4 mt-7 ">
-            <h1 className="text-3xl text-center font-normal mb-6 ">Top Categories</h1>
+          <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-3xl text-center font-normal mb-6">
+  Top Categories
+</h1>
+
             <Swiper
-                modules={[Autoplay]}
-                loop={true}
-                autoplay={{ delay: 3000, disableOnInteraction: false }}
-                spaceBetween={20}
-                slidesPerView={7}>
-                {data.map((item, index) => (
-                    <SwiperSlide key={index} className="flex justify-center">
-                        <Link href={item.link} className="block">
-                            <Image
-                                src={item.image}
-                                alt={`Category ${index}`}
-                                width={200}
-                                height={200}
-                                className="object-cover  border shadow-sm hover:scale-105 transition"
-                            />
-                        </Link>
-                    </SwiperSlide>
-                ))}
-            </Swiper>
+  modules={[Autoplay]}
+  loop={true}
+  autoplay={{ delay: 3000, disableOnInteraction: false }}
+  spaceBetween={20}
+  breakpoints={{
+    0: { slidesPerView: 3 },  
+    640: { slidesPerView: 4 },  
+    768: { slidesPerView: 5 },  
+    1024: { slidesPerView: 6 }, 
+    1280: { slidesPerView: 7 } 
+  }}
+>
+  {data.map((item, index) => (
+    <SwiperSlide key={index} className="flex justify-center">
+      <Link href={item.link} className="block">
+        <div className="w-24 sm:w-28 md:w-32 lg:w-36 xl:w-40 aspect-square">
+          <Image
+            src={item.image}
+            alt={`Category ${index}`}
+            fill
+            className="object-cover border shadow-sm hover:scale-105 transition-transform duration-300"
+          />
+        </div>
+      </Link>
+    </SwiperSlide>
+  ))}
+</Swiper>
+
         </div>
     )
 }

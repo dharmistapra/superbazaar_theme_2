@@ -19,7 +19,7 @@ const CardsSlider3D = () => {
   const sliderdata = [image1, image2, image3, image4, image5, image6, image7, image8]
 
   return (
-    <div className="w-full bg-orange-100 py-10 mt-10">
+    <div className="w-full bg-gradient-to-r from-indigo-100 via-white to-indigo-100  py-10 mt-10">
       <h1 className="text-3xl text-center font-normal mb-6 ">Cards Slider</h1>
 
       <Swiper

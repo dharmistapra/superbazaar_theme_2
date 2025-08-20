@@ -1,4 +1,5 @@
 import "./globals.css";
+import { getThemeLayout } from "./themeProvider";
 
 export const metadata = {
   title: "Create Next App",
@@ -6,10 +7,12 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
+  const currentTheme = "theme1";
+  const Layout = getThemeLayout(currentTheme);
   return (
     <html lang="en">
       <body>
-        {children}
+         <Layout>{children}</Layout>
       </body>
     </html>
   );
