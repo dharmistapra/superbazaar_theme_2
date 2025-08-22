@@ -1,7 +1,7 @@
 import { ChevronDown } from "lucide-react"
 import Link from "next/link"
 import data from "@/app/data/MenuData"
-const Menu = () => {
+const Menu = ({purchaseType}) => {
   return (
     <div className="justify-center items-center mt-3 hidden sm:flex">
       <ul className="flex direction-row gap-3">
@@ -10,7 +10,7 @@ const Menu = () => {
           data.map((item) => (
             <li key={item.id} className="relative group">
               <Link
-                href={`/${item.url}`}
+                href={`${purchaseType==="wholesale" ? `/wholesale/${item.url}` :`/retail/${item.url}`}`}
                 className="flex items-center gap-1 px-3 py-2 text-black-900 hover:text-red-400 font-normal transition-colors"
               >
                 {item.name}
@@ -30,7 +30,7 @@ const Menu = () => {
                     {item.children[0].children.map((child) => (
                       <li key={child.id}>
                         <Link
-                          href={`/${child.url}`}
+                          href={`${purchaseType==="wholesale" ? `/wholesale/${child.url}` :`/retail/${child.url}`}`}
                           className="block px-4 py-2 text-gray-600 hover:bg-gray-100 hover:text-red-400 transition-colors"
                         >
                           {child.name}

@@ -5,13 +5,13 @@ import { ComapreButton, QuickViewButton, WishlistButton } from "./CardsButton"
 
 const ProductCard = ({ data }) => {
     return (
-        <div className="group relative w-full bg-white  rounded-none sm:rounded-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 p-0 sm:p-2">
-            <div className="relative w-full h-55 sm:h-80 md:h-100">
+        <div className="group relative w-full bg-white  rounded-none sm:rounded-sm overflow-hidden hover:shadow-xl transition-shadow duration-300 p-0 sm:p-2">
+            <div className="relative w-full aspect-[4/5] sm:aspect-[1/1] md:aspect-[3/4]">
                 <Image
                     src={data?.image?.[0] || "/banner1.webp"}
                     alt={data?.name || "Product"}
                     fill
-                    className="rounded-none sm:rounded-lg transition-transform duration-300 group-hover:scale-105"
+                    className="rounded-none sm:rounded-sm transition-transform duration-300 group-hover:scale-105"
                 />
                 <div className="absolute top-2 right-2 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
                     <WishlistButton />

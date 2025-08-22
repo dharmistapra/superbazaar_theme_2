@@ -1,10 +1,16 @@
+import dynamic from "next/dynamic";
+
 export function getThemeLayout(theme) {
   switch (theme) {
     case "theme1":
-      return require("./theme/theme1/layout").default;
+      return dynamic(() => import("./theme/theme1/layout"));
     case "theme2":
-      return require("./theme/theme2/layout").default;
+      return dynamic(() => import("./theme/theme2/layout"));
     default:
-      return ({ children }) => <>{children}</>;
+      function DefaultLayout({ children }) {
+        return <>{children}</>;
+      }
+      DefaultLayout.displayName = "DefaultLayout";
+      return DefaultLayout;
   }
 }
