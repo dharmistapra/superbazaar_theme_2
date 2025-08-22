@@ -6,23 +6,23 @@ import Menu from "./components/Menu"
 import MobileMenu from "./components/MobileMenu"
 const NavBar = () => {
     const [open, setOpen] = useState(false)
-    const [menuOpen,setMenuOpen]=useState(false)
-    const handleMenu=()=>setMenuOpen(!menuOpen)
+    const [menuOpen, setMenuOpen] = useState(false)
+    const handleMenu = () => setMenuOpen(!menuOpen)
     const dropdownRef = useRef(null)
 
 
     useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth >= 640) { 
-        setMenuOpen(false);
-      }
-    };
+        const handleResize = () => {
+            if (window.innerWidth >= 640) {
+                setMenuOpen(false);
+            }
+        };
 
-    window.addEventListener("resize", handleResize);
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
+        window.addEventListener("resize", handleResize);
+        return () => {
+            window.removeEventListener("resize", handleResize);
+        };
+    }, []);
     useEffect(() => {
         const handleClickOutside = (event) => {
             if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -40,7 +40,7 @@ const NavBar = () => {
 
                 <div className="flex items-center gap-2">
                     <div className="sm:hidden cursor-pointer">
-                        <MenuIcon size={28} onClick={handleMenu}/>
+                        <MenuIcon size={28} onClick={handleMenu} />
                     </div>
                     <div className="hidden sm:flex">
                         <Image
@@ -113,8 +113,8 @@ const NavBar = () => {
                     </div>
                 </div>
             </div>
-                <Menu />
-                <MobileMenu open={menuOpen} handleMenu={handleMenu}/>
+            <Menu />
+            <MobileMenu open={menuOpen} handleMenu={handleMenu} />
         </nav>
     )
 }

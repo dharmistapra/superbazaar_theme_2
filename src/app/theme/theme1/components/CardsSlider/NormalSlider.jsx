@@ -19,44 +19,44 @@ const NormalSliderCard = () => {
 
   return (
     <div className="container mx-auto px-4 mt-7">
-    <div className="relative">
+      <div className="relative">
         <SliderNavigation position="center" />
 
-      <Swiper
-        loop
-        grabCursor
-        autoplay={{ delay: 2500, disableOnInteraction: false }}
-        navigation={{ nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" }}
-        modules={[Autoplay, Navigation]}
-        spaceBetween={20}
-        className="w-full"
-        breakpoints={{
-          0: { slidesPerView: 2 },
-          480: { slidesPerView: 2 },
-          640: { slidesPerView: 3 },
-          768: { slidesPerView: 3 },
-          1024: { slidesPerView: 4 },
-          1280: { slidesPerView: 5 },
-        }}
-      >
-        {sliderData.map((item, index) => (
-          <SwiperSlide
-            key={index}
-            className="overflow-hidden shadow-lg bg-white rounded-lg"
-          >
-            <div className="relative w-full h-60 sm:h-72 md:h-80 lg:h-[400px]">
-              <Image
-                src={item}
-                alt={`Slide ${index + 1}`}
-                fill
-                priority={index === 0}
-                className="object-cover"
-              />
-            </div>
-          </SwiperSlide>
-        ))}
-      </Swiper>
-          </div>
+        <Swiper
+          loop
+          grabCursor
+          autoplay={{ delay: 2500, disableOnInteraction: false }}
+          navigation={{ nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" }}
+          modules={[Autoplay, Navigation]}
+          spaceBetween={20}
+          className="w-full"
+          breakpoints={{
+            0: { slidesPerView: 2 },
+            480: { slidesPerView: 2 },
+            640: { slidesPerView: 3 },
+            768: { slidesPerView: 3 },
+            1024: { slidesPerView: 4 },
+            1280: { slidesPerView: 5 },
+          }}
+        >
+          {sliderData.map((item, index) => (
+            <SwiperSlide
+              key={index}
+              className="overflow-hidden shadow-lg bg-white rounded-lg"
+            >
+              <div className="relative w-full h-60 sm:h-72 md:h-80 lg:h-[400px]">
+                <Image
+                  src={item}
+                  alt={`Slide ${index + 1}`}
+                  fill
+                  priority={index === 0}
+                  className="object-cover"
+                />
+              </div>
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      </div>
 
     </div>
   )
