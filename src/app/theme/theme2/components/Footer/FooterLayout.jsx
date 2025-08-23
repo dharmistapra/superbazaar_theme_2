@@ -56,8 +56,8 @@ const FooterLayout = () => {
                                     ["Wholesale", "/catalogue/wholesale"],
                                     ["Brands", "/brands"],
                                 ].map(([label, href]) => (
-                                    <li key={label}>
-                                        <a href={href} className="hover:underline">{label}</a>
+                                    <li key={label} className="gap-5">
+                                        <a href={href} className="hover:underline ">{label}</a>
                                     </li>
                                 ))}
                             </ul>
@@ -85,7 +85,7 @@ const FooterLayout = () => {
                         <div>
                             <h4 className="font-medium mb-3 uppercase tracking-[3px]">Quick Link</h4>
                             <ul className="space-y-1 text-[13px] tracking-wider">
-                                <li className="flex gap-2">
+                                <li className="flex gap-1">
                                     <a href="/login" className="hover:underline">Login</a>/
                                     <a href="/signup" className="hover:underline">Register</a>
                                 </li>
@@ -151,16 +151,18 @@ const FooterLayout = () => {
             </div>
 
             {/* Scroll to top */}
-            {showScroll && (
-                <button
-                    onClick={scrollToTop}
-                    aria-label="Scroll to top"
-                    className="fixed bottom-5 right-5 bg-white hover:bg-slate-400 text-white p-2 rounded-sm z-50"
-                >
-                    <MoveUp size={28} fill="black" className="text-black" />
-                </button>
-            )}
-        </footer>
+            {
+                showScroll && (
+                    <button
+                        onClick={scrollToTop}
+                        aria-label="Scroll to top"
+                        className="fixed bottom-5 right-5 bg-white hover:bg-slate-400 text-white p-2 rounded-sm z-50"
+                    >
+                        <MoveUp size={28} fill="black" className="text-black" />
+                    </button>
+                )
+            }
+        </footer >
     );
 };
 

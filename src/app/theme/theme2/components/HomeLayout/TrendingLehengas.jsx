@@ -52,8 +52,8 @@ const TrendingLehengas = () => {
                     spaceBetween={16}
                     slidesPerView={2}
                     breakpoints={{
-                        640: { slidesPerView: 2 },
-                        768: { slidesPerView: 3 },
+                        320: { slidesPerView: 1 },
+                        768: { slidesPerView: 2 },
                         1024: { slidesPerView: 5 },
                     }}
                 >
