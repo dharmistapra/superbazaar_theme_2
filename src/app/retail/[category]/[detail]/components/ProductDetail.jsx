@@ -1,15 +1,43 @@
 "use client";
-import ProductImageGallery from "./ProductImageGallery";
 
+import { useState } from "react";
+import { CircleQuestionMark, Heart, MessageCircle, Repeat, Share2 } from "lucide-react";
+import OfferBanner from "@/app/components/OfferBanner";
+import ProductImageGallery from "./ProductImageGallery";
+import SizeSelector from "@/app/components/SizeSelector";
+import SharePopup from "./SharePopup";
+import DetailsCmsImage from "./DetailsCmsImage";
+import ProductTabs from "./ProductTabs";
+import RealtedProduct from "./RelatedProduct";
+import StitchingForm from "./StitchingForm";
 const ProductDetail = ({ product }) => {
+  const [quantity, setQuantity] = useState(1);
+  const [selectedSize, setSelectedSize] = useState(null);
+  const [errors,setErrors]=useState(null)
+  const [wishlist, setWishlist] = useState(false);
+  const [compare, setCompare] = useState(false);
+  const [shareOpen, setShareOpen] = useState(false); // popup state
+
+  const increment = () => setQuantity((prev) => prev + 1);
+  const decrement = () => setQuantity((prev) => (prev > 1 ? prev - 1 : 1));
+
+  const toggleWishlist = () => setWishlist((prev) => !prev);
+  const toggleCompare = () => setCompare((prev) => !prev);
+
+
+  const handleAddtoCart=()=>{
+    if(product.optionType === "Size" && !selectedSize){
+      return setErrors("Please select size")
+    }
+    
+  }
   return (
     <div className="container mx-auto p-4">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <ProductImageGallery
           images={product.image}
-          thumbs={product.thumbImage}
-        />
-        <div className="flex flex-col gap-6">
+          thumbs={product.thumbImage}/>
+        <div className="flex flex-col gap-4 md:gap-4">
           <div>
             <h1 className="text-2xl font-bold">{product.name}</h1>
             <p className="text-gray-500 mt-1">{product.sku}</p>
@@ -17,33 +45,96 @@ const ProductDetail = ({ product }) => {
               ₹{product.offer_price.toLocaleString()}
             </p>
           </div>
+          <p className="flex items-center gap-2 bg-slat-100 text-zinc-800 font-medium px-3 py-1 rounded-lg w-fit">
+            <span className="font-bold">⏱</span> Dispatch Time: 7 Working Days
+          </p>
+          <OfferBanner discount={50} />
+          {/* {product.optionType === "Size" && (
+            <div className="-mt-1">
+              <SizeSelector
+                sizes={product.sizes || ["S", "M", "L", "XL"]}
+                onChange={setSelectedSize}
+                errors={errors}
+                setErrors={setErrors}
+              />
+            </div>)} */}
 
-          <div>
-            <h2 className="text-lg font-semibold">Description</h2>
-            <p className="text-gray-600 mt-2">{product.description}</p>
-          </div>
 
-          {product.optionType === "Size" && (
-            <div>
-              <h2 className="text-lg font-semibold">Sizes</h2>
-              <div className="flex gap-2 mt-2">
-                {["S", "M", "L", "XL"].map((size) => (
-                  <button
-                    key={size}
-                    className="px-4 py-2 border rounded-md hover:bg-black hover:text-white transition"
-                  >
-                    {size}
-                  </button>
-                ))}
-              </div>
+            <StitchingForm/>
+          <div className="flex items-center gap-4 mt-4">
+            <div className="flex items-center border rounded-lg overflow-hidden w-40">
+              <button
+                onClick={decrement}
+                className="w-12 py-2 bg-gray-200 hover:bg-gray-300 transition text-lg font-bold">
+                -
+              </button>
+              <span className="flex-1 text-center py-2 text-lg font-medium">
+                {quantity}
+              </span>
+              <button
+                onClick={increment}
+                className="w-12 py-2 bg-gray-200 hover:bg-gray-300 transition text-lg font-bold">
+                +
+              </button>
             </div>
-          )}
-
-          <button className="bg-black text-white py-3 rounded-lg mt-4 hover:bg-gray-800 transition">
-            Add to Cart
-          </button>
+            <button
+              onClick={toggleWishlist}
+              className={`p-2 rounded-lg border transition ${wishlist
+                  ? "bg-zinc-900 text-white border-zinc-900"
+                  : "bg-white text-gray-700 border-zinc-900 hover:bg-zinc-900 hover:text-white"
+                }`}>
+              <Heart className="w-5 h-5" />
+            </button>
+            <button
+              onClick={toggleCompare}
+              className={`p-2 rounded-lg border transition ${compare
+                  ? "bg-zinc-500 text-white border-zinc-900"
+                  : "bg-white text-gray-700 border-zinc-900 hover:bg-zinc-900 hover:text-white"
+                }`}>
+              <Repeat className="w-5 h-5" />
+            </button>
+            <button
+              onClick={() => setShareOpen(true)}
+              className="p-2 rounded-lg border bg-white text-gray-700 border-zinc-900 hover:bg-zinc-900 hover:text-white transition">
+              <Share2 className="w-5 h-5" />
+            </button>
+            <button
+              className="p-2 rounded-lg border bg-white text-gray-700 border-zinc-900 hover:bg-zinc-900 hover:text-white transition">
+              <CircleQuestionMark className="w-5 h-5" />
+            </button>
+          </div>
+          <div className="flex flex-row gap-4 mt-4 w-full">
+            <button
+            onClick={handleAddtoCart}
+            className="w-full bg-black text-white px-6 py-3 rounded-lg hover:bg-gray-800 transition">
+              Add to Cart
+            </button>
+            <button className="w-full flex items-center justify-center gap-2 bg-green-700 text-white px-6 py-3 rounded-lg hover:bg-green-600 transition">
+              <MessageCircle className="w-5 h-5" />
+              Order on WhatsApp
+            </button>
+          </div>
+        
+          <div className="border-t border-gray-500 border-dashed mt-3"></div>
+          <div>
+            <DetailsCmsImage />
+          </div>
         </div>
       </div>
+      <div className="mt-10">
+        <ProductTabs />
+      </div>
+
+
+      <div className="w-full mt-10">
+         <h1 className="text-2xl font-normal text-center mb-10">You May Also Like this</h1>
+        <RealtedProduct/>
+      </div>
+      <SharePopup
+        isOpen={shareOpen}
+        onClose={() => setShareOpen(false)}
+        url={`https://superbazaar.in/`}
+      />
     </div>
   );
 };
