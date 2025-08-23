@@ -1,8 +1,9 @@
 "use client"
 import { useEffect, useRef, useState } from "react"
-import { Search, User, ShoppingCart, Heart, Truck } from "lucide-react"
+import { Search, User, ShoppingCart, Heart, Truck, Menu } from "lucide-react"
 import data from "@/app/data/MenuData"
 import Image from "next/image"
+import MobileMenu from "./component/MobileMenu"
 
 const currencies = [
     { code: "USD", flag: "https://flagcdn.com/us.svg" },
@@ -22,6 +23,7 @@ const currencies = [
 const NavBar = () => {
     const [openCurrency, setOpenCurrency] = useState(false)
     const [openUser, setOpenUser] = useState(false)
+    const [openMenu, setOpenMenu] = useState(false) // 👈 for sidebar
     const currencyRef = useRef(null)
     const userRef = useRef(null)
 
@@ -50,6 +52,13 @@ const NavBar = () => {
 
             {/* Middle section */}
             <div className="flex items-center justify-between px-6 py-3 mb-1">
+                {/* Left: Mobile Menu Icon */}
+                <div className="flex items-center lg:hidden md:hidden">
+                    <button onClick={() => setOpenMenu(true)}>
+                        <Menu size={28} className="text-gray-800" />
+                    </button>
+                </div>
+
                 {/* Logo */}
                 <div className="flex items-center">
                     <img
@@ -67,10 +76,9 @@ const NavBar = () => {
                     </div>
                 </div>
 
-
                 {/* Right Icons */}
                 <div className="flex items-center space-x-4 text-gray-700">
-                    <Search className="cursor-pointer" />
+                    <Search className="cursor-pointer w-18 mr-2  " />
 
                     {/* Currency Dropdown */}
                     <div className="relative" ref={currencyRef}>
@@ -112,7 +120,7 @@ const NavBar = () => {
                     </div>
 
                     {/* User Dropdown */}
-                    <div className="relative" ref={userRef}>
+                    <div className="hidden md:flex relative" ref={userRef}>
                         <button
                             onClick={() => {
                                 setOpenUser((prev) => !prev)
@@ -124,45 +132,29 @@ const NavBar = () => {
                         </button>
 
                         {openUser && (
-                            <div className="absolute  right-[-10px] mt-2 w-40 bg-white shadow-lg rounded-lg z-50">
-                                <a
-                                    href="/profile"
-                                    className="block px-4 py-2 hover:bg-gray-100"
-                                >
+                            <div className="absolute right-[-10px] mt-2 w-40 bg-white shadow-lg rounded-lg z-50">
+                                <a href="/profile" className="block px-4 py-2 hover:bg-gray-100">
                                     My Account
                                 </a>
-                                <a
-                                    href="/profile"
-                                    className="block px-4 py-2 hover:bg-gray-100"
-                                >
-                                    Whishlist
+                                <a href="/wishlist" className="block px-4 py-2 hover:bg-gray-100">
+                                    Wishlist
                                 </a>
-
-                                <a
-                                    href="/logout"
-                                    className="block px-4 py-2 hover:bg-gray-100"
-                                >
+                                <a href="/logout" className="block px-4 py-2 hover:bg-gray-100">
                                     Logout
                                 </a>
-                                <a
-                                    href="/profile"
-                                    className="block px-4 py-2 hover:bg-gray-100"
-                                >
+                                <a href="/login" className="block px-4 py-2 hover:bg-gray-100">
                                     Login
                                 </a>
-                                <a
-                                    href="/profile"
-                                    className="block px-4 py-2 hover:bg-gray-100"
-                                >
+                                <a href="/register" className="block px-4 py-2 hover:bg-gray-100">
                                     Register
                                 </a>
                             </div>
                         )}
                     </div>
 
-                    <Heart className="cursor-pointer" />
+                    <Heart className="cursor-pointer hidden md:flex" />
 
-                    <div className="relative">
+                    <div className="relative hidden md:flex">
                         <ShoppingCart className="cursor-pointer" size={18} />
                         <span className="absolute -top-2 -right-2 bg-black text-white text-xs rounded-full px-1">
                             1
@@ -171,7 +163,7 @@ const NavBar = () => {
                 </div>
             </div>
 
-            {/* Dynamic Navigation Menu */}
+            {/* Desktop Menu */}
             <nav className="hidden lg:flex justify-center space-x-6 py-2 text-sm font-medium text-gray-800 relative mb-1">
                 {data.map((item) => (
                     <div key={item.id} className="relative group">
@@ -202,6 +194,11 @@ const NavBar = () => {
                     </div>
                 ))}
             </nav>
+
+            {/* Mobile Sidebar */}
+            {openMenu && (
+                <MobileMenu data={data} closeMenu={() => setOpenMenu(false)} />
+            )}
         </header>
     )
 }
