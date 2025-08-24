@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-const CategoryBanner = () => {
+const CategoryBannertheme2 = () => {
   return (
     <div className="relative w-full h-[300px]">
       <Image
@@ -20,4 +20,4 @@ const CategoryBanner = () => {
   );
 };
 
-export default CategoryBanner;
+export default CategoryBannertheme2;

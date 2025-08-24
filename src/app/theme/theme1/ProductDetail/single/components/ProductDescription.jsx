@@ -2,8 +2,7 @@
 
 import { useState } from "react";
 import { Layers, NotebookText, ScrollText } from "lucide-react";
-
-const ProductTabs = ({ productId }) => {
+const ProductDescription = ({ productId }) => {
   const [activeTab, setActiveTab] = useState("description");
   const [data] = useState({
     description:
@@ -85,4 +84,4 @@ const ProductTabs = ({ productId }) => {
   );
 };
 
-export default ProductTabs;
+export default ProductDescription;

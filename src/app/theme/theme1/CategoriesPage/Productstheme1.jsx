@@ -1,21 +1,56 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { SlidersHorizontal, LayoutList, Grip, GripVertical } from "lucide-react";
-import Filter from "./Filter";
+import Filtertheme1 from "./Filtertheme1";
 import ProductCard from "@/app/theme/theme1/components/Cards/ProductCards";
-import CategoryProductData from "@/app/data/CategoryProductData";
 import Pagination from "@/app/theme/theme1/components/Pagination/Pagination";
-const Products = () => {
+import { getCategoryProducts } from "@/app/services/productService";
+import ProductCardSkeleton from "@/app/components/ProductCardSkeleton";
+const Productstheme1 = ({ initialData, category,filterData }) => {
     const [grid, setGrid] = useState(4);
     const [open, setOpen] = useState(false);
-    const [sort, setSort] = useState("latest");
+    const [sort, setSort] = useState("");
     const [page, setPage] = useState(1);
-    const totalPages = 50;
+    const [products, setProducts] = useState(initialData?.data || []);
+    const [totalCount, setTotalCount] = useState(initialData?.totalCount || 0);
+    const [isFirstLoad, setIsFirstLoad] = useState(true);
+    const [loading, setLoading] = useState(false);
+     const [activeFilters, setActiveFilters] = useState("");
+    useEffect(() => {
+        if (isFirstLoad && page === 1 && sort === "") {
+            setIsFirstLoad(false);
+            return;
+        }
+
+        const fetchProducts = async () => {
+            setLoading(true);
+            try {
+                const res = await getCategoryProducts(category, page, 20, sort, activeFilters);
+                console.log(res);
+                setProducts(res.data || []);
+                setTotalCount(res?.totalCount || 0);
+            } catch (err) {
+                setProducts([]);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchProducts();
+    }, [page, sort, category, activeFilters]);
+
+
+     const handleApplyFilters = (filters) => {
+    setActiveFilters(filters); 
+    setPage(1); 
+  };
 
     const sortOptions = [
-        { value: "latest", label: "Latest" },
-        { value: "price-low", label: "Price: Low to High" },
-        { value: "price-high", label: "Price: High to Low" },
+        { value: "", label: "New Arrivals" },
+        { value: "AtoZ", label: "A To Z" },
+        { value: "ZtoA", label: "Z To A" },
+        { value: "low", label: "Price: Low to High" },
+        { value: "high", label: "Price: High to Low" },
     ];
 
     const gridButtons = [
@@ -46,8 +81,8 @@ const Products = () => {
                                         onClick={() => setGrid(btn.value)}
                                         title={btn.label}
                                         className={`p-1 rounded transition-all ${isActive
-                                                ? "bg-blue-600 text-white shadow-md"
-                                                : "text-zinc-900 hover:bg-blue-100"
+                                            ? "bg-blue-600 text-white shadow-md"
+                                            : "text-zinc-900 hover:bg-blue-100"
                                             }`}
                                     >
                                         <Icon size={20} />
@@ -78,31 +113,44 @@ const Products = () => {
     ${grid === 3 ? "grid-cols-2 sm:grid-cols-2 md:grid-cols-3" : ""} 
     ${grid === 4 ? "grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4" : ""}`}
                 >
-                    {CategoryProductData?.products?.length > 0 &&
-                        CategoryProductData?.products.map((item, index) => (
+                    {loading ? (
+                        [...Array(grid * 2)].map((_, i) => (
+                            <ProductCardSkeleton key={i} />
+                        ))
+                    ) : products?.length > 0 ? (
+                        products.map((item, index) => (
                             <div key={index}>
                                 <ProductCard data={item} grid={grid} />
                             </div>
-                        ))}
+                        ))
+                    ) : (
+                        <p className="col-span-full text-center text-gray-500">
+                            No products found.
+                        </p>
+                    )}
                 </div>
-
 
 
                 <div className="flex justify-center items-center ">
                     <Pagination
                         currentPage={page}
-                        totalCount={500}
-                        perPage={10}
+                        totalCount={totalCount}
+                        perPage={20}
                         onPageChange={(p) => setPage(p)}
                     />
                 </div>
 
             </div>
 
-            {<Filter open={open} setOpen={setOpen} />}
+            {<Filtertheme1 
+            open={open} 
+            category={category}
+            setOpen={setOpen} 
+            filterData={filterData} 
+            onApply={handleApplyFilters}/>}
 
         </>
     );
 };
 
-export default Products;
+export default Productstheme1;

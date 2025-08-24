@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-export default function LayoutTheme1({ children, tabs }) {
+const AccountsLayoutTheme1=({ children, tabs })=> {
   const pathname = usePathname();
 
   return (
@@ -28,23 +28,21 @@ export default function LayoutTheme1({ children, tabs }) {
 
           return (
             <li key={tab.name}>
-             <Link
-  href={tab.href}
-  className={`group inline-flex items-center px-3 py-3 rounded-lg w-full transition-colors duration-200 border-b ${
-    isActive
-      ? "text-white bg-zinc-900 border-zinc-900 font-normal"
-      : "text-zinc-900 border-zinc-300 hover:bg-zinc-900 hover:text-white hover:border-zinc-900"
-  }`}
->
-  {tab.icon && (
-    <tab.icon
-      className={`w-5 h-5 me-3 transition-colors duration-200 ${
-        isActive ? "text-white" : "text-zinc-900 group-hover:text-white"
-      }`}
-    />
-  )}
-  <span className="text-base">{tab.name}</span>
-</Link>
+              <Link
+                href={tab.href}
+                className={`group inline-flex items-center px-3 py-3 rounded-lg w-full transition-colors duration-200 border-b ${isActive
+                    ? "text-white bg-zinc-900 border-zinc-900 font-normal"
+                    : "text-zinc-900 border-zinc-300 hover:bg-zinc-900 hover:text-white hover:border-zinc-900"
+                  }`}
+              >
+                {tab.icon && (
+                  <tab.icon
+                    className={`w-5 h-5 me-3 transition-colors duration-200 ${isActive ? "text-white" : "text-zinc-900 group-hover:text-white"
+                      }`}
+                  />
+                )}
+                <span className="text-base">{tab.name}</span>
+              </Link>
 
             </li>
           );
@@ -57,3 +55,5 @@ export default function LayoutTheme1({ children, tabs }) {
     </div>
   );
 }
+
+export default AccountsLayoutTheme1;

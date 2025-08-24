@@ -1,6 +1,6 @@
 import DetailPageImageData from "@/app/data/DetailPageImageData"
 
-const DetailsCmsImage = () => {
+const StaticImage = () => {
   return (
     <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-6">
       {DetailPageImageData.map((item, i) => (
@@ -20,4 +20,4 @@ const DetailsCmsImage = () => {
   )
 }
 
-export default DetailsCmsImage
+export default StaticImage

@@ -1,7 +1,7 @@
 "use client";
 import { X } from "lucide-react";
 import { useEffect } from "react";
-const Filter = ({ open, setOpen }) => {
+const Filtertheme2 = ({ open, setOpen }) => {
     const categories = ["Saree", "Salwar Kameez", "Kurti", "Lehenga"];
     const colors = ["Red", "Blue", "Green", "Black", "White"];
     const sizes = ["S", "M", "L", "XL"];
@@ -78,4 +78,4 @@ const Filter = ({ open, setOpen }) => {
     );
 };
 
-export default Filter;
+export default Filtertheme2;

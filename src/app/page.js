@@ -1,6 +1,10 @@
-export default async function HomePage() {
+import themes from "@/app/themeConfig";
+const HomePage = () => {
   const currentTheme = "theme1";
-  const ThemeHome = (await import(`./theme/${currentTheme}/Home`)).default;
+  const { Home } = themes[currentTheme];
+  return (
+      <Home />
+  );
+};
 
-  return <ThemeHome />;
-}
+export default HomePage;

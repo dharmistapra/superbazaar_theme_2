@@ -2,7 +2,7 @@
 
 import { useState, useMemo } from "react";
 import { Search, Eye } from "lucide-react";
-import Pagination from "../components/Pagination/Pagination";
+import Pagination from "../../components/Pagination/Pagination";
 
 const statusColors = {
   PENDING: "bg-yellow-100 text-yellow-700",
@@ -228,7 +228,6 @@ const OrderHistorythem1 = () => {
         ))}
       </div>
 
-      {/* Pagination */}
       <div className="flex justify-center items-center mt-8">
         <Pagination
           currentPage={page}

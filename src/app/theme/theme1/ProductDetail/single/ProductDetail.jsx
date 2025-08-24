@@ -3,20 +3,20 @@
 import { useState } from "react";
 import { CircleQuestionMark, Heart, MessageCircle, Repeat, Share2 } from "lucide-react";
 import OfferBanner from "@/app/components/OfferBanner";
-import ProductImageGallery from "./ProductImageGallery";
+import ProductImageGallery from "./components/ProductImageGallery";
 import SizeSelector from "@/app/components/SizeSelector";
-import SharePopup from "./SharePopup";
-import DetailsCmsImage from "./DetailsCmsImage";
-import ProductTabs from "./ProductTabs";
-import RealtedProduct from "./RelatedProduct";
-import StitchingForm from "./StitchingForm";
-const ProductDetail = ({ product }) => {
+import SharePopup from "./components/SharePopup";
+import RealtedProduct from "./components/RelatedProduct";
+import StitchingForm from "./components/StitchingForm";
+import ProductDescription from "./components/ProductDescription";
+import StaticImage from "./components/StaticImage";
+const ProductDetailTheme1 = ({ product }) => {
   const [quantity, setQuantity] = useState(1);
   const [selectedSize, setSelectedSize] = useState(null);
   const [errors,setErrors]=useState(null)
   const [wishlist, setWishlist] = useState(false);
   const [compare, setCompare] = useState(false);
-  const [shareOpen, setShareOpen] = useState(false); // popup state
+  const [shareOpen, setShareOpen] = useState(false); 
 
   const increment = () => setQuantity((prev) => prev + 1);
   const decrement = () => setQuantity((prev) => (prev > 1 ? prev - 1 : 1));
@@ -117,12 +117,12 @@ const ProductDetail = ({ product }) => {
         
           <div className="border-t border-gray-500 border-dashed mt-3"></div>
           <div>
-            <DetailsCmsImage />
+            <StaticImage />
           </div>
         </div>
       </div>
       <div className="mt-10">
-        <ProductTabs />
+        <ProductDescription />
       </div>
 
 
@@ -139,4 +139,4 @@ const ProductDetail = ({ product }) => {
   );
 };
 
-export default ProductDetail;
+export default ProductDetailTheme1;

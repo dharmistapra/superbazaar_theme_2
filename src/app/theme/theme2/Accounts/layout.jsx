@@ -1,4 +1,4 @@
-const LayoutTheme2=({children, tabs })=>{
+const Accountlayouttheme2=({children, tabs })=>{
 return(
     <div>
         <h1>Accounts Layouts theme2</h1>
@@ -7,4 +7,4 @@ return(
 )
 }
 
-export default LayoutTheme2
+export default Accountlayouttheme2

@@ -37,7 +37,7 @@ export default function StitchingForm() {
     return (
         <form
             onSubmit={handleSubmit}
-            className="space-y-6  bg-white shadow rounded-xl "
+            className="space-y-6 rounded-xl "
         >
             {stitchingData.map((section) => (
                 <div key={section.id} className="space-y-2">
@@ -52,7 +52,7 @@ export default function StitchingForm() {
                                             <label
                                                 key={option.id}
                                                 className={`px-6 py-4 min-w-[160px] min-h-[100px] flex flex-col items-center justify-center border rounded-xl cursor-pointer text-center transition ${selectedStitch === option.id
-                                                    ? "border-red-500 bg-red-50 shadow-md"
+                                                    ? "border-red-500 bg-red-50 "
                                                     : "border-gray-300 hover:border-gray-400"
                                                     }`}
                                             >
@@ -88,7 +88,7 @@ export default function StitchingForm() {
                                     option.type === "CheckBox" && (
                                         <label
                                             key={option.id}
-                                            className="flex items-center gap-2 p-3 shadow-2xl rounded-lg cursor-pointer hover:bg-gray-50"
+                                            className="flex items-center gap-2 p-3  rounded-lg cursor-pointer hover:bg-gray-50"
                                         >
                                             <input
                                                 type="checkbox"
@@ -115,9 +115,7 @@ export default function StitchingForm() {
                             option.stitchingValues.length > 0 ? (
                                 <div
                                     key={option.id}
-                                    className="space-y-4 mt-4 border-t pt-4"
-                                >
-                                    {/* Grid layout: 1 col mobile, 2 col desktop */}
+                                    className="space-y-4 mt-4 border-t pt-4">
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
                                         {option.stitchingValues.map((field) => (
                                             <div key={field.id} className="flex flex-col w-full">

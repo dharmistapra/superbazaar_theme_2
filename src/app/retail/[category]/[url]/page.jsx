@@ -1,7 +1,10 @@
-import ProductDetail from "./components/ProductDetail";
+import themes from "@/app/themeConfig";
 
-const ProductPage = () => {
-  const product = {
+const ProductDetailpage=()=>{
+     const currentTheme = "theme1";
+  const { ProdductDetail } = themes[currentTheme];
+
+   const product = {
     id: "687de673690d3457a4d714d0",
     name: "Red Chinon Readymade Palazzo Suit",
     sku: "Blossom Vol 2-1713",
@@ -19,7 +22,9 @@ const ProductPage = () => {
     offer_price: 3762,
   };
 
-  return <ProductDetail product={product} />;
+    return(
+        <ProdductDetail product={product} />
+    )
 }
 
-export default ProductPage;
+export default ProductDetailpage;

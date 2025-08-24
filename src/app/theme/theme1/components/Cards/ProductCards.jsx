@@ -3,6 +3,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { usePathname } from "next/navigation";
 import { ComapreButton, QuickViewButton, WishlistButton } from "./CardsButton"
+import { ImageUrl } from "@/app/helper/imageUrl";
 
 const ProductCard = ({ data }) => {
     const pathname = usePathname();
@@ -11,7 +12,7 @@ const ProductCard = ({ data }) => {
             <div className="relative w-full aspect-[4/5] sm:aspect-[1/1] md:aspect-[3/4]">
            <Link href={`${pathname}/${data?.url || "/"}`}>
                  <Image
-                    src={data?.image?.[0] || "/banner1.webp"}
+                    src={ImageUrl(data?.mediumImage?.[0]) }
                     alt={data?.name || "Product"}
                     fill
                     className="rounded-none sm:rounded-sm transition-transform duration-300 group-hover:scale-105"
@@ -29,25 +30,25 @@ const ProductCard = ({ data }) => {
                 <Link href={`${pathname}/${data?.url || "/"}`}>
                     <h3 className="text-sm sm:text-base font-normal text-gray-800 hover:text-gray-900 
                    line-clamp-2 overflow-hidden">
-                        {data?.title || "Ribbed cotton-blend top"}
+                        {data?.name || ""}
                     </h3>
                 </Link>
 
 
                 <div className="flex  items-start sm:items-center gap-1 sm:gap-2 mt-1">
                     <span className="text-red-600 font-normal text-base sm:text-md">
-                        ₹{data?.offerPrice || "999"}
+                        ₹{data?.offer_price || ""}
                     </span>
 
-                    {data?.price && (
+                    {data?.retail_discount != data?.retail_price && (
                         <span className="text-gray-400 line-through text-sm sm:text-md font-medium">
-                            ₹{data?.price}
+                            ₹{data?.retail_price}
                         </span>
                     )}
 
-                    {data?.price && data?.offerPrice && (
+                    {data?.retail_price && data?.offer_price && (
                         <span className="hidden lg:block bg-red-100 text-red-700 font-normal text-xs sm:text-md px-2 py-0.5 rounded-md">
-                            {Math.round(((data.price - data.offerPrice) / data.price) * 100)}% OFF
+                            {data?.retail_discount}% OFF
                         </span>
                     )}
 

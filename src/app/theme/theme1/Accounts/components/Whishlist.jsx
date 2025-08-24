@@ -1,5 +1,5 @@
 import CategoryProductData from "@/app/data/CategoryProductData"
-import ProductCard from "../components/Cards/ProductCards"
+import ProductCard from "../../components/Cards/ProductCards"
 
 const WishlistTheme1 = () => {
   return (
