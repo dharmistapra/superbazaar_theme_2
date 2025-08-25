@@ -52,7 +52,7 @@ const themes = {
     OrderHistory: OrderHistorytheme2,
     Wishlist: WishlistTheme2,
     AccountsLayout: Accountlayouttheme2,
-    ProductDetail: ProductDetailTheme2,
+    ProdductDetail: ProductDetailTheme2,
   },
 };
 

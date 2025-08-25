@@ -3,7 +3,7 @@ import { Tags } from "lucide-react";
 const OfferBanner = ({ discount }) => {
   return (
     <div className="offer-banner border border-zinc-800 border-dashed flex flex-col sm:flex-row items-start sm:items-center gap-4 p-4 rounded-2xl bg-gradient-to-r from-yellow-50 via-slate-100 to-yellow-50 transform transition duration-300 hover:scale-105">
-            <div className="flex-shrink-0 p-2 bg-slate-900 rounded-lg">
+      <div className="flex-shrink-0 p-2 bg-slate-900 rounded-lg">
         <Tags className="w-6 h-6 text-white" />
       </div>
       <div className="flex-1">

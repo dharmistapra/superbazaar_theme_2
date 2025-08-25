@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-const AccountsLayoutTheme1=({ children, tabs })=> {
+const AccountsLayoutTheme1 = ({ children, tabs }) => {
   const pathname = usePathname();
 
   return (
@@ -31,8 +31,8 @@ const AccountsLayoutTheme1=({ children, tabs })=> {
               <Link
                 href={tab.href}
                 className={`group inline-flex items-center px-3 py-3 rounded-lg w-full transition-colors duration-200 border-b ${isActive
-                    ? "text-white bg-zinc-900 border-zinc-900 font-normal"
-                    : "text-zinc-900 border-zinc-300 hover:bg-zinc-900 hover:text-white hover:border-zinc-900"
+                  ? "text-white bg-zinc-900 border-zinc-900 font-normal"
+                  : "text-zinc-900 border-zinc-300 hover:bg-zinc-900 hover:text-white hover:border-zinc-900"
                   }`}
               >
                 {tab.icon && (
