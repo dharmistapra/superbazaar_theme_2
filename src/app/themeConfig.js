@@ -1,34 +1,36 @@
-import Theme1Layout from "@/app/theme/theme1/layout";
-import Theme2Layout from "@/app/theme/theme2/layout";
+import dynamic from "next/dynamic";
+const Theme1Layout = dynamic(() => import("@/app/theme/theme1/layout"));
+const Theme2Layout = dynamic(() => import("@/app/theme/theme2/layout"));
 
-import CategoryBannertheme1 from "@/app/theme/theme1/CategoriesPage/CategoryBannertheme1";
-import CategoryBannertheme2 from "@/app/theme/theme2/CategoriesPage/CategoryBannertheme2";
+const CategoryBannertheme1 = dynamic(() => import("@/app/theme/theme1/CategoriesPage/CategoryBannertheme1"));
+const CategoryBannertheme2 = dynamic(() => import("@/app/theme/theme2/CategoriesPage/CategoryBannertheme2"));
 
-import Productstheme1 from "@/app/theme/theme1/CategoriesPage/Productstheme1";
-import Productstheme2 from "@/app/theme/theme2/CategoriesPage/Productstheme2";
+const Productstheme1 = dynamic(() => import("@/app/theme/theme1/CategoriesPage/Productstheme1"));
+const Productstheme2 = dynamic(() => import("@/app/theme/theme2/CategoriesPage/Productstheme2"));
 
-import Home1 from "@/app/theme/theme1/Home";
-import Home2 from "@/app/theme/theme2/Home";
+const Home1 = dynamic(() => import("@/app/theme/theme1/Home"));
+const Home2 = dynamic(() => import("@/app/theme/theme2/Home"));
 
-import AccountDetailtheme1 from "./theme/theme1/Accounts/components/AccountDetailtheme1";
-import AccountDetailtheme2 from "./theme/theme2/Accounts/components/AccountDetailtheme2";
+const AccountDetailtheme1 = dynamic(() => import("@/app/theme/theme1/Accounts/components/AccountDetailtheme1"));
+const AccountDetailtheme2 = dynamic(() => import("@/app/theme/theme2/Accounts/components/AccountDetailtheme2"));
 
-import AddressTheme1 from "./theme/theme1/Accounts/components/Address";
-import AddressTheme2 from "./theme/theme2/Accounts/components/Address";
+const AddressTheme1 = dynamic(() => import("@/app/theme/theme1/Accounts/components/Address"));
+const AddressTheme2 = dynamic(() => import("@/app/theme/theme2/Accounts/components/Address"));
 
-import OrderHistorythem1 from "./theme/theme1/Accounts/components/OrderHistory";
-import OrderHistorytheme2 from "./theme/theme2/Accounts/components/OrderHistory";
+const OrderHistorythem1 = dynamic(() => import("@/app/theme/theme1/Accounts/components/OrderHistory"));
+const OrderHistorytheme2 = dynamic(() => import("@/app/theme/theme2/Accounts/components/OrderHistory"));
 
-import WishlistTheme1 from "./theme/theme1/Accounts/components/Whishlist";
-import WishlistTheme2 from "./theme/theme2/Accounts/components/Whishlist";
+const WishlistTheme1 = dynamic(() => import("@/app/theme/theme1/Accounts/components/Whishlist"));
+const WishlistTheme2 = dynamic(() => import("@/app/theme/theme2/Accounts/components/Whishlist"));
 
-import AccountsLayoutTheme1 from "./theme/theme1/Accounts/layout";
-import Accountlayouttheme2 from "./theme/theme2/Accounts/layout";
+const AccountsLayoutTheme1 = dynamic(() => import("@/app/theme/theme1/Accounts/layout"));
+const Accountlayouttheme2 = dynamic(() => import("@/app/theme/theme2/Accounts/layout"));
 
-import ProductDetailTheme1 from "./theme/theme1/ProductDetail/single/ProductDetail";
-import ProductDetailTheme2 from "./theme/theme2/ProductDetail/single/ProductDetail";
+const ProductDetailTheme1 = dynamic(() => import("@/app/theme/theme1/ProductDetail/single/ProductDetail"));
+const ProductDetailTheme2 = dynamic(() => import("@/app/theme/theme2/ProductDetail/single/ProductDetail"));
 
 
+// ✅ Themes config
 const themes = {
   theme1: {
     layout: Theme1Layout,
@@ -40,7 +42,7 @@ const themes = {
     OrderHistory: OrderHistorythem1,
     Wishlist: WishlistTheme1,
     AccountsLayout: AccountsLayoutTheme1,
-    ProdductDetail: ProductDetailTheme1,
+    ProductDetail: ProductDetailTheme1,
   },
   theme2: {
     layout: Theme2Layout,
@@ -52,11 +54,12 @@ const themes = {
     OrderHistory: OrderHistorytheme2,
     Wishlist: WishlistTheme2,
     AccountsLayout: Accountlayouttheme2,
-    ProdductDetail: ProductDetailTheme2,
+    ProductDetail: ProductDetailTheme2,
   },
 };
 
 export default themes;
+
 export const getThemeLayout = (theme) => {
   return themes[theme]?.layout || themes.theme1.layout;
-}
+};

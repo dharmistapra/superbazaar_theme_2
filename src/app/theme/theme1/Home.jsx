@@ -1,4 +1,3 @@
-import NavBar from "./components/Header/Navbar";
 import Banner from "./components/Banner/Banner";
 import Topcategories from "./components/Categories/TopCategores";
 import Products from "./components/Products/Products";
@@ -7,7 +6,6 @@ import CardsSlider3D from "./components/CardsSlider/CardsSlider3D";
 import FullSlider from "./components/FullSlider/FulSlider";
 import NormalSliderCard from "./components/CardsSlider/NormalSlider";
 import TestimonialSlider from "./components/Testimonial/Testimonal";
-import Footer from "./components/Footer/Footer";
 import { getHomeBanners, getHomeContent, getHomeProductlist } from "@/app/services/homeService";
 import TwoBanner from "./components/HomeBanner/TwoBanner";
 
@@ -59,11 +57,6 @@ export default async function Home() {
         const renderFn = componentMap[item.type];
         return renderFn ? renderFn(item) : null;
       })}
-            {/* <Products />
-            <ThreeFourBanner data={ThreeBannerData} bannergrid={3} />
-            <CardsSlider3D />
-            <FullSlider />
-            <ThreeFourBanner data={ThreeFourBannerData} /> */}
             <NormalSliderCard />
             <TestimonialSlider />
         </>
