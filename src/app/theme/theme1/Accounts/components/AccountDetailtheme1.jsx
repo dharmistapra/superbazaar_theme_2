@@ -4,7 +4,7 @@ import UpdateProfile from "./updateProfile";
 import { useState } from "react";
 
 export default function AccountDetailtheme1() {
-    const [open,setOpen]=useState()
+    const [open, setOpen] = useState()
     const user = {
         name: "Spartan Druid",
         mobile: "+91 9876543210",
@@ -18,7 +18,7 @@ export default function AccountDetailtheme1() {
             <div className="flex items-center justify-between mb-4">
                 <h2 className="text-lg font-semibold">My Profile</h2>
                 <div className="p-10 bg-gray-100">
-                    <button onClick={()=>setOpen(!open)} className="w-10 h-10 shadow-2xl flex items-center justify-center rounded-full bg-white hover:bg-black text-black hover:text-white transition">
+                    <button onClick={() => setOpen(!open)} className="w-10 h-10 shadow-2xl flex items-center justify-center rounded-full bg-white hover:bg-black text-black hover:text-white transition">
                         <SquarePen />
                     </button>
                 </div>
@@ -45,11 +45,11 @@ export default function AccountDetailtheme1() {
 
             <hr className="my-4 border-zinc-300" />
 
-             <UpdateProfile
-        open={open}
-        onClose={() => setOpen(false)}
-        user={user}
-      />
+            <UpdateProfile
+                open={open}
+                onClose={() => setOpen(false)}
+                user={user}
+            />
         </div>
     );
 }

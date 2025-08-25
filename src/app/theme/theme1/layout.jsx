@@ -1,15 +1,15 @@
 import NavBar from "./components/Header/Navbar"
 import Footer from "./components/Footer/Footer"
 import ModalManager from "./Modals/ModalManager"
-const Layout = ({children}) => {
-    return(
+const Layout = ({ children }) => {
+    return (
         <div>
-        <NavBar />
-        <main>{children}</main>
-        <Footer />
-         <ModalManager />
+            <NavBar />
+            <main>{children}</main>
+            <Footer />
+            <ModalManager />
 
-    </div>
+        </div>
     )
 }
 export default Layout

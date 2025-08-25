@@ -10,15 +10,15 @@ const ProductCard = ({ data }) => {
     return (
         <div className="group relative w-full bg-white  rounded-none sm:rounded-sm overflow-hidden hover:shadow-xl transition-shadow duration-300 p-0 sm:p-2">
             <div className="relative w-full aspect-[4/5] sm:aspect-[1/1] md:aspect-[3/4]">
-           <Link href={`${pathname}/${data?.url || "/"}`}>
-                 <Image
-                    src={ImageUrl(data?.mediumImage?.[0]) }
-                    alt={data?.name || "Product"}
-                    fill
-                    className="rounded-none sm:rounded-sm transition-transform duration-300 group-hover:scale-105"
-                />
-            </Link>
-               
+                <Link href={`${pathname}/${data?.url || "/"}`}>
+                    <Image
+                        src={ImageUrl(data?.mediumImage?.[0])}
+                        alt={data?.name || "Product"}
+                        fill
+                        className="rounded-none sm:rounded-sm transition-transform duration-300 group-hover:scale-105"
+                    />
+                </Link>
+
                 <div className="absolute top-2 right-2 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
                     <WishlistButton />
                     <QuickViewButton />

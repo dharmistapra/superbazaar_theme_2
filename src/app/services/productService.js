@@ -19,7 +19,7 @@ export const getCategoryProducts = async (
   filters = {}
 ) => {
   try {
-      const finalFilters = cleanFilters(filters);
+    const finalFilters = cleanFilters(filters);
     const res = await axiosInstance.get(`/product/${category}`, {
       params: {
         perPage,

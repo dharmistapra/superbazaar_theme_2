@@ -2,7 +2,7 @@ import { ImageUrl } from "@/app/helper/imageUrl";
 import Image from "next/image";
 
 const CategoryBannertheme1 = ({ data }) => {
-  const banner = data?.PageWiseBanner?.[0]; 
+  const banner = data?.PageWiseBanner?.[0];
   return (
     <div className="relative w-full h-[300px]">
       {banner?.desktopImage && (

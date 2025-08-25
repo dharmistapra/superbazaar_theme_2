@@ -168,7 +168,8 @@ const NavBar = () => {
                 {data.map((item) => (
                     <div key={item.id} className="relative group">
                         <a
-                            href={`/${item.url}`}
+                            // href={`${purchaseType === "wholesale" ? `/wholesale/${item.url}` : `/retail/${item.url}`}`}
+                            href={`/retail/${item.url}`}
                             className="hover:text-red-800 flex items-center text-[17px] text-gray-700 tracking-[1px]"
                         >
                             {item.name}

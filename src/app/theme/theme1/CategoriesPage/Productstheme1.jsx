@@ -6,7 +6,7 @@ import ProductCard from "@/app/theme/theme1/components/Cards/ProductCards";
 import Pagination from "@/app/theme/theme1/components/Pagination/Pagination";
 import { getCategoryProducts } from "@/app/services/productService";
 import ProductCardSkeleton from "@/app/components/ProductCardSkeleton";
-const Productstheme1 = ({ initialData, category,filterData }) => {
+const Productstheme1 = ({ initialData, category, filterData }) => {
     const [grid, setGrid] = useState(4);
     const [open, setOpen] = useState(false);
     const [sort, setSort] = useState("");
@@ -15,7 +15,7 @@ const Productstheme1 = ({ initialData, category,filterData }) => {
     const [totalCount, setTotalCount] = useState(initialData?.totalCount || 0);
     const [isFirstLoad, setIsFirstLoad] = useState(true);
     const [loading, setLoading] = useState(false);
-     const [activeFilters, setActiveFilters] = useState("");
+    const [activeFilters, setActiveFilters] = useState("");
     useEffect(() => {
         if (isFirstLoad && page === 1 && sort === "") {
             setIsFirstLoad(false);
@@ -40,10 +40,10 @@ const Productstheme1 = ({ initialData, category,filterData }) => {
     }, [page, sort, category, activeFilters]);
 
 
-     const handleApplyFilters = (filters) => {
-    setActiveFilters(filters); 
-    setPage(1); 
-  };
+    const handleApplyFilters = (filters) => {
+        setActiveFilters(filters);
+        setPage(1);
+    };
 
     const sortOptions = [
         { value: "", label: "New Arrivals" },
@@ -142,12 +142,12 @@ const Productstheme1 = ({ initialData, category,filterData }) => {
 
             </div>
 
-            {<Filtertheme1 
-            open={open} 
-            category={category}
-            setOpen={setOpen} 
-            filterData={filterData} 
-            onApply={handleApplyFilters}/>}
+            {<Filtertheme1
+                open={open}
+                category={category}
+                setOpen={setOpen}
+                filterData={filterData}
+                onApply={handleApplyFilters} />}
 
         </>
     );

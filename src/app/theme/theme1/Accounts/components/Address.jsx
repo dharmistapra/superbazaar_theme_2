@@ -55,13 +55,13 @@ const AddressTheme1 = () => {
 
   const handleEdit = (index) => {
     console.log(index)
-    setValues(addresses[index]); 
+    setValues(addresses[index]);
     setEditIndex(index);
     setShowForm(true);
   };
 
 
-  const handleDelete=()=>{
+  const handleDelete = () => {
     console.log("Data Dleted Successfully")
   }
 
@@ -83,11 +83,10 @@ const AddressTheme1 = () => {
       </div>
 
       <div
-        className={`overflow-hidden transition-all duration-500 ${
-          showForm
-            ? "max-h-[1500px] opacity-100 scale-100"
-            : "max-h-0 opacity-0 scale-95"
-        }`}
+        className={`overflow-hidden transition-all duration-500 ${showForm
+          ? "max-h-[1500px] opacity-100 scale-100"
+          : "max-h-0 opacity-0 scale-95"
+          }`}
       >
         <form
           onSubmit={handleSubmit}
@@ -235,8 +234,8 @@ const AddressTheme1 = () => {
           </div>
         </form>
       </div>
-      <AddressList addresses={addresses} handleEdit={handleEdit} handleDelete={handleDelete}/>
-   
+      <AddressList addresses={addresses} handleEdit={handleEdit} handleDelete={handleDelete} />
+
     </div>
   );
 };
