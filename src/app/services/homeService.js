@@ -16,3 +16,13 @@ const res = await axiosInstance.get(`/home-data`);
         return error
     }
 }
+
+
+export const getHomeProductlist=async(url)=>{
+    try{
+      const res = await axiosInstance.get(`/home-layout/collection/${url}?purchaseType=retail`);
+    return res.data?.data || {};
+    }catch(error){
+        return error
+    }
+}

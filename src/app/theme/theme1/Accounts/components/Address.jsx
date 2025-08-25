@@ -54,7 +54,6 @@ const AddressTheme1 = () => {
   });
 
   const handleEdit = (index) => {
-    console.log(index)
     setValues(addresses[index]);
     setEditIndex(index);
     setShowForm(true);
