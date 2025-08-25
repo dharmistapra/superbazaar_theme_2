@@ -1,10 +1,13 @@
 import { useState } from "react";
-const SizeSelector = ({ sizes = ["S", "M", "L", "XL"], onChange ,errors,setErrors}) => {
+
+const SizeSelector = ({ sizes = [], onChange, errors, setErrors }) => {
   const [activeSize, setActiveSize] = useState(null);
+
   const handleClick = (size) => {
-    setActiveSize(size);
-    if (onChange) onChange(size);
-    setErrors(null)
+    if (size.quantity === 0) return; 
+    setActiveSize(size.value);
+    if (onChange) onChange(size.value);
+    setErrors(null);
   };
 
   return (
@@ -13,18 +16,19 @@ const SizeSelector = ({ sizes = ["S", "M", "L", "XL"], onChange ,errors,setError
       <div className="flex gap-2 flex-wrap">
         {sizes.map((size) => (
           <button
-            key={size}
+            key={size.id}
             onClick={() => handleClick(size)}
-            className={`px-4 py-2 border rounded-md transition 
-              ${activeSize === size ? "bg-black text-white" : "hover:bg-black hover:text-white"}
+            disabled={size.quantity === 0}
+            className={`px-4 py-2 border rounded-md transition
+              ${activeSize === size.value ? "bg-black text-white" : "hover:bg-black hover:text-white"}
+              ${size.quantity === 0 ? "line-through text-gray-400 cursor-not-allowed" : ""}
             `}
           >
-            {size}
+            {size.value} {size.quantity === 0 ? "(Out of stock)" : ""}
           </button>
         ))}
-        
       </div>
-        {errors && <p className="text-red-800">{errors}</p>}
+      {errors && <p className="text-red-800">{errors}</p>}
     </div>
   );
 };

@@ -12,7 +12,7 @@ const ProductCard = ({ data }) => {
             <div className="relative w-full aspect-[4/5] sm:aspect-[1/1] md:aspect-[3/4]">
            <Link href={`${pathname}/${data?.url || "/"}`}>
                  <Image
-                    src={ImageUrl(data?.mediumImage?.[0]) }
+                    src={ data?.mediumImage? ImageUrl(data?.mediumImage?.[0]) :"/banner1.webp" }
                     alt={data?.name || "Product"}
                     fill
                     className="rounded-none sm:rounded-sm transition-transform duration-300 group-hover:scale-105"

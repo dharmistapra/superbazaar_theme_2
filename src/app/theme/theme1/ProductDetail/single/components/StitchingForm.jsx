@@ -1,11 +1,8 @@
 "use client";
-
 import { useState } from "react";
-import stitchingData from "@/app/data/StitchingData";
-export default function StitchingForm() {
+export default function StitchingForm({ stitchingData }) {
     const [selectedStitch, setSelectedStitch] = useState(null);
     const [formData, setFormData] = useState({});
-
     const handleRadioChange = (option) => {
         setSelectedStitch(option.id);
         setFormData((prev) => ({ ...prev, [option.id]: {} }));
@@ -37,12 +34,10 @@ export default function StitchingForm() {
     return (
         <form
             onSubmit={handleSubmit}
-            className="space-y-6 rounded-xl "
-        >
+            className="space-y-6 rounded-xl ">
             {stitchingData.map((section) => (
                 <div key={section.id} className="space-y-2">
                     <h2 className="text-lg font-semibold">{section.name}</h2>
-
                     <div className="flex flex-wrap gap-3">
                         {section.stitchingOption.some((o) => o.type === "Redio") && (
                             <div className="flex flex-wrap gap-4">
@@ -54,8 +49,7 @@ export default function StitchingForm() {
                                                 className={`px-6 py-4 min-w-[160px] min-h-[100px] flex flex-col items-center justify-center border rounded-xl cursor-pointer text-center transition ${selectedStitch === option.id
                                                     ? "border-red-500 bg-red-50 "
                                                     : "border-gray-300 hover:border-gray-400"
-                                                    }`}
-                                            >
+                                                    }`}>
                                                 <input
                                                     type="radio"
                                                     name="stitching"
@@ -67,20 +61,16 @@ export default function StitchingForm() {
                                                 <span className="font-medium text-gray-800">
                                                     {option.name}
                                                 </span>
-
                                                 {option.price > 0 && (
                                                     <span className="mt-2 text-red-500  text-sm">
                                                         + ₹{option.price}
                                                     </span>
                                                 )}
                                             </label>
-                                        )
-                                )}
+                                        ))}
                             </div>
                         )}
                     </div>
-
-
                     {section.stitchingOption.some((o) => o.type === "CheckBox") && (
                         <div className="grid md:grid-cols-2 gap-4">
                             {section.stitchingOption.map(
@@ -88,14 +78,12 @@ export default function StitchingForm() {
                                     option.type === "CheckBox" && (
                                         <label
                                             key={option.id}
-                                            className="flex items-center gap-2 p-3  rounded-lg cursor-pointer hover:bg-gray-50"
-                                        >
+                                            className="flex items-center gap-2 p-3  rounded-lg cursor-pointer hover:bg-gray-50">
                                             <input
                                                 type="checkbox"
                                                 checked={!!formData[option.id]}
                                                 onChange={() => handleCheckboxChange(option)}
-                                                className="w-5 h-5 accent-zinc-900"
-                                            />
+                                                className="w-5 h-5 accent-zinc-900" />
                                             {option.name}{" "}
                                             {option.price > 0 && (
                                                 <span className="text-sm text-red-500">
@@ -103,19 +91,16 @@ export default function StitchingForm() {
                                                 </span>
                                             )}
                                         </label>
-                                    )
-                            )}
+                                    ))}
                         </div>
                     )}
-
-
                     {section.stitchingOption
                         .filter((opt) => opt.id === selectedStitch)
                         .map((option) =>
                             option.stitchingValues.length > 0 ? (
                                 <div
                                     key={option.id}
-                                    className="space-y-4 mt-4 border-t pt-4">
+                                    className="space-y-4 mt-4  pt-4">
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
                                         {option.stitchingValues.map((field) => (
                                             <div key={field.id} className="flex flex-col w-full">
@@ -137,7 +122,7 @@ export default function StitchingForm() {
                                                         onChange={(e) =>
                                                             handleInputChange(option.id, field.id, e.target.value)
                                                         }
-                                                        className="border rounded-lg px-3 py-2 focus:ring-2 focus:ring-red-400 outline-none w-full"
+                                                        className="border rounded-lg px-3 py-2  outline-none w-full"
                                                     />
                                                 ) : field.type === "Dropdown" ? (
                                                     <select
@@ -146,7 +131,7 @@ export default function StitchingForm() {
                                                         onChange={(e) =>
                                                             handleInputChange(option.id, field.id, e.target.value)
                                                         }
-                                                        className="border rounded-lg px-3 py-2 focus:ring-2 focus:ring-red-400 outline-none w-full"
+                                                        className="border rounded-lg px-3 py-2  outline-none w-full"
                                                     >
                                                         <option value="">Select</option>
                                                         {field.values.split(",").map((val) => (
@@ -162,17 +147,10 @@ export default function StitchingForm() {
                                 </div>
                             ) : null
                         )}
-
-
                 </div>
             ))}
 
-            <button
-                type="submit"
-                className="w-full py-3 rounded-lg bg-red-500 text-white font-semibold hover:bg-red-600 transition"
-            >
-                Submit
-            </button>
+            <button>Submit</button>
         </form>
     );
 }

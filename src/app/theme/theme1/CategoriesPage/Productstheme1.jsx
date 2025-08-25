@@ -6,7 +6,10 @@ import ProductCard from "@/app/theme/theme1/components/Cards/ProductCards";
 import Pagination from "@/app/theme/theme1/components/Pagination/Pagination";
 import { getCategoryProducts } from "@/app/services/productService";
 import ProductCardSkeleton from "@/app/components/ProductCardSkeleton";
-const Productstheme1 = ({ initialData, category,filterData }) => {
+import cleanFilters from "@/app/helper/FilterClean";
+import SelectedFilters from "@/app/components/SelctedFilter";
+
+const Productstheme1 = ({ initialData, category, filterData }) => {
     const [grid, setGrid] = useState(4);
     const [open, setOpen] = useState(false);
     const [sort, setSort] = useState("");
@@ -14,37 +17,36 @@ const Productstheme1 = ({ initialData, category,filterData }) => {
     const [products, setProducts] = useState(initialData?.data || []);
     const [totalCount, setTotalCount] = useState(initialData?.totalCount || 0);
     const [isFirstLoad, setIsFirstLoad] = useState(true);
+    const [selectedAttributes, setSelectedAttributes] = useState({});
     const [loading, setLoading] = useState(false);
-     const [activeFilters, setActiveFilters] = useState("");
+
+    const fetchProducts = async (filters = {}) => {
+        setLoading(true);
+        try {
+            const cleanFilter = cleanFilters(filters);
+            const res = await getCategoryProducts(category, page, 20, sort, cleanFilter);
+            setProducts(res.data || []);
+            setTotalCount(res?.totalCount || 0);
+        } catch (err) {
+            setProducts([]);
+        } finally {
+            setLoading(false);
+        }
+    };
+
     useEffect(() => {
         if (isFirstLoad && page === 1 && sort === "") {
             setIsFirstLoad(false);
             return;
         }
-
-        const fetchProducts = async () => {
-            setLoading(true);
-            try {
-                const res = await getCategoryProducts(category, page, 20, sort, activeFilters);
-                console.log(res);
-                setProducts(res.data || []);
-                setTotalCount(res?.totalCount || 0);
-            } catch (err) {
-                setProducts([]);
-            } finally {
-                setLoading(false);
-            }
-        };
-
         fetchProducts();
-    }, [page, sort, category, activeFilters]);
+    }, [page, sort, category]);
 
 
-     const handleApplyFilters = (filters) => {
-    setActiveFilters(filters); 
-    setPage(1); 
-  };
 
+    const handleApplyFilters = (filters) => {
+        fetchProducts(filters);
+    };
     const sortOptions = [
         { value: "", label: "New Arrivals" },
         { value: "AtoZ", label: "A To Z" },
@@ -105,18 +107,20 @@ const Productstheme1 = ({ initialData, category,filterData }) => {
                     </div>
                 </div>
 
-
-
+                <SelectedFilters
+                    selectedAttributes={selectedAttributes}
+                    onFiltersChange={handleApplyFilters}
+                    setSelectedAttributes={setSelectedAttributes}
+                    fetchProducts={fetchProducts}
+                />
                 <div
                     className={`grid gap-4 
-    ${grid === 2 ? "grid-cols-2 sm:grid-cols-2 lg:grid-cols-2" : ""} 
-    ${grid === 3 ? "grid-cols-2 sm:grid-cols-2 md:grid-cols-3" : ""} 
-    ${grid === 4 ? "grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4" : ""}`}
+            ${grid === 2 ? "grid-cols-2 sm:grid-cols-2 lg:grid-cols-2" : ""} 
+            ${grid === 3 ? "grid-cols-2 sm:grid-cols-2 md:grid-cols-3" : ""} 
+            ${grid === 4 ? "grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4" : ""}`}
                 >
                     {loading ? (
-                        [...Array(grid * 2)].map((_, i) => (
-                            <ProductCardSkeleton key={i} />
-                        ))
+                        [...Array(grid * 2)].map((_, i) => <ProductCardSkeleton key={i} />)
                     ) : products?.length > 0 ? (
                         products.map((item, index) => (
                             <div key={index}>
@@ -130,7 +134,6 @@ const Productstheme1 = ({ initialData, category,filterData }) => {
                     )}
                 </div>
 
-
                 <div className="flex justify-center items-center ">
                     <Pagination
                         currentPage={page}
@@ -139,16 +142,17 @@ const Productstheme1 = ({ initialData, category,filterData }) => {
                         onPageChange={(p) => setPage(p)}
                     />
                 </div>
-
             </div>
 
-            {<Filtertheme1 
-            open={open} 
-            category={category}
-            setOpen={setOpen} 
-            filterData={filterData} 
-            onApply={handleApplyFilters}/>}
-
+            <Filtertheme1
+                open={open}
+                category={category}
+                setOpen={setOpen}
+                filterData={filterData}
+                onApply={handleApplyFilters}
+                setSelectedAttributes={setSelectedAttributes}
+                selectedAttributes={selectedAttributes}
+            />
         </>
     );
 };

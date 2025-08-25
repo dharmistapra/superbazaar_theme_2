@@ -5,22 +5,12 @@ import "swiper/css"
 import "swiper/css/pagination"
 import "swiper/css/effect-coverflow"
 import Image from "next/image"
+import { ImageUrl } from "@/app/helper/imageUrl"
 
-import image1 from "../../../../Assets/Image/product1.webp"
-import image2 from "../../../../Assets/Image/product3.webp"
-import image3 from "../../../../Assets/Image/product4.webp"
-import image4 from "../../../../Assets/Image/product5.webp"
-import image5 from "../../../../Assets/Image/product6.webp"
-import image6 from "../../../../Assets/Image/product7.webp"
-import image7 from "../../../../Assets/Image/product8.webp"
-import image8 from "../../../../Assets/Image/product9.webp"
-
-const CardsSlider3D = () => {
-  const sliderdata = [image1, image2, image3, image4, image5, image6, image7, image8]
-
+const CardsSlider3D = ({ slides }) => {
   return (
-    <div className="w-full bg-gradient-to-r from-indigo-100 via-white to-indigo-100  py-10 mt-10">
-      <h1 className="text-3xl text-center font-normal mb-6 ">Cards Slider</h1>
+    <div className="w-full bg-gradient-to-r from-indigo-100 via-white to-indigo-100 py-10 mt-10">
+      <h1 className="text-3xl text-center font-normal mb-6">Cards Slider</h1>
 
       <Swiper
         effect="coverflow"
@@ -33,7 +23,7 @@ const CardsSlider3D = () => {
           disableOnInteraction: false,
         }}
         coverflowEffect={{
-          rotate: 12,
+          rotate: 0,
           stretch: 0,
           depth: 150,
           modifier: 2,
@@ -43,16 +33,18 @@ const CardsSlider3D = () => {
         modules={[Autoplay, EffectCoverflow, Pagination]}
         className="max-w-6xl mx-auto"
       >
-        {sliderdata.map((item, index) => (
+        {slides.map((item, index) => (
           <SwiperSlide
             key={index}
-            className="!w-64 !h-100 flex items-center justify-center"
+            className="flex items-center justify-center !w-80 !h-[400px]"
           >
-            <div className="w-full h-full rounded-xl overflow-hidden shadow-lg bg-white">
+            <div className="w-full h-full rounded-3xl overflow-hidden shadow-lg bg-white flex items-center justify-center">
               <Image
-                src={item}
+                src={ImageUrl(item.image)}
                 alt={`Slide ${index + 1}`}
-                className="w-full h-full object-cover"
+                width={500}
+                height={500}
+                className="object-contain w-full h-full"
               />
             </div>
           </SwiperSlide>

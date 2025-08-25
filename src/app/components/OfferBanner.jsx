@@ -17,8 +17,7 @@ const OfferBanner = ({ discount }) => {
         </div>
       </div>
 
-      {/* Discount Badge */}
-      {discount && (
+      {discount !== 0 && (
         <div className="sm:ml-auto bg-red-500 text-white font-bold px-3 py-1 rounded-full text-xs sm:text-sm animate-bounce">
           {discount}% OFF
         </div>

@@ -1,10 +1,11 @@
 const cleanFilters = (filters) => {
   const cleaned = {};
-
   if (filters.attributes) {
     Object.keys(filters.attributes).forEach((key) => {
       if (filters.attributes[key] && filters.attributes[key].length > 0) {
-        cleaned[key] = filters.attributes[key].join(",");
+        cleaned[key] = filters.attributes[key]
+          .map((item) => item.value)
+          .join(",");
       }
     });
   }
@@ -21,4 +22,5 @@ const cleanFilters = (filters) => {
 
   return cleaned;
 };
+
 export default cleanFilters;

@@ -2,16 +2,9 @@
 
 import { useState } from "react";
 import { Layers, NotebookText, ScrollText } from "lucide-react";
-const ProductDescription = ({ productId }) => {
+
+const ProductDescription = ({ description, attributes }) => {
   const [activeTab, setActiveTab] = useState("description");
-  const [data] = useState({
-    description:
-      "Stretch strap top Nodding to retro styles, this Hyperbola T-shirt is defined by its off-the-shoulder design. Its spun from a green stretch cotton jersey and adorned with an embroidered AC logo on the front, a brand's signature.Thick knitted fabric. Short design. Straight design. Rounded neck. Sleeveless. Straps. Unclosed. Cable knit finish. Co-ord.",
-    shipping:
-      "Orders are usually shipped within 2-3 business days. Free shipping on orders above $50.",
-    returns:
-      "You may return most new, unopened items within 30 days of delivery for a full refund.",
-  });
 
   return (
     <div className="bg-white rounded-lg shadow-sm">
@@ -75,10 +68,61 @@ const ProductDescription = ({ productId }) => {
         </li>
       </ul>
 
-      <div className="p-4 sm:p-6 text-center text-gray-600 text-sm sm:text-base">
-        {activeTab === "description" && <p>{data.description}</p>}
-        {activeTab === "shipping" && <p>{data.shipping}</p>}
-        {activeTab === "returns" && <p>{data.returns}</p>}
+      <div className="p-4 sm:p-6 text-gray-600 text-sm sm:text-base">
+        {activeTab === "description" && (
+          <div className="space-y-4">
+
+          {attributes?.length > 0 && (
+  <div className=" p-4 bg-white rounded-lg shadow-sm">
+    <h3 className="font-semibold mb-3 text-lg  pb-2">Product Attributes</h3>
+    <div className="flex flex-col gap-4">
+      {attributes.map((attr) => (
+        <div key={attr.key} className="flex flex-wrap items-center gap-2">
+          <span className="font-medium w-32 text-zinc-700">{attr.name}:</span>
+
+          {attr.key === "color" ? (
+            <div className="flex gap-3 flex-wrap">
+              {attr.values?.map((v, i) => (
+                <div
+                  key={i}
+                  className="flex items-center gap-1 bg-gray-50 px-2 py-1 rounded-md "
+                >
+                  <span
+                    className="w-4 h-4 rounded-full "
+                    style={{ backgroundColor: v.color }}
+                  ></span>
+                  <span className="text-sm">{v.value}</span>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="flex gap-2 flex-wrap">
+              {attr.values?.map((v, i) => (
+                <span
+                  key={i}
+                  className="bg-gray-50 px-2 py-1 rounded-md text-sm">
+                  {typeof v === "object" ? v.value || v.name : v}
+                </span>
+              ))}
+            </div>
+          )}
+        </div>
+      ))}
+    </div>
+  </div>
+)}
+
+
+
+            <p>{description}</p>
+
+        
+
+          </div>
+        )}
+
+        {activeTab === "shipping" && <p>{attributes?.shipping || "Shipping info not available."}</p>}
+        {activeTab === "returns" && <p>{attributes?.returns || "Return policy not available."}</p>}
       </div>
     </div>
   );

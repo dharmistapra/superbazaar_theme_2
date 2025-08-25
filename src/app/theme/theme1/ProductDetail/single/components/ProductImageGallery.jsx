@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import Image from "next/image";
+import { ImageUrl } from "@/app/helper/imageUrl";
 
 const ProductImageGallery = ({ images, thumbs }) => {
   const [selectedImage, setSelectedImage] = useState(images[0]);
@@ -45,7 +46,7 @@ const ProductImageGallery = ({ images, thumbs }) => {
             }`}
           >
             <Image
-              src={`https://cdn.superbazaar.in/${thumb}`}
+              src={ImageUrl(thumb)}
               alt={`Thumb ${index + 1}`}
               width={80}
               height={100}
