@@ -125,7 +125,23 @@ const Productstheme2 = ({ product, category }) => {
                     </div>
 
                 </div>
-                <div className="flex flex-wrap mx-1 mt-3">
+                <div className="row flex flex-wrap">
+                    {/* Sidebar */}
+                    {open && (
+                        <div className="w-full lg:w-1/4 px-2"> {/* Filter col-3 */}
+                            <FilterSidebar open={open} setOpen={setOpen} />
+                        </div>
+                    )}
+
+                    {/* Product Grid */}
+                    <div className={`${open ? "w-full lg:w-3/4" : "w-full"} px-2 flex flex-wrap`}>
+                        {products?.map((product) => (
+                            <ProductCard key={product.id} product={product} pathname={`${pathname}/${product?.url || "/"}`} />
+                        ))}
+                    </div>
+                </div>
+
+                {/* <div className="flex flex-wrap mx-1 mt-3">
                     {products?.map((product) => {
                         console.log("product", product);
                         return (
@@ -133,7 +149,7 @@ const Productstheme2 = ({ product, category }) => {
 
                         )
                     })}
-                </div>
+                </div> */}
             </div>
 
             {/* <div className="flex justify-center items-center ">
