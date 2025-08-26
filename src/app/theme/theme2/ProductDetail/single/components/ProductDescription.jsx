@@ -20,17 +20,15 @@ const ProductDescription = ({ productId }) => {
         <li className="mx-2 sm:mx-4">
           <button
             onClick={() => setActiveTab("description")}
-            className={`inline-flex items-center px-2 sm:px-3 py-3 sm:py-4 border-b-2 text-sm sm:text-lg transition-colors ${
-              activeTab === "description"
-                ? "text-zinc-900 border-zinc-900"
-                : "text-zinc-700 border-transparent hover:text-zinc-900 hover:border-zinc-900"
-            }`}
+            className={`inline-flex items-center px-2 sm:px-3 py-3 sm:py-4 border-b-2 text-sm sm:text-lg transition-colors ${activeTab === "description"
+              ? "text-zinc-900 border-zinc-900"
+              : "text-zinc-700 border-transparent hover:text-zinc-900 hover:border-zinc-900"
+              }`}
           >
             <Layers
               size={20}
-              className={`mr-2 ${
-                activeTab === "description" ? "text-zinc-900" : "text-zinc-700"
-              }`}
+              className={`mr-2 ${activeTab === "description" ? "text-zinc-900" : "text-zinc-700"
+                }`}
             />
             Description
           </button>
@@ -39,17 +37,15 @@ const ProductDescription = ({ productId }) => {
         <li className="mx-2 sm:mx-4">
           <button
             onClick={() => setActiveTab("shipping")}
-            className={`inline-flex items-center px-2 sm:px-3 py-3 sm:py-4 border-b-2 text-sm sm:text-lg transition-colors ${
-              activeTab === "shipping"
-                ? "text-zinc-900 border-zinc-900"
-                : "text-zinc-700 border-transparent hover:text-zinc-900 hover:border-zinc-900"
-            }`}
+            className={`inline-flex items-center px-2 sm:px-3 py-3 sm:py-4 border-b-2 text-sm sm:text-lg transition-colors ${activeTab === "shipping"
+              ? "text-zinc-900 border-zinc-900"
+              : "text-zinc-700 border-transparent hover:text-zinc-900 hover:border-zinc-900"
+              }`}
           >
             <ScrollText
               size={20}
-              className={`mr-2 ${
-                activeTab === "shipping" ? "text-zinc-900" : "text-zinc-700"
-              }`}
+              className={`mr-2 ${activeTab === "shipping" ? "text-zinc-900" : "text-zinc-700"
+                }`}
             />
             Shipping & Returns
           </button>
@@ -58,17 +54,15 @@ const ProductDescription = ({ productId }) => {
         <li className="mx-2 sm:mx-4">
           <button
             onClick={() => setActiveTab("returns")}
-            className={`inline-flex items-center px-2 sm:px-3 py-3 sm:py-4 border-b-2 text-sm sm:text-lg transition-colors ${
-              activeTab === "returns"
-                ? "text-zinc-900 border-zinc-900"
-                : "text-zinc-700 border-transparent hover:text-zinc-900 hover:border-zinc-900"
-            }`}
+            className={`inline-flex items-center px-2 sm:px-3 py-3 sm:py-4 border-b-2 text-sm sm:text-lg transition-colors ${activeTab === "returns"
+              ? "text-zinc-900 border-zinc-900"
+              : "text-zinc-700 border-transparent hover:text-zinc-900 hover:border-zinc-900"
+              }`}
           >
             <NotebookText
               size={20}
-              className={`mr-2 ${
-                activeTab === "returns" ? "text-zinc-900" : "text-zinc-700"
-              }`}
+              className={`mr-2 ${activeTab === "returns" ? "text-zinc-900" : "text-zinc-700"
+                }`}
             />
             Return Policies
           </button>
