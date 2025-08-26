@@ -61,7 +61,6 @@ const AddressTheme1 = () => {
 
 
   const handleDelete = () => {
-    console.log("Data Dleted Successfully")
   }
 
   return (

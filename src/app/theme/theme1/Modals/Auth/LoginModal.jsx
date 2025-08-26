@@ -5,18 +5,30 @@ import { useModal } from "@/app/hooks/useModal";
 import { ArrowUpRight, Eye, EyeOff } from "lucide-react";
 import { useFormik } from "formik";
 import { loginSchema } from "@/app/schema/schema";
+import { signIn } from "next-auth/react";
 
 export default function LoginModal() {
   const { modal, close, open } = useModal();
   const [showPassword, setShowPassword] = useState(false);
+  const [loginError, setLoginError] = useState("");
 
   const initialValues = { email: "", password: "" };
 
   const formik = useFormik({
     initialValues,
     validationSchema: loginSchema,
-    onSubmit: (values) => {
-      console.log(values);
+    onSubmit: async (values) => {
+      setLoginError("");
+      const res = await signIn("credentials", {
+       redirect:false,
+        email: values.email,
+        password: values.password,
+      });
+      if (res?.error) {
+        setLoginError("Invalid email or password");
+      } else {
+        close("login")
+      }
     },
   });
 
@@ -24,6 +36,7 @@ export default function LoginModal() {
     if (!modal.login) {
       formik.resetForm();
       setShowPassword(false);
+      setLoginError("");
     }
   }, [modal.login]);
 
@@ -111,6 +124,8 @@ export default function LoginModal() {
               <p className="text-xs text-red-500 mt-1">{formik.errors.password}</p>
             )}
           </div>
+          {loginError && <p className="text-xs text-red-600">{loginError}</p>}
+
           <p
             onClick={() => {
               close("login");
@@ -120,6 +135,7 @@ export default function LoginModal() {
           >
             Forget Password <ArrowUpRight size={14} className="mt-1" />
           </p>
+
           <div className="mt-1 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <button
               type="submit"

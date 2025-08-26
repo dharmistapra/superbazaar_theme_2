@@ -3,7 +3,7 @@
 import { ImageUrl } from "@/app/helper/imageUrl";
 import React from "react";
 
-const MoreColors = ({ moreColors = [], basePath = "/retail" }) => {
+const MoreColors = ({ moreColors = [], basepath}) => {
   if (!moreColors.length) return null;
 
   return (
@@ -13,7 +13,7 @@ const MoreColors = ({ moreColors = [], basePath = "/retail" }) => {
         {moreColors.map((color) => (
           <a
             key={color.id}
-            href={`${basePath}/${color.url}`} 
+            href={`/retail/${basepath}/${color.url}`} 
             className="group relative w-24 h-40 rounded-md overflow-hidden border border-gray-200 hover:shadow-lg transition-shadow"
             title={color.sku} 
           >

@@ -42,8 +42,6 @@ const Filtertheme1 = ({ open, setOpen, filterData, onApply, setSelectedAttribute
         : [...current, { label: name, value }];
 
       const newAttributes = { ...prev, [key]: updated };
-
-      // Call onApply only when user changes
       if (onApply) onApply({ attributes: newAttributes, price: appliedPrice });
 
       return newAttributes;
@@ -64,8 +62,6 @@ const Filtertheme1 = ({ open, setOpen, filterData, onApply, setSelectedAttribute
           }`}
         onClick={() => setOpen(false)}
       />
-
-      {/* Sidebar */}
       <div
         className={`fixed top-0 left-0 h-full w-[90%] sm:w-[20rem] lg:w-[30rem] bg-white shadow-2xl z-50 transform transition-transform duration-500 ${open ? "translate-x-0" : "-translate-x-full"
           } flex flex-col rounded-r-2xl`}
@@ -81,7 +77,6 @@ const Filtertheme1 = ({ open, setOpen, filterData, onApply, setSelectedAttribute
         </div>
 
         <div className="flex-1 overflow-y-auto p-5 space-y-4">
-          {/* Price Filter */}
           {filterData?.priceRange && (
             <div className="p-4 border-b border-gray-200">
               <div
@@ -98,8 +93,8 @@ const Filtertheme1 = ({ open, setOpen, filterData, onApply, setSelectedAttribute
                       className="absolute h-1 bg-black rounded"
                       style={{
                         left: `${((priceRange[0] - filterData.priceRange.minPrice) /
-                            (filterData.priceRange.maxPrice -
-                              filterData.priceRange.minPrice)) *
+                          (filterData.priceRange.maxPrice -
+                            filterData.priceRange.minPrice)) *
                           100
                           }%`,
                         right: `${100 -
@@ -145,8 +140,6 @@ const Filtertheme1 = ({ open, setOpen, filterData, onApply, setSelectedAttribute
               )}
             </div>
           )}
-
-          {/* Attribute Filters */}
           {filterData?.attributes?.map((attr) => (
             <div
               key={attr.attribute.key}
@@ -189,8 +182,6 @@ const Filtertheme1 = ({ open, setOpen, filterData, onApply, setSelectedAttribute
               )}
             </div>
           ))}
-
-          {/* Brand Filter */}
           {filterData?.brands && (
             <div className="p-4 border-b border-gray-200">
               <div

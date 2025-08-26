@@ -25,8 +25,8 @@ const WishlistTheme2 = dynamic(() => import("@/app/theme/theme2/Accounts/compone
 
 const AccountsLayoutTheme1 = dynamic(() => import("@/app/theme/theme1/Accounts/layout"));
 const Accountlayouttheme2 = dynamic(() => import("@/app/theme/theme2/Accounts/layout"));
-
-const ProductDetailTheme1 = dynamic(() => import("@/app/theme/theme1/ProductDetail/single/ProductDetail"));
+// import ProductDetailTheme1 from "./theme/theme1/ProductDetail/single/ProductDetail";
+const ProductDetailTheme1 = dynamic(() => import("./theme/theme1/ProductDetail/single/ProductDetail"));
 const ProductDetailTheme2 = dynamic(() => import("@/app/theme/theme2/ProductDetail/single/ProductDetail"));
 
 

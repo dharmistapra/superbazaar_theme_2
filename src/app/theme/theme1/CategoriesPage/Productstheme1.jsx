@@ -1,13 +1,14 @@
 "use client";
 import { useEffect, useState } from "react";
+import dynamic from "next/dynamic";
 import { SlidersHorizontal, LayoutList, Grip, GripVertical } from "lucide-react";
-import Filtertheme1 from "./Filtertheme1";
-import ProductCard from "@/app/theme/theme1/components/Cards/ProductCards";
-import Pagination from "@/app/theme/theme1/components/Pagination/Pagination";
 import { getCategoryProducts } from "@/app/services/productService";
 import ProductCardSkeleton from "@/app/components/ProductCardSkeleton";
 import cleanFilters from "@/app/helper/FilterClean";
-import SelectedFilters from "@/app/components/SelctedFilter";
+const Filtertheme1 =dynamic(()=> import("./Filtertheme1"))
+const ProductCard =dynamic(()=> import("@/app/theme/theme1/components/Cards/ProductCards"))
+const Pagination =dynamic(()=> import("@/app/theme/theme1/components/Pagination/Pagination"))
+const SelectedFilters =dynamic(()=> import("@/app/components/SelctedFilter"))
 
 const Productstheme1 = ({ initialData, category, filterData }) => {
     const [grid, setGrid] = useState(4);

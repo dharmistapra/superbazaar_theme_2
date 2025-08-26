@@ -15,7 +15,6 @@ export default function ConfirmPasswordModal() {
     initialValues: { password: "", confirmPassword: "" },
     validationSchema: ResetPasswordschema,
     onSubmit: (values) => {
-      console.log("New Password:", values.password);
       close("confirmPassword");
     },
   });

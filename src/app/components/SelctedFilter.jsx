@@ -6,7 +6,7 @@ const SelectedFilters = ({ selectedAttributes, onFiltersChange, setSelectedAttri
     const updated = { ...selectedAttributes };
     if (!updated[key]) return;
 
-    updated[key] = updated[key].filter((item) => item.value !== value);
+    updated[key] = updated[key]?.filter((item) => item.value !== value);
     if (updated[key].length === 0) {
       delete updated[key];
     }

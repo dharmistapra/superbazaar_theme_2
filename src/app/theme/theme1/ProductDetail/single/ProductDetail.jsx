@@ -1,20 +1,23 @@
 "use client";
 import { useState } from "react";
+import dynamic from "next/dynamic";
 import { CircleQuestionMark, Heart, MessageCircle, Repeat, Share2 } from "lucide-react";
 import OfferBanner from "@/app/components/OfferBanner";
 import ProductImageGallery from "./components/ProductImageGallery";
-import SizeSelector from "@/app/components/SizeSelector";
-import SharePopup from "./components/SharePopup";
-import RealtedProduct from "./components/RelatedProduct";
-import StitchingForm from "./components/StitchingForm";
-import ProductDescription from "./components/ProductDescription";
-import StaticImage from "./components/StaticImage";
-import MoreColors from "./components/MoreColors";
-const ProductDetailTheme1 = ({ product, Stitching, attributes }) => {
+import { useSession } from "next-auth/react";
+const SizeSelector = dynamic(() => import("@/app/components/SizeSelector"));
+const SharePopup = dynamic(() => import("./components/SharePopup"));
+const RalatedProduct = dynamic(() => import("./components/RelatedProduct"));
+const StitchingForm = dynamic(() => import("./components/StitchingForm"));
+const ProductDescription = dynamic(() => import("./components/ProductDescription"));
+const StaticImage = dynamic(() => import("./components/StaticImage"));
+const MoreColors = dynamic(() => import("./components/MoreColors"));
+const ProductDetailTheme1 = ({ product, Stitching, attributes, category }) => {
+  const { data: session, status } = useSession();
   const [quantity, setQuantity] = useState(1);
   const [selectedSize, setSelectedSize] = useState(null);
   const [errors, setErrors] = useState(null)
-  
+  const [stitchingData, setStitchingData] = useState(null);
   const [wishlist, setWishlist] = useState(false);
   const [compare, setCompare] = useState(false);
   const [shareOpen, setShareOpen] = useState(false);
@@ -23,10 +26,31 @@ const ProductDetailTheme1 = ({ product, Stitching, attributes }) => {
   const toggleWishlist = () => setWishlist((prev) => !prev);
   const toggleCompare = () => setCompare((prev) => !prev);
   const handleAddtoCart = () => {
+    setErrors(null); 
+
     if (product.optionType === "Size" && !selectedSize) {
-      return setErrors("Please select size")
+      return setErrors("⚠️ Please select size");
     }
-  }
+
+    if (product.optionType === "Stitching") {
+      if (!stitchingData || stitchingData.stitching.length === 0) {
+        return setErrors("⚠️ Please select stitching option");
+      }
+      if (!stitchingData.isValid) {
+        return setErrors("⚠️ Please fill all required measurements");
+      }
+    }
+
+   const finalCartData = {
+  productId: product.id,
+  qty: quantity,
+  ...(product.optionType === "Size" && { size: selectedSize }), 
+  stitching: stitchingData?.stitching || [],
+};
+    alert("✅ Added to cart successfully!");
+  };
+
+
   return (
     <div className="container mx-auto p-4">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -62,7 +86,7 @@ const ProductDetailTheme1 = ({ product, Stitching, attributes }) => {
                 setErrors={setErrors}
               />
             </div>) : (
-            <StitchingForm stitchingData={Stitching} />
+            <StitchingForm stitchingData={Stitching} onChange={setStitchingData} />
           )}
           <div className="flex items-center gap-4 mt-4">
             <div className="flex items-center border rounded-lg overflow-hidden w-40">
@@ -117,9 +141,11 @@ const ProductDetailTheme1 = ({ product, Stitching, attributes }) => {
               Order on WhatsApp
             </button>
           </div>
+          {errors && (
+            <p className="text-red-500 text-sm mt-2">{errors}</p>
+          )}
 
-
-          <MoreColors moreColors={attributes.moreColors} />
+          <MoreColors moreColors={attributes.moreColors} basepath={category} />
 
           <div className="border-t border-gray-500 border-dashed mt-3"></div>
           <div>
@@ -132,7 +158,7 @@ const ProductDetailTheme1 = ({ product, Stitching, attributes }) => {
       </div>
       <div className="w-full mt-10">
         <h1 className="text-2xl font-normal text-center mb-10">You May Also Like this</h1>
-        <RealtedProduct />
+        <RalatedProduct />
       </div>
       <SharePopup
         isOpen={shareOpen}

@@ -28,7 +28,7 @@ const Banner = ({ bannerdata }) => {
         }}
         className=""
       >
-        {bannerdata.map((slide) => (
+        {bannerdata && bannerdata?.length > 0 && bannerdata.map((slide) => (
           <SwiperSlide key={slide.position}>
             <img
               src={ImageUrl(isMobile ? slide.mobileImage : slide.desktopImage)}

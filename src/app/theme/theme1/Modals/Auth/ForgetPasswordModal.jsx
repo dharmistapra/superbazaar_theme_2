@@ -13,7 +13,6 @@ export default function ForgetPasswordModal() {
       initialValues,
       validationSchema: forgetSchema,
       onSubmit: (values) => {
-        console.log(values);
         open("otp")
         close("forget")
       },

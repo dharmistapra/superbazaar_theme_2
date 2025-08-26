@@ -39,8 +39,6 @@ const Productstheme2 = ({ product, category }) => {
         setLoading(true);
         try {
             const res = await getCategoryProducts(category, page, 20, sort, []);
-            console.log(res, "res");
-
             setProducts(res.data || []);
             setTotalCount(res?.totalCount || 0);
         } catch (err) {
@@ -52,8 +50,6 @@ const Productstheme2 = ({ product, category }) => {
     useEffect(() => {
         fetchProducts()
     }, [])
-    console.log("product", category);
-
     return (
         <>
             <div className="container mx-auto px-4 mt-7">
@@ -92,15 +88,11 @@ const Productstheme2 = ({ product, category }) => {
                             </div>
 
 
-                            {/* Right Controls */}
                             <div className="flex gap-2 flex-wrap items-center">
-                                {/* Filter Button */}
                                 <button className="flex items-center gap-2 p-2 rounded shadow bg-black text-white hover:bg-gray-800 text-sm">
                                     <Funnel size={18} />
                                     FILTER
                                 </button>
-
-                                {/* Sort Dropdown */}
                                 <select
                                     value={sort}
                                     onChange={(e) => setSort(e.target.value)}
@@ -113,7 +105,6 @@ const Productstheme2 = ({ product, category }) => {
                                     <option value="high">Price: High to Low</option>
                                 </select>
 
-                                {/* Grid/List Toggle */}
                                 <div className="flex gap-1">
                                     <button className="p-2 rounded bg-black text-white hover:bg-gray-800">
                                         <LayoutGrid size={18} />
@@ -128,7 +119,6 @@ const Productstheme2 = ({ product, category }) => {
                     </div>
                     <div className="flex flex-wrap -mx-1 mt-2">
                         {products?.map((product) => {
-                            console.log("product", product);
                             return (
                                 <div className="p-1 mb-4 w-full sm:w-1/2 md:w-1/3 lg:w-1/4">
 
@@ -142,7 +132,6 @@ const Productstheme2 = ({ product, category }) => {
                                                 height={450}
                                             />
                                             <Image
-                                                // src={ImageUrl(product.mediumImage[1]) ? ImageUrl(product.mediumImage[1]) : ""}
                                                 src={ImageUrl(product.mediumImage[1])}
                                                 alt={product.name}
                                                 className="w-full object-cover absolute top-0 left-0 opacity-0 transition duration-300 group-hover:opacity-100"
@@ -172,79 +161,9 @@ const Productstheme2 = ({ product, category }) => {
                     </div>
                 </div>
 
-                {/* <div className="flex flex-wrap justify-between items-center mb-6 gap-4">
-                    <button
-                        onClick={() => setOpen(!open)}
-                        className="flex items-center gap-2 px-3 py-1 border rounded-sm shadow-sm hover:shadow-md hover:bg-gray-100 transition-all duration-200 text-sm font-medium"
-                    >
-                        <SlidersHorizontal size={18} />
-                        Filter
-                    </button>
-                    <div className="flex items-center gap-3">
-                        <div className="hidden md:flex items-center gap-2 bg-gray-50 p-2 rounded-lg shadow-sm">
-                            {gridButtons.map((btn) => {
-                                const Icon = btn.icon;
-                                const isActive = grid === btn.value;
-                                return (
-                                    <button
-                                        key={btn.value}
-                                        onClick={() => setGrid(btn.value)}
-                                        title={btn.label}
-                                        className={`p-1 rounded transition-all ${isActive
-                                            ? "bg-blue-600 text-white shadow-md"
-                                            : "text-zinc-900 hover:bg-blue-100"
-                                            }`}
-                                    >
-                                        <Icon size={20} />
-                                    </button>
-                                );
-                            })}
-                        </div>
-
-                        <select
-                            value={sort}
-                            onChange={(e) => setSort(e.target.value)}
-                            className="border rounded-md px-2 py-1 text-sm shadow-sm hover:shadow-md transition-all duration-200 bg-white w-auto"
-                        >
-                            {sortOptions.map((option) => (
-                                <option key={option.value} value={option.value}>
-                                    {option.label}
-                                </option>
-                            ))}
-                        </select>
-                    </div>
-                </div> */}
-
-
-
-                {/* <div
-                    className={`grid gap-4 
-    ${grid === 2 ? "grid-cols-2 sm:grid-cols-2 lg:grid-cols-2" : ""} 
-    ${grid === 3 ? "grid-cols-2 sm:grid-cols-2 md:grid-cols-3" : ""} 
-    ${grid === 4 ? "grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4" : ""}`}
-                >
-                    {CategoryProductData?.products?.length > 0 &&
-                        CategoryProductData?.products.map((item, index) => (
-                            <div key={index}>
-                                <ProductCard data={item} grid={grid} />
-                            </div>
-                        ))}
-                </div> */}
-
-
-
-                {/* <div className="flex justify-center items-center ">
-                    <Pagination
-                        currentPage={page}
-                        totalCount={500}
-                        perPage={10}
-                        onPageChange={(p) => setPage(p)}
-                    />
-                </div> */}
 
             </div >
 
-            {/* {<Filtertheme2 open={open} setOpen={setOpen} />} */}
 
         </>
     );

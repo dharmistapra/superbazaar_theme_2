@@ -5,7 +5,8 @@ import "swiper/css"
 import Image from "next/image"
 import { Quote } from "lucide-react"
 import Testimonaldata from "@/app/data/TestimonalData"
-const TestimonialSlider = () => {
+import { ImageUrl } from "@/app/helper/imageUrl"
+const TestimonialSlider = ({data}) => {
     return (
         <div className="mt-10 w-full bg-gradient-to-r from-indigo-100 via-white to-indigo-100 py-16">
             <div className="container mx-auto text-center">
@@ -29,22 +30,24 @@ const TestimonialSlider = () => {
                     }}
                     className="max-w-7xl mx-auto"
                 >
-                    {Testimonaldata.map((item, index) => (
+                    {data && data?.length > 0 && data?.map((item, index) => (
                         <SwiperSlide key={index}>
                             <div className="bg-white shadow-lg rounded-2xl p-6 flex flex-col items-center text-center relative h-full">
                                 <Quote className="absolute top-1 left-4 text-indigo-400 w-8 h-8 opacity-70" />
                                 <div className="w-20 h-20 md:w-24 md:h-24 rounded-full overflow-hidden shadow-lg mb-4 border-4 border-indigo-100">
                                     <Image
-                                        src={item.image}
-                                        alt={item.name}
+                                        src={ImageUrl(item.image)}
+                                        alt={item?.customer_name}
+                                        height={300}
+                                        width={300}
                                         className="object-cover w-full h-full"
                                     />
                                 </div>
                                 <h3 className="text-md md:text-lg font-semibold text-gray-800 mb-2">
-                                    {item.name}
+                                    {item.customer_name}
                                 </h3>
                                 <p className="text-gray-600 text-sm leading-relaxed line-clamp-4">
-                                    {item.description}
+                                    {item.review}
                                 </p>
                             </div>
                         </SwiperSlide>

@@ -17,13 +17,21 @@ export async function generateMetadata({ params }) {
 
 const ProductDetailpage=async ({params})=>{
      const currentTheme = "theme1";
-       const { url } = await params;
-  const { ProdductDetail } = themes[currentTheme];
-     const data = await getProductdetail(url)
-     const stitching = await getProductStitching(url)
-     const attributes = await getProductAttributes(url)
+       const { category,url } = await params;
+  const { ProductDetail } = themes[currentTheme];
+
+   const [data, stitching, attributes] = await Promise.all([
+    getProductdetail(url),
+    getProductStitching(url),
+    getProductAttributes(url),
+  ]);
+
     return(
-        <ProdductDetail product={data.data} Stitching={stitching.data}  attributes={attributes.data}/>
+        <ProductDetail 
+        product={data.data} 
+        Stitching={stitching.data}  
+        attributes={attributes.data} 
+        category={category}/>
     )
 }
 

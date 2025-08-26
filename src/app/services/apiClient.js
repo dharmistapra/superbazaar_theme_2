@@ -1,23 +1,28 @@
 import axios from "axios";
+import { getServerSession } from "next-auth";
+import { authOptions } from "../lib/auth";
 
-const axiosInstance = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL, 
-  headers: {
-    "Content-Type": "application/json",
-  },
-});
+export const createServerAxios = async () => {
+  const session = await getServerSession(authOptions);
+  const token = session?.accessToken;
 
-axiosInstance.interceptors.request.use(
-  (config) => {
-    if (typeof window !== "undefined") {
-      const token = localStorage.getItem("token");
-      if (token) {
-        config.headers.Authorization = `Bearer ${token}`;
-      }
-    }
-    return config;
-  },
-  (error) => Promise.reject(error)
-);
+  return axios.create({
+    baseURL: process.env.NEXT_PUBLIC_API_URL,
+    headers: {
+      "Content-Type": "application/json",
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+    },
+  });
+};
 
-export default axiosInstance;
+export const createClientAxios = () => {
+  const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
+
+  return axios.create({
+    baseURL: process.env.NEXT_PUBLIC_API_URL,
+    headers: {
+      "Content-Type": "application/json",
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+    },
+  });
+};

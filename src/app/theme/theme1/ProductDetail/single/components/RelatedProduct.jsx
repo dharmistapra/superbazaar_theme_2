@@ -4,7 +4,7 @@ import "swiper/css"
 import SliderNavigation from "@/app/theme/theme1/components/CardsSlider/SliderNavigation"
 import ProductCard from "@/app/theme/theme1/components/Cards/ProductCards"
 import ProductData from "@/app/data/HomeProductData"
-const RealtedProduct=()=>{
+const RalatedProduct=()=>{
     return(
          <div className="relative"> 
          <SliderNavigation position="center" />
@@ -43,4 +43,4 @@ const RealtedProduct=()=>{
     )
 }
 
-export default RealtedProduct
+export default RalatedProduct

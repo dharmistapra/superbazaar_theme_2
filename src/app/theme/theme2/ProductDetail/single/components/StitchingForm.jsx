@@ -30,7 +30,6 @@ export default function StitchingForm() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log("Final Data:", formData);
         alert("Check console for submitted data");
     };
 

@@ -19,7 +19,6 @@ const Products = ({ tabsData = [] }) => {
 
   return (
     <div className="container mx-auto px-4 mt-15 mb-20">
-      {/* Tabs */}
       <div className="w-full flex justify-center items-center gap-8 mb-10">
         {tabsData.map((tab) => (
           <button
@@ -34,8 +33,6 @@ const Products = ({ tabsData = [] }) => {
           </button>
         ))}
       </div>
-
-      {/* Slider */}
       <div className="relative">
         <SliderNavigation position="center" />
 

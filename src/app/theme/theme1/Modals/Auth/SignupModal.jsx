@@ -23,7 +23,6 @@ export default function SignupModal() {
     initialValues,
     validationSchema: signupSchema,
     onSubmit: (values) => {
-      console.log("SignUp values:", values);
     },
   });
 

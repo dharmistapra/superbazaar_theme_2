@@ -16,7 +16,6 @@ export default function ForgetPasswordModal() {
     initialValues: { otp: "" },
     validationSchema: otpSchema,
     onSubmit: (values) => {
-      console.log("Entered OTP:", values.otp);
       close("otp")
       open("confirmPassword")
     },

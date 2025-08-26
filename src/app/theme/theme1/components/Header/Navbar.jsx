@@ -5,16 +5,19 @@ import Image from "next/image";
 import Menu from "./components/Menu";
 import MobileMenu from "./components/MobileMenu";
 import Link from "next/link";
+import { openCart } from "@/app/store/slice/MiniCartSlice";
 import { useModal } from "@/app/hooks/useModal";
+import { useDispatch } from "react-redux";
 const NavBar = () => {
+  const dispatch=useDispatch()
   const [menuOpen, setMenuOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
-
   const { open } = useModal();
-
   const handleMenu = () => setMenuOpen(!menuOpen);
-
+const handleCartClick = () => {
+    dispatch(openCart());
+  };
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth >= 640) setMenuOpen(false);
@@ -64,7 +67,7 @@ const NavBar = () => {
 
         <div className="flex items-center gap-5 text-gray-700 relative" ref={dropdownRef}>
           <Heart className="cursor-pointer hover:text-black hidden sm:block" size={23} />
-          <ShoppingBag className="cursor-pointer hover:text-black hidden sm:block" size={23} />
+          <ShoppingBag className="cursor-pointer hover:text-black hidden sm:block" size={23} onClick={handleCartClick}/>
           <div className="relative" ref={dropdownRef}>
             <User
               className="cursor-pointer hover:text-black"

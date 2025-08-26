@@ -1,6 +1,7 @@
 import NavBar from "./components/Header/Navbar"
 import Footer from "./components/Footer/Footer"
-import ModalManager from "./Modals/ModalManager"
+import ModalManager from "./Modals/Auth/ModalManager"
+import MiniCart from "./Modals/Cart/MiniCart"
 const Layout = ({ children }) => {
     return (
         <div>
@@ -8,6 +9,7 @@ const Layout = ({ children }) => {
             <main>{children}</main>
             <Footer />
             <ModalManager />
+            <MiniCart/>
 
         </div>
     )

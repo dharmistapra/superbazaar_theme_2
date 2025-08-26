@@ -12,15 +12,12 @@ export async function generateMetadata({ params }) {
 }
 
 const RetailCategoryPage = async ({ params }) => {
-    const { category } = await params;
     const currentTheme = "theme1";
+    const { category } = await params;
+    const initialProducts = await getCategoryProducts(category, 1, 20,true);
+    const data = await getCategoryBanners(category)
+    const filterData = await getCategoryFilter(category);
     const { CategoryBanner, Products } = themes[currentTheme];
-   const [initialProducts, data, filterData] = await Promise.all([
-  getCategoryProducts(category, 1, 20),
-  getCategoryBanners(category),
-  getCategoryFilter(category)
-]);
-
     return (
         <>
             {data?.PageWiseBanner?.length > 0 && <CategoryBanner data={data} />}

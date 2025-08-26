@@ -16,7 +16,6 @@ const UpdateProfile = ({ open, onClose, user }) => {
         initialValues,
         validationSchema: profileschema,
         onSubmit: (values) => {
-            console.log(values)
         }
     })
 
