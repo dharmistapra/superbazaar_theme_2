@@ -5,6 +5,9 @@ import { CircleQuestionMark, Heart, MessageCircle, Repeat, Share2 } from "lucide
 import OfferBanner from "@/app/components/OfferBanner";
 import ProductImageGallery from "./components/ProductImageGallery";
 import { useSession } from "next-auth/react";
+import { useDispatch } from "react-redux";
+import { openCart } from "@/app/store/slice/MiniCartSlice";
+import { useModal } from "@/app/hooks/useModal";
 const SizeSelector = dynamic(() => import("@/app/components/SizeSelector"));
 const SharePopup = dynamic(() => import("./components/SharePopup"));
 const RalatedProduct = dynamic(() => import("./components/RelatedProduct"));
@@ -13,6 +16,8 @@ const ProductDescription = dynamic(() => import("./components/ProductDescription
 const StaticImage = dynamic(() => import("./components/StaticImage"));
 const MoreColors = dynamic(() => import("./components/MoreColors"));
 const ProductDetailTheme1 = ({ product, Stitching, attributes, category }) => {
+  const dispatch=useDispatch()
+  const { open } = useModal();
   const { data: session, status } = useSession();
   const [quantity, setQuantity] = useState(1);
   const [selectedSize, setSelectedSize] = useState(null);
@@ -39,6 +44,10 @@ const ProductDetailTheme1 = ({ product, Stitching, attributes, category }) => {
       if (!stitchingData.isValid) {
         return setErrors("⚠️ Please fill all required measurements");
       }
+    }
+    if(!session.accessToken){
+       open("login")
+       return 
     }
 
    const finalCartData = {

@@ -24,6 +24,7 @@ export default function LoginModal() {
         email: values.email,
         password: values.password,
       });
+
       if (res?.error) {
         setLoginError("Invalid email or password");
       } else {

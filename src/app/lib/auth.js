@@ -10,7 +10,8 @@ export const authOptions = {
             },
             async authorize(credentials) {
                 try {
-                    const res = await createClientAxios.post(
+                    const axiosInstance=await createClientAxios()
+                    const res = await axiosInstance.post(
                         `${process.env.NEXT_PUBLIC_API_URL}login`,
                         {
                             email: credentials.email,
@@ -31,6 +32,7 @@ export const authOptions = {
                     }
                     return null;
                 } catch (err) {
+                    console.log(err)
                    throw new Error(err?.response?.data?.message || "Login failed");
                    
                 }
