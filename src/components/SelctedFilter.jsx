@@ -34,8 +34,7 @@ const SelectedFilters = ({ selectedAttributes, onFiltersChange, setSelectedAttri
           </span>
         ))
       )}
-
-      {Object.keys(selectedAttributes).length > 0 && (
+      {selectedAttributes.brand?.length > 0 && selectedAttributes.color?.length > 0 && selectedAttributes.occasion?.length > 0 && selectedAttributes.size?.length > 0 && (
         <button
           onClick={handleClearAll}
           className="flex items-center gap-1 px-4 py-1 rounded-full bg-black text-white">

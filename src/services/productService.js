@@ -36,7 +36,7 @@ export const getCategoryProducts = async (
 };
 export const getCategoryFilter = async (category) => {
   try {
-    const axiosInstance = await createServerAxios();
+    const axiosInstance = await createClientAxios();
      const res = await axiosInstance.get(`/filter/${category}`);
     return res.data;
   } catch (error) {

@@ -15,16 +15,12 @@ const RetailCategoryPage = async ({ params }) => {
     const currentTheme = "theme1";
     const { category } = await params;
     const { CategoryBanner,Products } = getThemeModules(currentTheme);  
-   const [initialProducts, data, filterData] = await Promise.all([
-    getCategoryProducts(category, 1, 20, true),
-    getCategoryBanners(category),
-    getCategoryFilter(category)
-])
+    const data=await  getCategoryBanners(category);
 
     return (
         <>
             {data?.PageWiseBanner?.length > 0 && <CategoryBanner data={data} />}
-            <Products initialData={initialProducts} category={category} filterData={filterData.data} />
+            <Products  category={category} />
         </>
     )
 }

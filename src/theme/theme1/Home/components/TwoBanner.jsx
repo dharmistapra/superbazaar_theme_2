@@ -17,7 +17,7 @@ const TwoBanner = ({ data }) => {
           data.map((item, index) => (
             <div
               key={index}
-              className="relative overflow-hidden rounded-xl shadow-lg group h-[300px] sm:h-[400px] md:h-[450px] lg:h-[500px]"
+              className="relative overflow-hidden rounded-xl group h-[300px] sm:h-[400px] md:h-[500px] lg:h-[600px]"
             >
               <img
                 src={ImageUrl(item.image)}

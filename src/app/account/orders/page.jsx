@@ -1,7 +1,7 @@
-import themes from "@/themeConfig";
+import { getThemeModules } from "@/theme/themeConfig";
 const OrderHistoryPage = () => {
   const currentTheme = "theme1";
-  const { OrderHistory } = themes[currentTheme];
+  const { OrderHistory } = getThemeModules(currentTheme);
   return <OrderHistory />
 }
 export default OrderHistoryPage

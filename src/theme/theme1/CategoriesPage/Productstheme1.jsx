@@ -2,23 +2,24 @@
 import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import { SlidersHorizontal, LayoutList, Grip, GripVertical } from "lucide-react";
-import { getCategoryProducts } from "@/services/productService";
+import { getCategoryFilter, getCategoryProducts } from "@/services/productService";
 import ProductCardSkeleton from "@/components/ProductCardSkeleton";
 import cleanFilters from "@/helper/FilterClean";
 const Filtertheme1 = dynamic(() => import("./Filtertheme1"))
 const ProductCard = dynamic(() => import("@/theme/theme1/components/Cards/ProductCards"))
 const Pagination = dynamic(() => import("@/theme/theme1/components/Pagination/Pagination"))
 const SelectedFilters = dynamic(() => import("@/components/SelctedFilter"))
-const Productstheme1 = ({ initialData, category, filterData }) => {
+const Productstheme1 = ({ category }) => {
     const [grid, setGrid] = useState(4);
     const [open, setOpen] = useState(false);
     const [sort, setSort] = useState("");
     const [page, setPage] = useState(1);
-    const [products, setProducts] = useState(initialData?.data || []);
-    const [totalCount, setTotalCount] = useState(initialData?.totalCount || 0);
-    const [isFirstLoad, setIsFirstLoad] = useState(true);
+    const [products, setProducts] = useState([]);
+    const [totalCount, setTotalCount] = useState(0);
     const [selectedAttributes, setSelectedAttributes] = useState({});
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
+    const [filterData, setFilterData] = useState([]);
+
     const fetchProducts = async (filters = {}) => {
         setLoading(true);
         try {
@@ -34,15 +35,22 @@ const Productstheme1 = ({ initialData, category, filterData }) => {
     };
 
     useEffect(() => {
-        if (isFirstLoad && page === 1 && sort === "") {
-            setIsFirstLoad(false);
-            return;
-        }
         fetchProducts();
     }, [page, sort, category]);
-    const handleApplyFilters = (filters) => {
-        fetchProducts(filters);
-    };
+
+    useEffect(() => {
+        const fetchFilter = async () => {
+            const res = await getCategoryFilter(category);
+            setFilterData(res.data || []);
+        };
+        fetchFilter();
+    }, [category])
+
+    const handleApplyFilters = (filters) =>  fetchProducts(filters);
+    
+
+
+
     const sortOptions = [
         { value: "", label: "New Arrivals" },
         { value: "AtoZ", label: "A To Z" },
@@ -50,13 +58,11 @@ const Productstheme1 = ({ initialData, category, filterData }) => {
         { value: "low", label: "Price: Low to High" },
         { value: "high", label: "Price: High to Low" },
     ];
-
     const gridButtons = [
         { icon: LayoutList, value: 2, label: "2 Grid" },
         { icon: Grip, value: 3, label: "3 Grid" },
         { icon: GripVertical, value: 4, label: "4 Grid" },
     ];
-
     return (
         <>
             <div className="container mx-auto px-4 mt-7">
