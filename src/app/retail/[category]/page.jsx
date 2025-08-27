@@ -1,5 +1,5 @@
-import { getCategoryBanners, getCategoryFilter, getCategoryProducts } from "@/app/services/productService";
-import themes from "@/app/themeConfig";
+import { getCategoryBanners, getCategoryFilter, getCategoryProducts } from "@/services/productService";
+import { getThemeModules } from "@/theme/themeConfig";
 
 
 export async function generateMetadata({ params }) {
@@ -14,10 +14,13 @@ export async function generateMetadata({ params }) {
 const RetailCategoryPage = async ({ params }) => {
     const currentTheme = "theme1";
     const { category } = await params;
-    const initialProducts = await getCategoryProducts(category, 1, 20,true);
-    const data = await getCategoryBanners(category)
-    const filterData = await getCategoryFilter(category);
-    const { CategoryBanner, Products } = themes[currentTheme];
+    const { CategoryBanner,Products } = getThemeModules(currentTheme);  
+   const [initialProducts, data, filterData] = await Promise.all([
+    getCategoryProducts(category, 1, 20, true),
+    getCategoryBanners(category),
+    getCategoryFilter(category)
+])
+
     return (
         <>
             {data?.PageWiseBanner?.length > 0 && <CategoryBanner data={data} />}

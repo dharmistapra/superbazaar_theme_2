@@ -1,6 +1,6 @@
-import themes from "@/app/themeConfig";
+import themes from "@/themeConfig";
 const WishlistPage = () => {
-  const currentTheme = "theme2";
+  const currentTheme = "theme1";
   const { Wishlist } = themes[currentTheme];
   return <Wishlist />
 }

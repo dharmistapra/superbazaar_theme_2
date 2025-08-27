@@ -1,5 +1,5 @@
 "use client";
-import themes from "../themeConfig";
+import themes from "../../themeConfig";
 import { User, MapPin, Package, Heart, LogOut } from "lucide-react";
 const tabs = [
   { name: "Account Details", href: "/account/account-details", icon: User },
@@ -9,7 +9,7 @@ const tabs = [
   { name: "Logout", href: "/", icon: LogOut },
 ];
 const AccountLayout = ({ children }) => {
-  const currentTheme = "theme2";
+  const currentTheme = "theme1";
   const { AccountsLayout } = themes[currentTheme];
   return <AccountsLayout tabs={tabs}>{children}</AccountsLayout>;
 }

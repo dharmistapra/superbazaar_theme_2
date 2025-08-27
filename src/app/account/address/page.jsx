@@ -1,6 +1,6 @@
-import themes from "@/app/themeConfig";
+import themes from "@/themeConfig";
 const AddressPage = () => {
-  const currentTheme = "theme2";
+  const currentTheme = "theme1";
   const { Address } = themes[currentTheme];
   return <Address />
 }

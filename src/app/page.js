@@ -1,8 +1,9 @@
-import themes from "@/app/themeConfig";
-const HomePage = async() => {
+import { getThemeModules } from "@/theme/themeConfig";
+
+const HomePage = () => {
   const currentTheme = "theme1";
-  const { Home } = themes[currentTheme];
-  return (
+const { Home } = getThemeModules(currentTheme);  
+return (
       <Home/>
   );
 };

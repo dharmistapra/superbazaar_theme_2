@@ -1,5 +1,5 @@
-import { getProductAttributes, getProductdetail, getProductStitching } from "@/app/services/productService";
-import themes from "@/app/themeConfig";
+import { getProductAttributes, getProductdetail, getProductStitching } from "@/services/productService";
+import themes from "@/themeConfig";
 
 
 
