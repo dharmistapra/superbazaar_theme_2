@@ -1,6 +1,6 @@
 import { X } from "lucide-react";
 
-const SelectedFilters = ({ selectedAttributes, onFiltersChange, setSelectedAttributes,fetchProducts }) => {
+const SelectedFilters = ({ selectedAttributes, onFiltersChange, setSelectedAttributes, fetchProducts }) => {
 
   const handleRemove = (key, value) => {
     const updated = { ...selectedAttributes };

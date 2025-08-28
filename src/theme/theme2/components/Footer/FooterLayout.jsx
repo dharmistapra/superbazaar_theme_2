@@ -2,6 +2,7 @@
 
 import { Mail, MoveUp } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import { useState, useEffect } from "react";
 
 const FooterLayout = () => {
@@ -35,8 +36,8 @@ const FooterLayout = () => {
                         />
                         <p className="text-[13px] tracking-wider mb-3 mt-2">D-House, 21st Century Building, Ring Road, Surat, Gujarat-395002, INDIA</p>
                         <p className="mt-1">
-                            Phone: <a href="tel:+919898013133" className=" text-[13px] tracking-wider ">+91-9898013133</a>{" "}
-                            | Email: <a href="mailto:info@superbazaar.in" className=" text-[13px] tracking-wider ">info@superbazaar.in</a>
+                            Phone: <Link href="tel:+919898013133" className=" text-[13px] tracking-wider ">+91-9898013133</Link>{" "}
+                            | Email: <Link href="mailto:info@superbazaar.in" className=" text-[13px] tracking-wider ">info@superbazaar.in</Link>
                         </p>
                     </div>
 
@@ -57,7 +58,7 @@ const FooterLayout = () => {
                                     ["Brands", "/brands"],
                                 ].map(([label, href]) => (
                                     <li key={label} className="gap-5">
-                                        <a href={href} className="hover:underline ">{label}</a>
+                                        <Link href={href} className="hover:underline ">{label}</Link>
                                     </li>
                                 ))}
                             </ul>
@@ -75,7 +76,7 @@ const FooterLayout = () => {
                                     ["Return Policy", "/help-support/return-policy"],
                                 ].map(([label, href]) => (
                                     <li key={label}>
-                                        <a href={href} className="hover:underline">{label}</a>
+                                        <Link href={href} className="hover:underline">{label}</Link>
                                     </li>
                                 ))}
                             </ul>
@@ -86,10 +87,10 @@ const FooterLayout = () => {
                             <h4 className="font-medium mb-3 uppercase tracking-[3px]">Quick Link</h4>
                             <ul className="space-y-1 text-[13px] tracking-wider">
                                 <li className="flex gap-1">
-                                    <a href="/login" className="hover:underline">Login</a>/
-                                    <a href="/signup" className="hover:underline">Register</a>
+                                    <Link href="/login" className="hover:underline">Login</Link>/
+                                    <Link href="/signup" className="hover:underline">Register</Link>
                                 </li>
-                                <li><a href="/contact-us" className="hover:underline">Contact Us</a></li>
+                                <li><Link href="/contact-us" className="hover:underline">Contact Us</Link></li>
                             </ul>
                         </div>
 

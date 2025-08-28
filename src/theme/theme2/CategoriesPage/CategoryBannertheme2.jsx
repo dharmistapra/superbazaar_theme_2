@@ -6,27 +6,27 @@ const CategoryBannertheme2 = ({ data }) => {
   const pageBannerstatus = data?.status;
   return (
     <div>
-      <div className="relative w-full h-[300px]">
+      <div className="relative ">
         {banner.desktopImage && (
           <Image
             src={ImageUrl(banner.desktopImage)}
             alt="Banner Desktop"
-            fill
+            // fill
+            width={1440}
+            height={300}
+
             className={`object-cover hidden md:block ${pageBannerstatus === "loading" ? "opacity-50" : ""}`}
-            loading="eager"
-            decoding="async"
-            fetchPriority="high"
           />
         )}
         {banner.mobileImage && (
           <Image
             src={ImageUrl(banner.mobileImage)}
             alt="Banner Mobile"
-            fill
+            // fill
+            width={540}
+            height={658}
             className="object-cover md:hidden"
-            loading="eager"
-            decoding="async"
-            fetchPriority="high"
+
           />
         )}
       </div>

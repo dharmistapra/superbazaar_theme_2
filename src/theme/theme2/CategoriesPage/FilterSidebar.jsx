@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import "rc-slider/assets/index.css";
 import Slider from 'rc-slider';
 
-const FilterSidebar = () => {
+const FilterSidebar = ({ open, setOpen, filterData, onApply, setSelectedAttributes, selectedAttributes }) => {
     const [sections, setSections] = useState({
         price: true,
         color: true,
@@ -11,7 +11,17 @@ const FilterSidebar = () => {
         occasion: true,
         brands: true,
     });
+    console.log("FilterSidebar", filterData);
+
     const [price, setPrice] = useState(5000);
+    const priceRanges = [
+        { min: 500, max: 1500 },
+        { min: 1500, max: 3000 },
+        { min: 3000, max: 5000 },
+        { min: 5000, max: 8000 },
+        { min: 8000, max: 12000 },
+    ]
+    const [selectedRange, setSelectedRange] = useState(priceRanges[0])
     const [range, setRange] = useState([1000, 5000]); // min & max
     const colors = [
         { name: "Lavender", hex: "#E6E6FA" },
@@ -55,6 +65,7 @@ const FilterSidebar = () => {
     };
 
     const renderSection = (title, name, children) => (
+
         <div className="mb-4">
             <div
                 className="flex justify-between items-center border-b border-gray-200 pb-2 mb-4  mt-5 cursor-pointer"
@@ -70,26 +81,24 @@ const FilterSidebar = () => {
     return (
         <>
             <div className="bg-white rounded-lg shadow p-4 space-y-6">
+                {/* {filterData?.attributes?.map((att)=> )} */}
                 {renderSection("Price", "price",
-                    <div className="flex items-center gap-2 ">
-
+                    <div className="flex items-center gap-2">
                         <div className="px-2">
-                            {/* Slider */}
                             <Slider
                                 min={1000}
                                 max={9000}
                                 range
                                 value={range}
                                 onChange={handleSliderChange}
-                                trackStyle={[{ backgroundColor: "#3B82F6" }]} // Tailwind blue-500
+                                trackStyle={[{ backgroundColor: "#3B82F6" }]}
                                 handleStyle={[
                                     { borderColor: "#3B82F6" },
                                     { borderColor: "#3B82F6" },
                                 ]}
-                                railStyle={{ backgroundColor: "#E5E7EB" }} // Tailwind gray-200
+                                railStyle={{ backgroundColor: "#E5E7EB" }}
                             />
 
-                            {/* Input and Filter Button */}
                             <div className="flex justify-between mt-3">
                                 <input
                                     id="amount"
@@ -108,76 +117,48 @@ const FilterSidebar = () => {
                     </div>
                 )}
 
-                {renderSection("Color", "color",
-                    <ul className="flex flex-wrap gap-3">
-                        {colors.map((color) => (
-                            <li key={color.name}>
-                                <span
-                                    className="block w-8 h-8 rounded-md cursor-pointer relative group"
-                                    style={{ backgroundColor: color.hex, border: color.hex === "#FFFFFF" ? "1px solid #ccc" : "none" }}
-                                >
-                                    {/* Tooltip */}
-                                    <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 bg-black text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap z-10">
-                                        {color.name}
-                                    </span>
-                                </span>
-                            </li>
-                        ))}
-                    </ul>
-                )}
+                {filterData?.attributes?.map((att) => {
+                    return renderSection(
+                        att.attribute.name,
+                        att.attribute.key,
+                        att.attribute.name === "Color" ?
+                            <ul className="flex flex-wrap gap-3">
+                                {att?.value?.map((color) => {
+                                    return (
+                                        <li key={color.name}>
+                                            <span
+                                                className="block w-8 h-8 rounded-md cursor-pointer relative group"
+                                                style={{ backgroundColor: color.colour, border: color.colour === "#FFFFFF" ? "1px solid #ccc" : "none" }}
+                                            >
+                                                <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 bg-black text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap z-10">
+                                                    {color.name}
+                                                </span>
+                                            </span>
+                                        </li>
+                                    )
+                                })}
+                            </ul> : < ul className="flex flex-col gap-2" >
+                                {
+                                    att.value.map((val) => (
+                                        <li key={val.id || val.name} className="flex items-center gap-2">
+                                            <input
+                                                id={`${att.attribute.key}-${val.id || val.name}`}
+                                                type="checkbox"
+                                                value={val.name || val.value}
+                                                checked={selectedAttributes[att.attribute.key]?.includes(val.name || val.value)}
+                                                onChange={() => handleAttributeChange(att.attribute.key, val.name || val.value)}
+                                                className="w-4 h-4"
+                                            />
+                                            <label htmlFor={`${att.attribute.key}-${val.id || val.name}`} className="text-sm">
+                                                {val.name || val.value}
+                                            </label>
+                                        </li>
+                                    ))
+                                }
+                            </ul>
+                    );
+                })}
 
-
-                {/* {renderSection("Color", "color",
-                    <ul className="flex flex-wrap gap-3 ">
-                        {colors.map((color) => (
-                            <li key={color.name} className="">
-                                <span
-                                    className="block w-8 h-8 rounded-md border cursor-pointer relative group"
-                                    style={{ backgroundColor: color.hex }}
-                                >
-                                    <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-1 bg-black text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition truncate">
-                                        {color.name}
-                                    </span></span>
-                            </li>
-                        ))}
-                    </ul>
-                )} */}
-
-                {renderSection("Fabric", "fabric",
-                    <ul className="flex flex-col gap-2">
-                        {fabrics.map((fabric) => (
-                            <li key={fabric} className="flex items-center gap-2">
-                                <input
-                                    id={fabric}
-                                    type="checkbox"
-                                    value={fabric}
-                                    className="w-4 h-4"
-                                />
-                                <label htmlFor={fabric} className="text-sm">
-                                    {fabric}
-                                </label>
-                            </li>
-                        ))}
-                    </ul>
-                )}
-
-                {renderSection("Occasion", "occasion",
-                    <ul className="flex flex-col gap-2">
-                        {occasions.map((occasion) => (
-                            <li key={occasion} className="flex items-center gap-2">
-                                <input
-                                    id={occasion}
-                                    type="checkbox"
-                                    value={occasion}
-                                    className="w-4 h-4"
-                                />
-                                <label htmlFor={occasion} className="text-sm">
-                                    {occasion}
-                                </label>
-                            </li>
-                        ))}
-                    </ul>
-                )}
 
                 {renderSection("Brands", "brands",
                     <ul className="flex flex-col gap-2">
@@ -196,7 +177,7 @@ const FilterSidebar = () => {
                         ))}
                     </ul>
                 )}
-            </div>
+            </div >
         </>
     )
 }

@@ -44,12 +44,12 @@ const MobileMenu = ({ data, closeMenu }) => {
                                             {item.name}
                                         </button>
                                     ) : (
-                                        <a
+                                        <Link
                                             href={`/${item.url}`}
                                             className="block flex-1 text-gray-800 hover:text-red-800 font-medium"
                                         >
                                             {item.name}
-                                        </a>
+                                        </Link>
                                     )}
 
                                     {subCategories.length > 0 && (
@@ -71,12 +71,12 @@ const MobileMenu = ({ data, closeMenu }) => {
                                     <ul className="pl-4 mt-2 space-y-2">
                                         {subCategories.map((subItem) => (
                                             <li key={subItem.id} className="pt-[15px] pr-[45px] pb-[0px] pl-[15px]">
-                                                <a
+                                                <Link
                                                     href={`/${subItem.url}`}
                                                     className="block text-gray-600 hover:text-red-700 text-sm"
                                                 >
                                                     {subItem.name}
-                                                </a>
+                                                </Link>
                                             </li>
                                         ))}
                                     </ul>

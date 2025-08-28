@@ -1,5 +1,6 @@
 "use client";
 import { Facebook, Twitter, Pinterest, MessageCircle, Copy, X } from "lucide-react"
+import Link from "next/link";
 const SharePopup = ({ isOpen, onClose, url }) => {
   if (!isOpen) return null;
 
@@ -24,29 +25,29 @@ const SharePopup = ({ isOpen, onClose, url }) => {
 
         <h3 className="text-lg font-semibold mb-2 mt-5">Share</h3>
         <div className="flex gap-4 mt-4">
-          <a
+          <Link
             href={`https://www.facebook.com/sharer/sharer.php?u=${url}`}
             target="_blank"
             className="text-zinc-900 hover:text-blue-600 transition"
           >
             <Facebook size={22} />
-          </a>
+          </Link>
 
-          <a
+          <Link
             href={`https://twitter.com/intent/tweet?url=${url}`}
             target="_blank"
             className="text-zinc-900 hover:text-sky-500 transition"
           >
             <Twitter size={22} />
-          </a>
+          </Link>
 
-          <a
+          <Link
             href={`https://api.whatsapp.com/send?text=${url}`}
             target="_blank"
             className="text-zinc-900 hover:text-green-700 transition"
           >
             <MessageCircle size={22} />
-          </a>
+          </Link>
         </div>
       </div>
     </div>

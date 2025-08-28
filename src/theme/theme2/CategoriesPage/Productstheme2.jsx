@@ -1,15 +1,12 @@
 "use client";
-import { use, useEffect, useState } from "react";
-import { SlidersHorizontal, LayoutList, Grip, GripVertical, Heart, Package, Shirt, Funnel, LayoutGrid } from "lucide-react";
-import Pagination from "@/theme/theme1/components/Pagination/Pagination";
+import { useEffect, useState } from "react";
+import { Package, Shirt, Funnel, Columns2, Columns3, Columns4 } from "lucide-react";
 import Filtertheme2 from "./Filtertheme2";
-import { getCategoryProducts } from "@/services/productService";
-import Image from "next/image";
-import { ImageUrl } from "@/helper/imageUrl";
+import { getCategoryFilter, getCategoryProducts } from "@/services/productService";
 import { usePathname, useRouter } from "next/navigation";
-import Link from "next/link";
 import ProductCard from "../ProductComponent/ProductCard";
 import FilterSidebar from "./FilterSidebar";
+import Pagination from "@/theme/theme1/components/Pagination/Pagination";
 
 const Productstheme2 = ({ category }) => {
     const router = useRouter();
@@ -23,11 +20,13 @@ const Productstheme2 = ({ category }) => {
     const [totalCount, setTotalCount] = useState(0)
     const [loading, setLoading] = useState(false);
     const [activeTab, setActiveTab] = useState("single");
-
+    const [filterData, setFilterData] = useState([]);
+    const [selectedAttributes, setSelectedAttributes] = useState({});
+    // const [appliedFilters, setAppliedFilters] = useState({});
     const gridButtons = [
-        { icon: LayoutList, value: 2, label: "2 Grid" },
-        { icon: Grip, value: 3, label: "3 Grid" },
-        { icon: GripVertical, value: 4, label: "4 Grid" },
+        { icon: Columns2, value: 2, label: "2 Grid" },
+        { icon: Columns3, value: 3, label: "3 Grid" },
+        { icon: Columns4, value: 4, label: "4 Grid" },
     ];
 
     const fetchProducts = async () => {
@@ -45,7 +44,17 @@ const Productstheme2 = ({ category }) => {
     };
     useEffect(() => {
         fetchProducts()
-    }, [])
+    }, [page, sort, category])
+
+    useEffect(() => {
+        const fetchFilter = async () => {
+            const res = await getCategoryFilter(category);
+            setFilterData(res.data || []);
+        };
+        fetchFilter();
+    }, [category])
+
+    const handleApplyFilters = (filters) => fetchProducts(filters);
 
     return (
         <>
@@ -56,8 +65,7 @@ const Productstheme2 = ({ category }) => {
                             onClick={() => {
                                 setActiveTab("full");
                                 router.push(`/wholesale/${category}`);
-                            }
-                            }
+                            }}
                             className={`flex items-center gap-2 p-3 rounded shadow text-sm font-medium
             ${activeTab === "full" ? "bg-red-700 text-white" : "bg-gray-200 hover:bg-gray-400 "}`}>
                             <Package size={18} />
@@ -73,101 +81,97 @@ const Productstheme2 = ({ category }) => {
                             SINGLE
                         </button>
                     </div>
-                    <div className="bg-white border-b border-gray-200 sm:px-4 lg:px-5 py-3 flex flex-wrap items-center justify-between gap-3">
+                    <div className="bg-white border-b border-gray-200 sm:px-4 lg:px-5 py-3 mb-3 flex flex-wrap items-center justify-between gap-3">
 
-                        {/* Left Tabs */}
                         <div className="flex gap-2 flex-wrap items-center">
                             <h1 className="text-[25px] font-semibold ">Sarees</h1>
                             <p className="text-sm text-gray-500 justify-center">Showing 1–17 of 17 results</p>
                         </div>
 
-
-                        {/* Right Controls */}
                         <div className="flex gap-2 flex-wrap items-center">
-                            {/* Filter Button */}
                             <button
-                                onClick={() => setOpen(!open)}  // toggle filter open/close
+                                onClick={() => setOpen(!open)}
                                 className="flex items-center gap-2 p-2 rounded shadow bg-black text-white hover:bg-gray-800 text-sm"
                             >
                                 <Funnel size={18} />
                                 FILTER
                             </button>
 
-
-                            {/* Sort Dropdown */}
                             <select
                                 value={sort}
                                 onChange={(e) => setSort(e.target.value)}
                                 className="border rounded p-2 text-sm shadow-sm hover:shadow-md"
                             >
-                                <option value="new">New Arrivals</option>
-                                <option value="atoz">A to Z</option>
-                                <option value="ztoa">Z to A</option>
+                                <option value="">New Arrivals</option>
+                                <option value="AtoZ">A to Z</option>
+                                <option value="ZtoA">Z to A</option>
                                 <option value="low">Price: Low to High</option>
                                 <option value="high">Price: High to Low</option>
                             </select>
 
-                            {/* Grid/List Toggle */}
                             <div className="flex gap-1">
-                                <button className="p-2 rounded bg-black text-white hover:bg-gray-800">
+                                {gridButtons.map((btn) => {
+                                    const Icon = btn.icon;
+                                    return (
+                                        <button
+                                            key={btn.value}
+                                            onClick={() => setGrid(btn.value)}
+                                            className={`p-2 rounded ${grid === btn.value
+                                                ? "bg-red-700 text-white"
+                                                : "bg-gray-200 hover:bg-gray-300"
+                                                }`}
+                                        >
+                                            <Icon size={18} />
+                                        </button>
+                                    );
+                                })}
+                                {/* <button className="p-2 rounded bg-black text-white hover:bg-gray-800">
                                     <LayoutGrid size={18} />
                                 </button>
                                 <button className="p-2 rounded bg-red-100 hover:bg-red-200">
                                     <LayoutList size={18} />
-                                </button>
+                                </button> */}
                             </div>
                         </div>
                     </div>
 
                 </div>
                 <div className="row flex flex-wrap">
-                    {/* Sidebar */}
                     {open && (
-                        <div className="w-full lg:w-1/4 px-2"> {/* Filter col-3 */}
-                            <FilterSidebar open={open} setOpen={setOpen} />
+                        <div className="w-full lg:w-1/4 px-2">
+                            <FilterSidebar
+                                open={open}
+                                category={category}
+                                setOpen={setOpen}
+                                filterData={filterData}
+                                onApply={handleApplyFilters}
+                                setSelectedAttributes={setSelectedAttributes}
+                                selectedAttributes={selectedAttributes}
+                            />
+                            {/* <FilterSidebar open={open} setOpen={setOpen} /> */}
                         </div>
                     )}
 
-                    {/* Product Grid */}
-                    <div className={`${open ? "w-full lg:w-3/4" : "w-full"} px-2 flex flex-wrap`}>
+                    <div
+                        className={`${open ? "w-full lg:w-3/4" : "w-full"
+                            } px-2 grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-${grid}`}
+                    >
                         {products?.map((product) => (
                             <ProductCard key={product.id} product={product} pathname={`${pathname}/${product?.url || "/"}`} />
                         ))}
                     </div>
                 </div>
-
-                {/* <div className="flex flex-wrap mx-1 mt-3">
-                    {products?.map((product) => {
-                        console.log("product", product);
-                        return (
-                            <ProductCard key={product.id} product={product} pathname={`${pathname}/${product?.url || "/"}`} />
-
-                        )
-                    })}
-                </div> */}
             </div>
 
-            {/* <div className="flex justify-center items-center ">
-                    <Pagination
-                        currentPage={page}
-                        totalCount={500}
-                        perPage={10}
-                        onPageChange={(p) => setPage(p)}
-                    />
-                </div> */}
-            {/* {open && (
-                <div
-                    className="fixed inset-0 bg-black bg-opacity-40 z-50 flex"
-                    onClick={() => setOpen(false)} // closes when clicking outside sidebar
-                >
-                    <div
-                        className="bg-white w-72 max-w-full h-full p-4 overflow-y-auto transform transition-transform duration-300"
-                        onClick={(e) => e.stopPropagation()} // prevent closing when clicking inside
-                    >
-                        <FilterSidebar open={open} setOpen={setOpen} />
-                    </div>
-                </div>
-            )} */}
+            <div className="flex justify-center items-center ">
+                <Pagination
+                    currentPage={page}
+                    totalCount={totalCount}
+                    perPage={20}
+                    onPageChange={(p) => setPage(p)}
+                />
+            </div>
+
 
         </>
     );
