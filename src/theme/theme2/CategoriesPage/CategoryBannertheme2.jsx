@@ -1,20 +1,34 @@
+import { ImageUrl } from "@/helper/imageUrl";
 import Image from "next/image";
 
-const CategoryBannertheme2 = () => {
+const CategoryBannertheme2 = ({ data }) => {
+  const banner = data?.PageWiseBanner?.[0];
+  const pageBannerstatus = data?.status;
   return (
-    <div className="relative w-full h-[300px]">
-      <Image
-        src="/banner3.webp"
-        alt="Category Banner"
-        fill
-        className="object-cover"
-      />
-
-      <div className="absolute inset-0 flex flex-col justify-center items-center text-center text-white  p-4">
-        <h1 className="text-4xl font-bold mb-2">New Arrivals</h1>
-        <p className="text-lg max-w-xl">
-          Check out our latest collection of trendy outfits and accessories!
-        </p>
+    <div>
+      <div className="relative w-full h-[300px]">
+        {banner.desktopImage && (
+          <Image
+            src={ImageUrl(banner.desktopImage)}
+            alt="Banner Desktop"
+            fill
+            className={`object-cover hidden md:block ${pageBannerstatus === "loading" ? "opacity-50" : ""}`}
+            loading="eager"
+            decoding="async"
+            fetchPriority="high"
+          />
+        )}
+        {banner.mobileImage && (
+          <Image
+            src={ImageUrl(banner.mobileImage)}
+            alt="Banner Mobile"
+            fill
+            className="object-cover md:hidden"
+            loading="eager"
+            decoding="async"
+            fetchPriority="high"
+          />
+        )}
       </div>
     </div>
   );

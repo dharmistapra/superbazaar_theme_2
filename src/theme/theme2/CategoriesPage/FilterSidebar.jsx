@@ -53,14 +53,11 @@ const FilterSidebar = () => {
     const toggleSection = (name) => {
         setSections((prev) => ({ ...prev, [name]: !prev[name] }));
     };
-    const handleChange = (val) => {
-        setRange(val);
-        console.log(val[0], val[1], "range");
-    };
+
     const renderSection = (title, name, children) => (
         <div className="mb-4">
             <div
-                className="flex justify-between items-center border-b pb-2 mb-2 cursor-pointer"
+                className="flex justify-between items-center border-b border-gray-200 pb-2 mb-4  mt-5 cursor-pointer"
                 onClick={() => toggleSection(name)}
             >
                 <h2 className="text-lg font-semibold uppercase text-gray-600">{title}</h2>
@@ -74,7 +71,7 @@ const FilterSidebar = () => {
         <>
             <div className="bg-white rounded-lg shadow p-4 space-y-6">
                 {renderSection("Price", "price",
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-2 ">
 
                         <div className="px-2">
                             {/* Slider */}
@@ -99,7 +96,7 @@ const FilterSidebar = () => {
                                     type="text"
                                     value={`${range?.[0] || 0} - ${range?.[1] || 0}`}
                                     readOnly
-                                    className="flex-1 border rounded px-2 py-1 text-sm mr-2"
+                                    className="flex-1 border border-gray-400 rounded px-2 py-1 text-sm mr-2"
                                 />
                                 <button
                                     className="px-4 py-1 bg-blue-600 text-white rounded text-sm hover:bg-blue-700 transition"
@@ -112,6 +109,25 @@ const FilterSidebar = () => {
                 )}
 
                 {renderSection("Color", "color",
+                    <ul className="flex flex-wrap gap-3">
+                        {colors.map((color) => (
+                            <li key={color.name}>
+                                <span
+                                    className="block w-8 h-8 rounded-md cursor-pointer relative group"
+                                    style={{ backgroundColor: color.hex, border: color.hex === "#FFFFFF" ? "1px solid #ccc" : "none" }}
+                                >
+                                    {/* Tooltip */}
+                                    <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 bg-black text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap z-10">
+                                        {color.name}
+                                    </span>
+                                </span>
+                            </li>
+                        ))}
+                    </ul>
+                )}
+
+
+                {/* {renderSection("Color", "color",
                     <ul className="flex flex-wrap gap-3 ">
                         {colors.map((color) => (
                             <li key={color.name} className="">
@@ -125,7 +141,7 @@ const FilterSidebar = () => {
                             </li>
                         ))}
                     </ul>
-                )}
+                )} */}
 
                 {renderSection("Fabric", "fabric",
                     <ul className="flex flex-col gap-2">

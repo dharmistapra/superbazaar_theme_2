@@ -15,23 +15,23 @@ export async function generateMetadata({ params }) {
 }
 
 
-const ProductDetailpage=async ({params})=>{
-     const currentTheme = "theme1";
-const { category,url } = await params;
-const { ProductDetail } = getThemeModules(currentTheme);  
-    
-   const [data, stitching, attributes] = await Promise.all([
-    getProductdetail(url),
-    getProductStitching(url),
-    getProductAttributes(url),
-  ]);
+const ProductDetailpage = async ({ params }) => {
+    const currentTheme = "theme1";
+    const { category, url } = await params;
+    const { ProductDetail } = getThemeModules(currentTheme);
 
-    return(
-        <ProductDetail 
-        product={data.data} 
-        Stitching={stitching.data}  
-        attributes={attributes.data} 
-        category={category}/>
+    const [data, stitching, attributes] = await Promise.all([
+        getProductdetail(url),
+        getProductStitching(url),
+        getProductAttributes(url),
+    ]);
+
+    return (
+        <ProductDetail
+            product={data.data}
+            Stitching={stitching.data}
+            attributes={attributes.data}
+            category={category} />
     )
 }
 

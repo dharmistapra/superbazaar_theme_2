@@ -156,7 +156,7 @@ const FooterLayout = () => {
                     <button
                         onClick={scrollToTop}
                         aria-label="Scroll to top"
-                        className="fixed bottom-5 right-5 bg-white hover:bg-slate-400 text-white p-2 rounded-sm z-50"
+                        className="fixed bottom-14 right-2 bg-white hover:bg-slate-400 text-white p-2 rounded-sm z-50"
                     >
                         <MoveUp size={28} fill="black" className="text-black" />
                     </button>

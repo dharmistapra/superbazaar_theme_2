@@ -1,4 +1,5 @@
 import { getCategoryBanners, getCategoryFilter, getCategoryProducts } from "@/services/productService";
+import Accordian from "@/theme/theme2/components/Accordian/Accordian";
 import { getThemeModules } from "@/theme/themeConfig";
 
 
@@ -14,13 +15,13 @@ export async function generateMetadata({ params }) {
 const RetailCategoryPage = async ({ params }) => {
     const currentTheme = "theme1";
     const { category } = await params;
-    const { CategoryBanner,Products } = getThemeModules(currentTheme);  
-    const data=await  getCategoryBanners(category);
+    const { CategoryBanner, Products } = getThemeModules(currentTheme);
+    const data = await getCategoryBanners(category);
 
     return (
         <>
-            {data?.PageWiseBanner?.length > 0 && <CategoryBanner data={data} />}
-            <Products  category={category} />
+            {data?.PageWiseBanner?.length > 0 ? <CategoryBanner data={data} /> : <Accordian name={data} />}
+            <Products category={category} />
         </>
     )
 }

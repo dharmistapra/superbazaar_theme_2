@@ -73,7 +73,7 @@ import dynamic from "next/dynamic";
 
 
 
-const load = (importFn) =>  dynamic(importFn, { ssr: true });
+const load = (importFn) => dynamic(importFn, { ssr: true });
 
 export const getThemeModules = (theme = "theme1") => {
   switch (theme) {

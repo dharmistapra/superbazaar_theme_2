@@ -9,10 +9,9 @@ import { ImageUrl } from "@/helper/imageUrl";
 import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
 import ProductCard from "../ProductComponent/ProductCard";
-import Accordian from "../components/Accordian/Accordian";
 import FilterSidebar from "./FilterSidebar";
 
-const Productstheme2 = ({ product, category }) => {
+const Productstheme2 = ({ category }) => {
     const router = useRouter();
     const pathname = usePathname();
     const [grid, setGrid] = useState(4);
@@ -35,7 +34,6 @@ const Productstheme2 = ({ product, category }) => {
         setLoading(true);
         try {
             const res = await getCategoryProducts(category, page, 20, sort, []);
-            console.log(res, "res");
 
             setProducts(res.data || []);
             setTotalCount(res?.totalCount || 0);
@@ -48,11 +46,9 @@ const Productstheme2 = ({ product, category }) => {
     useEffect(() => {
         fetchProducts()
     }, [])
-    console.log("product", category);
 
     return (
         <>
-            <Accordian />
             <div className="container mx-auto px-4 mt-7">
                 <div className="row">
                     <div className="flex gap-2 mb-3">
@@ -77,7 +73,7 @@ const Productstheme2 = ({ product, category }) => {
                             SINGLE
                         </button>
                     </div>
-                    <div className="bg-white border-b border-gray-200 px-3 sm:px-4 lg:px-5 py-3 flex flex-wrap items-center justify-between gap-3">
+                    <div className="bg-white border-b border-gray-200 sm:px-4 lg:px-5 py-3 flex flex-wrap items-center justify-between gap-3">
 
                         {/* Left Tabs */}
                         <div className="flex gap-2 flex-wrap items-center">
