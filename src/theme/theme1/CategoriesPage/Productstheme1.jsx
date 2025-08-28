@@ -46,8 +46,8 @@ const Productstheme1 = ({ category }) => {
         fetchFilter();
     }, [category])
 
-    const handleApplyFilters = (filters) =>  fetchProducts(filters);
-    
+    const handleApplyFilters = (filters) => fetchProducts(filters);
+
 
 
 

@@ -172,11 +172,11 @@ const NavBar = () => {
                                     </button>
                                     {openUser && (
                                         <div className="absolute right-[-10px] mt-2 w-40 bg-white shadow-lg rounded-lg z-50">
-                                            <a href="/profile" className="block px-4 py-2 hover:bg-gray-100">My Account</a>
-                                            <a href="/wishlist" className="block px-4 py-2 hover:bg-gray-100">Wishlist</a>
-                                            <a href="/logout" className="block px-4 py-2 hover:bg-gray-100">Logout</a>
-                                            <a href="/login" className="block px-4 py-2 hover:bg-gray-100">Login</a>
-                                            <a href="/register" className="block px-4 py-2 hover:bg-gray-100">Register</a>
+                                            <Link href="/profile" className="block px-4 py-2 hover:bg-gray-100">My Account</Link>
+                                            <Link href="/wishlist" className="block px-4 py-2 hover:bg-gray-100">Wishlist</Link>
+                                            <Link href="/logout" className="block px-4 py-2 hover:bg-gray-100">Logout</Link>
+                                            <Link href="/login" className="block px-4 py-2 hover:bg-gray-100">Login</Link>
+                                            <Link href="/register" className="block px-4 py-2 hover:bg-gray-100">Register</Link>
                                         </div>
                                     )}
                                 </div>
@@ -194,25 +194,25 @@ const NavBar = () => {
                         <nav className="hidden lg:flex justify-center space-x-6 py-2 text-sm font-medium text-gray-800 relative mb-1">
                             {data.map((item) => (
                                 <div key={item.id} className="relative group">
-                                    <a
+                                    <Link
                                         // href={`${purchaseType === "wholesale" ? `/wholesale/${item.url}` : `/retail/${item.url}`}`}
                                         href={`/retail/${item.url}`}
                                         className="hover:text-red-800 flex items-center text-[17px] text-gray-700 tracking-[1px]"
                                     >
                                         {item.name}
-                                    </a>
+                                    </Link>
 
                                     {item.children.length > 0 && (
                                         <div className="absolute left-0 top-full mt-2 w-56 bg-white shadow-lg rounded-md opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
                                             <ul className="flex flex-col p-3 space-y-2">
                                                 {item.children[0]?.children?.map((child) => (
                                                     <li key={child.id}>
-                                                        <a
+                                                        <Link
                                                             href={`/${child.url}`}
                                                             className="block hover:text-red-800"
                                                         >
                                                             {child.name}
-                                                        </a>
+                                                        </Link>
                                                     </li>
                                                 ))}
                                             </ul>

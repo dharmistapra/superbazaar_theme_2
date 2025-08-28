@@ -50,7 +50,7 @@ const ProductDetailTheme2 = ({ product }) => {
             <div className="flex flex-col md:flex-row">
               {/* Thumbnails */}
               <div className="flex flex-col space-y-2 mx-3">
-                <a href="/retail/sarees/mahotsav-erisha-s3689-to-s3693-designer-saree-erisha-s3692" className="border-2 border-dashed border-gray-800 rounded">
+                <Link href="/retail/sarees/mahotsav-erisha-s3689-to-s3693-designer-saree-erisha-s3692" className="border-2 border-dashed border-gray-800 rounded">
                   <Image
                     src="https://cdn.superbazaar.in/uploads/product/thumb/Erisha_S3692.webp"
                     alt="Thumb 1"
@@ -58,8 +58,8 @@ const ProductDetailTheme2 = ({ product }) => {
                     width={133}
                     height={200}
                   />
-                </a>
-                <a href="#" className="border-2 border-dashed border-gray-800 rounded">
+                </Link>
+                <Link href="#" className="border-2 border-dashed border-gray-800 rounded">
                   <Image
                     src="https://cdn.superbazaar.in/uploads/product/thumb/Erisha_S3692-A.webp"
                     alt="Thumb 2"
@@ -67,8 +67,8 @@ const ProductDetailTheme2 = ({ product }) => {
                     width={133}
                     height={200}
                   />
-                </a>
-                <a href="#" className="border-2 border-dashed border-gray-800 rounded">
+                </Link>
+                <Link href="#" className="border-2 border-dashed border-gray-800 rounded">
                   <Image
                     src="https://cdn.superbazaar.in/uploads/product/thumb/Erisha_S3692-B.webp"
                     alt="Thumb 3"
@@ -76,7 +76,7 @@ const ProductDetailTheme2 = ({ product }) => {
                     width={133}
                     height={200}
                   />
-                </a>
+                </Link>
               </div>
 
               {/* Main Image */}
@@ -209,9 +209,9 @@ const ProductDetailTheme2 = ({ product }) => {
 
                         <p className="mt-3 text-sm">
                           <span className="font-semibold">Catalog: </span>
-                          <a href="#" className="text-blue-600 underline">
+                          <Link href="#" className="text-blue-600 underline">
                             View Full Catalog
-                          </a>
+                          </Link>
                         </p>
 
                         <p className="mt-3 text-gray-700 leading-relaxed">
@@ -310,14 +310,14 @@ const ProductDetailTheme2 = ({ product }) => {
                     </div>
 
                     {/* Add to Cart Button */}
-                    <a href="/cart">
+                    <Link href="/cart">
                       <button
                         type="submit"
                         className="bg-white hover:bg-black hover:text-white text-black outline outline-1 px-6 py-2 rounded-md transition"
                       >
                         Add to cart
                       </button>
-                    </a>
+                    </Link>
                   </div>
 
                   {/* Right Side: Share Icons */}
