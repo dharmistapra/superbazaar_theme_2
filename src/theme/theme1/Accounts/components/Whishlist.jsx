@@ -1,6 +1,20 @@
+"use client"
+import { useEffect, useState } from "react"
 import ProductCard from "../../components/Cards/ProductCards"
-
+import { useSession } from "next-auth/react";
+import { getUserWishlist } from "@/services/accountsService";
 const WishlistTheme1 = () => {
+  const [wishlist,setWishlist]=useState([])
+
+  const fethData=async()=>{
+const response=getUserWishlist()
+setWishlist(response.data)
+  }
+
+  useEffect(()=>{
+    fethData()
+  },[])
+  console.log(wishlist)
   const CategoryProductData=[]
   return (
     <div className="container mx-auto px-4 py-6">

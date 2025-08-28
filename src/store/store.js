@@ -2,10 +2,12 @@ import { configureStore } from "@reduxjs/toolkit";
 import ModalReucer from "./slice/ModalSlice"
 import MiniCartSlice from "./slice/MiniCartSlice"
 import CurrencySlice from "./slice/CurrencySlice"
+import WishlistSlice from "./slice/WishlistSlice"
 export const store=configureStore({
     reducer:{
         modal:ModalReucer,
         minicart:MiniCartSlice,
-        currency:CurrencySlice
+        currency:CurrencySlice,
+        wishlis:WishlistSlice
     }
 })
