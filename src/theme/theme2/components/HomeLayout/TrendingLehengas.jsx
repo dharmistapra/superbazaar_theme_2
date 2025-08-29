@@ -26,7 +26,7 @@ const TrendingLehengas = () => {
         <div className="container mx-auto px-4 mt-3 mb-0">
             <div className="flex flex-col sm:flex-row justify-between items-center mb-3">
                 <div className="text-center">
-                    <p className="text-xl sm:text-2xl font-bold">Trending Lehengas</p>
+                    <h1 className="text-8xl sm:text-xl ">Trending Lehengas</h1>
                 </div>
                 <Link
                     href="/retail/lehengas"

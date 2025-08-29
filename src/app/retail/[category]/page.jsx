@@ -1,5 +1,5 @@
 import { getCategoryBanners, getCategoryFilter, getCategoryProducts } from "@/services/productService";
-import Accordian from "@/theme/theme2/components/Accordian/Accordian";
+import Breadcrum from "@/theme/theme2/components/BreadCrums/Breadcrum";
 import { getThemeModules } from "@/theme/themeConfig";
 
 
@@ -13,14 +13,14 @@ export async function generateMetadata({ params }) {
 }
 
 const RetailCategoryPage = async ({ params }) => {
-    const currentTheme = "theme1";
+    const currentTheme = "theme2";
     const { category } = await params;
     const { CategoryBanner, Products } = getThemeModules(currentTheme);
     const data = await getCategoryBanners(category);
 
     return (
         <>
-            {data?.PageWiseBanner?.length > 0 ? <CategoryBanner data={data} /> : <Accordian name={data} />}
+            {data?.PageWiseBanner?.length > 0 ? <CategoryBanner data={data} /> : <Breadcrum name={data} />}
             <Products category={category} />
         </>
     )

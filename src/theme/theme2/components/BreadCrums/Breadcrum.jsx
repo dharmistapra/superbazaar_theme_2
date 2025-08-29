@@ -1,8 +1,8 @@
 import Link from 'next/link'
 import React from 'react'
 
-const Accordian = ({ name }) => {
 
+const Breadcrum = ({ name }) => {
     return (
         <div>
             <div className="text-uppercase mb-4 bg-red-50 p-3 text-xs">
@@ -12,13 +12,12 @@ const Accordian = ({ name }) => {
                             Home
                         </Link>
                         <span className="mx-2 text-gray-400">|</span>
-                        <span className="text-gray-800">{name.name}</span>
+                        <span className="text-gray-800">{name.name || ''}</span>
                     </nav>
                 </div>
             </div>
-
         </div>
     )
 }
 
-export default Accordian
+export default Breadcrum

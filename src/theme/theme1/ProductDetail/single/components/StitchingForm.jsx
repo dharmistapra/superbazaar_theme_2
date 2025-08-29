@@ -90,8 +90,8 @@ export default function StitchingForm({ stitchingData, onChange }) {
                                         <label
                                             key={option.id}
                                             className={`px-6 py-4 min-w-[160px] min-h-[100px] flex flex-col items-center justify-center border rounded-xl cursor-pointer text-center transition ${selectedStitch === option.id
-                                                    ? "border-red-500 bg-red-50"
-                                                    : "border-gray-300 hover:border-gray-400"
+                                                ? "border-red-500 bg-red-50"
+                                                : "border-gray-300 hover:border-gray-400"
                                                 }`}
                                         >
                                             <input
@@ -170,8 +170,8 @@ export default function StitchingForm({ stitchingData, onChange }) {
                                                             )
                                                         }
                                                         className={`border rounded-lg px-3 py-2 outline-none w-full ${errors[`${option.id}_${field.id}`]
-                                                                ? "border-red-500"
-                                                                : ""
+                                                            ? "border-red-500"
+                                                            : ""
                                                             }`}
                                                     />
                                                 ) : field.type === "Dropdown" ? (
@@ -185,8 +185,8 @@ export default function StitchingForm({ stitchingData, onChange }) {
                                                             )
                                                         }
                                                         className={`border rounded-lg px-3 py-2 outline-none w-full ${errors[`${option.id}_${field.id}`]
-                                                                ? "border-red-500"
-                                                                : ""
+                                                            ? "border-red-500"
+                                                            : ""
                                                             }`}
                                                     >
                                                         <option value="">Select</option>

@@ -16,7 +16,7 @@ const ProductDescription = dynamic(() => import("./components/ProductDescription
 const StaticImage = dynamic(() => import("./components/StaticImage"));
 const MoreColors = dynamic(() => import("./components/MoreColors"));
 const ProductDetailTheme1 = ({ product, Stitching, attributes, category }) => {
-  const dispatch=useDispatch()
+  const dispatch = useDispatch()
   const { open } = useModal();
   const { data: session, status } = useSession();
   const [quantity, setQuantity] = useState(1);
@@ -31,7 +31,7 @@ const ProductDetailTheme1 = ({ product, Stitching, attributes, category }) => {
   const toggleWishlist = () => setWishlist((prev) => !prev);
   const toggleCompare = () => setCompare((prev) => !prev);
   const handleAddtoCart = () => {
-    setErrors(null); 
+    setErrors(null);
 
     if (product.optionType === "Size" && !selectedSize) {
       return setErrors("⚠️ Please select size");
@@ -45,17 +45,17 @@ const ProductDetailTheme1 = ({ product, Stitching, attributes, category }) => {
         return setErrors("⚠️ Please fill all required measurements");
       }
     }
-    if(!session.accessToken){
-       open("login")
-       return 
+    if (!session.accessToken) {
+      open("login")
+      return
     }
 
-   const finalCartData = {
-  productId: product.id,
-  qty: quantity,
-  ...(product.optionType === "Size" && { size: selectedSize }), 
-  stitching: stitchingData?.stitching || [],
-};
+    const finalCartData = {
+      productId: product.id,
+      qty: quantity,
+      ...(product.optionType === "Size" && { size: selectedSize }),
+      stitching: stitchingData?.stitching || [],
+    };
     alert("✅ Added to cart successfully!");
   };
 
@@ -64,14 +64,14 @@ const ProductDetailTheme1 = ({ product, Stitching, attributes, category }) => {
     <div className="container mx-auto p-4">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
-        <ProductImageGallery
-          images={product.image}
-          thumbs={product.thumbImage} />
-         <div className="justify-end items-end hidden md:flex">
-           <MoreColors moreColors={attributes.moreColors} basepath={category} />
-         </div>
+          <ProductImageGallery
+            images={product.image}
+            thumbs={product.thumbImage} />
+          <div className="justify-end items-end hidden md:flex">
+            <MoreColors moreColors={attributes.moreColors} basepath={category} />
+          </div>
         </div>
-        
+
         <div className="flex flex-col gap-4 md:gap-4">
           <div>
             {product?.ProductBrand?.map((item, index) => (
@@ -160,9 +160,9 @@ const ProductDetailTheme1 = ({ product, Stitching, attributes, category }) => {
             <p className="text-red-500 text-sm mt-2">{errors}</p>
           )}
           <div className="border-t border-gray-500 border-dashed mt-3"></div>
-           <div className="justify-end items-end flex md:hidden">
-           <MoreColors moreColors={attributes.moreColors} basepath={category} />
-         </div>
+          <div className="justify-end items-end flex md:hidden">
+            <MoreColors moreColors={attributes.moreColors} basepath={category} />
+          </div>
 
           <div>
             <StaticImage />

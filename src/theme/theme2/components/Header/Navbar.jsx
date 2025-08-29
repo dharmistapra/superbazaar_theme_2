@@ -175,7 +175,7 @@ const NavBar = () => {
                                             <Link href="/profile" className="block px-4 py-2 hover:bg-gray-100">My Account</Link>
                                             <Link href="/wishlist" className="block px-4 py-2 hover:bg-gray-100">Wishlist</Link>
                                             <Link href="/logout" className="block px-4 py-2 hover:bg-gray-100">Logout</Link>
-                                            <Link href="/login" className="block px-4 py-2 hover:bg-gray-100">Login</Link>
+                                            <Link href="/auth/login" className="block px-4 py-2 hover:bg-gray-100">Login</Link>
                                             <Link href="/register" className="block px-4 py-2 hover:bg-gray-100">Register</Link>
                                         </div>
                                     )}

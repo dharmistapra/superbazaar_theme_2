@@ -1,6 +1,6 @@
 import { getThemeModules } from "@/theme/themeConfig";
 const WishlistPage = () => {
-  const currentTheme = "theme1";
+  const currentTheme = "theme2";
   const { Wishlist } = getThemeModules(currentTheme);
   return <Wishlist />
 }

@@ -8,8 +8,8 @@ import { loginSchema } from "@/schema/schema";
 import { signIn, useSession } from "next-auth/react";
 
 
-export default  function LoginModal() {
-    const { data: session, } = useSession();
+export default function LoginModal() {
+  const { data: session, } = useSession();
   const { modal, close, open } = useModal();
   const [showPassword, setShowPassword] = useState(false);
   const [loginError, setLoginError] = useState("");
@@ -21,7 +21,7 @@ export default  function LoginModal() {
     onSubmit: async (values) => {
       setLoginError("");
       const res = await signIn("credentials", {
-       redirect:false,
+        redirect: false,
         email: values.email,
         password: values.password,
       });
@@ -29,10 +29,10 @@ export default  function LoginModal() {
       if (res?.error) {
         setLoginError("Invalid email or password");
       } else {
-         const session = await fetch("/api/auth/session").then(r => r.json());
+        const session = await fetch("/api/auth/session").then(r => r.json());
         if (session?.accessToken) {
-    localStorage.setItem("token", session.accessToken);
-  }
+          localStorage.setItem("token", session.accessToken);
+        }
         close("login")
       }
     },

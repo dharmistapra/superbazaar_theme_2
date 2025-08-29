@@ -1,6 +1,6 @@
 import { getThemeModules } from "@/theme/themeConfig";
 const AddressPage = () => {
-  const currentTheme = "theme1";
+  const currentTheme = "theme2";
   const { Address } = getThemeModules(currentTheme);
   return <Address />
 }

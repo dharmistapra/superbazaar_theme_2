@@ -106,10 +106,10 @@ export const getThemeModules = (theme = "theme1") => {
       };
 
     default:
-      return getThemeModules("theme1");
+      return getThemeModules("theme2");
   }
 };
 
-export const getThemeLayout = (theme = "theme1") => {
+export const getThemeLayout = (theme = "theme2") => {
   return getThemeModules(theme).layout;
 };

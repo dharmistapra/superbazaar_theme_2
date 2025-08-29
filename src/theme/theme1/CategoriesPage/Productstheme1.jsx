@@ -48,9 +48,6 @@ const Productstheme1 = ({ category }) => {
 
     const handleApplyFilters = (filters) => fetchProducts(filters);
 
-
-
-
     const sortOptions = [
         { value: "", label: "New Arrivals" },
         { value: "AtoZ", label: "A To Z" },

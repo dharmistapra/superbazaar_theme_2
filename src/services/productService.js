@@ -1,4 +1,4 @@
-import  { createClientAxios, createServerAxios } from "./apiClient";
+import { createClientAxios, createServerAxios } from "./apiClient";
 export const getCategoryBanners = async (category) => {
   try {
     const axiosInstance = await createServerAxios();
@@ -37,7 +37,7 @@ export const getCategoryProducts = async (
 export const getCategoryFilter = async (category) => {
   try {
     const axiosInstance = await createClientAxios();
-     const res = await axiosInstance.get(`/filter/${category}`);
+    const res = await axiosInstance.get(`/filter/${category}`);
     return res.data;
   } catch (error) {
     console.error("Error fetching category filter   :", error);
