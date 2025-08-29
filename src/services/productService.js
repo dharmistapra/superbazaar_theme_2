@@ -74,3 +74,14 @@ export const getProductAttributes = async (url) => {
     throw error;
   }
 };
+
+export const getRelatedProduct = async (url) => {
+  try {
+    const axiosInstance = await createClientAxios();
+    const res = await axiosInstance.get(`/related-product/${url}`);
+    return res.data;
+  } catch (error) {
+    console.error("Error fetching product detail:", error);
+    throw error;
+  }
+};

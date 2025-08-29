@@ -54,7 +54,7 @@ export const postuserOrderHistory = async (values) => {
     return error;
   }
 };
-export const getUserWishlist= async (id) => {
+export const getUserWishlist= async () => {
   try {
     const axiosInstance = await createClientAxios(); 
     const res = await axiosInstance.get(`protected/wish-list`);
@@ -63,3 +63,12 @@ export const getUserWishlist= async (id) => {
     return error;
   }
 };
+export const postUserWishlist=async(values)=>{
+  try {   
+    const axiosInstance = await createClientAxios(); 
+    const res = await axiosInstance.post(`protected/wish-list`,values);
+    return res.data || [];
+  } catch (error) {
+    return error;
+  }
+}

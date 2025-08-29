@@ -1,34 +1,59 @@
 "use client"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import ProductCard from "../../components/Cards/ProductCards"
-import { useSession } from "next-auth/react";
-import { getUserWishlist } from "@/services/accountsService";
+import { useSelector } from "react-redux"
+
 const WishlistTheme1 = () => {
-  const [wishlist,setWishlist]=useState([])
-
-  const fethData=async()=>{
-const response=getUserWishlist()
-setWishlist(response.data)
-  }
-
-  useEffect(()=>{
-    fethData()
-  },[])
-  console.log(wishlist)
-  const CategoryProductData=[]
+  const { list } = useSelector((state) => state.wishlist)
+  const [activeTab, setActiveTab] = useState("products")
+  const products = list?.product || []
+  const catalogues = list?.catalogue || []
   return (
     <div className="container mx-auto px-4 py-6">
       <h2 className="text-xl font-semibold mb-6">My Wishlist</h2>
-
-      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        {CategoryProductData?.products?.length > 0 ? (
-          CategoryProductData.products.map((item, index) => (
-            <ProductCard key={index} data={item} />
-          ))
-        ) : (
-          <p className="text-gray-600">No products in your wishlist.</p>
-        )}
+      <div className="flex space-x-4 border-b mb-6">
+        <button
+          onClick={() => setActiveTab("products")}
+          className={`pb-2 px-4 font-medium ${activeTab === "products" ? "border-b-2 border-black text-black" : "text-gray-500"
+            }`}
+        >
+          Products
+        </button>
+        <button
+          onClick={() => setActiveTab("catalogues")}
+          className={`pb-2 px-4 font-medium ${activeTab === "catalogues" ? "border-b-2 border-black text-black" : "text-gray-500"
+            }`}
+        >
+          Catalogues
+        </button>
       </div>
+
+      {activeTab === "products" && (
+        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          {products.length > 0 ? (
+            products.map((item, index) => <ProductCard key={index} data={item} />)
+          ) : (
+            <p className="text-gray-600">No products in your wishlist.</p>
+          )}
+        </div>
+      )}
+
+      {activeTab === "catalogues" && (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {catalogues.length > 0 ? (
+            catalogues.map((item, index) => (
+              <div
+                key={index}
+                className="border rounded-xl p-4 shadow-sm hover:shadow-md transition"
+              >
+                <h3 className="font-semibold">{item?.name || "Catalogue"}</h3>
+              </div>
+            ))
+          ) : (
+            <p className="text-gray-600">No catalogues in your wishlist.</p>
+          )}
+        </div>
+      )}
     </div>
   )
 }

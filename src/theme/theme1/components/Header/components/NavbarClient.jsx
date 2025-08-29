@@ -7,11 +7,15 @@ import Menu from "./Menu";
 import Link from "next/link";
 import { openCart } from "@/store/slice/MiniCartSlice";
 import { useModal } from "@/hooks/useModal";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import CurrencySelector from "../../../Home/components/CurrencySelector";
 import { setCurrencyData } from "@/store/slice/CurrencySlice";
 import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { getUserWishlist } from "@/services/accountsService";
+import { setWishlistData } from "@/store/slice/WishlistSlice";
+import { getCartItems } from "@/services/cartService";
+import { setCartItems } from "@/store/slice/cartItemSlice";
 const MobileMenu = dynamic(() => import("./MobileMenu"))
 const NavbarClient = ({ Menudata, currencyData }) => {
   const router = useRouter()
@@ -21,7 +25,20 @@ const NavbarClient = ({ Menudata, currencyData }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
+  const { list } = useSelector((state) => state.wishlist)
 
+  const fetchProtectedData = async () => {
+    const [wishlist, cartItems] = await Promise.all(
+      [getUserWishlist(), getCartItems(session?.user?.id)]
+    )
+    dispatch(setWishlistData(wishlist.data))
+    dispatch(setCartItems(cartItems))
+  }
+  useEffect(() => {
+    if (session?.accessToken) {
+      fetchProtectedData()
+    }
+  }, [session])
   useEffect(() => {
     dispatch(setCurrencyData(currencyData));
     const handleResize = () => {
@@ -78,7 +95,13 @@ const NavbarClient = ({ Menudata, currencyData }) => {
           <CurrencySelector currencyData={currencyData} />
           {session?.accessToken && (
             <>
-              <Heart className="cursor-pointer hover:text-black hidden sm:block" size={23} />
+              {list?.product?.length > 0 || list?.catalogue?.length ? (
+                <Heart className={`fill-red-500 text-red-500`} size={23} />
+
+              ) : (
+                <Heart className="cursor-pointer hover:text-black hidden sm:block" size={23} />
+
+              )}
               <ShoppingBag className="cursor-pointer hover:text-black hidden sm:block" size={23} onClick={handleCartClick} />
             </>
           )}
@@ -91,13 +114,13 @@ const NavbarClient = ({ Menudata, currencyData }) => {
               <div className="absolute right-0 mt-2 w-56 bg-white rounded-xl shadow-xl border border-gray-100 z-50">
                 <ul className="py-2 text-sm text-gray-700">
                   {!session?.accessToken && (
-                  <li
-                    onClick={() => open("login")}
-                    className="flex items-center gap-3 px-4 py-2.5 cursor-pointer transition-all duration-200 hover:bg-gray-50 hover:text-red-500">
-                    <Key size={18} className="text-gray-500 group-hover:text-red-400" />
-                    <span className="font-medium">Login</span>
-                  </li>
-                     )}
+                    <li
+                      onClick={() => open("login")}
+                      className="flex items-center gap-3 px-4 py-2.5 cursor-pointer transition-all duration-200 hover:bg-gray-50 hover:text-red-500">
+                      <Key size={18} className="text-gray-500 group-hover:text-red-400" />
+                      <span className="font-medium">Login</span>
+                    </li>
+                  )}
 
                   <li
                     onClick={() => open("signup")}
