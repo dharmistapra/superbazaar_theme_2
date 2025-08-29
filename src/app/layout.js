@@ -7,7 +7,7 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
-  const currentTheme = "theme2";
+  const currentTheme = process.env.NEXT_THEME || "theme1";
   const Layout = getThemeLayout(currentTheme);
   return (
     <html lang="en">

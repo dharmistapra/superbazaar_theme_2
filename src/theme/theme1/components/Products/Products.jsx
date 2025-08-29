@@ -18,7 +18,13 @@ const Products = ({ tabsData = [] }) => {
   const activeTabData = tabsData.find((tab) => tab.url === active)
 
   return (
-    <div className="container mx-auto px-4 mt-15 mb-20">
+    <div className="mx-auto px-4 mt-15  
+  w-full 
+  sm:max-w-[540px] 
+  md:max-w-[720px] 
+  lg:max-w-[960px] 
+  xl:max-w-[1140px] 
+  2xl:max-w-[1320px]">
       <div className="w-full flex justify-center items-center gap-8 mb-10">
         {tabsData.map((tab) => (
           <button

@@ -1,7 +1,7 @@
 import { getThemeModules } from "@/theme/themeConfig";
 
 const HomePage = () => {
-  const currentTheme = "theme2";
+  const currentTheme = process.env.NEXT_THEME || "theme1";
   const { Home } = getThemeModules(currentTheme);
   return (
     <Home />

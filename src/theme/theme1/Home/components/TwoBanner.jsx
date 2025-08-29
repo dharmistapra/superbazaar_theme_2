@@ -11,7 +11,13 @@ const TwoBanner = ({ data }) => {
   }, []);
 
   return (
-    <div className="mt-10 px-3">
+    <div className="mx-auto px-4 mt-7  
+  w-full 
+  sm:max-w-[540px] 
+  md:max-w-[720px] 
+  lg:max-w-[960px] 
+  xl:max-w-[1140px] 
+  2xl:max-w-[1320px]">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {data?.length > 0 &&
           data.map((item, index) => (
