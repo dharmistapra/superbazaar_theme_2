@@ -2,9 +2,11 @@
 import Image from "next/image"
 import Link from "next/link"
 import { usePathname } from "next/navigation";
-import { ComapreButton, QuickViewButton, WishlistButton } from "./CardsButton"
 import { ImageUrl } from "@/helper/imageUrl";
 import PriceConverter from "@/components/PriceConverter";
+import WishlistButton from "./WishlistButton";
+import QuickViewButton from "./QuickViewButton";
+import CompareButton from "./CompareButton";
 
 const ProductCard = ({ data }) => {
     const pathname = usePathname();
@@ -21,9 +23,9 @@ const ProductCard = ({ data }) => {
                 </Link>
 
                 <div className="absolute top-2 right-2 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                    <WishlistButton />
+                    <WishlistButton productId={data.id} type="product"/>
                     <QuickViewButton />
-                    <ComapreButton />
+                    <CompareButton />
                 </div>
             </div>
 

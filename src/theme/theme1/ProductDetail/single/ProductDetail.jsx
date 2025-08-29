@@ -8,6 +8,9 @@ import { useSession } from "next-auth/react";
 import { useDispatch } from "react-redux";
 import { openCart } from "@/store/slice/MiniCartSlice";
 import { useModal } from "@/hooks/useModal";
+import { addToCartProduct, getCartItems } from "@/services/cartService";
+import { setCartItems } from "@/store/slice/cartItemSlice";
+import { Loader2 } from "lucide-react";
 const SizeSelector = dynamic(() => import("@/components/SizeSelector"));
 const SharePopup = dynamic(() => import("./components/SharePopup"));
 const RalatedProduct = dynamic(() => import("./components/RelatedProduct"));
@@ -20,17 +23,18 @@ const ProductDetailTheme1 = ({ product, Stitching, attributes, category }) => {
   const { open } = useModal();
   const { data: session, status } = useSession();
   const [quantity, setQuantity] = useState(1);
-  const [selectedSize, setSelectedSize] = useState(null);
+  const [selectedSize, setSelectedSize] = useState({});
   const [errors, setErrors] = useState(null)
   const [stitchingData, setStitchingData] = useState(null);
   const [wishlist, setWishlist] = useState(false);
   const [compare, setCompare] = useState(false);
   const [shareOpen, setShareOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
   const increment = () => setQuantity((prev) => prev + 1);
   const decrement = () => setQuantity((prev) => (prev > 1 ? prev - 1 : 1));
   const toggleWishlist = () => setWishlist((prev) => !prev);
   const toggleCompare = () => setCompare((prev) => !prev);
-  const handleAddtoCart = () => {
+  const handleAddtoCart = async () => {
     setErrors(null);
 
     if (product.optionType === "Size" && !selectedSize) {
@@ -45,18 +49,31 @@ const ProductDetailTheme1 = ({ product, Stitching, attributes, category }) => {
         return setErrors("⚠️ Please fill all required measurements");
       }
     }
-    if (!session.accessToken) {
+    if (!session?.accessToken) {
       open("login")
       return
     }
 
-    const finalCartData = {
-      productId: product.id,
-      qty: quantity,
-      ...(product.optionType === "Size" && { size: selectedSize }),
-      stitching: stitchingData?.stitching || [],
-    };
-    alert("✅ Added to cart successfully!");
+    setLoading(true);
+    try {
+      console.log(selectedSize)
+      const finalCartData = {
+        product_id: product.id,
+        quantity: quantity,
+        user_id: session?.user?.id,
+        ...(product.optionType === "Size" && { size: selectedSize }),
+        ...(product.optionType === "Stitching" && { stitching: stitchingData?.stitching || [] }),
+      };
+
+      const response = await addToCartProduct(finalCartData)
+      if (response?.isSuccess) {
+        const fetchCartData = await getCartItems(session?.user?.id)
+        dispatch(setCartItems(fetchCartData))
+        dispatch(openCart())
+      }
+    } finally {
+      setLoading(false);
+    }
   };
 
 
@@ -67,7 +84,7 @@ const ProductDetailTheme1 = ({ product, Stitching, attributes, category }) => {
           <ProductImageGallery
             images={product.image}
             thumbs={product.thumbImage} />
-          <div className="justify-end items-end hidden md:flex">
+          <div className="justify-center items-center hidden md:flex">
             <MoreColors moreColors={attributes.moreColors} basepath={category} />
           </div>
         </div>
@@ -147,10 +164,14 @@ const ProductDetailTheme1 = ({ product, Stitching, attributes, category }) => {
           </div>
           <div className="flex flex-row gap-4 mt-4 w-full">
             <button
+              disabled={loading}
               onClick={handleAddtoCart}
-              className="w-full bg-black text-white px-6 py-3 rounded-lg hover:bg-gray-800 transition">
-              Add to Cart
+              className="w-full flex items-center justify-center bg-black text-white px-6 py-3 rounded-lg hover:bg-gray-800 transition disabled:opacity-70 gap-2"
+            >
+              <span>Add to Cart</span>
+              {loading && <Loader2 className="w-5 h-5 animate-spin" />}
             </button>
+
             <button className="w-full flex items-center justify-center gap-2 bg-green-700 text-white px-6 py-3 rounded-lg hover:bg-green-600 transition">
               <MessageCircle className="w-5 h-5" />
               Order on WhatsApp
@@ -174,7 +195,7 @@ const ProductDetailTheme1 = ({ product, Stitching, attributes, category }) => {
       </div>
       <div className="w-full mt-10">
         <h1 className="text-2xl font-normal text-center mb-10">You May Also Like this</h1>
-        <RalatedProduct />
+        <RalatedProduct url={product.url} />
       </div>
       <SharePopup
         isOpen={shareOpen}

@@ -24,6 +24,8 @@ export default async function Home() {
       };
     })
   );
+
+
   const componentMap = {
     "full slider": (item) => <FullSlider key={item.id} slides={item.fullSlider} />,
     "cards slider": (item) => <CardsSlider3D key={item.id} slides={item.cardSlider} />,

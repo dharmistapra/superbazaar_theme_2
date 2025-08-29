@@ -1,5 +1,4 @@
-import { GitCompareArrows, Heart, ScanEye } from "lucide-react"
-
+import React from "react";
 const TooltipButton = ({ icon: Icon, label, onClick, delay }) => {
   return (
     <div
@@ -28,17 +27,4 @@ const TooltipButton = ({ icon: Icon, label, onClick, delay }) => {
   )
 }
 
-const handleWishlist = () => console.log("Wishlist button clicked ✅")
-const handleQuickView = () => console.log("Quick View button clicked ✅")
-const handleCompare = () => console.log("Compare button clicked ✅")
-const WishlistButton = () => (
-  <TooltipButton icon={Heart} label="Add to Wishlist" onClick={handleWishlist} delay={0} />
-)
-const QuickViewButton = () => (
-  <TooltipButton icon={ScanEye} label="Quick View" onClick={handleQuickView} delay={100} />
-)
-const ComapreButton = () => (
-  <TooltipButton icon={GitCompareArrows} label="Compare" onClick={handleCompare} delay={200} />
-)
-
-export { QuickViewButton, WishlistButton, ComapreButton }
+export default TooltipButton;

@@ -1,8 +1,10 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { Search, Eye } from "lucide-react";
 import Pagination from "../../components/Pagination/Pagination";
+import { useSession } from "next-auth/react";
+import { postuserOrderHistory } from "@/services/accountsService";
 
 const statusColors = {
   PENDING: "bg-yellow-100 text-yellow-700",
@@ -12,10 +14,31 @@ const statusColors = {
 };
 
 const OrderHistorythem1 = () => {
+  const { data: session, } = useSession();
+  const [orders,setOrders]=useState([])
+  const [total,setTotalCount]=useState(0)
   const [page, setPage] = useState(1);
   const [filter, setFilter] = useState("30days");
   const [search, setSearch] = useState("");
 
+
+ const fetchData = async () => {
+    try {
+      const userId = session?.user?.id;
+      if (!userId) return;
+      const payload={ userId,page,perPage:20,filter,search}
+      const response = await postuserOrderHistory(payload);
+      setOrders(response.data);
+      setTotalCount(response.total);
+    } catch (error) {
+      return error
+    }
+  };
+
+
+   useEffect(() => {
+    fetchData();
+  }, [page, filter, search, session]);
   const data = [
     {
       orderId: "ORD-20250803-0836343",
@@ -45,47 +68,7 @@ const OrderHistorythem1 = () => {
   return (
     <div className="p-6 bg-gray-50 min-h-screen">
       <h2 className="text-2xl font-bold text-gray-800 mb-6">Order History</h2>
-
-      {/* <div className="flex flex-col sm:flex-row items-center justify-between pb-6 gap-4">
-        <div>
-          <button
-            className="inline-flex items-center text-gray-700 bg-white border border-gray-300 hover:bg-gray-100 focus:ring-2 focus:ring-blue-400 font-medium rounded-lg text-sm px-4 py-2 shadow-sm transition"
-            type="button"
-          >
-            Last 30 days
-            <svg
-              className="w-2.5 h-2.5 ms-2.5"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 10 6"
-            >
-              <path
-                stroke="currentColor"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="m1 1 4 4 4-4"
-              />
-            </svg>
-          </button>
-        </div>
-
-        <div className="relative w-full sm:w-80">
-          <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-            <Search className="w-5 h-5 text-gray-400" />
-          </div>
-          <input
-            type="text"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            className="block w-full p-2.5 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg shadow-sm bg-white focus:ring-2 focus:ring-blue-400 focus:border-blue-400"
-            placeholder="Search by Order ID, Amount, Date"
-          />
-        </div>
-      </div> */}
-
-<div className="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
+      <div className="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
         <div className="relative w-full md:w-1/3">
           <input
             type="text"
@@ -128,7 +111,7 @@ const OrderHistorythem1 = () => {
             </tr>
           </thead>
           <tbody>
-            {filteredData.map((order, idx) => (
+            {orders && orders?.length > 0 && orders?.map((order, idx) => (
               <tr
                 key={idx}
                 className="bg-white border-b hover:bg-blue-50 transition duration-200"
@@ -148,18 +131,16 @@ const OrderHistorythem1 = () => {
                 </td>
                 <td className="px-6 py-4">
                   <span
-                    className={`px-3 py-1 rounded-full text-xs font-medium ${
-                      statusColors[order.orderStatus] || "bg-gray-100 text-gray-600"
-                    }`}
+                    className={`px-3 py-1 rounded-full text-xs font-medium ${statusColors[order.orderStatus] || "bg-gray-100 text-gray-600"
+                      }`}
                   >
                     {order.orderStatus}
                   </span>
                 </td>
                 <td className="px-6 py-4">
                   <span
-                    className={`px-3 py-1 rounded-full text-xs font-medium ${
-                      statusColors[order.paymentStatus] || "bg-gray-100 text-gray-600"
-                    }`}
+                    className={`px-3 py-1 rounded-full text-xs font-medium ${statusColors[order.paymentStatus] || "bg-gray-100 text-gray-600"
+                      }`}
                   >
                     {order.paymentStatus}
                   </span>
@@ -171,7 +152,7 @@ const OrderHistorythem1 = () => {
                 </td>
               </tr>
             ))}
-            {filteredData.length === 0 && (
+            {orders?.length === 0 && (
               <tr>
                 <td
                   colSpan={7}
@@ -204,9 +185,8 @@ const OrderHistorythem1 = () => {
             <p className="text-sm">
               <span className="font-semibold">Order Status:</span>{" "}
               <span
-                className={`px-2 py-0.5 rounded-full text-xs font-medium ${
-                  statusColors[order.orderStatus] || "bg-gray-100 text-gray-600"
-                }`}
+                className={`px-2 py-0.5 rounded-full text-xs font-medium ${statusColors[order.orderStatus] || "bg-gray-100 text-gray-600"
+                  }`}
               >
                 {order.orderStatus}
               </span>
@@ -214,9 +194,8 @@ const OrderHistorythem1 = () => {
             <p className="text-sm">
               <span className="font-semibold">Payment Status:</span>{" "}
               <span
-                className={`px-2 py-0.5 rounded-full text-xs font-medium ${
-                  statusColors[order.paymentStatus] || "bg-gray-100 text-gray-600"
-                }`}
+                className={`px-2 py-0.5 rounded-full text-xs font-medium ${statusColors[order.paymentStatus] || "bg-gray-100 text-gray-600"
+                  }`}
               >
                 {order.paymentStatus}
               </span>
@@ -231,8 +210,8 @@ const OrderHistorythem1 = () => {
       <div className="flex justify-center items-center mt-8">
         <Pagination
           currentPage={page}
-          totalCount={500}
-          perPage={10}
+          totalCount={total}
+          perPage={20}
           onPageChange={(p) => setPage(p)}
         />
       </div>

@@ -82,7 +82,7 @@ const Productstheme1 = ({ category }) => {
                                         onClick={() => setGrid(btn.value)}
                                         title={btn.label}
                                         className={`p-1 rounded transition-all ${isActive
-                                            ? "bg-blue-600 text-white shadow-md"
+                                            ? "bg-zinc-900 text-white shadow-md"
                                             : "text-zinc-900 hover:bg-blue-100"
                                             }`}
                                     >

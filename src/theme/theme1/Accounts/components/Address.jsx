@@ -1,15 +1,23 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useFormik } from "formik";
 import { addressschema } from "@/schema/schema";
-import { SquarePen } from "lucide-react";
 import AddressList from "./AddressCards";
-
+import { deleteUserAddress, getUserAddress, postuserAddress } from "@/services/accountsService";
+import { useSession } from "next-auth/react";
 const AddressTheme1 = () => {
+  const { data: session, } = useSession();
   const [showForm, setShowForm] = useState(false);
   const [addresses, setAddresses] = useState([]);
   const [editIndex, setEditIndex] = useState(null);
-
+  const fetchAddress = async () => {
+    const id = session?.user?.id
+    const data = await getUserAddress(id)
+    setAddresses(data)
+  }
+  useEffect(() => {
+    if (session?.user?.id) fetchAddress();
+  }, [session?.user?.id])
   const initialValues = {
     email: "",
     fullName: "",
@@ -26,7 +34,6 @@ const AddressTheme1 = () => {
     defaultBilling: false,
     defaultShipping: false,
   };
-
   const {
     errors,
     values,
@@ -39,35 +46,38 @@ const AddressTheme1 = () => {
   } = useFormik({
     initialValues,
     validationSchema: addressschema,
-    onSubmit: (values) => {
-      if (editIndex !== null) {
-        const updated = [...addresses];
-        updated[editIndex] = values;
-        setAddresses(updated);
-        setEditIndex(null);
-      } else {
-        setAddresses([...addresses, values]);
+    onSubmit: async (values) => {
+      try {
+        values.user_id = session?.user?.id
+        const response = await postuserAddress(values)
+        if (response.isSuccess) {
+          fetchAddress()
+          resetForm();
+          setShowForm(false);
+        }
+
+      } catch (errors) {
+        return errors
       }
-      resetForm();
-      setShowForm(false);
     },
   });
-
   const handleEdit = (index) => {
     setValues(addresses[index]);
     setEditIndex(index);
     setShowForm(true);
   };
-
-
-  const handleDelete = () => {
+  const handleDelete = async (id) => {
+    try {
+      const response = await deleteUserAddress(id)
+      fetchAddress()
+    } catch (errors) {
+      return errors
+    }
   }
-
   return (
     <div className="container mx-auto p-4">
       <div className="flex justify-between">
         <h1 className="text-xl font-semibold mb-4">Address Page</h1>
-
         <button
           onClick={() => {
             resetForm();
@@ -79,7 +89,6 @@ const AddressTheme1 = () => {
           {showForm ? "Cancel" : "Add Address"}
         </button>
       </div>
-
       <div
         className={`overflow-hidden transition-all duration-500 ${showForm
           ? "max-h-[1500px] opacity-100 scale-100"
@@ -232,8 +241,11 @@ const AddressTheme1 = () => {
           </div>
         </form>
       </div>
-      <AddressList addresses={addresses} handleEdit={handleEdit} handleDelete={handleDelete} />
-
+      <AddressList
+        addresses={addresses}
+        handleEdit={handleEdit}
+        handleDelete={handleDelete}
+        fetchAddress={fetchAddress} />
     </div>
   );
 };

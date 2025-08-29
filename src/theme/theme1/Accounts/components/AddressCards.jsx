@@ -1,5 +1,4 @@
 import { SquarePen, Trash2 } from "lucide-react";
-
 export default function AddressList({ addresses, handleEdit, handleDelete }) {
   return (
     <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
@@ -17,7 +16,7 @@ export default function AddressList({ addresses, handleEdit, handleDelete }) {
               <SquarePen className="w-4 h-4 text-gray-700" />
             </button>
             <button
-              onClick={() => handleDelete(i)}
+              onClick={() => handleDelete(addr.id)}
               type="button"
               className="bg-white border border-gray-300 shadow-sm p-2 rounded-full transition hover:bg-red-100 hover:scale-110"
             >
