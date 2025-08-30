@@ -16,7 +16,7 @@ export async function generateMetadata({ params }) {
 
 
 const ProductDetailpage = async ({ params }) => {
-    const currentTheme = "theme2";
+     const currentTheme = process.env.NEXT_THEME || "theme1";
     const { category, url } = await params;
     const { ProductDetail } = getThemeModules(currentTheme);
 

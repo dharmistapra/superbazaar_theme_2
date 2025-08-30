@@ -1,6 +1,6 @@
 import { getThemeModules } from "@/theme/themeConfig";
 const OrderHistoryPage = () => {
-  const currentTheme = "theme2";
+   const currentTheme = process.env.NEXT_THEME || "theme1";
   const { OrderHistory } = getThemeModules(currentTheme);
   return <OrderHistory />
 }

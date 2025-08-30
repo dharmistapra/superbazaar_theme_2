@@ -10,11 +10,12 @@ export const addToCartProduct = async (values) => {
 };
 export const getCartItems=async(id)=>{
   try{
+   
     const axiosInstance = await createClientAxios();
     const res = await axiosInstance.get(`/protected/cart-item/${id}`,);  
     return res.data
   }catch(error){
-    return error
+    return error.response?.data?.message
   }
 }
 export const putCartProduct = async (values) => {

@@ -13,7 +13,7 @@ export async function generateMetadata({ params }) {
 }
 
 const RetailCategoryPage = async ({ params }) => {
-    const currentTheme = "theme2";
+    const currentTheme = process.env.NEXT_THEME || "theme1";
     const { category } = await params;
     const { CategoryBanner, Products } = getThemeModules(currentTheme);
     const data = await getCategoryBanners(category);
