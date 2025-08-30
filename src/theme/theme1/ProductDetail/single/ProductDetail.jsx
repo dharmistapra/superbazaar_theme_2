@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import dynamic from "next/dynamic";
-import { CircleQuestionMark, Heart, MessageCircle, Repeat, Share2 } from "lucide-react";
+import { CircleQuestionMark, Heart, MessageCircle, Repeat, Share2, ShoppingCart } from "lucide-react";
 import OfferBanner from "@/components/OfferBanner";
 import ProductImageGallery from "./components/ProductImageGallery";
 import { useSession } from "next-auth/react";
@@ -166,9 +166,9 @@ const ProductDetailTheme1 = ({ product, Stitching, attributes, category }) => {
             <button
               disabled={loading}
               onClick={handleAddtoCart}
-              className="w-full flex items-center justify-center bg-black text-white px-6 py-3 rounded-lg hover:bg-gray-800 transition disabled:opacity-70 gap-2"
+              className="w-full flex items-center justify-center bg-zinc-900 text-white px-6 py-3 rounded-lg  transition disabled:opacity-70 gap-2"
             >
-              <span>Add to Cart</span>
+              <span className="flex gap-2"> <ShoppingCart />Add to Cart</span>
               {loading && <Loader2 className="w-5 h-5 animate-spin" />}
             </button>
 

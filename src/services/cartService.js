@@ -38,7 +38,6 @@ export const deleteCartProduct = async (id) => {
 };
 export const updateCartQuantity = async (item, newQty,userId) => {
   try {
-    console.log(item,newQty,userId)
     const finalCartData = {
       cartItem_id: item.id,
       quantity: newQty,
@@ -47,7 +46,6 @@ export const updateCartQuantity = async (item, newQty,userId) => {
     const freshCart = await getCartItems(userId);
     return freshCart; 
   } catch (err) {
-    console.error("Error updating quantity:", err);
     return err;
   }
 };

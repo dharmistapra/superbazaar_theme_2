@@ -8,12 +8,13 @@ import WishlistButton from "./WishlistButton";
 import QuickViewButton from "./QuickViewButton";
 import CompareButton from "./CompareButton";
 
-const ProductCard = ({ data }) => {
+const ProductCard = ({ data ,redirectUrl}) => {
     const pathname = usePathname();
     return (
         <div className="group relative w-full bg-white  rounded-none sm:rounded-sm overflow-hidden hover:shadow-xl transition-shadow duration-300 p-0 sm:p-2">
             <div className="relative w-full aspect-[4/5] sm:aspect-[1/1] md:aspect-[3/4]">
-                <Link href={`${pathname}/${data?.url || "/"}`}>
+                <Link
+                href={redirectUrl ? `/retail/${redirectUrl}/${data?.url}` : `${pathname}/${data?.url || "/"}`}>
                     <Image
                         src={data?.mediumImage ? ImageUrl(data?.mediumImage?.[0]) : "/banner1.webp"}
                         alt={data?.name || "Product"}

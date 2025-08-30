@@ -31,7 +31,7 @@ const Topcategories = () => {
   xl:max-w-[1140px] 
   2xl:max-w-[1320px]">
           <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-3xl text-center font-normal mb-6">
-  Top Categories
+  Shop by categories
 </h1>
 
             <Swiper

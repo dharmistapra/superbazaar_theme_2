@@ -6,7 +6,9 @@ import SliderNavigation from "@/theme/theme1/components/CardsSlider/SliderNaviga
 import ProductCard from "@/theme/theme1/components/Cards/ProductCards"
 import { useEffect, useState } from "react"
 import { getRelatedProduct } from "@/services/productService"
+import { usePathname } from "next/navigation"
 const RalatedProduct = ({ url }) => {
+   const pathname = usePathname();
   const [ProductData, setProductData] = useState([])
   const fetchdata = async () => {
     const response = await getRelatedProduct(url)
@@ -45,7 +47,7 @@ const RalatedProduct = ({ url }) => {
         }}>
         {ProductData && ProductData?.length > 0 && ProductData?.map((product, index) => (
           <SwiperSlide key={index} className="flex justify-center h:md-100" style={{ width: '320px' }} >
-            <ProductCard data={product} />
+            <ProductCard data={product} redirectUrl={pathname?.split("/")?.[2]}/>
           </SwiperSlide>
         ))}
       </Swiper>
