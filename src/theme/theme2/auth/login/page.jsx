@@ -5,6 +5,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup"; // if you already have schema file, import from there
 import Head from "next/head";
 import Link from "next/link";
+import { signIn } from "next-auth/react";
 
 // Example schema (replace with your `loginSchema`)
 const loginSchema = Yup.object().shape({
@@ -18,41 +19,38 @@ export default function Login() {
     const [resErrors, setResErrors] = useState("");
     const [loading, setLoading] = useState(false);
 
-    const handleLogin = async (values) => {
-        setLoading(true);
-        setResErrors("");
 
+    const handleLogin = async (values, { setSubmitting, setErrors }) => {
         try {
-            const response = await fetch("/login", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(values),
+            setResErrors("");
+            const res = await signIn("credentials", {
+                redirect: false,      // prevent automatic redirect
+                email: values.email,
+                password: values.password,
             });
 
-            const data = await response.json();
+            if (res?.error) {
+                setResErrors("Invalid email or password");
+            } else {
+                // get session token from next-auth
+                const session = await fetch("/api/auth/session").then(r => r.json());
+                if (session?.accessToken) {
+                    localStorage.setItem("token", session.accessToken);
+                }
 
-            if (!response.ok || !data.success) {
-                setResErrors(data.message || "Invalid email or password");
-                setLoading(false);
-                return;
+                // redirect or navigate
+                const from = searchParams.get("from");
+                if (!from || from === "/") router.push("/");
+                else router.replace(from);
             }
-
-            // Store token and payload
-            localStorage.setItem("kekeeUserToken", data.token);
-            localStorage.setItem("payload", JSON.stringify(data.payload));
-
-            // Redirect user
-            const from = searchParams.get("from");
-            if (!from || from === "/") router.push("/");
-            else router.replace(from);
-
-        } catch (error) {
+        } catch (err) {
+            console.error(err);
             setResErrors("Something went wrong. Please try again.");
-            console.error(error);
         } finally {
-            setLoading(false);
+            setSubmitting(false);
         }
     };
+
 
     return (
         <>
@@ -127,42 +125,14 @@ export default function Login() {
                                             <button
                                                 type="submit"
                                                 disabled={loading || isSubmitting}
-                                                className="w-full bg-black text-white py-2 rounded-lg hover:bg-red-700 transition disabled:opacity-70 "
+                                                className="w-full bg-black text-white py-2 rounded-lg hover:bg-red-700 transition disabled:opacity-70"
                                             >
-                                                {loading ? (
-                                                    <span className="flex items-center justify-center">
-                                                        <svg
-                                                            className="animate-spin h-5 w-5 mr-2 text-white"
-                                                            xmlns="http://www.w3.org/2000/svg"
-                                                            fill="none"
-                                                            viewBox="0 0 24 24"
-                                                        >
-                                                            <circle
-                                                                className="opacity-25"
-                                                                cx="12"
-                                                                cy="12"
-                                                                r="10"
-                                                                stroke="currentColor"
-                                                                strokeWidth="4"
-                                                            ></circle>
-                                                            <path
-                                                                className="opacity-75"
-                                                                fill="currentColor"
-                                                                d="M4 12a8 8 0 018-8v8H4z"
-                                                            ></path>
-                                                        </svg>
-                                                        Waiting...
-                                                    </span>
-                                                ) : (
-                                                    "Sign In"
-                                                )}
+                                                {loading ? "Waiting..." : "Sign In"}
                                             </button>
 
-                                            {/* Error Message */}
+                                            {/* Error */}
                                             {resErrors && (
-                                                <p className="text-red-600 text-sm text-center">
-                                                    {resErrors}
-                                                </p>
+                                                <p className="text-red-600 text-sm text-center">{resErrors}</p>
                                             )}
 
                                             <Link

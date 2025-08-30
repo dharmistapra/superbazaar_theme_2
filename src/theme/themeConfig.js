@@ -1,4 +1,5 @@
 import dynamic from "next/dynamic";
+import SignupPage from "./theme2/auth/signup/page";
 // const Theme1Layout = dynamic(() => import("./theme1/layout"));
 // const Theme2Layout = dynamic(() => import("./theme2/layout"));
 
@@ -103,7 +104,8 @@ export const getThemeModules = (theme = "theme1") => {
         Wishlist: load(() => import("./theme2/Accounts/components/Whishlist")),
         AccountsLayout: load(() => import("./theme2/Accounts/layout")),
         ProductDetail: load(() => import("./theme2/ProductDetail/single/ProductDetail")),
-        Login: load(() => import("./theme2/auth/login/page"))
+        Login: load(() => import("./theme2/auth/login/page")),
+        Signup: load(() => import("./theme2/auth/signup/page"))
       };
 
     default:

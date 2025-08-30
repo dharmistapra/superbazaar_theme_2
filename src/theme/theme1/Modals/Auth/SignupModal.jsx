@@ -13,7 +13,7 @@ export default function SignupModal() {
   const { modal, close, open } = useModal();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [errors,setErrors]=useState(null)
+  const [errors, setErrors] = useState(null)
   const initialValues = {
     name: "",
     email: "",
@@ -30,20 +30,20 @@ export default function SignupModal() {
         const axiosInstance = createClientAxios();
         const response = await axiosInstance.post("/register", values)
         if (response.status == 200) {
-           close("signup")
-           setErrors(null)
-         const loginRes=  await signIn("credentials", {
+          close("signup")
+          setErrors(null)
+          const loginRes = await signIn("credentials", {
             redirect: false,
             email: values.email,
             password: values.password,
           });
 
-           if (loginRes?.error) {
-          setErrors(errors?.response?.data?.message || "Something went wrong")
-        } else {
-          close("signup");
-        }
-      
+          if (loginRes?.error) {
+            setErrors(errors?.response?.data?.message || "Something went wrong")
+          } else {
+            close("signup");
+          }
+
         }
       } catch (errors) {
         setErrors(errors?.response?.data?.message || "Something went wrong")
@@ -233,38 +233,38 @@ export default function SignupModal() {
           </div>
 
           <div className="mt-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-           <button
-  type="submit"
-  disabled={formik.isSubmitting}
-  className={`w-full sm:w-auto flex-1 py-2 rounded-sm transition-colors duration-200 flex items-center justify-center gap-2
+            <button
+              type="submit"
+              disabled={formik.isSubmitting}
+              className={`w-full sm:w-auto flex-1 py-2 rounded-sm transition-colors duration-200 flex items-center justify-center gap-2
     ${formik.isSubmitting ? "bg-gray-400 cursor-not-allowed" : "bg-zinc-950 text-white hover:bg-zinc-700"}`}
->
-  {formik.isSubmitting ? (
-    <>
-      <Loader2 className=" animate-spin" />
-      <span>Processing...</span>
-    </>
-  ) : (
-    "Sign Up"
-  )}
-</button>
+            >
+              {formik.isSubmitting ? (
+                <>
+                  <Loader2 className=" animate-spin" />
+                  <span>Processing...</span>
+                </>
+              ) : (
+                "Sign Up"
+              )}
+            </button>
 
-{!session?.accessToken && (
-            <p className="text-sm text-gray-600 text-center sm:text-left">
-              Already have an account?{" "}
-              <button
-                type="button"
-                onClick={() => {
-                  close("signup");
-                  open("login");
-                }}
-                className="text-blue-600 font-medium hover:underline"
-              >
-                Login
-              </button>
-            </p>
+            {!session?.accessToken && (
+              <p className="text-sm text-gray-600 text-center sm:text-left">
+                Already have an account?{" "}
+                <button
+                  type="button"
+                  onClick={() => {
+                    close("signup");
+                    open("login");
+                  }}
+                  className="text-blue-600 font-medium hover:underline"
+                >
+                  Login
+                </button>
+              </p>
 
-  )}
+            )}
           </div>
           {errors && <p className="text-red-400 text-sm">{errors}</p>}
         </form>
