@@ -4,9 +4,18 @@ import { Swiper, SwiperSlide } from "swiper/react"
 import "swiper/css"
 import SliderNavigation from "@/theme/theme1/components/CardsSlider/SliderNavigation"
 import ProductCard from "@/theme/theme1/components/Cards/ProductCards"
+import { useEffect, useState } from "react"
+import { getRelatedProduct } from "@/services/productService"
+const RalatedProduct = ({ url }) => {
+  const [ProductData, setProductData] = useState([])
+  const fetchdata = async () => {
+    const response = await getRelatedProduct(url)
+    setProductData(response.data)
+  }
 
-const RalatedProduct = () => {
-  const ProductData = []
+  useEffect(() => {
+    fetchdata()
+  }, [url])
   return (
     <div className="relative">
       <SliderNavigation position="center" />
@@ -34,7 +43,7 @@ const RalatedProduct = () => {
           1024: { slidesPerView: 3 },
           1280: { slidesPerView: 4 },
         }}>
-        {ProductData?.[0]?.products?.map((product, index) => (
+        {ProductData && ProductData?.length > 0 && ProductData?.map((product, index) => (
           <SwiperSlide key={index} className="flex justify-center h:md-100" style={{ width: '320px' }} >
             <ProductCard data={product} />
           </SwiperSlide>
