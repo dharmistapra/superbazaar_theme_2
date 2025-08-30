@@ -103,8 +103,7 @@ export const getThemeModules = (theme = "theme1") => {
         Wishlist: load(() => import("./theme2/Accounts/components/Whishlist")),
         AccountsLayout: load(() => import("./theme2/Accounts/layout")),
         ProductDetail: load(() => import("./theme2/ProductDetail/single/ProductDetail")),
-        Login: load(() => import("./theme2/auth/login")),
-        // Signup: load(() => import("./theme2/auth/Signup"))
+        Login: load(() => import("./theme2/auth/login/page"))
       };
 
     default:
