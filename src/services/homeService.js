@@ -20,10 +20,10 @@ export const getHomeContent = async () => {
   }
 };
 
-export const getHomeProductlist = async (url) => {
+export const getHomeProductlist = async (url,purchaseType) => {
   try {
     const axiosInstance = await createServerAxios();
-    const res = await axiosInstance.get(`/home-layout/collection/${url}?purchaseType=retail`);
+    const res = await axiosInstance.get(`/home-layout/collection/${url}?purchaseType=${purchaseType}`);
     return res.data?.data || {};
   } catch (error) {
     return error;

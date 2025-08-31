@@ -8,7 +8,6 @@ export const getCategoryBanners = async (category) => {
     return error;
   }
 };
-
 export const getCategoryProducts = async (
   category,
   pageNo = 1,
@@ -74,7 +73,6 @@ export const getProductAttributes = async (url) => {
     throw error;
   }
 };
-
 export const getRelatedProduct = async (url) => {
   try {
     const axiosInstance = await createClientAxios();
@@ -82,6 +80,29 @@ export const getRelatedProduct = async (url) => {
     return res.data;
   } catch (error) {
     console.error("Error fetching product detail:", error);
+    throw error;
+  }
+};
+export const getWholeSaleProductslists = async (
+  category,
+  pageNo = 1,
+  perPage = 20,
+  sortOption = "",
+  isServer = false
+) => {
+  try {
+    const axiosInstance = isServer ? await createServerAxios() : createClientAxios();
+    const res = await axiosInstance.get(`/catalogue/${category}`, {
+      params: {
+        perPage,
+        pageNo,
+        sortOption,
+      },
+    });
+
+    return res.data;
+  } catch (error) {
+    console.error("Error fetching category products:", error);
     throw error;
   }
 };

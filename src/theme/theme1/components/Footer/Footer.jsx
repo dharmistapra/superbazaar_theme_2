@@ -1,13 +1,26 @@
 "use client"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Mail, Phone, ChevronDown, ChevronUp } from "lucide-react"
 import Image from "next/image"
 import SocialIcon from "./SocialIcon"
 import SocialIconData from "@/data/SocialIcon"
+import { getWebSetting } from "@/services/webSetting"
+import { useDispatch } from "react-redux"
+import { setWebSetting } from "@/store/slice/webSettingSlice"
 
 const Footer = () => {
+  const dispatch = useDispatch();
   const [openSection, setOpenSection] = useState(null)
+  
+  const fetchdata=async()=>{
+    const data=await getWebSetting();
+    dispatch(setWebSetting(data));
+  }
 
+  useEffect(() => {
+    fetchdata();
+  }, []);
+  
   const toggleSection = (index) => {
     setOpenSection(openSection === index ? null : index)
   }
@@ -26,7 +39,6 @@ const Footer = () => {
   return (
     <footer className="w-full mt-10 bg-zinc-950 text-white">
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8 p-8 md:p-10 items-start">
-        {/* Logo & Contact Info */}
         <div className="flex flex-col gap-4">
           <Image
             src="/logo.png"
