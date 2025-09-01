@@ -66,8 +66,6 @@ const ProductDetailTheme2 = ({ product, Stitching, attributes, category }) => {
     };
     alert("✅ Added to cart successfully!");
   };
-  console.log("product", product, product.ProductBrand, product.ProductBrand?.length);
-
 
   return (
     <>

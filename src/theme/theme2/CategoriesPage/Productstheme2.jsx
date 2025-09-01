@@ -30,12 +30,17 @@ const Productstheme2 = ({ category }) => {
         { icon: Columns3, value: 3, label: "3 Grid" },
         { icon: Columns4, value: 4, label: "4 Grid" },
     ];
+
     const buildFilterQuery = (selectedAttributes) => {
         const params = new URLSearchParams();
 
         Object.entries(selectedAttributes).forEach(([key, values]) => {
-            if (values.length > 0) {
-                params.set(key, values.map((v) => v.value).join(","));
+            const arr = Array.isArray(values) ? values : [];
+            if (arr.length > 0) {
+                params.set(
+                    key,
+                    arr.map((v) => v.value).join(",")
+                );
             }
         });
 
@@ -45,17 +50,24 @@ const Productstheme2 = ({ category }) => {
     useEffect(() => {
         if (!searchParams) return;
 
-        const paramsObj = Object.fromEntries([...searchParams.entries()]);
-        setSelectedAttributes(paramsObj); // load filters from URL
+        const paramsObj = {};
+        for (const [key, value] of searchParams.entries()) {
+            paramsObj[key] = value.split(",").map((v) => ({
+                value: v,
+                label: v,
+            }));
+        }
 
-    }, [searchParams, category]); // <--- important: reset filters when category changes
+        setSelectedAttributes(paramsObj);
+    }, [searchParams, category]);
 
-    // Update URL only when filters change
+
     useEffect(() => {
         if (!category) return;
 
         const queryString = buildFilterQuery(selectedAttributes);
         const newUrl = `/retail/${category}${queryString ? `?${queryString}` : ""}`;
+
 
         if (newUrl !== pathname) {
             router.replace(newUrl, { scroll: false });
