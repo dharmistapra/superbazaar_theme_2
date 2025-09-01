@@ -14,9 +14,11 @@ export const getThemeModules = (theme = "theme1") => {
         Wishlist: load(() => import("./theme1/Accounts/components/Whishlist")),
         AccountsLayout: load(() => import("./theme1/Accounts/layout")),
         ProductDetail: load(() => import("./theme1/ProductDetail/single/ProductDetail")),
-        WholeSaleProductList:load(() => import("./theme1/CategoriesPage/Wholesale/WholeSaleProductList")),
-        Catalogue:load(() => import("./theme1/ProductDetail/catalogue/catalogue")),
-        WholeSalePage:load(() => import("./theme1/wholesalePage/wholesalepage"))
+        WholeSaleProductList: load(() => import("./theme1/CategoriesPage/Wholesale/WholeSaleProductList")),
+        Catalogue: load(() => import("./theme1/ProductDetail/catalogue/catalogue")),
+        WholeSalePage: load(() => import("./theme1/wholesalePage/wholesalepage")),
+        BrandList: load(() => import("./theme1/brands/brandLists")),
+        BrandCatalogueList:load(() => import("./theme1/brands/brandCatalogueList")),
       };
 
     case "theme2":
@@ -33,14 +35,13 @@ export const getThemeModules = (theme = "theme1") => {
         ProductDetail: load(() => import("./theme2/ProductDetail/single/ProductDetail")),
         Login: load(() => import("./theme2/auth/login/page")),
         Signup: load(() => import("./theme2/auth/signup/page")),
-        WholeSaleProductList:load(() => import("./theme1/CategoriesPage/Wholesale/WholeSaleProductList")),
-        Catalogue:load(() => import("./theme1/ProductDetail/catalogue/catalogue")),
-                WholeSalePage:load(() => import("./theme1/wholesalePage/wholesalepage"))
-
-
+        WholeSaleProductList: load(() => import("./theme1/CategoriesPage/Wholesale/WholeSaleProductList")),
+        Catalogue: load(() => import("./theme1/ProductDetail/catalogue/catalogue")),
+        BrandList: load(() => import("./theme1/brands/brandLists")),
+        WholeSalePage: load(() => import("./theme1/wholesalePage/wholesalepage")),
+                BrandCatalogueList:load(() => import("./theme1/brands/brandCatalogueList")),
 
       };
-
     default:
       return getThemeModules("theme2");
   }

@@ -17,7 +17,7 @@ const WholesaleCategoryPage = async ({ params }) => {
 
     return (
         <>
-            {data?.PageWiseBanner?.length > 0 ? <CategoryBanner data={data} /> : <Breadcrum name={data} />}
+            {data?.PageWiseBanner?.length > 0 ? <CategoryBanner data={data} /> : <Breadcrum name={data?.name} />}
             <WholeSaleProductList category={category} />
         </>
     )

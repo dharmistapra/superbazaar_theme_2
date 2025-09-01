@@ -80,7 +80,7 @@ const Catalogue = ({ CatalogueDetailData, stitching, category }) => {
                         {CatalogueDetailData?.CatalogueBrand?.map((item, index) => (
                             <a
                                 key={index}
-                                href={`/brand/${item?.brand.url}`}
+                                href={`/brand/catalogue/${item?.brand.url}`}
                                 className="text-blue-600 hover:underline">
                                 {item.brand.name}
                             </a>
