@@ -79,7 +79,7 @@ export default function StitchingForm({ stitchingData, onChange }) {
 
     return (
         <div className="space-y-2 rounded-xl">
-            {stitchingData.map((section) => (
+            {stitchingData && stitchingData?.length > 0 && stitchingData?.map((section) => (
                 <div key={section.id} className="space-y-1">
                     <h2 className="text-lg font-semibold">{section.name}</h2>
                     {section.stitchingOption.some((o) => o.type === "Redio") && (

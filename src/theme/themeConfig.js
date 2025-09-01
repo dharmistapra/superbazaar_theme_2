@@ -1,6 +1,5 @@
 import dynamic from "next/dynamic";
 const load = (importFn) => dynamic(importFn, { ssr: true });
-
 export const getThemeModules = (theme = "theme1") => {
   switch (theme) {
     case "theme1":
@@ -16,6 +15,8 @@ export const getThemeModules = (theme = "theme1") => {
         AccountsLayout: load(() => import("./theme1/Accounts/layout")),
         ProductDetail: load(() => import("./theme1/ProductDetail/single/ProductDetail")),
         WholeSaleProductList:load(() => import("./theme1/CategoriesPage/Wholesale/WholeSaleProductList")),
+        Catalogue:load(() => import("./theme1/ProductDetail/catalogue/catalogue")),
+        WholeSalePage:load(() => import("./theme1/wholesalePage/wholesalepage"))
       };
 
     case "theme2":
@@ -32,7 +33,11 @@ export const getThemeModules = (theme = "theme1") => {
         ProductDetail: load(() => import("./theme2/ProductDetail/single/ProductDetail")),
         Login: load(() => import("./theme2/auth/login/page")),
         Signup: load(() => import("./theme2/auth/signup/page")),
-         WholeSaleProductList:load(() => import("./theme1/CategoriesPage/Wholesale/WholeSaleProductList")),
+        WholeSaleProductList:load(() => import("./theme1/CategoriesPage/Wholesale/WholeSaleProductList")),
+        Catalogue:load(() => import("./theme1/ProductDetail/catalogue/catalogue")),
+                WholeSalePage:load(() => import("./theme1/wholesalePage/wholesalepage"))
+
+
 
       };
 

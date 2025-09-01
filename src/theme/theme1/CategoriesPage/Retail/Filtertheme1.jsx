@@ -152,7 +152,7 @@ const Filtertheme1 = ({ open, setOpen, filterData, onApply, setSelectedAttribute
                 <h3 className="font-semibold">{attr.attribute.name}</h3>
                 {openSections[attr.attribute.key] ? <Minus /> : <Plus />}
               </div>
-              {/* {console.log(attr.attribute.key)}
+              {/* 
               {openSections[attr.attribute.key] && (
                 <div className="mt-3 space-y-2">
                   {attr.value.map((val) => (

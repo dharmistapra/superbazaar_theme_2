@@ -8,7 +8,6 @@ import Link from "next/link";
 import { openCart } from "@/store/slice/MiniCartSlice";
 import { useModal } from "@/hooks/useModal";
 import { useDispatch, useSelector } from "react-redux";
-import CurrencySelector from "../../../Home/components/CurrencySelector";
 import { setCurrencyData } from "@/store/slice/CurrencySlice";
 import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
@@ -16,11 +15,14 @@ import { getUserWishlist } from "@/services/accountsService";
 import { setWishlistData } from "@/store/slice/WishlistSlice";
 import { getCartItems } from "@/services/cartService";
 import { setCartItems } from "@/store/slice/cartItemSlice";
+import CurrencySelector from "@/theme/theme1/Home/components/CurrencySelector";
+import { setCategoyData } from "@/store/slice/categorySlice";
 const MobileMenu = dynamic(() => import("./MobileMenu"))
 const NavbarClient = ({ Menudata, currencyData }) => {
   const router = useRouter()
   const { open } = useModal();
   const dispatch = useDispatch()
+
   const { data: session, } = useSession();
   const [menuOpen, setMenuOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -38,6 +40,7 @@ const NavbarClient = ({ Menudata, currencyData }) => {
     if (session?.accessToken) {
       fetchProtectedData()
     }
+      dispatch(setCategoyData(Menudata))
   }, [session])
   useEffect(() => {
     dispatch(setCurrencyData(currencyData));
@@ -96,7 +99,9 @@ const NavbarClient = ({ Menudata, currencyData }) => {
           {session?.accessToken && (
             <>
               {list?.product?.length > 0 || list?.catalogue?.length ? (
-                <Heart className={`fill-red-500 text-red-500`} size={23} />
+                <Link href={"/account/wishlist"}>
+                <Heart className={`fill-red-500 text-red-500`} size={23} />                
+                </Link>
 
               ) : (
                 <Heart className="cursor-pointer hover:text-black hidden sm:block" size={23} />

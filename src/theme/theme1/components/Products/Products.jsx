@@ -6,10 +6,9 @@ import { Autoplay, Navigation } from "swiper/modules"
 import "swiper/css"
 import "swiper/css/pagination"
 import SliderNavigation from "../CardsSlider/SliderNavigation"
-import CatalogueCard from "../Cards/CatalogueCard"
+import CatalogueCard from "../../../../components/cards/CatalogueCard"
 const Products = ({ tabsData = [], purchaseType }) => {
   const [active, setActive] = useState("")
-
   useEffect(() => {
     if (tabsData.length > 0) {
       setActive(tabsData[0].url)
@@ -17,6 +16,8 @@ const Products = ({ tabsData = [], purchaseType }) => {
   }, [tabsData])
 
   const activeTabData = tabsData.find((tab) => tab.url === active)
+  console.log(active)
+
 
   const products =
     purchaseType === "wholesale"
@@ -30,7 +31,7 @@ const Products = ({ tabsData = [], purchaseType }) => {
       sm:max-w-[540px] 
       md:max-w-[720px] 
       lg:max-w-[960px] 
-      xl:max-w-[1140px] 
+      xl:max-w-[1240px] 
       2xl:max-w-[1320px]"
     >
       <div className="w-full flex justify-center items-center gap-6 mb-10">
@@ -78,7 +79,7 @@ const Products = ({ tabsData = [], purchaseType }) => {
         >
           {products?.map((data, index) => (
             <SwiperSlide key={index} className="flex justify-center">
-              <CatalogueCard data={data} />
+              <CatalogueCard data={data} redirectUrl={`catalogue/${active}`}/>
             </SwiperSlide>
           ))}
         </Swiper>

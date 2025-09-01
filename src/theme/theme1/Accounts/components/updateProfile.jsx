@@ -32,9 +32,6 @@ const UpdateProfile = ({ open, onClose, user, onUpdate, userId }) => {
 
         }
     })
-    console.log(errors)
-
-
     useEffect(() => {
         if (user?.email) {
             setFieldValue("email", user?.email)

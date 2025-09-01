@@ -1,7 +1,8 @@
 "use client"
 import { useState } from "react"
-import ProductCard from "../../components/Cards/ProductCards"
+import ProductCard from "../../../../components/cards/ProductCards"
 import { useSelector } from "react-redux"
+import CatalogueCard from "@/components/cards/CatalogueCard"
 
 const WishlistTheme1 = () => {
   const { list } = useSelector((state) => state.wishlist)
@@ -41,14 +42,7 @@ const WishlistTheme1 = () => {
       {activeTab === "catalogues" && (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {catalogues.length > 0 ? (
-            catalogues.map((item, index) => (
-              <div
-                key={index}
-                className="border rounded-xl p-4 shadow-sm hover:shadow-md transition"
-              >
-                <h3 className="font-semibold">{item?.name || "Catalogue"}</h3>
-              </div>
-            ))
+            catalogues.map((item, index) => ( <CatalogueCard data={item} key={index}/>))
           ) : (
             <p className="text-gray-600">No catalogues in your wishlist.</p>
           )}

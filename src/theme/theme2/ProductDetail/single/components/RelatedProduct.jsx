@@ -1,6 +1,6 @@
 import { Autoplay, Navigation } from "swiper/modules"
 import { Swiper, SwiperSlide } from "swiper/react";
-import ProductCard from "@/theme/theme1/components/Cards/ProductCards"
+import ProductCard from "@/components/cards/ProductCards"
 import SliderNavigation from "@/theme/theme1/components/CardsSlider/SliderNavigation"
 import { useRef } from "react"
 

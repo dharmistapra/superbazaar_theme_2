@@ -10,7 +10,7 @@ import { ImageUrl } from "@/helper/imageUrl"
 const CardsSlider3D = ({ slides }) => {
   return (
     <div className="w-full bg-gradient-to-r from-indigo-100 via-white to-indigo-100 py-10 mt-10">
-      <h1 className="text-3xl text-center font-normal mb-6">Cards Slider</h1>
+      <h1 className="text-3xl text-center font-normal mb-6">Shop By Video</h1>
 
       <Swiper
         effect="coverflow"

@@ -8,7 +8,6 @@ import SizeSelector from "@/components/SizeSelector";
 import SharePopup from "./components/SharePopup";
 import StitchingForm from "./components/StitchingForm";
 import ProductDescription from "./components/ProductDescription";
-import StaticImage from "./components/StaticImage";
 import Image from "next/image";
 import Link from "next/link";
 import { useDispatch } from "react-redux";
@@ -212,7 +211,6 @@ const ProductDetailTheme2 = ({ product, Stitching, attributes, category }) => {
                 <div className="flex gap-2 overflow-x-auto">
                   {
                     attributes?.moreColors?.map((product, i) => {
-                      console.log("product", product);
 
                       return (
                         <Link key={i} href="/retail/sarees/mahotsav-erisha-s3689-to-s3693-designer-saree-erisha-s3690" className="flex-shrink-0 ">

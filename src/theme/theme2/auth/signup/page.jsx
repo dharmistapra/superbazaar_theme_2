@@ -37,8 +37,6 @@ export default function Signup() {
             if (res.ok && data.token) {
                 localStorage.setItem("kekeeUserToken", data.token);
                 localStorage.setItem("payload", JSON.stringify(data.payload));
-                console.log("data ===>", data);
-
                 // toast.success(data.message || "Account created successfully!");
                 router.push("/login");
             } else {

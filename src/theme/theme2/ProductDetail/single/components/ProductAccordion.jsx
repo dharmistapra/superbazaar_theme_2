@@ -8,7 +8,6 @@ const ProductAccordion = ({ product, Stitching, setStitchingData, attributes }) 
     const toggle = (section) => {
         setOpen(open === section ? null : section);
     };
-    console.log(product, attributes, "product in accordion");
 
     return (
         <div>
@@ -48,7 +47,6 @@ const ProductAccordion = ({ product, Stitching, setStitchingData, attributes }) 
                                 <table className="w-full border border-gray-200">
                                     <tbody>
                                         {attributes?.attributeValues?.map((attr, index) => {
-                                            console.log(attr.values, "attr in accordion");
                                             return (
                                                 <tr
                                                     key={index}

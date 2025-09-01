@@ -16,7 +16,7 @@ const TwoBanner = ({ data }) => {
   sm:max-w-[540px] 
   md:max-w-[720px] 
   lg:max-w-[960px] 
-  xl:max-w-[1140px] 
+  xl:max-w-[1240px]
   2xl:max-w-[1320px]">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {data?.length > 0 &&

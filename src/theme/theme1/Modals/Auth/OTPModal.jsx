@@ -22,7 +22,6 @@ export default function ForgetPasswordModal() {
         const axiosInstance = createClientAxios();
         values.secret = localStorage.getItem("otpsecrets");
         const response = await axiosInstance.post("verify-otp", values)
-        console.log(response.data)
         if (response.data.isSuccess) {
           const expiryTime = Date.now() + 4 * 60 * 1000;
            localStorage.setItem("otp",values.otp)

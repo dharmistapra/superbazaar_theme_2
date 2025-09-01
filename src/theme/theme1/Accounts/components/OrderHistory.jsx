@@ -2,7 +2,7 @@
 
 import { useState, useMemo, useEffect } from "react";
 import { Search, Eye } from "lucide-react";
-import Pagination from "../../components/Pagination/Pagination";
+import Pagination from "../../../../components/Pagination";
 import { useSession } from "next-auth/react";
 import { postuserOrderHistory } from "@/services/accountsService";
 

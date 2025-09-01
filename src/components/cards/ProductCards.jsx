@@ -4,9 +4,10 @@ import Link from "next/link"
 import { usePathname } from "next/navigation";
 import { ImageUrl } from "@/helper/imageUrl";
 import PriceConverter from "@/components/PriceConverter";
-import WishlistButton from "./WishlistButton";
-import QuickViewButton from "./QuickViewButton";
-import CompareButton from "./CompareButton";
+import WishlistButton from "./attribute/WishlistButton";
+import QuickViewButton from "./attribute/QuickViewButton";
+import CompareButton from "./attribute/CompareButton";
+
 
 const ProductCard = ({ data ,redirectUrl}) => {
     const pathname = usePathname();

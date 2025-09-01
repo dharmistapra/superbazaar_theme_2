@@ -11,12 +11,13 @@ import { useModal } from "@/hooks/useModal";
 import { addToCartProduct, getCartItems } from "@/services/cartService";
 import { setCartItems } from "@/store/slice/cartItemSlice";
 import { Loader2 } from "lucide-react";
+import Link from "next/link";
 const SizeSelector = dynamic(() => import("@/components/SizeSelector"));
 const SharePopup = dynamic(() => import("./components/SharePopup"));
 const RalatedProduct = dynamic(() => import("./components/RelatedProduct"));
 const StitchingForm = dynamic(() => import("./components/StitchingForm"));
 const ProductDescription = dynamic(() => import("./components/ProductDescription"));
-const StaticImage = dynamic(() => import("./components/StaticImage"));
+const StaticImage = dynamic(() => import("@/components/StaticImage"));
 const MoreColors = dynamic(() => import("./components/MoreColors"));
 const ProductDetailTheme1 = ({ product, Stitching, attributes, category }) => {
   const dispatch = useDispatch()
@@ -56,7 +57,6 @@ const ProductDetailTheme1 = ({ product, Stitching, attributes, category }) => {
 
     setLoading(true);
     try {
-      console.log(selectedSize)
       const finalCartData = {
         product_id: product.id,
         quantity: quantity,
@@ -92,14 +92,24 @@ const ProductDetailTheme1 = ({ product, Stitching, attributes, category }) => {
         <div className="flex flex-col gap-4 md:gap-4">
           <div>
             {product?.ProductBrand?.map((item, index) => (
-              <a
+              <Link
                 key={index}
                 href={`/brand/${item.brand.url}`}
                 className="text-blue-600 hover:underline">
                 {item.brand.name}
-              </a>
+              </Link>
             ))}
-            <h1 className="text-2xl font-bold">{product?.name}</h1>
+           <div>
+            <span>View Full Catalogue: </span>
+             {product?.catalogue?.url && (
+                <Link
+                href={`/catalogue/${category}/${product?.catalogue?.url}`}
+                className="text-blue-600 hover:underline">
+                {product?.catalogue?.name}
+              </Link>
+              )}
+           </div>
+            <h1 className="text-xl font-medium">{product?.name}</h1>
             <p className="text-gray-500 mt-1">{product?.sku}</p>
             <p className="text-xl font-semibold mt-2">
               ₹{product?.offer_price}
@@ -120,6 +130,7 @@ const ProductDetailTheme1 = ({ product, Stitching, attributes, category }) => {
             </div>) : (
             <StitchingForm stitchingData={Stitching} onChange={setStitchingData} />
           )}
+
           <div className="flex items-center gap-4 mt-4">
             <div className="flex items-center border rounded-lg overflow-hidden w-40">
               <button
@@ -162,6 +173,7 @@ const ProductDetailTheme1 = ({ product, Stitching, attributes, category }) => {
               <CircleQuestionMark className="w-5 h-5" />
             </button>
           </div>
+
           <div className="flex flex-row gap-4 mt-4 w-full">
             <button
               disabled={loading}

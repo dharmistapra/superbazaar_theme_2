@@ -28,7 +28,7 @@ const Topcategories = () => {
   sm:max-w-[540px] 
   md:max-w-[720px] 
   lg:max-w-[960px] 
-  xl:max-w-[1140px] 
+  xl:max-w-[1240px] 
   2xl:max-w-[1320px]">
           <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-3xl text-center font-normal mb-6">
   Shop by categories

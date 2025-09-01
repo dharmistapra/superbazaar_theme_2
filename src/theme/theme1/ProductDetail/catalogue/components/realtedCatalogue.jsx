@@ -3,16 +3,16 @@ import { Pagination, Autoplay, Navigation } from "swiper/modules"
 import { Swiper, SwiperSlide } from "swiper/react"
 import "swiper/css"
 import SliderNavigation from "@/theme/theme1/components/CardsSlider/SliderNavigation"
-import ProductCard from "@/components/cards/ProductCards"
 import { useEffect, useState } from "react"
-import { getRelatedProduct } from "@/services/productService"
 import { usePathname } from "next/navigation"
-const RalatedProduct = ({ url }) => {
+import { getRelatedCatalogue } from "@/services/catalogueService"
+import CatalogueCard from "@/components/cards/CatalogueCard"
+const RalatedCatalogue = ({ url }) => {
    const pathname = usePathname();
-  const [ProductData, setProductData] = useState([])
+  const [catalogue, setCatalogue] = useState([])
   const fetchdata = async () => {
-    const response = await getRelatedProduct(url)
-    setProductData(response.data)
+    const response = await getRelatedCatalogue(url)
+    setCatalogue(response.data)
   }
 
   useEffect(() => {
@@ -26,7 +26,7 @@ const RalatedProduct = ({ url }) => {
         grabCursor
         loop={true}
         slidesPerView="auto"
-        spaceBetween={1}
+        spaceBetween={20}
         autoplay={{
           delay: 2500,
           disableOnInteraction: false,
@@ -43,11 +43,11 @@ const RalatedProduct = ({ url }) => {
           640: { slidesPerView: 3 },
           768: { slidesPerView: 3 },
           1024: { slidesPerView: 3 },
-          1280: { slidesPerView: 4 },
+          1280: { slidesPerView: 5 },
         }}>
-        {ProductData && ProductData?.length > 0 && ProductData?.map((product, index) => (
-          <SwiperSlide key={index} className="flex justify-center h:md-100" style={{ width: '320px' }} >
-            <ProductCard data={product} redirectUrl={pathname?.split("/")?.[2]}/>
+        {catalogue && catalogue?.length > 0 && catalogue?.map((data, index) => (
+          <SwiperSlide key={index} className="flex justify-center h-10 " >
+            <CatalogueCard data={data} redirectUrl={pathname?.split("/")?.[2]}/>
           </SwiperSlide>
         ))}
       </Swiper>
@@ -56,4 +56,4 @@ const RalatedProduct = ({ url }) => {
   )
 }
 
-export default RalatedProduct
+export default RalatedCatalogue

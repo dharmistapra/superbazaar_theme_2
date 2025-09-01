@@ -6,7 +6,6 @@ import { ImageUrl } from "@/helper/imageUrl";
 
 const ProductCard = ({ product, pathname }) => {
     if (!product) return null;
-    console.log("retail path", `${pathname}}`);
 
     return (
         <div className="single-product-card bg-white rounded-md shadow hover:shadow-lg transition overflow-hidden">

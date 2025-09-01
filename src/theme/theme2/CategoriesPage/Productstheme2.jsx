@@ -5,7 +5,7 @@ import { getCategoryFilter, getCategoryProducts } from "@/services/productServic
 import { usePathname, useRouter } from "next/navigation";
 import ProductCard from "../ProductComponent/ProductCard";
 import FilterSidebar from "./FilterSidebar";
-import Pagination from "@/theme/theme1/components/Pagination/Pagination";
+import Pagination from "@/components/Pagination";
 import cleanFilters from "@/helper/FilterClean";
 import SelectedFilters from "@/components/SelctedFilter";
 

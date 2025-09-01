@@ -10,18 +10,28 @@ const Menu = ({Menudata}) => {
           Menudata.length > 0 &&
           Menudata.map((item) => (
             <li key={item.id} className="relative group">
-              <Link
-                href={`${webSetting?.purchaseType==="wholesale" ? `/wholesale/${item.url}` :`/retail/${item.url}`}`}
-                className="flex items-center gap-1 px-3 py-2 text-black-900 hover:text-red-400 font-normal transition-colors"
-              >
-                {item.name}
-                {item?.children && item.children.length > 0 && (
-                  <ChevronDown
-                    size={16}
-                    className="transition-transform duration-200 group-hover:rotate-180 mt-1"
-                  />
-                )}
-              </Link>
+              {
+
+              }
+             <Link
+  href={
+    item.url === "wholesale"
+      ? "/wholesale"
+      : webSetting?.purchaseType === "wholesale"
+      ? `/wholesale/${item.url}`
+      : `/retail/${item.url}`
+  }
+  className="flex items-center gap-1 px-3 py-2 text-black-900 hover:text-red-400 font-normal transition-colors"
+>
+  {item.name}
+  {item?.children && item.children.length > 0 && (
+    <ChevronDown
+      size={16}
+      className="transition-transform duration-200 group-hover:rotate-180 mt-1"
+    />
+  )}
+</Link>
+
 
               {item?.children && item.children.length > 0 && (
                 <div

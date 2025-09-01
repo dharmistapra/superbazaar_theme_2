@@ -6,8 +6,8 @@ import { getCategoryFilter, getCategoryProducts } from "@/services/productServic
 import ProductCardSkeleton from "@/components/ProductCardSkeleton";
 import cleanFilters from "@/helper/FilterClean";
 const Filtertheme1 = dynamic(() => import("./Filtertheme1"))
-const ProductCard = dynamic(() => import("@/theme/theme1/components/Cards/ProductCards"))
-const Pagination = dynamic(() => import("@/theme/theme1/components/Pagination/Pagination"))
+const ProductCard = dynamic(() => import("@/components/cards/ProductCards"))
+const Pagination = dynamic(() => import("@/components/Pagination"))
 const SelectedFilters = dynamic(() => import("@/components/SelctedFilter"))
 const Productstheme1 = ({ category }) => {
     const [grid, setGrid] = useState(4);
@@ -62,7 +62,13 @@ const Productstheme1 = ({ category }) => {
     ];
     return (
         <>
-            <div className="container mx-auto px-4 mt-7">
+            <div className="mx-auto px-4 mt-7  
+  w-full 
+  sm:max-w-[540px] 
+  md:max-w-[720px] 
+  lg:max-w-[960px] 
+  xl:max-w-[1240px] 
+  2xl:max-w-[1320px]">
                 <div className="flex flex-wrap justify-between items-center mb-6 gap-4">
                     <button
                         onClick={() => setOpen(!open)}

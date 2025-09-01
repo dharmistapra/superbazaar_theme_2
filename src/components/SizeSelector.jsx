@@ -32,7 +32,6 @@ const SizeSelector = ({ sizes = [], onChange, errors, setErrors }) => {
           </button>
         ))}
       </div>
-      {errors && <p className="text-red-800">{errors}</p>}
     </div>
   );
 };

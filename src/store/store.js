@@ -5,6 +5,7 @@ import CurrencySlice from "./slice/CurrencySlice"
 import WishlistSlice from "./slice/WishlistSlice"
 import CartItemSlice from "./slice/cartItemSlice";
 import WebSettingSlice from "./slice/webSettingSlice";
+import CategorySlice from "./slice/categorySlice"
 export const store=configureStore({
     reducer:{
         modal:ModalReucer,
@@ -12,6 +13,7 @@ export const store=configureStore({
         currency:CurrencySlice,
         wishlist:WishlistSlice,
         cartItem:CartItemSlice,
-        webSetting:WebSettingSlice
+        webSetting:WebSettingSlice,
+        categorystore:CategorySlice
     }
 })

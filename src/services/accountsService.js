@@ -5,7 +5,6 @@ export const getUserInfo = async (id) => {
     const res = await axiosInstance.get(`protected/user/profile/${id}`);
     return res.data?.data || {};
   } catch (error) {
-    console.log(error)
     return error;
   }
 };
