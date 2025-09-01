@@ -39,10 +39,9 @@ const Products = ({ tabsData = [], purchaseType }) => {
             key={tab.url}
             onClick={() => setActive(tab.url)}
             className={`pb-2 text-sm sm:text-base md:text-lg lg:text-xl font-medium transition-colors duration-300
-              ${
-                active === tab.url
-                  ? "text-black border-b-2 border-black"
-                  : "text-gray-500 hover:text-black"
+              ${active === tab.url
+                ? "text-black border-b-2 border-black"
+                : "text-gray-500 hover:text-black"
               }`}
           >
             {tab.title}

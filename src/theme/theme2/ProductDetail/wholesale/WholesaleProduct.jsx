@@ -4,14 +4,12 @@ import dynamic from "next/dynamic";
 import { SlidersHorizontal, LayoutList, Grip, GripVertical } from "lucide-react";
 import { getCategoryProducts, getWholeSaleProductslists } from "@/services/productService";
 import ProductCardSkeleton from "@/components/ProductCardSkeleton";
-import CatalogueCard from "../../../../components/cards/CatalogueCard";
-import { usePathname } from "next/navigation";
-const ProductCard = dynamic(() => import("@/components/cards/ProductCards"))
-const Pagination = dynamic(() => import("@/components/Pagination"))
-const WholeSaleProductList = ({ category }) => {
-    const pathname = usePathname();
+import Pagination from "@/theme/theme1/components/Pagination/Pagination";
+import CatalogCard from "./component/CatalogCard";
 
+const WholesaleProduct = ({ category }) => {
     const [grid, setGrid] = useState(4);
+    const [open, setOpen] = useState(false);
     const [sort, setSort] = useState("");
     const [page, setPage] = useState(1);
     const [products, setProducts] = useState([]);
@@ -49,15 +47,13 @@ const WholeSaleProductList = ({ category }) => {
         { icon: Grip, value: 3, label: "3 Grid" },
         { icon: GripVertical, value: 4, label: "4 Grid" },
     ];
-
-
     return (
         <div className="mx-auto px-4 mt-10  
   w-full 
   sm:max-w-[540px] 
   md:max-w-[720px] 
   lg:max-w-[960px] 
-  xl:max-w-[1240px] 
+  xl:max-w-[1140px] 
   2xl:max-w-[1320px]">
             <div className="flex flex-wrap justify-between items-center mb-6 gap-4">
                 <div className="hidden md:flex items-center gap-5">
@@ -106,7 +102,7 @@ const WholeSaleProductList = ({ category }) => {
                 ) : products?.length > 0 ? (
                     products.map((item, index) => (
                         <div key={index}>
-                            <CatalogueCard data={item} grid={grid} />
+                            <CatalogCard product={item} grid={grid} />
                         </div>
                     ))
                 ) : (
@@ -128,4 +124,4 @@ const WholeSaleProductList = ({ category }) => {
     );
 };
 
-export default WholeSaleProductList;
+export default WholesaleProduct;

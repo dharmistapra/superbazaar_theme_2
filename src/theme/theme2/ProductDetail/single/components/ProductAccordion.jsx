@@ -3,19 +3,12 @@ import React, { useState } from 'react'
 import StitchingForm from './StitchingForm'
 import Link from 'next/link';
 
-const ProductAccordion = ({ product, Stitching, setStitchingData, attributes, SizeSelector, }) => {
+const ProductAccordion = ({ product, Stitching, setStitchingData, attributes }) => {
     const [open, setOpen] = useState("stitching");
-    const [selectedSize, setSelectedSize] = useState(null);
-    const [errors, setErrors] = useState({
-        size: "",
-        quantity: "",
-        color: "",
-    });
 
     const toggle = (section) => {
         setOpen(open === section ? null : section);
     };
-    console.log(product, SizeSelector, "product in accordion");
 
     return (
         <div>
@@ -53,7 +46,6 @@ const ProductAccordion = ({ product, Stitching, setStitchingData, attributes, Si
                             <table className="w-full border border-gray-200">
                                 <tbody>
                                     {attributes?.attributeValues?.map((attr, index) => {
-                                        console.log(attr.values, "attr in accordion");
                                         return (
                                             <tr
                                                 key={index}

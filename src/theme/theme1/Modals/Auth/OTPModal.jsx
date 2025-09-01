@@ -24,9 +24,9 @@ export default function ForgetPasswordModal() {
         const response = await axiosInstance.post("verify-otp", values)
         if (response.data.isSuccess) {
           const expiryTime = Date.now() + 4 * 60 * 1000;
-           localStorage.setItem("otp",values.otp)
-           localStorage.setItem("otp_expiry", expiryTime);
-         await close("otp")
+          localStorage.setItem("otp", values.otp)
+          localStorage.setItem("otp_expiry", expiryTime);
+          await close("otp")
           open("confirmPassword")
         }
       } catch (error) {
@@ -138,7 +138,7 @@ export default function ForgetPasswordModal() {
               " Verify OTP"
             )}
           </button>
-           {errors && <p className="text-red-400 text-sm">{errors}</p>}
+          {errors && <p className="text-red-400 text-sm">{errors}</p>}
         </form>
       </div>
     </div>
