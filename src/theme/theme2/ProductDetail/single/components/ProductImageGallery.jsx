@@ -1,45 +1,106 @@
+// "use client";
+// import { useState } from "react";
+// import Image from "next/image";
+// import { Fancybox } from "@fancyapps/ui";
+// import "@fancyapps/ui/dist/fancybox/fancybox.css";
+
+// const ProductImageGallery = ({ images, thumbs }) => {
+//   const [selectedImage, setSelectedImage] = useState(images[0]);
+
+//   const handleFancyBox = (startIndex) => {
+//     Fancybox.show(
+//       images.map((img) => ({
+//         src: `https://cdn.superbazaar.in/${img}`,
+//         type: "image",
+//       })),
+//       {
+//         Thumbs: { autoStart: true },
+//         startIndex,
+//       }
+//     );
+//   };
+
+//   return (
+//     <div className="flex flex-col md:flex-row gap-4">
+//       <div className="flex md:flex-col gap-2 order-2 md:order-1">
+//         {thumbs.map((thumb, index) => (
+//           <button
+//             key={index}
+//             onClick={() => { setSelectedImage(images[index]) }}
+//             className={`border rounded-md overflow-hidden ${selectedImage === images[index]
+//               ? "border-dashed border-gray-800"
+//               : "border-gray-300"
+//               }`}
+//           >
+//             <Image
+//               src={`https://cdn.superbazaar.in/${thumb}`}
+//               alt={`Thumb ${index + 1}`}
+//               width={80}
+//               height={100}
+//               className="object-cover"
+//             />
+//           </button>
+//         ))}
+//       </div>
+
+//       <div className="relative w-full flex-1 cursor-pointer order-1 md:order-2">
+//         <a
+//           href={`https://cdn.superbazaar.in/${selectedImage}`}
+//           data-fancybox="gallery"
+//           onClick={(e) => {
+//             e.preventDefault();
+//             handleFancyBox(images.indexOf(selectedImage));
+//           }}
+//         >
+//           <Image
+//             src={`https://cdn.superbazaar.in/${selectedImage}`}
+//             alt="Product"
+//             width={600}
+//             height={500}
+//             className="w-full h-auto rounded transition-transform duration-200 ease-out"
+//           />
+//         </a>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default ProductImageGallery;
+
 "use client";
 import { useState } from "react";
 import Image from "next/image";
+import { Fancybox } from "@fancyapps/ui";
+import "@fancyapps/ui/dist/fancybox/fancybox.css";
+import { Heart } from "lucide-react"; // wishlist icon
 
 const ProductImageGallery = ({ images, thumbs }) => {
   const [selectedImage, setSelectedImage] = useState(images[0]);
-  const [zoomStyle, setZoomStyle] = useState({});
-  const [isZoomed, setIsZoomed] = useState(false);
-  const [lensPosition, setLensPosition] = useState({ x: 0, y: 0 });
-  const lensSize = 100;
+  const [inWishlist, setInWishlist] = useState(false);
 
-  const handleMouseMove = (e) => {
-    const { left, top, width, height } = e.currentTarget.getBoundingClientRect();
-    const xPercent = ((e.clientX - left) / width) * 100;
-    const yPercent = ((e.clientY - top) / height) * 100;
-
-    const x = e.clientX - left - lensSize / 2;
-    const y = e.clientY - top - lensSize / 2;
-
-    setZoomStyle({
-      transform: "scale(2.5)",
-      transformOrigin: `${xPercent}% ${yPercent}%`,
-    });
-
-    setLensPosition({ x, y });
-    setIsZoomed(true);
-  };
-
-  const handleMouseLeave = () => {
-    setZoomStyle({});
-    setIsZoomed(false);
+  const handleFancyBox = (startIndex) => {
+    Fancybox.show(
+      images.map((img) => ({
+        src: `https://cdn.superbazaar.in/${img}`,
+        type: "image",
+      })),
+      {
+        Thumbs: { autoStart: true },
+        startIndex,
+      }
+    );
   };
 
   return (
     <div className="flex flex-col md:flex-row gap-4">
-      <div className="flex md:flex-col gap-2 justify-center md:justify-start mt-4 md:mt-0 order-2 md:order-1">
+      {/* Thumbnails */}
+      <div className="flex md:flex-col gap-2 order-2 md:order-1">
         {thumbs.map((thumb, index) => (
           <button
             key={index}
             onClick={() => setSelectedImage(images[index])}
             className={`border rounded-md overflow-hidden ${selectedImage === images[index]
-              ? "border-gray-800"
+              ? "border-dashed border-gray-800"
               : "border-gray-300"
               }`}
           >
@@ -53,32 +114,38 @@ const ProductImageGallery = ({ images, thumbs }) => {
           </button>
         ))}
       </div>
-      <div
-        className="relative w-full flex-1 cursor-crosshair overflow-hidden order-1 md:order-2"
-        onMouseMove={handleMouseMove}
-        onMouseLeave={handleMouseLeave}
-      >
-        <Image
-          src={`https://cdn.superbazaar.in/${selectedImage}`}
-          alt="Product"
-          width={600}
-          height={500}
-          className={`rounded-md  max-h-[700px] transition-transform duration-100 ${isZoomed ? "scale-150" : ""
-            }`}
-          style={zoomStyle}
-        />
 
-        {isZoomed && (
-          <div
-            className="absolute border-2 border-gray-800 shadow-md pointer-events-none"
-            style={{
-              left: `${lensPosition.x}px`,
-              top: `${lensPosition.y}px`,
-              width: `${lensSize}px`,
-              height: `${lensSize}px`,
-            }}
+      {/* Main Image with Wishlist */}
+      <div className="relative w-full flex-1 cursor-pointer order-1 md:order-2">
+        {/* Wishlist button */}
+        <button
+          onClick={() => setInWishlist(!inWishlist)}
+          className="absolute top-3 right-3 z-10 bg-white p-2 rounded-full shadow-md hover:scale-110 transition"
+        >
+          <Heart
+            size={22}
+            className={`${inWishlist ? "fill-red-500 stroke-red-500" : "stroke-gray-600"
+              }`}
           />
-        )}
+        </button>
+
+        {/* Fancybox Main Image */}
+        <a
+          href={`https://cdn.superbazaar.in/${selectedImage}`}
+          data-fancybox="gallery"
+          onClick={(e) => {
+            e.preventDefault();
+            handleFancyBox(images.indexOf(selectedImage));
+          }}
+        >
+          <Image
+            src={`https://cdn.superbazaar.in/${selectedImage}`}
+            alt="Product"
+            width={600}
+            height={500}
+            className="w-full h-auto rounded transition-transform duration-200 ease-out"
+          />
+        </a>
       </div>
     </div>
   );

@@ -4,11 +4,11 @@ const SizeSelector = ({ sizes = [], onChange, errors, setErrors }) => {
   const [activeSize, setActiveSize] = useState(null);
 
   const handleClick = (size) => {
-    if (size.quantity === 0) return; 
+    if (size.quantity === 0) return;
     setActiveSize(size.value);
-    const data={
-      id:size?.id,
-      value:size?.value
+    const data = {
+      id: size?.id,
+      value: size?.value
     }
     if (onChange) onChange(data);
     setErrors(null);

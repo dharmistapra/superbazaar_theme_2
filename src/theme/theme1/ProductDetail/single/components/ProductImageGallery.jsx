@@ -39,11 +39,10 @@ const ProductImageGallery = ({ images, thumbs }) => {
           <button
             key={index}
             onClick={() => setSelectedImage(images[index])}
-            className={`border rounded-md overflow-hidden ${
-              selectedImage === images[index]
-                ? "border-gray-800"
-                : "border-gray-300"
-            }`}
+            className={`border rounded-md overflow-hidden ${selectedImage === images[index]
+              ? "border-gray-800"
+              : "border-gray-300"
+              }`}
           >
             <Image
               src={ImageUrl(thumb)}
@@ -65,9 +64,8 @@ const ProductImageGallery = ({ images, thumbs }) => {
           alt="Product"
           width={600}
           height={500}
-          className={`rounded-md  max-h-[700px] transition-transform duration-100 ${
-            isZoomed ? "scale-150" : ""
-          }`}
+          className={`rounded-md  max-h-[700px] transition-transform duration-100 ${isZoomed ? "scale-150" : ""
+            }`}
           style={zoomStyle}
         />
 

@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { Package, Shirt, Funnel, Columns2, Columns3, Columns4 } from "lucide-react";
 import { getCategoryFilter, getCategoryProducts } from "@/services/productService";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import ProductCard from "../ProductComponent/ProductCard";
 import FilterSidebar from "./FilterSidebar";
 import Pagination from "@/components/Pagination";
@@ -12,6 +12,8 @@ import SelectedFilters from "@/components/SelctedFilter";
 const Productstheme2 = ({ category }) => {
     const router = useRouter();
     const pathname = usePathname();
+    const searchParams = useSearchParams();
+
     const [grid, setGrid] = useState(4);
     const [open, setOpen] = useState(false);
     const [sort, setSort] = useState("new");
@@ -40,14 +42,25 @@ const Productstheme2 = ({ category }) => {
         return params.toString();
     };
 
-
     useEffect(() => {
-        const queryString = buildFilterQuery(selectedAttributes);
-        const newUrl = `/retail/new-arrivals${queryString ? `?${queryString}` : ""}`;
+        if (!searchParams) return;
 
-        // Replace URL without reloading the page
-        router.replace(newUrl);
-    }, [selectedAttributes]);
+        const paramsObj = Object.fromEntries([...searchParams.entries()]);
+        setSelectedAttributes(paramsObj); // load filters from URL
+
+    }, [searchParams, category]); // <--- important: reset filters when category changes
+
+    // Update URL only when filters change
+    useEffect(() => {
+        if (!category) return;
+
+        const queryString = buildFilterQuery(selectedAttributes);
+        const newUrl = `/retail/${category}${queryString ? `?${queryString}` : ""}`;
+
+        if (newUrl !== pathname) {
+            router.replace(newUrl, { scroll: false });
+        }
+    }, [selectedAttributes, pathname, category]);
 
     const fetchProducts = async (filters = {}) => {
         setLoading(true);
@@ -65,7 +78,7 @@ const Productstheme2 = ({ category }) => {
 
     useEffect(() => {
         fetchProducts();
-    }, [page, sort, category]);
+    }, [page, sort,]);
 
     useEffect(() => {
         const fetchFilter = async () => {
