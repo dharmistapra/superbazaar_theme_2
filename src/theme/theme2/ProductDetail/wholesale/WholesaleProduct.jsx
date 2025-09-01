@@ -4,7 +4,6 @@ import dynamic from "next/dynamic";
 import { SlidersHorizontal, LayoutList, Grip, GripVertical } from "lucide-react";
 import { getCategoryProducts, getWholeSaleProductslists } from "@/services/productService";
 import ProductCardSkeleton from "@/components/ProductCardSkeleton";
-import Pagination from "@/theme/theme1/components/Pagination/Pagination";
 import CatalogCard from "./component/CatalogCard";
 
 const WholesaleProduct = ({ category }) => {
@@ -112,14 +111,14 @@ const WholesaleProduct = ({ category }) => {
                 )}
             </div>
 
-            <div className="flex justify-center items-center ">
+            {/* <div className="flex justify-center items-center ">
                 <Pagination
                     currentPage={page}
                     totalCount={totalCount}
                     perPage={20}
                     onPageChange={(p) => setPage(p)}
                 />
-            </div>
+            </div> */}
         </div>
     );
 };
