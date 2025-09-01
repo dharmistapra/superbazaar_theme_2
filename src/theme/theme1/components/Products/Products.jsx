@@ -16,7 +16,6 @@ const Products = ({ tabsData = [], purchaseType }) => {
   }, [tabsData])
 
   const activeTabData = tabsData.find((tab) => tab.url === active)
-  console.log(active)
 
 
   const products =
