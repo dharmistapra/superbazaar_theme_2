@@ -3,9 +3,10 @@ import Link from "next/link";
 import { Heart } from "lucide-react";
 import Image from "next/image";
 import { ImageUrl } from "@/helper/imageUrl";
+import PriceConverter from "@/components/PriceConverter";
 
-const CatalogCard = ({ product }) => {
-    console.log(product, "<================= product");
+const CatalogCard = ({ product, category }) => {
+    console.log("product ===> ", product, category);
 
     return (
         <div >
@@ -13,14 +14,13 @@ const CatalogCard = ({ product }) => {
 
                 {/* Product Image */}
                 <div className="relative w-full">
-                    <Link href="/catalogue/new-arrivals/georgette-readymade-palazzo-set-jasmine">
+                    <Link href={`/catalogue/${category}/${product.url}`}>
                         <div className="block relative w-full">
                             <Image
                                 src={ImageUrl(product.coverImage)}
                                 alt="Georgette Readymade Palazzo Set"
                                 width={1000}
                                 height={1500}
-
                                 className="w-full object-cover bg-gray-200"
                                 priority
                             />
@@ -48,17 +48,17 @@ const CatalogCard = ({ product }) => {
                 <div className="text-center p-2 bg-gray-50">
                     <h3 className="truncate font-semibold text-sm">
                         <Link href="/catalogue/new-arrivals/georgette-readymade-palazzo-set-jasmine">
-                            <p className="hover:underline">Georgette Readymade Palazzo Set</p>
+                            <p className="hover:underline">{product.name}</p>
                         </Link>
                     </h3>
 
                     <div className="flex justify-between mt-2 text-sm">
                         <div className="hidden sm:block">
-                            <div>Rs 3,578.00</div>
+                            <div><PriceConverter price={product.average_price} /></div>
                             <span className="text-gray-500 text-xs">AVG PRICE</span>
                         </div>
                         <div>
-                            <div>Rs 10,735.00</div>
+                            <div>Rs <PriceConverter price={product.offer_price} /></div>
                             <span className="text-gray-500 text-xs hidden sm:block text-center">FULL PRICE</span>
                         </div>
                     </div>

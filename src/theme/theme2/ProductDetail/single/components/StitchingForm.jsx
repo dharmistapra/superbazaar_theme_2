@@ -84,11 +84,8 @@ export default function StitchingForm({ stitchingData, onChange }) {
 
     return (
         <>
-
-
-
             <div className="px-4 pb-4 text-sm border-">
-                {stitchingData.map((section) => (
+                {stitchingData?.map((section) => (
                     <div key={section.id} className="mb-6">
                         {/* Section Title */}
                         <h4 className="font-semibold mb-2">{section.name}</h4>

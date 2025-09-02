@@ -6,6 +6,9 @@ import MobileMenu from "./component/MobileMenu"
 import Link from "next/link"
 import MobileNav from "./component/MobileNav"
 import data from "@/data/MenuData"
+import { setWebSetting } from "@/store/slice/webSettingSlice"
+import { getWebSetting } from "@/services/webSetting"
+import { useDispatch, useSelector } from "react-redux"
 
 const currencies = [
     { code: "USD", flag: "https://flagcdn.com/us.svg" },
@@ -29,6 +32,17 @@ const NavBar = () => {
     const currencyRef = useRef(null)
     const userRef = useRef(null)
     const [isSticky, setIsSticky] = useState(false);
+    const dispatch = useDispatch();
+    const webSetting = useSelector(state => state.webSetting.webSetting)
+
+    const fetchData = async () => {
+        const data = await getWebSetting();
+        dispatch(setWebSetting(data));
+    }
+
+    useEffect(() => {
+        fetchData();
+    }, []);
 
     useEffect(() => {
         const handleScroll = () => {
@@ -195,8 +209,7 @@ const NavBar = () => {
                             {data.map((item) => (
                                 <div key={item.id} className="relative group">
                                     <Link
-                                        // href={`${purchaseType === "wholesale" ? `/wholesale/${item.url}` : `/retail/${item.url}`}`}
-                                        href={`/retail/${item.url}`}
+                                        href={`${webSetting.purchaseType === "wholesale" ? `/wholesale/${item.url}` : `/retail/${item.url}`}`}
                                         className="hover:text-red-800 flex items-center text-[17px] text-gray-700 tracking-[1px]"
                                     >
                                         {item.name}

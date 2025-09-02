@@ -16,7 +16,7 @@ const SizeSelector = ({ sizes = [], onChange, errors, setErrors }) => {
 
   return (
     <div>
-      <h2 className="text-lg font-semibold p-2">Sizes</h2>
+      <h2 className="text-lg font-semibold mb-1">Sizes</h2>
       <div className="flex gap-2 flex-wrap">
         {sizes.map((size) => (
           <button

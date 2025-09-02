@@ -4,6 +4,8 @@ export const getCataloguedetail = async (url) => {
   try {
     const axiosInstance = await createServerAxios();
     const res = await axiosInstance.get(`/catalogueproduct/${url}`);
+    console.log("res catlog detail ===>", res);
+
     return res.data;
   } catch (error) {
     console.error("Error fetching product detail:", error);
@@ -31,9 +33,9 @@ export const getRelatedCatalogue = async (url) => {
   }
 };
 
-export const getAllCatalogue = async (page,category,perPage=20,sortOption) => {
+export const getAllCatalogue = async (page, category, perPage = 20, sortOption) => {
   try {
-    const url= `/wholesale?page=${page}&perPage=20${category}&sortOption=${sortOption}`
+    const url = `/wholesale?page=${page}&perPage=20${category}&sortOption=${sortOption}`
     const axiosInstance = await createClientAxios();
     const res = await axiosInstance.get(url);
     return res.data;

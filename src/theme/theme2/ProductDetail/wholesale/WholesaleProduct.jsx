@@ -75,8 +75,6 @@ const WholesaleProduct = ({ category }) => {
                     })}
                 </div>
                 <div className="flex items-center gap-3">
-
-
                     <select
                         value={sort}
                         onChange={(e) => setSort(e.target.value)}
@@ -101,7 +99,7 @@ const WholesaleProduct = ({ category }) => {
                 ) : products?.length > 0 ? (
                     products.map((item, index) => (
                         <div key={index}>
-                            <CatalogCard product={item} grid={grid} />
+                            <CatalogCard product={item} grid={grid} category={category} />
                         </div>
                     ))
                 ) : (
