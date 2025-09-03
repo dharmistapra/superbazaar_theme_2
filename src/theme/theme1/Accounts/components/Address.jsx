@@ -93,8 +93,7 @@ const AddressTheme1 = () => {
         className={`overflow-hidden transition-all duration-500 ${showForm
           ? "max-h-[1500px] opacity-100 scale-100"
           : "max-h-0 opacity-0 scale-95"
-          }`}
-      >
+          }`}>
         <form
           onSubmit={handleSubmit}
           className="grid md:grid-cols-2 gap-4 border rounded-xl p-6 shadow-lg bg-white mb-6 mt-2"
@@ -247,7 +246,7 @@ const AddressTheme1 = () => {
         handleDelete={handleDelete}
         fetchAddress={fetchAddress} />
     </div>
-  );
+  )
 };
 
 export default AddressTheme1;

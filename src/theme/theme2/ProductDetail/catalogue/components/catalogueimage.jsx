@@ -11,7 +11,6 @@ export default function CatalogueImages({
   brandpath,
   category,
 }) {
-  console.log("catalogDetails ==>", catalogDetails);
 
   return (
     <div className="w-full px-2">

@@ -37,7 +37,6 @@ const Catalogue = ({ CatalogueDetailData, stitching, category }) => {
     const toggleWishlist = () => setWishlist((prev) => !prev);
     const toggleCompare = () => setCompare((prev) => !prev);
     const brandUrl = CatalogueDetailData.CatalogueBrand[0]?.brand.url
-    console.log("CatalogueDetailData ====>", CatalogueDetailData, brandUrl);
     const handleAddtoCart = async () => {
         setErrors(null);
         if (CatalogueDetailData?.optionType === "Size" && Object.keys(selectedSize)?.length == 0) {

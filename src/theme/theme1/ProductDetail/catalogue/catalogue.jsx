@@ -13,6 +13,8 @@ import { addToCartProduct, getCartItems } from "@/services/cartService"
 import { setCartItems } from "@/store/slice/cartItemSlice"
 import { openCart } from "@/store/slice/MiniCartSlice"
 import SharePopup from "../single/components/SharePopup"
+import Link from "next/link"
+import WishlistButton from "@/components/cards/attribute/WishlistButton"
 const Catalogue = ({ CatalogueDetailData, stitching, category }) => {
     const dispatch = useDispatch()
     const { open } = useModal();
@@ -79,12 +81,12 @@ const Catalogue = ({ CatalogueDetailData, stitching, category }) => {
                     <div className="flex flex-col gap-4 md:gap-2">
                         <div>
                             {CatalogueDetailData?.CatalogueBrand?.map((item, index) => (
-                                <a
+                                <Link
                                     key={index}
                                     href={`/brand/catalogue/${item?.brand.url}`}
                                     className="text-blue-600 hover:underline">
                                     {item.brand.name}
-                                </a>
+                                </Link>
                             ))}
                             <h1 className="text-xl font-medium">{CatalogueDetailData?.name}</h1>
                             <p className="text-gray-500 mt-1">{CatalogueDetailData?.cat_code}</p>
@@ -123,15 +125,9 @@ const Catalogue = ({ CatalogueDetailData, stitching, category }) => {
                                     className="w-12 py-2 bg-gray-200 hover:bg-gray-300 transition text-lg font-bold">
                                     +
                                 </button>
+                                {console.log(CatalogueDetailData)}
                             </div>
-                            <button
-                                onClick={toggleWishlist}
-                                className={`p-2 rounded-lg border transition ${wishlist
-                                    ? "bg-zinc-900 text-white border-zinc-900"
-                                    : "bg-white text-gray-700 border-zinc-900 hover:bg-zinc-900 hover:text-white"
-                                    }`}>
-                                <Heart className="w-5 h-5" />
-                            </button>
+                                <WishlistButton variant="detail" catalogueId={CatalogueDetailData?.id} type="catalogue"/>
                             <button
                                 onClick={toggleCompare}
                                 className={`p-2 rounded-lg border transition ${compare

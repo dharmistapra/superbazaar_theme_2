@@ -4,7 +4,6 @@ export const getCataloguedetail = async (url) => {
   try {
     const axiosInstance = await createServerAxios();
     const res = await axiosInstance.get(`/catalogueproduct/${url}`);
-    console.log("res catlog detail ===>", res);
 
     return res.data;
   } catch (error) {

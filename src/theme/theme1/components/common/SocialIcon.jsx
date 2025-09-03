@@ -30,9 +30,9 @@ const SocialIcon = ({ socialMedia }) => {
   return (
     <div className="flex gap-3 mt-4">
       {socialMedia?.map((media, index) => {
-        const Icon = ICONS[media.icon.toLowerCase()];
+        const Icon = ICONS[media.name.toLowerCase()];
         const bgColor =
-          BG_COLORS[media.icon.toLowerCase()] ||
+          BG_COLORS[media.name.toLowerCase()] ||
           "bg-gray-500 hover:bg-gray-600";
 
         return (

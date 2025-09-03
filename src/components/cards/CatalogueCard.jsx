@@ -33,7 +33,7 @@ const CatalogueCard = ({ data, redirectUrl }) => {
           <Label text={data.label} danger={data?.label === "Hot"} />
         )}
         <div className="absolute top-5 right-3 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-all duration-500">
-          <WishlistButton catalogueId={data?.id} type="catalogue" />
+          <WishlistButton catalogueId={data?.id} type="catalogue" variant="card" />
           <QuickViewButton />
         </div>
 

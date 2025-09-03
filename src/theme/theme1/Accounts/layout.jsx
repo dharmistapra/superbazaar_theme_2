@@ -56,8 +56,6 @@ const AccountsLayoutTheme1 = ({ children }) => {
 
 
       </ul>
-
-      {/* Main content */}
       <div className="p-6 shadow-lg rounded-xl w-full bg-white">
         {children}
       </div>

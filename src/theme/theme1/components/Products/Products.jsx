@@ -7,6 +7,7 @@ import "swiper/css"
 import "swiper/css/pagination"
 import SliderNavigation from "../CardsSlider/SliderNavigation"
 import CatalogueCard from "../../../../components/cards/CatalogueCard"
+import ProductCard from "@/components/cards/ProductCards"
 const Products = ({ tabsData = [], purchaseType }) => {
   const [active, setActive] = useState("")
   useEffect(() => {
@@ -14,14 +15,13 @@ const Products = ({ tabsData = [], purchaseType }) => {
       setActive(tabsData[0].url)
     }
   }, [tabsData])
-
   const activeTabData = tabsData.find((tab) => tab.url === active)
 
 
   const products =
     purchaseType === "wholesale"
       ? activeTabData?.products?.catalogue
-      : activeTabData?.products?.Catalogue
+      : activeTabData?.products?.products
 
   return (
     <div
@@ -77,7 +77,10 @@ const Products = ({ tabsData = [], purchaseType }) => {
         >
           {products?.map((data, index) => (
             <SwiperSlide key={index} className="flex justify-center">
-              <CatalogueCard data={data} redirectUrl={`catalogue/${active}`}/>
+              { purchaseType === "wholesale" ?
+              ( <CatalogueCard data={data} redirectUrl={`catalogue/${active}`}/>
+              ):(<ProductCard data={data}  />)
+              }
             </SwiperSlide>
           ))}
         </Swiper>

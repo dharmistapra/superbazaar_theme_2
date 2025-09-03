@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 import FreeShippingProgress from "@/theme/theme1/Modals/Cart/FreeShippingProgress";
 import StitchingOptions from "@/components/StitchingOption";
 import { useCartActions } from "@/hooks/useCartActions";
+import Link from "next/link";
 const CartItems = ({ cartItems }) => {
   const [openCatalogueIds, setOpenCatalogueIds] = useState([]);
   const {
@@ -178,34 +179,45 @@ const CartItems = ({ cartItems }) => {
               <span>₹{totalOrder}</span>
             </div>
           </div>
-          <div className="mt-8 text-center">
-            <button className="mt-6 w-full bg-indigo-600 hover:bg-indigo-700 text-white py-3 rounded-lg font-medium shadow-lg transition-transform transform hover:scale-105">
-              Proceed to Checkout
-            </button>
-            <div className="mt-6 flex flex-col items-center">
-              <Image
-                alt="safe payment"
-                src={"/safepayment.webp"}
-                height={100}
-                width={250}
-                className="rounded-lg object-contain" />
-              <p className="mt-2 text-sm text-zinc-900"> 100% Safe & Secure Payments </p>
-              <div className="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-4 w-full max-w-md">
-                <div className="flex items-center justify-center gap-2 p-3 rounded-lg bg-green-50 shadow-sm">
-                  <Lock className="w-5 h-5 text-green-600" />
-                  <span className="text-sm font-medium text-gray-700">
-                    SSL Encrypted
-                  </span>
-                </div>
-                <div className="flex items-center justify-center gap-2 p-3 rounded-lg bg-yellow-50 shadow-sm">
-                  <ShieldCheck className="w-5 h-5 text-yellow-600" />
-                  <span className="text-sm font-medium text-gray-700">
-                    Money Back Guarantee
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
+          <div className="mt-8  w-full">
+  <Link
+    href="/checkout"
+    className="mt-6 mb-10 block w-full bg-indigo-600 hover:bg-indigo-700 
+               text-white p-3 rounded-lg font-medium shadow-lg 
+               transition-transform transform hover:scale-105 text-center"
+  >
+    Proceed to Checkout
+  </Link>
+
+  <div className="mt-6 flex flex-col items-center">
+    <Image
+      alt="safe payment"
+      src={"/safepayment.webp"}
+      height={100}
+      width={250}
+      className="rounded-lg object-contain"
+    />
+    <p className="mt-2 text-sm text-zinc-900">
+      100% Safe & Secure Payments
+    </p>
+
+    <div className="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-4 w-full max-w-md">
+      <div className="flex items-center justify-center gap-2 p-3 rounded-lg bg-green-50 shadow-sm">
+        <Lock className="w-5 h-5 text-green-600" />
+        <span className="text-sm font-medium text-gray-700">
+          SSL Encrypted
+        </span>
+      </div>
+      <div className="flex items-center justify-center gap-2 p-3 rounded-lg bg-yellow-50 shadow-sm">
+        <ShieldCheck className="w-5 h-5 text-yellow-600" />
+        <span className="text-sm font-medium text-gray-700">
+          Money Back Guarantee
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+
         </div>
       </div>
     </div>

@@ -17,6 +17,7 @@ import { getCartItems } from "@/services/cartService";
 import { setCartItems } from "@/store/slice/cartItemSlice";
 import CurrencySelector from "@/theme/theme1/Home/components/CurrencySelector";
 import { setCategoyData } from "@/store/slice/categorySlice";
+import SeachBar from "./searchBar";
 const MobileMenu = dynamic(() => import("./MobileMenu"))
 const NavbarClient = ({ Menudata, currencyData }) => {
   const router = useRouter()
@@ -81,20 +82,13 @@ const NavbarClient = ({ Menudata, currencyData }) => {
         </div>
 
         <div className="flex-1 max-w-lg mx-6">
-          <div className="relative hidden sm:block">
-            <input
-              type="text"
-              placeholder="Search..."
-              className="w-full pl-4 pr-10 py-3 bg-gray-200 rounded-lg outline-none"
-            />
-            <Search className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500" size={18} />
-          </div>
+          <SeachBar/>
           <div className="sm:hidden flex justify-center">
             <Image src="/logo.png" alt="Logo" width={150} height={150} className="h-10 w-auto" />
           </div>
         </div>
 
-        <div className="flex items-center gap-5 text-black relative" ref={dropdownRef}>
+        <div className="flex items-center gap-5 text-zinc-800 relative" ref={dropdownRef}>
           <CurrencySelector currencyData={currencyData} />
           {session?.accessToken && (
             <>
@@ -104,15 +98,17 @@ const NavbarClient = ({ Menudata, currencyData }) => {
                 </Link>
 
               ) : (
-                <Heart className="cursor-pointer hover:text-black hidden sm:block" size={23} />
+                   <Link href={"/account/wishlist"}>
+                <Heart className="cursor-pointer text-zinc-800 hidden sm:block" size={23} />
+                </Link>
 
               )}
-              <ShoppingBag className="cursor-pointer hover:text-black hidden sm:block" size={23} onClick={handleCartClick} />
+              <ShoppingBag className="cursor-pointer text-zinc-800 hidden sm:block" size={23} onClick={handleCartClick} />
             </>
           )}
           <div className="relative" ref={dropdownRef}>
             <User
-              className="cursor-pointer hover:text-black"
+              className="cursor-pointer text-zinc-800"
               size={23}
               onClick={() => setDropdownOpen(!dropdownOpen)} />
             {dropdownOpen && (
@@ -172,7 +168,7 @@ const NavbarClient = ({ Menudata, currencyData }) => {
         </div>
       </div>
       <Menu Menudata={Menudata} />
-      <MobileMenu open={menuOpen} handleMenu={handleMenu} />
+      <MobileMenu open={menuOpen} handleMenu={handleMenu} Menudata={Menudata}/>
     </nav>
   );
 };

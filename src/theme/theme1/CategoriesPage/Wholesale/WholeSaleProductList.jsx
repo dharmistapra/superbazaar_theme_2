@@ -11,6 +11,7 @@ const Pagination = dynamic(() => import("@/components/Pagination"))
 const WholeSaleProductList = ({ category }) => {
     const pathname = usePathname();
 
+
     const [grid, setGrid] = useState(4);
     const [sort, setSort] = useState("");
     const [page, setPage] = useState(1);
@@ -106,7 +107,7 @@ const WholeSaleProductList = ({ category }) => {
                 ) : products?.length > 0 ? (
                     products.map((item, index) => (
                         <div key={index}>
-                            <CatalogueCard data={item} grid={grid} />
+                            <CatalogueCard data={item} grid={grid} redirectUrl={`catalogue/${pathname?.split("/")?.[2]}`}/>
                         </div>
                     ))
                 ) : (

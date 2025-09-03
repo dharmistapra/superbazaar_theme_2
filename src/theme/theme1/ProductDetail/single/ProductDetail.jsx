@@ -202,6 +202,7 @@ const ProductDetailTheme1 = ({ product, Stitching, attributes, category }) => {
           </div>
         </div>
       </div>
+
       <div className="mt-10">
         <ProductDescription description={product.description} attributes={attributes.attributeValues} />
       </div>

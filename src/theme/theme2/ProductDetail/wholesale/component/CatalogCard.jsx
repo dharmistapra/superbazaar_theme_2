@@ -6,7 +6,6 @@ import { ImageUrl } from "@/helper/imageUrl";
 import PriceConverter from "@/components/PriceConverter";
 
 const CatalogCard = ({ product, category }) => {
-    console.log("product ===> ", product, category);
 
     return (
         <div >
