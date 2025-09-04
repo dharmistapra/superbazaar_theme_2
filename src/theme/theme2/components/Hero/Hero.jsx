@@ -1,16 +1,13 @@
-"use client"
-import React from 'react'
-import { Swiper, SwiperSlide } from "swiper/react"
-import { Pagination, Autoplay } from "swiper/modules"
+"use client";
 
-const Hero = () => {
-    const banners = [
-        "https://cdn.superbazaar.in/uploads/homeBanner/desktop/1751348504025-226916941.webp",
-        "https://cdn.superbazaar.in/uploads/homeBanner/desktop/1751352584027-647670880.webp",
-        "https://cdn.superbazaar.in/uploads/homeBanner/desktop/1751352597318-985055818.webp",
-        "https://cdn.superbazaar.in/uploads/homeBanner/desktop/1753075411720-460759712.jpg",
-    ]
+import React from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Pagination, Autoplay } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/pagination";
+import { ImageUrl } from "@/helper/imageUrl";
 
+const Hero = ({ banners }) => {
     return (
         <section className="slideshow-wrapper mb-4">
             <Swiper
@@ -18,20 +15,28 @@ const Hero = () => {
                 pagination={{ clickable: true }}
                 autoplay={{ delay: 3000 }}
                 loop={true}
-                className="w-full h-[400px] md:h-[auto]"
+                className="w-full"
             >
-                {banners.map((src, index) => (
+                {banners.map((banner, index) => (
                     <SwiperSlide key={index}>
-                        <img
-                            src={src}
-                            alt={`Banner ${index + 1}`}
-                            className="w-full h-full object-cover"
-                        />
+                        <picture>
+                            {/* Mobile Image */}
+                            <source
+                                media="(max-width: 767px)"
+                                srcSet={ImageUrl(banner.mobileImage)}
+                            />
+                            {/* Desktop Image */}
+                            <img
+                                src={ImageUrl(banner.desktopImage)}
+                                alt={`Banner ${index + 1}`}
+                                className="w-full h-[auto] sm:h-[auto] md:h-[auto] lg:h-[auto] object-cover"
+                            />
+                        </picture>
                     </SwiperSlide>
                 ))}
             </Swiper>
         </section>
-    )
-}
+    );
+};
 
-export default Hero
+export default Hero;

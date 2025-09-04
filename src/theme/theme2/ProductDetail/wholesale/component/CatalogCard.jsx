@@ -6,7 +6,6 @@ import { ImageUrl } from "@/helper/imageUrl";
 import PriceConverter from "@/components/PriceConverter";
 
 const CatalogCard = ({ product, category }) => {
-
     return (
         <div >
             <div className="bg-white rounded-lg overflow-hidden shadow hover:shadow-lg transition-shadow relative">
@@ -34,10 +33,11 @@ const CatalogCard = ({ product, category }) => {
                         </div>
                     </Link>
 
-                    {/* Wishlist Button */}
-                    <div className="absolute top-2 right-2">
-                        <button className="bg-white p-1 rounded-full shadow hover:bg-gray-100 transition">
-                            <Heart className="w-4 h-4 text-red-500" />
+
+                    <div className="absolute top-4 right-2">
+                        <button className="p-2 rounded-full bg-white text-gray-700 shadow-md 
+                   transition-all duration-300 hover:bg-black hover:text-white hover:shadow-lg">
+                            <Heart className=" text-red-500" size={18} />
                             <span className="sr-only">Add to Wishlist</span>
                         </button>
                     </div>
@@ -63,7 +63,7 @@ const CatalogCard = ({ product, category }) => {
                     </div>
                 </div>
             </div>
-        </div>
+        </div >
     );
 };
 

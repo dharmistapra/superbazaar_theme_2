@@ -23,8 +23,8 @@ const Banner = ({ bannerdata }) => {
         autoplay={{ delay: 3000, disableOnInteraction: false }}
         pagination={{ clickable: true }}
         breakpoints={{
-          0: { slidesPerView: 1 }, 
-          768: { slidesPerView: 1 }, 
+          0: { slidesPerView: 1 },
+          768: { slidesPerView: 1 },
         }}
         className=""
       >
