@@ -77,7 +77,7 @@ const NavBar = () => {
         <>
             <header className="w-full">
                 {/* Top black bar */}
-                <div className="bg-black text-white text-center text-[12px] p-3">
+                <div className="z-[49] bg-black text-white text-center text-[12px] p-[11px] px-1.5">
                     FREE SHIPPING ON ORDER OVER ₹1000
                 </div>
 
@@ -85,7 +85,7 @@ const NavBar = () => {
                 <header className={`w-full bg-white transition-all duration-300 ${isSticky ? "fixed top-0 left-0 shadow-md z-50" : "relative"
                     }`}>
                     <div className="container mx-auto px-3">
-                        <div className="flex items-center justify-between  py-3">
+                        <div className="flex items-center justify-between py-3">
                             {/* Left: Mobile Menu Icon */}
                             <div className="flex items-center lg:hidden gap-4">
                                 <button>
@@ -210,7 +210,7 @@ const NavBar = () => {
                                 <div key={item.id} className="relative group">
                                     <Link
                                         href={`${webSetting.purchaseType === "wholesale" ? `/wholesale/${item.url}` : `/retail/${item.url}`}`}
-                                        className="hover:text-red-800 flex items-center text-[17px] text-gray-700 tracking-[1px]"
+                                        className="hover:text-red-800 flex items-center text-[17px] text-gray-700 tracking-[2px]"
                                     >
                                         {item.name}
                                     </Link>

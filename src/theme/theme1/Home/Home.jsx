@@ -11,11 +11,11 @@ const TestimonialSlider = dynamic(() => import("./components/Testimonal"))
 const TwoBanner = dynamic(() => import("./components/TwoBanner"))
 export default async function Home() {
   const [bannerdata,
-     HomeContent,
-      testimonal,
-      webSetting
-    ] = await Promise.all(
-        [getHomeBanners(), getHomeContent(), getTestimonal(),getWebSetting()]);
+    HomeContent,
+    testimonal,
+    webSetting
+  ] = await Promise.all(
+    [getHomeBanners(), getHomeContent(), getTestimonal(), getWebSetting()]);
   const homeContentArray = Array.isArray(HomeContent) ? HomeContent : [];
   const productBlocks = homeContentArray.filter(
     (item) => item?.type === "product" && item.categoryId

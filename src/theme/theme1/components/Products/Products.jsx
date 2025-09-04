@@ -77,9 +77,9 @@ const Products = ({ tabsData = [], purchaseType }) => {
         >
           {products?.map((data, index) => (
             <SwiperSlide key={index} className="flex justify-center">
-              { purchaseType === "wholesale" ?
-              ( <CatalogueCard data={data} redirectUrl={`catalogue/${active}`}/>
-              ):(<ProductCard data={data}  />)
+              {purchaseType === "wholesale" ?
+                (<CatalogueCard data={data} redirectUrl={`catalogue/${active}`} />
+                ) : (<ProductCard data={data} />)
               }
             </SwiperSlide>
           ))}

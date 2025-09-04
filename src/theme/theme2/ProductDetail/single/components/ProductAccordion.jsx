@@ -9,27 +9,24 @@ const ProductAccordion = ({ product, Stitching, setStitchingData, attributes }) 
     const toggle = (section) => {
         setOpen(open === section ? null : section);
     };
-
     return (
         <div>
-            <div className='border-b border-gray-200 '>
-                <button
-                    onClick={() => toggle("stitching")}
-                    className={`w-full flex justify-between items-center px-4 py-3 font-semibold 
+            {product.optionType === "Stitching" &&
+                <div className='border-b border-gray-200'>
+                    <button
+                        onClick={() => toggle("stitching")}
+                        className={`w-full flex justify-between items-center px-4 py-3 font-semibold 
       ${open === "stitching" ? "text-blue-600" : "text-gray-800"}`}
-                >
-                    Stitching
-                    <span className="text-xl">{open === "stitching" ? "−" : "+"}</span>
-                </button>
-                {(open === "stitching" && product.optionType === "Stitching") && (
-                    <div className="px-4 pb-4 mt-2 text-sm">
-
-                        <StitchingForm stitchingData={Stitching} onChange={setStitchingData} />
-
-                        {/* <StitchingForm stitchingData={Stitching} onChange={setStitchingData} /> */}
-                    </div>
-                )}
-            </div>
+                    >
+                        Stitching
+                        <span className="text-xl">{open === "stitching" ? "−" : "+"}</span>
+                    </button>
+                    {open === "stitching" && (
+                        <div className="px-4 pb-4 mt-2 text-sm">
+                            <StitchingForm stitchingData={Stitching} onChange={setStitchingData} />
+                        </div>
+                    )}
+                </div>}
 
             <div className='border-b border-gray-200'>
                 <button

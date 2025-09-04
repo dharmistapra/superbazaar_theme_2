@@ -1,8 +1,7 @@
 import { getThemeModules } from "@/theme/themeConfig";
 
-const theme = "theme2";
-
 export default function LoginRoute() {
-    const Login = getThemeModules(theme).Login;
+    const currentTheme = process.env.NEXT_THEME || "theme1";
+    const Login = getThemeModules(currentTheme).Login;
     return <Login />;
 }

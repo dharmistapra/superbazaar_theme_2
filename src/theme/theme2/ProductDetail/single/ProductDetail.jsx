@@ -112,7 +112,7 @@ const ProductDetailTheme2 = ({ product, Stitching, attributes, category }) => {
                 />
               </div>
 
-              <div className="w-full mt-3  rounded-lg  p-4">
+              <div className="w-full mt-3 rounded-lg p-4">
                 <div className="flex flex-col md:flex-row items-center justify-between gap-4">
                   <div className="flex items-center gap-4 w-full  md:w-2/3">
                     <div className="flex items-center border rounded-md py-0.5  ">

@@ -3,7 +3,7 @@ import { useState } from "react"
 import SizeSelector from "@/components/SizeSelector"
 import CatalogueImages from "./components/catalogueimage"
 import StitchingForm from "../single/components/StitchingForm"
-import { CircleQuestionMark, Heart, MessageCircle, Repeat, Share2, ShoppingCart, Loader2, Minus, Plus, Link, MessageCircleMore } from "lucide-react";
+import { CircleQuestionMark, Heart, MessageCircle, Repeat, Share2, ShoppingCart, Loader2, Minus, Plus, MessageCircleMore, Download, FileArchive } from "lucide-react";
 import StaticImage from "@/components/StaticImage"
 import RalatedCatalogue from "./components/realtedCatalogue"
 import { useDispatch } from "react-redux"
@@ -15,6 +15,10 @@ import { openCart } from "@/store/slice/MiniCartSlice"
 import SharePopup from "../single/components/SharePopup"
 import PriceConverter from "@/components/PriceConverter"
 import ProductAccordion from "../single/components/ProductAccordion"
+import OfferBanner from "@/components/OfferBanner"
+import Link from "next/link"
+import WishlistButton from "@/components/cards/attribute/WishlistButton"
+
 const Catalogue = ({ CatalogueDetailData, stitching, category }) => {
     const dispatch = useDispatch()
     const { open } = useModal();
@@ -81,7 +85,9 @@ const Catalogue = ({ CatalogueDetailData, stitching, category }) => {
     return (
         <div className="container mx-auto p-4">
             <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
-                <div className="lg:col-span-7"> <CatalogueImages catalogDetails={CatalogueDetailData} category={category} /> </div>
+                <div className="lg:col-span-7">
+                    <CatalogueImages catalogDetails={CatalogueDetailData} category={category} />
+                </div>
 
                 <div className="lg:col-span-5 lg:sticky lg:top-20 self-start">
                     <div className="">
@@ -153,13 +159,13 @@ const Catalogue = ({ CatalogueDetailData, stitching, category }) => {
                             )}
 
 
-                            <SizeSelector
+                            {CatalogueDetailData?.optionType === "Size" && <SizeSelector
                                 sizes={CatalogueDetailData?.Size}
                                 selectedSize={selectedSize}
                                 setSelectedSize={setSelectedSize}
                                 status={status}
                             />
-                            <div className="border border-gray-200 rounded-lg divide-y shadow-sm mt-5">
+                            }                            <div className="border border-gray-200 rounded-lg divide-y shadow-sm mt-5">
                                 <ProductAccordion
                                     product={CatalogueDetailData}
                                     // Stitching={Stitching}
@@ -169,106 +175,168 @@ const Catalogue = ({ CatalogueDetailData, stitching, category }) => {
                             </div>
                         </div>
 
-                        <form className="mt-3">
-                            <div className="flex flex-col md:flex-row gap-3">
-                                {/* Quantity + Add to Cart */}
-                                <div className="flex flex-1 gap-3 items-center">
-                                    <div className="flex items-center border border-gray-300 rounded">
+                        <div className="w-full mt-3 rounded-lg p-4 px-0 ">
+                            <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+                                <div className="flex items-center gap-4 w-full md:w-2/3">
+                                    <div className="flex items-center border rounded-md py-0.5  ">
                                         <button
                                             type="button"
-                                            disabled={quantity <= 1}
-                                            onClick={() => setQuantity((prev) => Math.max(1, prev - 1))}
-                                            className="px-3 py-1 bg-gray-100 disabled:opacity-50"
+                                            onClick={decrement}
+                                            disabled={quantity === 1}
+                                            className="p-2 disabled:opacity-50"
                                         >
-                                            <Minus className="icon" aria-hidden="true" />
+                                            <Minus className="w-5 h-5 text-gray-600" />
                                         </button>
-
                                         <input
                                             type="text"
-                                            value={quantity}
                                             readOnly
-                                            className="w-12 text-center border-x border-gray-300"
+                                            value={quantity}
+                                            className="w-7 text-center py-1 text-gray-700"
                                         />
-
-                                        <button
-                                            type="button"
-                                            disabled={quantity === CatalogueDetailData?.no_of_product || quantity === selectedSize?.quantity}
-                                            onClick={() => {
-                                                if (CatalogueDetailData.optionType === "Size" && !selectedSize) {
-                                                    setErrorMessage("Please select size");
-                                                    return;
-                                                } else if (CatalogueDetailData.optionType === "Stitching" && !stitching) {
-                                                    setErrorMessage("Please select stitching option");
-                                                    return;
-                                                }
-                                                setQuantity((prev) => prev + 1);
-                                            }}
-                                            className="px-3 py-1 bg-gray-100 disabled:opacity-50"
-                                        >
-                                            <Plus className="icon" aria-hidden="true" />
+                                        <button type="button" onClick={increment} className="p-2">
+                                            <Plus className="w-5 h-5 text-gray-600" />
                                         </button>
                                     </div>
 
-                                    {CatalogueDetailData?.quantity === 0 ? (
-                                        <span className="bg-gray-400 text-white py-2 px-4 rounded w-full text-center">
-                                            Sold out
-                                        </span>
-                                    ) : (
+                                    <Link href="/cart">
                                         <button
                                             type="submit"
-                                            // onClick={handleAddToCart}
-                                            className={`w-full py-2 px-4 rounded ${status === "loading" ? "animate-pulse bg-gray-200" : "bg-green-600 text-white"}`}
+                                            className="bg-white hover:bg-black hover:text-white text-black outline outline-1 px-6 py-2 rounded-md transition whitespace-nowrap"
                                         >
-                                            {btnloading ? (
-                                                <span className="flex items-center justify-center gap-2">
-                                                    <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                                                    Adding...
-                                                </span>
-                                            ) : (
-                                                "Add to cart"
-                                            )}
+                                            Add to cart
                                         </button>
-                                    )}
+                                    </Link>
                                 </div>
 
-                                {/* Wishlist, WhatsApp, Download */}
-                                <div className="flex flex-1 gap-2 items-center">
+                                <div className="flex items-center justify-center gap-3 w-full md:w-2/3">
                                     <button
-                                        disabled={wishlistLoading || CatalogueDetailData?.price === undefined}
-                                        onClick={(e) => handleWishlistClick(e, CatalogueDetailData?.id)}
-                                        className="p-2 bg-gray-100 rounded"
+                                        title="Share on Facebook"
+                                        className="p-2 rounded-md border border-s border-gray-400 hover:bg-blue-100"
                                     >
-                                        {wishlistLoading ? (
-                                            <span className="spinner-border spinner-border-sm"></span>
-                                        ) : isWishlisted ? (
-                                            <Heart className="text-red-500" fill="#dc3545" size={18} />
-                                        ) : (
-                                            <Heart size={18} />
-                                        )}
+                                        <Heart size={18} />
+                                        {/* <Facebook className="w-6 h-6 text-blue-600" /> */}
                                     </button>
-
-                                    <Link
-                                        // href={whatsappURL}
-                                        target="_blank" className="p-2 bg-gray-100 rounded">
-                                        <MessageCircleMore aria-hidden="true" size={18} />
-                                    </Link>
-
-                                    {/* <Suspense fallback={null}>
-                                        <ImageDownloader products={catalogDetails?.Product} status={status} />
-                                    </Suspense> */}
-
-                                    {/* <DownloadZip products={catalogDetails?.Product} status={status} /> */}
+                                    <button
+                                        title="Share on WhatsApp"
+                                        className="p-2 rounded-md border border-s border-gray-400 hover:bg-green-100 "
+                                    >
+                                        <MessageCircle size={18} />
+                                    </button>
+                                    <button
+                                        title="Share on Twitter"
+                                        className="p-2 border rounded-md border-s border-gray-400 hover:bg-sky-100"
+                                    >
+                                        <Download size={18} />
+                                    </button>
+                                    <button
+                                        title="Share on Twitter"
+                                        className="p-2 border rounded-md border-s border-gray-400 hover:bg-sky-100"
+                                    >
+                                        <FileArchive size={18} />
+                                    </button>
                                 </div>
                             </div>
-
-                            {errorMessage && <p className="text-red-600 mt-2">{errorMessage}</p>}
-                        </form>
-
-                        <div className="mt-5">
-                            {/* <Services status={status} /> */}
                         </div>
+                        {/* <form className="mt-3">
+                            <div className="flex flex-col md:flex-row gap-3">
+                                
+                        <div className="flex flex-1 gap-3 items-center">
+                            <div className="flex items-center border border-gray-300 rounded">
+                                <button
+                                    type="button"
+                                    disabled={quantity <= 1}
+                                    onClick={() => setQuantity((prev) => Math.max(1, prev - 1))}
+                                    className="px-3 py-1 bg-gray-100 disabled:opacity-50"
+                                >
+                                    <Minus className="icon" aria-hidden="true" />
+                                </button>
+
+                                <input
+                                    type="text"
+                                    value={quantity}
+                                    readOnly
+                                    className="w-12 text-center border-x border-gray-300"
+                                />
+
+                                <button
+                                    type="button"
+                                    disabled={quantity === CatalogueDetailData?.no_of_product || quantity === selectedSize?.quantity}
+                                    onClick={() => {
+                                        if (CatalogueDetailData.optionType === "Size" && !selectedSize) {
+                                            setErrorMessage("Please select size");
+                                            return;
+                                        } else if (CatalogueDetailData.optionType === "Stitching" && !stitching) {
+                                            setErrorMessage("Please select stitching option");
+                                            return;
+                                        }
+                                        setQuantity((prev) => prev + 1);
+                                    }}
+                                    className="px-3 py-1 bg-gray-100 disabled:opacity-50"
+                                >
+                                    <Plus className="icon" aria-hidden="true" />
+                                </button>
+                            </div>
+
+                            {CatalogueDetailData?.quantity === 0 ? (
+                                <span className="bg-gray-400 text-white py-2 px-4 rounded w-full text-center">
+                                    Sold out
+                                </span>
+                            ) : (
+                                <button
+                                    type="submit"
+                                    // onClick={handleAddToCart}
+                                    className={`w-full py-2 px-4 rounded ${status === "loading" ? "animate-pulse bg-gray-200" : "bg-green-600 text-white"}`}
+                                >
+                                    {btnloading ? (
+                                        <span className="flex items-center justify-center gap-2">
+                                            <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                            Adding...
+                                        </span>
+                                    ) : (
+                                        "Add to cart"
+                                    )}
+                                </button>
+                            )}
+                        </div>
+
+                        <div className="flex flex-1 gap-2 items-center">
+                            <button
+                                disabled={wishlistLoading || CatalogueDetailData?.price === undefined}
+                                onClick={(e) => handleWishlistClick(e, CatalogueDetailData?.id)}
+                                className="p-2 bg-gray-100 rounded"
+                            >
+                                {wishlistLoading ? (
+                                    <span className="spinner-border spinner-border-sm"></span>
+                                ) : isWishlisted ? (
+                                    <Heart className="text-red-500" fill="#dc3545" size={18} />
+                                ) : (
+                                    <Heart size={18} />
+                                )}
+                            </button>
+
+                            <Link
+                                href="#"
+                                // href={whatsappURL}
+                                target="_blank" className="p-2 bg-gray-100 rounded">
+                                <MessageCircleMore aria-hidden="true" size={18} />
+                            </Link>
+
+                           <Suspense fallback={null}>
+                                        <ImageDownloader products={catalogDetails?.Product} status={status} />
+                                    </Suspense> 
+
+                         <DownloadZip products={catalogDetails?.Product} status={status} /> 
                     </div>
                 </div>
+
+                {errorMessage && <p className="text-red-600 mt-2">{errorMessage}</p>}
+            </form> */}
+
+                        <div className="mt-5">
+                            <StaticImage status={status} />
+                        </div>
+                    </div>
+                </div >
 
                 {/* <div className="lg:col-span-5 lg:sticky lg:top-20 self-start">
                     <div className="flex flex-col gap-4 md:gap-2">
@@ -368,21 +436,23 @@ const Catalogue = ({ CatalogueDetailData, stitching, category }) => {
                         </div>
                     </div>
                 </div> */}
-            </div>
+            </div >
 
             <div className="w-full mt-10">
                 <h1 className="text-2xl font-normal text-center mb-10">You May Also Like this</h1>
                 <RalatedCatalogue url={CatalogueDetailData.url} />
             </div>
 
-            {shareOpen && (
-                <SharePopup
-                    isOpen={shareOpen}
-                    onClose={() => setShareOpen(false)}
-                    url={`https://superbazaar.in/`}
-                />
-            )}
-        </div>
+            {
+                shareOpen && (
+                    <SharePopup
+                        isOpen={shareOpen}
+                        onClose={() => setShareOpen(false)}
+                        url={`https://superbazaar.in/`}
+                    />
+                )
+            }
+        </div >
     )
 }
 

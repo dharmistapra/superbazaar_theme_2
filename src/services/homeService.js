@@ -2,7 +2,7 @@ import { createServerAxios } from "./apiClient";
 
 export const getHomeBanners = async () => {
   try {
-    const axiosInstance = await createServerAxios(); 
+    const axiosInstance = await createServerAxios();
     const res = await axiosInstance.get(`/homebanner`);
     return res.data?.data || {};
   } catch (error) {
@@ -20,10 +20,12 @@ export const getHomeContent = async () => {
   }
 };
 
-export const getHomeProductlist = async (url,purchaseType) => {
+export const getHomeProductlist = async (url, purchaseType) => {
   try {
     const axiosInstance = await createServerAxios();
     const res = await axiosInstance.get(`/home-layout/collection/${url}?purchaseType=${purchaseType}`);
+    console.log("get home product ==>", res);
+
     return res.data?.data || {};
   } catch (error) {
     return error;

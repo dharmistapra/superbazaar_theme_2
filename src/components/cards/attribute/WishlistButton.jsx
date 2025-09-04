@@ -10,7 +10,7 @@ const WishlistButton = ({
   catalogueId = null,
   type = "product",
   delay = 0,
-  variant = "card", 
+  variant = "card",
 }) => {
   const { data: session } = useSession()
   const { open } = useModal()
@@ -64,34 +64,31 @@ const WishlistButton = ({
 
   return (
     <div
-      className={`relative flex items-center justify-center ${
-        variant === "card"
-          ? "group/icon transform translate-y-4 opacity-0 transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100"
-          : ""
-      }`}
+      className={`relative flex items-center justify-center ${variant === "card"
+        ? "group/icon transform translate-y-4 opacity-0 transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100"
+        : ""
+        }`}
       style={variant === "card" ? { transitionDelay: `${delay}ms` } : {}}
     >
-    <button
-  onClick={handleWishlistClick}
-  disabled={wishlistLoading}
-  className={`flex items-center justify-center transition-all duration-300 
-    ${
-      variant === "detail"
-        ? `w-10 h-10 rounded-md border ${
-            isWishlisted
+      <button
+        onClick={handleWishlistClick}
+        disabled={wishlistLoading}
+        className={`flex items-center justify-center transition-all duration-300 
+    ${variant === "detail"
+            ? `w-10 h-10 rounded-md border ${isWishlisted
               ? "bg-black text-white"
               : "bg-white text-gray-700 hover:bg-black hover:text-white"
-          }`
-        : "p-2 rounded-full bg-white text-gray-700 shadow-md hover:bg-black hover:text-white hover:shadow-lg"
-    }`}
-  aria-label="Add to Wishlist"
->
-  {wishlistLoading ? (
-    <Loader2 className="h-5 w-5 animate-spin" />
-  ) : (
-    <Heart size={20} className={`${isWishlisted ? "fill-current" : ""}`} />
-  )}
-</button>
+            }`
+            : "p-2 rounded-full bg-white text-gray-700 shadow-md hover:bg-black hover:text-white hover:shadow-lg"
+          }`}
+        aria-label="Add to Wishlist"
+      >
+        {wishlistLoading ? (
+          <Loader2 className="h-5 w-5 animate-spin" />
+        ) : (
+          <Heart size={20} className={`${isWishlisted ? "fill-current" : ""}`} />
+        )}
+      </button>
 
 
       {variant === "card" && (
