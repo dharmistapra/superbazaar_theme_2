@@ -99,16 +99,16 @@ const ProductDetailTheme1 = ({ product, Stitching, attributes, category }) => {
                 {item.brand.name}
               </Link>
             ))}
-           <div>
-            <span>View Full Catalogue: </span>
-             {product?.catalogue?.url && (
+            <div>
+              <span>View Full Catalogue: </span>
+              {product?.catalogue?.url && (
                 <Link
-                href={`/catalogue/${category}/${product?.catalogue?.url}`}
-                className="text-blue-600 hover:underline">
-                {product?.catalogue?.name}
-              </Link>
+                  href={`/catalogue/${category}/${product?.catalogue?.url}`}
+                  className="text-blue-600 hover:underline">
+                  {product?.catalogue?.name}
+                </Link>
               )}
-           </div>
+            </div>
             <h1 className="text-xl font-medium">{product?.name}</h1>
             <p className="text-gray-500 mt-1">{product?.sku}</p>
             <p className="text-xl font-semibold mt-2">

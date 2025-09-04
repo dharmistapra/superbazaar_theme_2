@@ -7,7 +7,6 @@ import {
   Youtube,
 } from "lucide-react";
 
-// Icon map
 const ICONS = {
   facebook: Facebook,
   twitter: Twitter,
@@ -16,12 +15,10 @@ const ICONS = {
   youtube: Youtube,
 };
 
-// Background colors for each platform
 const BG_COLORS = {
   facebook: "bg-blue-600 hover:bg-blue-700",
   twitter: "bg-sky-500 hover:bg-sky-600",
-  instagram:
-    "bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-600 hover:opacity-90",
+  instagram: "bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-600 hover:opacity-90",
   pinterest: "bg-red-600 hover:bg-red-700",
   youtube: "bg-red-500 hover:bg-red-600",
 };

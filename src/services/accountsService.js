@@ -71,3 +71,12 @@ export const postUserWishlist=async(values)=>{
     return error;
   }
 }
+export const getOrderDetails = async (id) => {
+  try {
+    const axiosInstance = await createClientAxios();
+    const res = await axiosInstance.get(`/protected/order/details/${id}`);
+    return res.data || {};
+  } catch (error) {
+    return error;
+  }
+};

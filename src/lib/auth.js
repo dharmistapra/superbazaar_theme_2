@@ -1,5 +1,5 @@
 import CredentialsProvider from "next-auth/providers/credentials";
-import  { createClientAxios } from "../services/apiClient";
+import { createClientAxios } from "../services/apiClient";
 export const authOptions = {
     providers: [
         CredentialsProvider({
@@ -10,7 +10,7 @@ export const authOptions = {
             },
             async authorize(credentials) {
                 try {
-                    const axiosInstance=await createClientAxios()
+                    const axiosInstance = await createClientAxios()
                     const res = await axiosInstance.post(
                         `${process.env.NEXT_PUBLIC_API_URL}login`,
                         {
@@ -32,8 +32,8 @@ export const authOptions = {
                     }
                     return null;
                 } catch (err) {
-                   throw new Error(err?.response?.data?.message || "Login failed");
-                   
+                    throw new Error(err?.response?.data?.message || "Login failed");
+
                 }
             },
         }),
@@ -42,14 +42,14 @@ export const authOptions = {
     callbacks: {
         async jwt({ token, user }) {
             if (user) {
-                 token.id = user.id;     
+                token.id = user.id;
                 token.accessToken = user.accessToken;
                 token.role = user.role;
             }
             return token;
         },
         async session({ session, token }) {
-            session.user.id = token.id;  
+            session.user.id = token.id;
             session.user.role = token.role;
             session.accessToken = token.accessToken;
             return session;

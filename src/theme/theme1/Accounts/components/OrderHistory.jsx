@@ -5,6 +5,7 @@ import { Search, Eye } from "lucide-react";
 import Pagination from "../../../../components/Pagination";
 import { useSession } from "next-auth/react";
 import { postuserOrderHistory } from "@/services/accountsService";
+import Link from "next/link";
 
 const statusColors = {
   PENDING: "bg-yellow-100 text-yellow-700",
@@ -39,31 +40,9 @@ const OrderHistorythem1 = () => {
    useEffect(() => {
     fetchData();
   }, [page, filter, search, session]);
-  const data = [
-    {
-      orderId: "ORD-20250803-0836343",
-      orderDate: "03 August 2025",
-      orderStatus: "PENDING",
-      paymentStatus: "PENDING",
-      amount: "10174.00",
-    },
-    {
-      orderId: "ORD-20250712-0734231",
-      orderDate: "12 July 2025",
-      orderStatus: "COMPLETED",
-      paymentStatus: "PAID",
-      amount: "5450.00",
-    },
-  ];
 
-  const filteredData = useMemo(() => {
-    return data.filter(
-      (item) =>
-        item.orderId.toLowerCase().includes(search.toLowerCase()) ||
-        item.amount.includes(search) ||
-        item.orderDate.toLowerCase().includes(search.toLowerCase())
-    );
-  }, [search, data]);
+
+  
 
   return (
     <div className="p-6 bg-gray-50 min-h-screen">
@@ -146,9 +125,12 @@ const OrderHistorythem1 = () => {
                   </span>
                 </td>
                 <td className="px-6 py-4 text-center">
-                  <button className="p-2 rounded-full hover:bg-blue-100 transition">
+                  <Link 
+                   className="p-2 rounded-full hover:bg-blue-100 transition"
+                  href={`/orders/${order?.orderId}`}>
                     <Eye className="w-5 h-5 text-blue-600" />
-                  </button>
+                  </Link>
+
                 </td>
               </tr>
             ))}
@@ -166,9 +148,9 @@ const OrderHistorythem1 = () => {
         </table>
       </div>
 
-      {/* Mobile cards */}
+     
       <div className="md:hidden space-y-4 mt-6">
-        {filteredData.map((order, idx) => (
+        {orders && orders?.length > 0 && orders?.map((order, idx) => (
           <div
             key={idx}
             className="border rounded-xl shadow-lg p-4 bg-white space-y-2 hover:shadow-xl transition"
