@@ -17,7 +17,7 @@ const CardsSlider3D = ({ slides }) => {
         grabCursor
         centeredSlides={true}
         loop={true}
-        slidesPerView="auto" 
+        slidesPerView="auto"
         autoplay={{
           delay: 2500,
           disableOnInteraction: false,
@@ -31,18 +31,18 @@ const CardsSlider3D = ({ slides }) => {
         }}
         pagination={{ clickable: true }}
         modules={[Autoplay, EffectCoverflow, Pagination]}
-className="max-w-6xl mx-auto"       >
+        className="max-w-6xl mx-auto"       >
         {slides.map((item, index) => (
           <SwiperSlide
             key={index}
             className="!w-[320px] !h-[400px]"
           >
-              <Image
-                src={ImageUrl(item.image)}
-                alt={`Slide ${index + 1}`}
-                fill
-                className="rounded-lg shadow-lg"
-              />
+            <Image
+              src={ImageUrl(item.image)}
+              alt={`Slide ${index + 1}`}
+              fill
+              className="rounded-lg shadow-lg"
+            />
           </SwiperSlide>
         ))}
       </Swiper>

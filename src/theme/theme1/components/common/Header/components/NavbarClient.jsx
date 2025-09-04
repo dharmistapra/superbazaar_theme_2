@@ -41,7 +41,7 @@ const NavbarClient = ({ Menudata, currencyData }) => {
     if (session?.accessToken) {
       fetchProtectedData()
     }
-      dispatch(setCategoyData(Menudata))
+    dispatch(setCategoyData(Menudata))
   }, [session])
   useEffect(() => {
     dispatch(setCurrencyData(currencyData));
@@ -82,7 +82,7 @@ const NavbarClient = ({ Menudata, currencyData }) => {
         </div>
 
         <div className="flex-1 max-w-lg mx-6">
-          <SeachBar/>
+          <SeachBar />
           <div className="sm:hidden flex justify-center">
             <Image src="/logo.png" alt="Logo" width={150} height={150} className="h-10 w-auto" />
           </div>
@@ -94,12 +94,12 @@ const NavbarClient = ({ Menudata, currencyData }) => {
             <>
               {list?.product?.length > 0 || list?.catalogue?.length ? (
                 <Link href={"/account/wishlist"}>
-                <Heart className={`fill-red-500 text-red-500`} size={23} />                
+                  <Heart className={`fill-red-500 text-red-500`} size={23} />
                 </Link>
 
               ) : (
-                   <Link href={"/account/wishlist"}>
-                <Heart className="cursor-pointer text-zinc-800 hidden sm:block" size={23} />
+                <Link href={"/account/wishlist"}>
+                  <Heart className="cursor-pointer text-zinc-800 hidden sm:block" size={23} />
                 </Link>
 
               )}
@@ -168,7 +168,7 @@ const NavbarClient = ({ Menudata, currencyData }) => {
         </div>
       </div>
       <Menu Menudata={Menudata} />
-      <MobileMenu open={menuOpen} handleMenu={handleMenu} Menudata={Menudata}/>
+      <MobileMenu open={menuOpen} handleMenu={handleMenu} Menudata={Menudata} />
     </nav>
   );
 };

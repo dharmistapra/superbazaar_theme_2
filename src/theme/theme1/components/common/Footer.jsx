@@ -40,7 +40,7 @@ const Footer = () => {
 
   return (
     <footer className="w-full mt-10 bg-zinc-950 text-white relative overflow-hidden">
-       <div className="absolute inset-0 bg-[radial-gradient(circle,rgba(255,255,255,0.05)_1px,transparent_1px)] [background-size:15px_15px]"></div>
+      <div className="absolute inset-0 bg-[radial-gradient(circle,rgba(255,255,255,0.05)_1px,transparent_1px)] [background-size:15px_15px]"></div>
 
       <div className="relative max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8 p-8 md:p-10 items-start">
         <div className="flex flex-col gap-4">
@@ -79,10 +79,7 @@ const Footer = () => {
               {openSection === 0 ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
             </span>
           </div>
-          <div
-            className={`transition-all duration-300 overflow-hidden 
-              ${openSection === 0 ? "max-h-screen py-2" : "max-h-0 md:max-h-none md:py-2"}`}
-          >
+          <div className={`transition-all duration-300 overflow-hidden ${openSection === 0 ? "max-h-screen py-2" : "max-h-0 md:max-h-none md:py-2"}`}>
             <ul className="space-y-2 text-sm text-gray-300">
               {data && data?.length > 0 && data.map((item, i) => (
                 <li key={i}>

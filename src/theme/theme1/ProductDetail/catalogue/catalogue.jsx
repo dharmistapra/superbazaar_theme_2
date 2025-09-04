@@ -127,7 +127,7 @@ const Catalogue = ({ CatalogueDetailData, stitching, category }) => {
                                 </button>
                                 {console.log(CatalogueDetailData)}
                             </div>
-                                <WishlistButton variant="detail" catalogueId={CatalogueDetailData?.id} type="catalogue"/>
+                            <WishlistButton variant="detail" catalogueId={CatalogueDetailData?.id} type="catalogue" />
                             <button
                                 onClick={toggleCompare}
                                 className={`p-2 rounded-lg border transition ${compare

@@ -5,6 +5,7 @@ import { useModal } from "@/hooks/useModal"
 import { getUserWishlist, postUserWishlist } from "@/services/accountsService"
 import { useDispatch, useSelector } from "react-redux"
 import { setWishlistData } from "@/store/slice/WishlistSlice"
+
 const WishlistButton = ({
   productId = null,
   catalogueId = null,
@@ -64,8 +65,7 @@ const WishlistButton = ({
 
   return (
     <div
-      className={`relative flex items-center justify-center ${variant === "card"
-        ? "group/icon transform translate-y-4 opacity-0 transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100"
+      className={`relative flex items-center justify-center ${variant === "card" ? "group/icon transform translate-y-4 opacity-0 transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100"
         : ""
         }`}
       style={variant === "card" ? { transitionDelay: `${delay}ms` } : {}}
