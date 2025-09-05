@@ -9,6 +9,7 @@ export const getThemeModules = (theme = "theme1") => {
         Products: load(() => import("./theme1/CategoriesPage/Retail/Productstheme1")),
         Home: load(() => import("./theme1/Home/Home")),
         AccountDetail: load(() => import("./theme1/Accounts/components/AccountDetailtheme1")),
+        Cart: load(() => import("./theme1/Cart/CartPage")),
         Address: load(() => import("./theme1/Accounts/components/Address")),
         OrderHistory: load(() => import("./theme1/Accounts/components/OrderHistory")),
         Wishlist: load(() => import("./theme1/Accounts/components/Whishlist")),
@@ -44,6 +45,7 @@ export const getThemeModules = (theme = "theme1") => {
         WholeSaleProductList: load(() => import("./theme2/ProductDetail/wholesale/WholesaleProduct")),
         OrderDetail: load(() => import("./theme1/Accounts/components/orderDetails")),
         Invoice: load(() => import("./theme1/Accounts/components/Invoice")),
+        Cart: load(() => import("./theme2/Cart/CartPage"))
       };
     default:
       return getThemeModules("theme1");

@@ -42,7 +42,7 @@ const WishlistTheme1 = () => {
       {activeTab === "catalogues" && (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {catalogues.length > 0 ? (
-            catalogues.map((item, index) => ( <CatalogueCard data={item} key={index}/>))
+            catalogues.map((item, index) => (<CatalogueCard data={item} key={index} />))
           ) : (
             <p className="text-gray-600">No catalogues in your wishlist.</p>
           )}

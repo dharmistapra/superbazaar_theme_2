@@ -85,7 +85,7 @@ const MiniCart = () => {
 
                       {size?.value && <p className="block">Size: {size?.value}</p>}
 
-                      <StitchingOptions stitching={item.stitching}/>
+                      <StitchingOptions stitching={item.stitching} />
                       <div className="flex items-center border border-gray-400 rounded-md overflow-hidden w-20 mt-2">
                         <button
                           disabled={item.quantity <= 1 || isLoading}
@@ -163,7 +163,6 @@ const MiniCart = () => {
             <p> <PriceConverter price={cartItems?.totalOrder || 0} /> </p>
           </div>
 
-         
 
            <Link
           href="/cart"

@@ -4,9 +4,9 @@ import { Autoplay, Navigation } from "swiper/modules"
 import "swiper/css"
 import Image from "next/image"
 import SliderNavigation from "./SliderNavigation"
-const NormalSliderCard = () => {
-  const sliderData = []
+import { ImageUrl } from "@/helper/imageUrl"
 
+const NormalSliderCard = ({ slides }) => {
   return (
     <div className="container mx-auto px-4 mt-7">
       <div className="relative">
@@ -29,22 +29,24 @@ const NormalSliderCard = () => {
             1280: { slidesPerView: 5 },
           }}
         >
-          {sliderData.map((item, index) => (
-            <SwiperSlide
-              key={index}
-              className="overflow-hidden shadow-lg bg-white rounded-lg"
-            >
-              <div className="relative w-full h-60 sm:h-72 md:h-80 lg:h-[400px]">
-                <Image
-                  src={item}
-                  alt={`Slide ${index + 1}`}
-                  fill
-                  priority={index === 0}
-                  className="object-cover"
-                />
-              </div>
-            </SwiperSlide>
-          ))}
+          {slides.map((item, index) => {
+            return (
+              <SwiperSlide
+                key={index}
+                className="overflow-hidden shadow-lg bg-white rounded-lg"
+              >
+                <div className="relative w-full h-60 sm:h-72 md:h-80 lg:h-[400px]">
+                  <Image
+                    src={ImageUrl(item.image)}
+                    alt={`Slide ${index + 1}`}
+                    fill
+                    priority={index === 0}
+                    className="object-cover"
+                  />
+                </div>
+              </SwiperSlide>
+            )
+          })}
         </Swiper>
       </div>
 

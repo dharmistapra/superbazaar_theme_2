@@ -131,7 +131,6 @@ const Catalogue = ({ CatalogueDetailData, stitching, category }) => {
                                 </button>
                             </div>
                             <WishlistButton variant="detail" catalogueId={CatalogueDetailData?.id} type="catalogue" />
-
                             <button
                                 onClick={() => setShareOpen(true)}
                                 className="p-2 rounded-lg border bg-white text-gray-700 border-zinc-900 hover:bg-zinc-900 hover:text-white transition">

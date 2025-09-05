@@ -32,13 +32,11 @@ export default function Login() {
             if (res?.error) {
                 setResErrors("Invalid email or password");
             } else {
-                // get session token from next-auth
                 const session = await fetch("/api/auth/session").then(r => r.json());
                 if (session?.accessToken) {
                     localStorage.setItem("token", session.accessToken);
                 }
 
-                // redirect or navigate
                 const from = searchParams.get("from");
                 if (!from || from === "/") router.push("/");
                 else router.replace(from);

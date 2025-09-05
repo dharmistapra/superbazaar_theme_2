@@ -4,7 +4,7 @@ import Image from "next/image";
 import { ImageUrl } from "@/helper/imageUrl";
 import { useDispatch, useSelector } from "react-redux";
 
-import { setSelectedCurrency,loadSelectedCurrency } from "@/store/slice/CurrencySlice";
+import { setSelectedCurrency, loadSelectedCurrency } from "@/store/slice/CurrencySlice";
 const CurrencySelector = ({ currencyData }) => {
   const dispatch = useDispatch();
   const { selected } = useSelector((state) => state.currency);
@@ -13,7 +13,7 @@ const CurrencySelector = ({ currencyData }) => {
 
   useEffect(() => {
     if (currencyData?.length) {
-      dispatch(loadSelectedCurrency()); 
+      dispatch(loadSelectedCurrency());
       if (!selected) {
         const inr = currencyData.find((c) => c.code === "INR") || currencyData[0];
         dispatch(setSelectedCurrency(inr));
@@ -60,10 +60,9 @@ const CurrencySelector = ({ currencyData }) => {
                   key={cur.id}
                   onClick={() => handleSelect(cur)}
                   className={`flex flex-col items-center justify-start gap-1 cursor-pointer p-2 rounded-md
-                    ${
-                      isSelected
-                        ? "bg-gray-200 border border-gray-400"
-                        : "hover:bg-gray-100"
+                    ${isSelected
+                      ? "bg-gray-200 border border-gray-400"
+                      : "hover:bg-gray-100"
                     }`}
                 >
                   <Image

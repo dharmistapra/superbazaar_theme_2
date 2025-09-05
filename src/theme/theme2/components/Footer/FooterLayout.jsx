@@ -1,14 +1,48 @@
 "use client";
 
+import { ImageUrl } from "@/helper/imageUrl";
+import { getPolicies, getSocialIcon } from "@/services/cmsService";
+import { getWebSetting } from "@/services/webSetting";
+import { setWebSetting } from "@/store/slice/webSettingSlice";
 import { Mail, MoveUp } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import * as LucideIcons from "lucide-react";
 
 const FooterLayout = () => {
+    const dispatch = useDispatch();
     const [showScroll, setShowScroll] = useState(false);
+    const { data } = useSelector((state) => state?.categorystore)
+    const [cmsData, setCmsData] = useState([])
+    const [socialIcons, setSocialIcons] = useState([])
+    const [webSetting, setWebSettingState] = useState({})
 
-    // Scroll-to-top functionality
+    const socialColors = {
+        facebook: "bg-blue-600 text-white hover:bg-blue-700",
+        twitter: "bg-sky-500 text-white hover:bg-sky-600",
+        instagram: "bg-pink-500 text-white hover:bg-pink-600",
+        linkedin: "bg-blue-700 text-white hover:bg-blue-800",
+        youtube: "bg-red-600 text-white hover:bg-red-700"
+    };
+
+    const fetchData = async () => {
+        const [webData, cmsDataResp, socialIconData] = await Promise.all([
+            getWebSetting(),
+            getPolicies(),
+            getSocialIcon()
+        ])
+        setCmsData(cmsDataResp?.data)
+        setSocialIcons(socialIconData?.data)
+        setWebSettingState(webData)
+        dispatch(setWebSetting(webData));
+    }
+
+    useEffect(() => {
+        fetchData();
+    }, []);
+
     useEffect(() => {
         const handleScroll = () => {
             setShowScroll(window.scrollY > 200);
@@ -28,16 +62,16 @@ const FooterLayout = () => {
                 <div className="container mx-auto px-4 text-center">
                     <div className="mb-4">
                         <Image
-                            src="https://cdn.superbazaar.in/uploads/logo/footer/1751887757153-231762557.png"
+                            src={ImageUrl(webSetting?.footerLogo || "/logo.png")}
                             alt="Footer Logo"
                             width={300}
                             height={60}
                             className="mx-auto mb-5"
                         />
-                        <p className="text-[13px] tracking-wider mb-3 mt-2">D-House, 21st Century Building, Ring Road, Surat, Gujarat-395002, INDIA</p>
+                        <p className="text-[13px] tracking-wider mb-3 mt-2">{webSetting?.address}</p>
                         <p className="mt-1">
-                            Phone: <Link href="tel:+919898013133" className=" text-[13px] tracking-wider ">+91-9898013133</Link>{" "}
-                            | Email: <Link href="mailto:info@superbazaar.in" className=" text-[13px] tracking-wider ">info@superbazaar.in</Link>
+                            Phone: <Link href="tel:+919898013133" className=" text-[13px] tracking-wider ">{webSetting?.complaintNumber}</Link>{" "}
+                            | Email: <Link href={`mailto:${webSetting?.email}`} className=" text-[13px] tracking-wider ">{webSetting?.email}</Link>
                         </p>
                     </div>
 
@@ -68,17 +102,13 @@ const FooterLayout = () => {
                         <div>
                             <h4 className="font-medium mb-3 uppercase tracking-[3px]">Help & Support</h4>
                             <ul className="space-y-1 text-[13px] tracking-wider">
-                                {[
-                                    ["About Us", "/help-support/about-us"],
-                                    ["Terms & Conditions", "/help-support/terms-and-conditions"],
-                                    ["Shipping Policy", "/help-support/shipping-policy"],
-                                    ["Stitching Charges", "/help-support/stitching-charges"],
-                                    ["Return Policy", "/help-support/return-policy"],
-                                ].map(([label, href]) => (
-                                    <li key={label}>
-                                        <Link href={href} className="hover:underline">{label}</Link>
-                                    </li>
-                                ))}
+                                {cmsData.map((cms, i) => {
+                                    return (
+                                        <li key={i}>
+                                            <Link href={cms?.url} className="hover:underline">{cms?.title}</Link>
+                                        </li>
+                                    )
+                                })}
                             </ul>
                         </div>
 
@@ -116,24 +146,23 @@ const FooterLayout = () => {
 
                             {/* Social Icons */}
                             <div className="flex gap-3 mt-4 justify-center lg:justify-start">
-                                {[
-                                    ["youtube", "/"],
-                                    ["facebook", "/"],
-                                    ["twitter", "/"],
-                                    ["instagram", "/"],
-                                ].map(([name, href]) => (
-                                    <a
-                                        key={name}
-                                        href={href}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="hover:text-yellow-500"
-                                    >
-                                        <svg className="w-6 h-6" fill="currentColor">
-                                            <use href={`/icons.svg#${name}`} />
-                                        </svg>
-                                    </a>
-                                ))}
+                                {socialIcons?.map((media) => {
+                                    const IconComponent = LucideIcons[media.icon];
+                                    const colorClasses = socialColors[media.icon?.toLowerCase()] || "bg-gray-200 text-black";
+
+                                    return (
+                                        <Link
+                                            key={media.id}
+                                            href={media.url || "#"}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className={`superbazaar-social-icon rounded-full p-3 flex items-center justify-center ${colorClasses}`}
+                                        >
+                                            {IconComponent ? <IconComponent size={20} /> : null}
+                                        </Link>
+                                    );
+                                })}
+
                             </div>
                         </div>
                     </div>
@@ -142,7 +171,7 @@ const FooterLayout = () => {
 
             {/* Bottom Section */}
             <div className="py-4 flex flex-col md:flex-row items-center justify-between container mx-auto px-4 text-gray-400">
-                <div className="uppercase text-sm mb-2 md:mb-0">© 2025 super Bazaar. All Rights Reserved.</div>
+                <div className="uppercase text-sm mb-2 md:mb-0">  © {new Date().getFullYear()}  {webSetting?.copyRightText}.</div>
                 <Image
                     src="/static/media/payment.020e7c82487e5bff608b.webp"
                     alt="Payment"

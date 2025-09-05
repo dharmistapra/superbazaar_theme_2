@@ -2,6 +2,7 @@
 import { Kumbh_Sans } from 'next/font/google'
 import FooterLayout from './components/Footer/FooterLayout'
 import Navbar from './components/Header/Navbar'
+import MiniCart from '../theme1/Modals/Cart/MiniCart'
 
 const kumbhSans = Kumbh_Sans({
     subsets: ['latin'],
@@ -15,6 +16,7 @@ const LayoutTheme2 = ({ children }) => {
             <Navbar />
             <main>{children}</main>
             <FooterLayout />
+            <MiniCart />
         </div>
     )
 }

@@ -9,7 +9,7 @@ const LayoutTheme1 = ({ children }) => {
             <main>{children}</main>
             <Footer />
             <ModalManager />
-            <MiniCart/>
+            <MiniCart />
 
         </div>
     )

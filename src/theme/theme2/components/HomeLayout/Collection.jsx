@@ -9,14 +9,14 @@ import FullSlider from "@/theme/theme1/Home/components/FulSlider";
 import CardsSlider3D from "@/theme/theme1/components/CardsSlider/CardsSlider3D";
 import TwoBanner from "@/theme/theme1/Home/components/TwoBanner";
 import ThreeFourBanner from "@/theme/theme1/Home/components/ThreeFourBanner";
+import NormalSliderCard from "@/theme/theme1/components/CardsSlider/NormalSlider";
 
-// ✅ Component Map
 const componentMap = {
     "full slider": (item) => (
         <FullSlider key={item.id} slides={item.fullSlider} />
     ),
     "cards slider": (item) => (
-        <CardsSlider3D key={item.id} slides={item.cardSlider} />
+        <NormalSliderCard key={item.id} slides={item.cardSlider} />
     ),
     "two banner": (item) => (
         <TwoBanner key={item.id} data={item.twoBanner} bannergrid={2} />
@@ -34,36 +34,39 @@ const Collection = ({ homeContent, webSetting }) => {
     return (
         <div className="container mx-auto px-4 mt-3 mb-0">
             {homeContent?.map((collection, idx) => {
-                // ✅ pick component by type
                 const RenderComponent = componentMap[collection.type];
+                const hasData =
+                    (RenderComponent && (
+                        (collection.type === "full slider" && collection.fullSlider?.length > 0) ||
+                        (collection.type === "cards slider" && collection.cardSlider?.length > 0) ||
+                        (collection.type === "two banner" && collection.twoBanner?.length > 0) ||
+                        (collection.type === "three banner" && collection.threeBanner?.length > 0) ||
+                        (collection.type === "four banner" && collection.fourBanner?.length > 0)
+                    )) ||
+                    (!RenderComponent && collection.products?.catalogue?.length > 0);
+
+                if (!hasData) return null;
 
                 return (
                     <React.Fragment key={idx}>
-                        {/* Header with View All link */}
-                        <div className="flex flex-col sm:flex-row justify-between items-center mb-4">
-                            <div className="text-center">
+                        <div className="flex flex-col sm:flex-row justify-between items-center ">
+                            <div className="text-center my-4">
                                 <p className="text-xl font-semibold sm:text-xl">
                                     {collection.title}
                                 </p>
                             </div>
-                            <Link
-                                href={
-                                    webSetting.purchaseType === "wholesale"
-                                        ? `/wholesale/${collection.url}`
-                                        : `/retail/${collection.url}`
-                                }
+                            {/* <Link
+                                href={webSetting.purchaseType === "wholesale" ? `/wholesale/${collection.url}` : `/retail/${collection.url}`}
                                 className="inline-flex items-center justify-center px-4 py-2 text-sm sm:text-base font-bold hover:text-pink-600 transition"
                             >
                                 View All
                                 <ArrowRight />
-                            </Link>
+                            </Link> */}
                         </div>
 
-                        {/* ✅ Dynamic component rendering */}
                         {RenderComponent ? (
                             RenderComponent(collection)
                         ) : (
-                            // fallback if type not in map → default product grid
                             <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                                 {collection?.products?.catalogue?.map((img, i) => (
                                     <CatalogCard
