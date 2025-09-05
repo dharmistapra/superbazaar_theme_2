@@ -16,18 +16,18 @@ const statusColors = {
 
 const OrderHistorythem1 = () => {
   const { data: session, } = useSession();
-  const [orders,setOrders]=useState([])
-  const [total,setTotalCount]=useState(0)
+  const [orders, setOrders] = useState([])
+  const [total, setTotalCount] = useState(0)
   const [page, setPage] = useState(1);
   const [filter, setFilter] = useState("30days");
   const [search, setSearch] = useState("");
 
 
- const fetchData = async () => {
+  const fetchData = async () => {
     try {
       const userId = session?.user?.id;
       if (!userId) return;
-      const payload={ userId,page,perPage:20,filter,search}
+      const payload = { userId, page, perPage: 20, filter, search }
       const response = await postuserOrderHistory(payload);
       setOrders(response.data);
       setTotalCount(response.total);
@@ -37,12 +37,12 @@ const OrderHistorythem1 = () => {
   };
 
 
-   useEffect(() => {
+  useEffect(() => {
     fetchData();
   }, [page, filter, search, session]);
 
 
-  
+
 
   return (
     <div className="p-6 bg-gray-50 min-h-screen">
@@ -125,9 +125,9 @@ const OrderHistorythem1 = () => {
                   </span>
                 </td>
                 <td className="px-6 py-4 text-center">
-                  <Link 
-                   className="p-2 rounded-full hover:bg-blue-100 transition"
-                  href={`/orders/${order?.orderId}`}>
+                  <Link
+                    className="p-2 rounded-full hover:bg-blue-100 transition"
+                    href={`/orders/${order?.orderId}`}>
                     <Eye className="w-5 h-5 text-blue-600" />
                   </Link>
 
@@ -148,7 +148,7 @@ const OrderHistorythem1 = () => {
         </table>
       </div>
 
-     
+
       <div className="md:hidden space-y-4 mt-6">
         {orders && orders?.length > 0 && orders?.map((order, idx) => (
           <div

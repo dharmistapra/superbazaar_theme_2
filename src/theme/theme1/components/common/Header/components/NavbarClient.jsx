@@ -43,6 +43,7 @@ const NavbarClient = ({ Menudata, currencyData }) => {
     }
     dispatch(setCategoyData(Menudata))
   }, [session])
+
   useEffect(() => {
     dispatch(setCurrencyData(currencyData));
     const handleResize = () => {

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react"
-import { Search, User, ShoppingCart, Heart, Truck, Menu } from "lucide-react"
+import { Search, User, ShoppingCart, Heart, Truck, Menu, LogOut } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
 import MobileMenu from "./MobileMenu"
@@ -11,23 +11,26 @@ import { getWebSetting } from "@/services/webSetting";
 import { setWebSetting } from "@/store/slice/webSettingSlice";
 import data from "@/data/MenuData";
 import CurrencyComponent from "./CurrencyComponent";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import { setCartItems } from "@/store/slice/cartItemSlice";
 import { setWishlistData } from "@/store/slice/WishlistSlice";
 import { getCartItems } from "@/services/cartService";
 import { getUserWishlist } from "@/services/accountsService";
+import { useRouter } from "next/navigation";
+import { openCart } from "@/store/slice/MiniCartSlice";
 
 const HeaderMenu = ({ menudata, currencyData }) => {
     const { data: session, } = useSession();
     const [openUser, setOpenUser] = useState(false)
     const [openMenu, setOpenMenu] = useState(false) // 👈 for sidebar
     // const [Menudata, currencyData] = Promise.all([getMenu(), getCurrency()]);
-
+    const router = useRouter();
     const userRef = useRef(null)
     const [isSticky, setIsSticky] = useState(false);
     const dispatch = useDispatch();
     const webSetting = useSelector(state => state.webSetting.webSetting)
 
+    const handleCartClick = () => dispatch(openCart());
     const fetchData = async () => {
         const data = await getWebSetting();
         dispatch(setWebSetting(data));
@@ -66,7 +69,8 @@ const HeaderMenu = ({ menudata, currencyData }) => {
     }, []);
 
     const handleLogout = async () => {
-        signOut({ redirect: false })
+        // localStorage.removeItem("token")
+        // signOut({ redirect: false })
         router.push("/")
     }
 
@@ -114,11 +118,13 @@ const HeaderMenu = ({ menudata, currencyData }) => {
                             </div>
 
                             {/* Right Icons */}
-                            <div className="flex items-center space-x-4 text-gray-700  flex-shrink-0">
-                                <Search className="cursor-pointer " size={20} />
+                            <div className="flex items-center space-x-4 text-gray-700 flex-shrink-0">
+                                {/* Search */}
+                                <Search className="cursor-pointer" size={20} />
 
                                 {/* Currency Dropdown */}
                                 <CurrencyComponent currencyData={currencyData} />
+
                                 {/* User Dropdown */}
                                 <div className="hidden md:flex relative" ref={userRef}>
                                     <button
@@ -130,57 +136,64 @@ const HeaderMenu = ({ menudata, currencyData }) => {
                                     >
                                         <User size={20} />
                                     </button>
+
                                     {openUser && (
                                         <div className="absolute right-[-10px] mt-6 w-40 bg-white shadow-lg rounded-lg z-50">
-                                            <Link href="/account/account-details" className="block px-4 py-2 hover:bg-gray-100">My Account</Link>
-                                            <Link href="/account/wishlist" className="block px-4 py-2 hover:bg-gray-100">Wishlist</Link>
-                                            <Link href="#" onClick={handleLogout} className="block px-4 py-2 hover:bg-gray-100">Logout</Link>
-                                            <Link href="/login" className="block px-4 py-2 hover:bg-gray-100">Login</Link>
-                                            <Link href="/signup" className="block px-4 py-2 hover:bg-gray-100">Register</Link>
+                                            {session?.accessToken ? (
+                                                <>
+                                                    <Link
+                                                        href="/account/account-details"
+                                                        className="block px-4 py-2 hover:bg-gray-100"
+                                                    >
+                                                        My Account
+                                                    </Link>
+                                                    <Link
+                                                        href="/account/wishlist"
+                                                        className="block px-4 py-2 hover:bg-gray-100"
+                                                    >
+                                                        Wishlist
+                                                    </Link>
+                                                    <button
+                                                        onClick={handleLogout}
+                                                        className="w-full text-left px-4 py-2 hover:bg-gray-100"
+                                                    >
+                                                        Logout
+                                                    </button>
+                                                </>
+                                            ) : (
+                                                <>
+                                                    <Link
+                                                        href="/login"
+                                                        className="block px-4 py-2 hover:bg-gray-100"
+                                                    >
+                                                        Login
+                                                    </Link>
+                                                    <Link
+                                                        href="/signup"
+                                                        className="block px-4 py-2 hover:bg-gray-100"
+                                                    >
+                                                        Register
+                                                    </Link>
+                                                </>
+                                            )}
                                         </div>
                                     )}
                                 </div>
 
+                                {/* Extra icons visible only when logged in */}
                                 {session?.accessToken && (
                                     <>
-                                        <li>
-                                            <Link
-                                                href="/account/wishlist"
-                                                className="flex items-center gap-3 px-4 py-2.5 transition-all duration-200 hover:bg-gray-50 hover:text-red-500"
-                                            >
-                                                <Heart size={18} className="text-gray-500 group-hover:text-red-400" />
-                                                <span className="font-medium">Wishlist</span>
-                                            </Link>
-                                        </li>
-                                        <li>
-                                            <Link
-                                                href="/account/account-details"
-                                                className="flex items-center gap-3 px-4 py-2.5 transition-all duration-200 hover:bg-gray-50 hover:text-red-500"
-                                            >
-                                                <User size={18} className="text-gray-500 group-hover:text-red-400" />
-                                                <span className="font-medium">Account</span>
-                                            </Link>
-                                        </li>
-                                        <li>
-                                            <div
-                                                onClick={handleLogout}
-                                                className="cursor-pointer flex items-center gap-3 px-4 py-2.5 transition-all duration-200 hover:bg-gray-50 hover:text-red-500"
-                                            >
-                                                <LogOut size={18} className="text-gray-500 group-hover:text-red-400" />
-                                                <span className="font-medium">Logout</span>
-                                            </div>
-                                        </li>
+                                        <Heart size={20} className="cursor-pointer hidden md:flex" />
+                                        <div className="relative hidden md:flex">
+                                            <ShoppingCart className="cursor-pointer" size={20} onClick={handleCartClick} />
+                                            <span className="absolute -top-2 -right-2 bg-black text-white text-xs rounded-full px-1" >
+                                                1
+                                            </span>
+                                        </div>
                                     </>
                                 )}
-                                <Heart size={20} className="cursor-pointer hidden md:flex" />
-
-                                <div className="relative hidden md:flex">
-                                    <ShoppingCart className="cursor-pointer" size={20} />
-                                    <span className="absolute -top-2 -right-2 bg-black text-white text-xs rounded-full px-1">
-                                        1
-                                    </span>
-                                </div>
                             </div>
+
                         </div>
                         <nav className="hidden lg:flex justify-center space-x-6 py-2 text-sm font-medium text-gray-800 relative mb-1">
                             {menudata.map((item) => (

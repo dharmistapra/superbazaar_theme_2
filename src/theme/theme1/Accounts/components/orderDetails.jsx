@@ -47,11 +47,10 @@ const OrderDetail = ({ orderid }) => {
             </p>
           </div>
           <span
-            className={`px-4 py-1 rounded-full text-sm font-medium shadow-sm transition ${
-              order.status === "PENDING"
-                ? "bg-yellow-100 text-yellow-800 border border-yellow-200"
-                : "bg-green-100 text-green-800 border border-green-200"
-            }`}
+            className={`px-4 py-1 rounded-full text-sm font-medium shadow-sm transition ${order.status === "PENDING"
+              ? "bg-yellow-100 text-yellow-800 border border-yellow-200"
+              : "bg-green-100 text-green-800 border border-green-200"
+              }`}
           >
             {order.status}
           </span>
@@ -154,11 +153,10 @@ const OrderDetail = ({ orderid }) => {
 
                         {/* Expanding Section */}
                         <div
-                          className={`transition-all duration-500 ease-in-out overflow-hidden ${
-                            openCatalogueIds.includes(item.id)
-                              ? "max-h-96 opacity-100 mt-3"
-                              : "max-h-0 opacity-0"
-                          }`}
+                          className={`transition-all duration-500 ease-in-out overflow-hidden ${openCatalogueIds.includes(item.id)
+                            ? "max-h-96 opacity-100 mt-3"
+                            : "max-h-0 opacity-0"
+                            }`}
                         >
                           <div className="space-y-2 pl-4 border-l">
                             {item.products.map((p) => (

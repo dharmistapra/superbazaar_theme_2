@@ -9,7 +9,7 @@ const Layout = ({ children }) => {
             <main>{children}</main>
             <Footer />
             <ModalManager />
-            <MiniCart/>
+            <MiniCart />
 
         </div>
     )

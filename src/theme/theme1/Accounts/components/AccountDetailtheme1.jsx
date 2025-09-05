@@ -3,10 +3,10 @@ import { SquarePen, User } from "lucide-react";
 import UpdateProfile from "./updateProfile";
 import { useState } from "react";
 
-export default function AccountDetailtheme1({data}) {
+export default function AccountDetailtheme1({ data }) {
     const [open, setOpen] = useState()
-    const [userData, setUserData] = useState(data); 
-    
+    const [userData, setUserData] = useState(data);
+
     return (
         <div className="bg-white shadow rounded-xl p-6">
             <div className="flex items-center justify-between mb-4">
@@ -44,7 +44,7 @@ export default function AccountDetailtheme1({data}) {
                 onClose={() => setOpen(false)}
                 user={userData}
                 userId={data.id}
-                 onUpdate={(updated) => setUserData(updated)}
+                onUpdate={(updated) => setUserData(updated)}
             />
         </div>
     );

@@ -9,6 +9,7 @@ export const getThemeModules = (theme = "theme1") => {
         Products: load(() => import("./theme1/CategoriesPage/Retail/Productstheme1")),
         Home: load(() => import("./theme1/Home/Home")),
         AccountDetail: load(() => import("./theme1/Accounts/components/AccountDetailtheme1")),
+        Cart: load(() => import("./theme1/Cart/CartPage")),
         Address: load(() => import("./theme1/Accounts/components/Address")),
         OrderHistory: load(() => import("./theme1/Accounts/components/OrderHistory")),
         Wishlist: load(() => import("./theme1/Accounts/components/Whishlist")),
@@ -19,7 +20,7 @@ export const getThemeModules = (theme = "theme1") => {
         BrandCatalogueList: load(() => import("./theme1/brands/brandCatalogueList")),
         Catalogue: load(() => import("./theme1/ProductDetail/catalogue/catalogue")),
         WholeSalePage: load(() => import("./theme1/wholesalePage/wholesalepage")),
-        OrderDetail:load(() => import("./theme1/Accounts/components/orderDetails")),
+        OrderDetail: load(() => import("./theme1/Accounts/components/orderDetails")),
       };
 
     case "theme2":
@@ -41,9 +42,8 @@ export const getThemeModules = (theme = "theme1") => {
         WholeSalePage: load(() => import("./theme1/wholesalePage/wholesalepage")),
         BrandCatalogueList: load(() => import("./theme1/brands/brandCatalogueList")),
         WholeSaleProductList: load(() => import("./theme2/ProductDetail/wholesale/WholesaleProduct")),
-        OrderDetail:load(() => import("./theme1/Accounts/components/orderDetails")),
-
-
+        OrderDetail: load(() => import("./theme1/Accounts/components/orderDetails")),
+        Cart: load(() => import("./theme2/Cart/CartPage"))
       };
     default:
       return getThemeModules("theme2");

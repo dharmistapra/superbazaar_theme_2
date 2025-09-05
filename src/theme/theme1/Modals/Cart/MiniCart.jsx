@@ -85,7 +85,7 @@ const MiniCart = () => {
 
                       {size?.value && <p className="block">Size: {size?.value}</p>}
 
-                      <StitchingOptions stitching={item.stitching}/>
+                      <StitchingOptions stitching={item.stitching} />
                       <div className="flex items-center border border-gray-400 rounded-md overflow-hidden w-20 mt-2">
                         <button
                           disabled={item.quantity <= 1 || isLoading}
@@ -163,15 +163,14 @@ const MiniCart = () => {
             <p> <PriceConverter price={cartItems?.totalOrder || 0} /> </p>
           </div>
 
-         
 
-           <Link
-          href="/cart"
-        onClick={() => dispatch(closeCart())}
-          className="flex-1 py-2 text-center rounded-lg bg-gray-100 hover:bg-gray-200 transition font-medium"
-        >
-          View Cart
-        </Link>
+          <Link
+            href="/cart"
+            onClick={() => dispatch(closeCart())}
+            className="flex-1 py-2 text-center rounded-lg bg-gray-100 hover:bg-gray-200 transition font-medium"
+          >
+            View Cart
+          </Link>
           <button className="w-full py-2 bg-zinc-900 text-white rounded hover:bg-grey-700">
             Proceed to Checkout
           </button>
