@@ -2,7 +2,7 @@ import  { createClientAxios } from "./apiClient";
 export const addToCartProduct = async (values) => {
   try {
     const axiosInstance = await createClientAxios();
-    const res = await axiosInstance.post(`/protected/cart-item`,values);
+    const res = await axiosInstance.post(`/cart`,values);
     return res.data || {};
   } catch (error) {
     return error;
@@ -12,7 +12,7 @@ export const getCartItems=async(id)=>{
   try{
    
     const axiosInstance = await createClientAxios();
-    const res = await axiosInstance.get(`/protected/cart-item/${id}`,);  
+    const res = await axiosInstance.get(`/cart/${id}`,);  
     return res.data
   }catch(error){
     return error.response?.data?.message
@@ -21,7 +21,7 @@ export const getCartItems=async(id)=>{
 export const putCartProduct = async (values) => {
   try {
     const axiosInstance = await createClientAxios();
-    const res = await axiosInstance.put(`/protected/cart-item`,values);
+    const res = await axiosInstance.put(`/cart/${values?.cartItem_id}`,{quantity:values.quantity});
     return res.data || {};
   } catch (error) {
     return error;
@@ -30,7 +30,7 @@ export const putCartProduct = async (values) => {
 export const deleteCartProduct = async (id) => {
   try {
     const axiosInstance = await createClientAxios();
-    const res = await axiosInstance.delete(`/protected/deletecart-item/${id}`,);
+    const res = await axiosInstance.delete(`/cart/${id}`,);
     return res.data || {};
   } catch (error) {
     return error;

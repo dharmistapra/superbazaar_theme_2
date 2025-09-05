@@ -3,7 +3,7 @@ import { createClientAxios, createServerAxios } from "./apiClient";
 export const getCataloguedetail = async (url) => {
   try {
     const axiosInstance = await createServerAxios();
-    const res = await axiosInstance.get(`/catalogueproduct/${url}`);
+    const res = await axiosInstance.get(`/public/catalogue-detail/${url}`);
 
     return res.data;
   } catch (error) {
@@ -14,7 +14,7 @@ export const getCataloguedetail = async (url) => {
 export const getCatalogueStitching = async (url) => {
   try {
     const axiosInstance = await createServerAxios();
-    const res = await axiosInstance.get(`/catalogue-stitching/${url}`);
+    const res = await axiosInstance.get(`/public/catalogue-stitching/${url}`);
     return res.data;
   } catch (error) {
     console.error("Error fetching product stitching:", error);
@@ -24,7 +24,7 @@ export const getCatalogueStitching = async (url) => {
 export const getRelatedCatalogue = async (url) => {
   try {
     const axiosInstance = await createClientAxios();
-    const res = await axiosInstance.get(`/catalogue-realted/${url}`);
+    const res = await axiosInstance.get(`/public/catalogue-realted/${url}`);
     return res.data;
   } catch (error) {
     console.error("Error fetching product detail:", error);
@@ -34,7 +34,7 @@ export const getRelatedCatalogue = async (url) => {
 
 export const getAllCatalogue = async (page, category, perPage = 20, sortOption) => {
   try {
-    const url = `/wholesale?page=${page}&perPage=20${category}&sortOption=${sortOption}`
+    const url = `/public/wholesale?page=${page}&perPage=20${category}&sortOption=${sortOption}`
     const axiosInstance = await createClientAxios();
     const res = await axiosInstance.get(url);
     return res.data;

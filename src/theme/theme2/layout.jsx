@@ -9,7 +9,7 @@ const kumbhSans = Kumbh_Sans({
     variable: '--font-kumbh-sans'
 })
 
-const Layout = ({ children }) => {
+const LayoutTheme2 = ({ children }) => {
     return (
         <div className={kumbhSans.className}>
             <Navbar />
@@ -19,4 +19,4 @@ const Layout = ({ children }) => {
     )
 }
 
-export default Layout
+export default LayoutTheme2

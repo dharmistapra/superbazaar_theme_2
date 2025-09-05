@@ -8,13 +8,12 @@ const MoreColors = ({ moreColors = [], basepath}) => {
 
   return (
     <div className="mt-1">
-      <h3 className="font-semibold mb-3 text-lg">More Colors</h3>
       <div className="flex gap-3 flex-wrap">
         {moreColors.map((color) => (
           <a
             key={color.id}
             href={`/retail/${basepath}/${color.url}`} 
-            className="group relative w-24 h-40 rounded-md overflow-hidden border border-gray-200 hover:shadow-lg transition-shadow"
+            className="group relative w-15 h-15 rounded-full overflow-hidden border border-gray-200 hover:shadow-lg transition-shadow"
             title={color.sku} 
           >
             <img

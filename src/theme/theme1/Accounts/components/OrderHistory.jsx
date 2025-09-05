@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useMemo, useEffect } from "react";
-import { Search, Eye } from "lucide-react";
+import { Search, Eye, FileDown } from "lucide-react";
 import Pagination from "../../../../components/Pagination";
 import { useSession } from "next-auth/react";
 import { postuserOrderHistory } from "@/services/accountsService";
@@ -124,13 +124,17 @@ const OrderHistorythem1 = () => {
                     {order.paymentStatus}
                   </span>
                 </td>
-                <td className="px-6 py-4 text-center">
+                <td className="px-6 py-4 text-center flex gap-2">
                   <Link 
                    className="p-2 rounded-full hover:bg-blue-100 transition"
                   href={`/orders/${order?.orderId}`}>
-                    <Eye className="w-5 h-5 text-blue-600" />
+                    <Eye className="w-5 h-5 text-gray-600" />
                   </Link>
-
+<Link 
+                   className="p-2 rounded-full hover:bg-blue-100 transition"
+                  href={`/invoice/${order?.orderId}`}>
+                        <FileDown className="w-5 h-5 text-red-500"/>
+                  </Link>
                 </td>
               </tr>
             ))}

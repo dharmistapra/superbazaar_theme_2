@@ -3,7 +3,7 @@ import { createServerAxios } from "./apiClient";
 export const getHomeBanners = async () => {
   try {
     const axiosInstance = await createServerAxios();
-    const res = await axiosInstance.get(`/homebanner`);
+    const res = await axiosInstance.get(`/public/banner`);
     return res.data?.data || {};
   } catch (error) {
     return error;
@@ -13,7 +13,7 @@ export const getHomeBanners = async () => {
 export const getHomeContent = async () => {
   try {
     const axiosInstance = await createServerAxios();
-    const res = await axiosInstance.get(`/home-data`);
+    const res = await axiosInstance.get(`/public/home-data`);
     return res.data?.data || {};
   } catch (error) {
     return error;
@@ -23,9 +23,7 @@ export const getHomeContent = async () => {
 export const getHomeProductlist = async (url, purchaseType) => {
   try {
     const axiosInstance = await createServerAxios();
-    const res = await axiosInstance.get(`/home-layout/collection/${url}?purchaseType=${purchaseType}`);
-    console.log("get home product ==>", res);
-
+    const res = await axiosInstance.get(`/public/home/collection/${url}?purchaseType=${purchaseType}`);
     return res.data?.data || {};
   } catch (error) {
     return error;
@@ -35,7 +33,7 @@ export const getHomeProductlist = async (url, purchaseType) => {
 export const getTestimonal = async () => {
   try {
     const axiosInstance = await createServerAxios();
-    const res = await axiosInstance.get(`/testimonials`);
+    const res = await axiosInstance.get(`/public/testimonials`);
     return res.data?.data || {};
   } catch (error) {
     return error;

@@ -1,14 +1,28 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Layers, NotebookText, ScrollText } from "lucide-react";
+import { getPoliciesDetail } from "@/services/cmsService";
 
 const ProductDescription = ({ description, attributes }) => {
   const [activeTab, setActiveTab] = useState("description");
+  const [shippingPolicy,setShippingPolicy]=useState(null)
+   const [returnPolicy,setReturnPolicy]=useState(null)
+
+  const fetchData=async()=>{
+    const [shippingPolicy,returnPolicy]=await Promise.all([getPoliciesDetail("shipping-policy"),getPoliciesDetail("return-policy")])
+    console.log(shippingPolicy) 
+    setReturnPolicy(shippingPolicy.data)
+      setShippingPolicy(returnPolicy.data)
+      
+  }
+
+  useEffect(()=>{
+fetchData()
+  },[])
 
   return (
     <div className="bg-white rounded-lg shadow-sm">
-      {/* Tabs */}
       <ul className="flex flex-wrap sm:flex-nowrap justify-center border-b text-sm font-medium text-gray-500">
         <li className="mx-2 sm:mx-4">
           <button
@@ -74,18 +88,18 @@ const ProductDescription = ({ description, attributes }) => {
 
           {attributes?.length > 0 && (
   <div className=" p-4 bg-white rounded-lg shadow-sm">
-    <h3 className="font-semibold mb-3 text-lg  pb-2">Product Attributes</h3>
+    <h3 className="font-semibold mb-3 text-lg text-zinc-900  pb-2">Product Attributes</h3>
     <div className="flex flex-col gap-4">
       {attributes.map((attr) => (
         <div key={attr.key} className="flex flex-wrap items-center gap-2">
-          <span className="font-medium w-32 text-zinc-700">{attr.name}:</span>
+          <span className="font-medium w-32 text-zinc-900">{attr.name}:</span>
 
           {attr.key === "color" ? (
             <div className="flex gap-3 flex-wrap">
               {attr.values?.map((v, i) => (
                 <div
                   key={i}
-                  className="flex items-center gap-1 bg-gray-50 px-2 py-1 rounded-md "
+                  className="flex items-center gap-1 px-2 py-1 rounded-md "
                 >
                   <span
                     className="w-4 h-4 rounded-full "
@@ -100,7 +114,7 @@ const ProductDescription = ({ description, attributes }) => {
               {attr.values?.map((v, i) => (
                 <span
                   key={i}
-                  className="bg-gray-50 px-2 py-1 rounded-md text-sm">
+                  className=" px-2 py-1 rounded-md text-sm">
                   {typeof v === "object" ? v.value || v.name : v}
                 </span>
               ))}
@@ -114,15 +128,19 @@ const ProductDescription = ({ description, attributes }) => {
 
 
 
-            <p>{description}</p>
+            <p className="text-zinc-900">{description}</p>
 
         
 
           </div>
         )}
 
-        {activeTab === "shipping" && <p>{attributes?.shipping || "Shipping info not available."}</p>}
-        {activeTab === "returns" && <p>{attributes?.returns || "Return policy not available."}</p>}
+        {activeTab === "shipping" &&  <div className="p-6  rounded-xl w-full bg-white">
+                <div dangerouslySetInnerHTML={{ __html: shippingPolicy?.description || ""}}></div>
+            </div>}
+        {activeTab === "returns" &&  <div className="p-6  rounded-xl w-full bg-white">
+                <div dangerouslySetInnerHTML={{ __html: returnPolicy?.description || "" }}></div>
+            </div>}
       </div>
     </div>
   );

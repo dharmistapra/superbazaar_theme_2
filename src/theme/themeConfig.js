@@ -19,7 +19,8 @@ export const getThemeModules = (theme = "theme1") => {
         BrandCatalogueList: load(() => import("./theme1/brands/brandCatalogueList")),
         Catalogue: load(() => import("./theme1/ProductDetail/catalogue/catalogue")),
         WholeSalePage: load(() => import("./theme1/wholesalePage/wholesalepage")),
-        OrderDetail:load(() => import("./theme1/Accounts/components/orderDetails")),
+        OrderDetail: load(() => import("./theme1/Accounts/components/orderDetails")),
+        Invoice: load(() => import("./theme1/Accounts/components/Invoice")),
       };
 
     case "theme2":
@@ -41,15 +42,14 @@ export const getThemeModules = (theme = "theme1") => {
         WholeSalePage: load(() => import("./theme1/wholesalePage/wholesalepage")),
         BrandCatalogueList: load(() => import("./theme1/brands/brandCatalogueList")),
         WholeSaleProductList: load(() => import("./theme2/ProductDetail/wholesale/WholesaleProduct")),
-        OrderDetail:load(() => import("./theme1/Accounts/components/orderDetails")),
-
-
+        OrderDetail: load(() => import("./theme1/Accounts/components/orderDetails")),
+        Invoice: load(() => import("./theme1/Accounts/components/Invoice")),
       };
     default:
-      return getThemeModules("theme2");
+      return getThemeModules("theme1");
   }
 };
 
-export const getThemeLayout = (theme = "theme2") => {
+export const getThemeLayout = (theme = "theme1") => {
   return getThemeModules(theme).layout;
 };

@@ -2,7 +2,7 @@ import { createClientAxios, createServerAxios } from "./apiClient";
 export const getUserInfo = async (id) => {
   try {
     const axiosInstance = await createServerAxios(); 
-    const res = await axiosInstance.get(`protected/user/profile/${id}`);
+    const res = await axiosInstance.get(`/users/profile/${id}`);
     return res.data?.data || {};
   } catch (error) {
     return error;
@@ -11,7 +11,7 @@ export const getUserInfo = async (id) => {
 export const updateUserInfo = async (id,values) => {
   try {
     const axiosInstance = await createClientAxios(); 
-    const res = await axiosInstance.put(`protected/user-update/${id}`,values);
+    const res = await axiosInstance.put(`/users/${id}`,values);
     return res.data || {};
   } catch (error) {
     return error;
@@ -20,7 +20,7 @@ export const updateUserInfo = async (id,values) => {
 export const getUserAddress = async (id) => {
   try {
     const axiosInstance = await createClientAxios(); 
-    const res = await axiosInstance.get(`protected/user/address/${id}`);
+    const res = await axiosInstance.get(`/users/address/${id}`);
     return res.data?.data || {};
   } catch (error) {
     return error;
@@ -29,7 +29,7 @@ export const getUserAddress = async (id) => {
 export const postuserAddress = async (values) => {
   try {
     const axiosInstance = await createClientAxios(); 
-    const res = await axiosInstance.post(`protected/shipping/address`,values);
+    const res = await axiosInstance.post(`/users/address`,values);
     return res.data || {};
   } catch (error) {
     return error;
@@ -38,7 +38,7 @@ export const postuserAddress = async (values) => {
 export const deleteUserAddress = async (id) => {
   try {
     const axiosInstance = await createClientAxios(); 
-    const res = await axiosInstance.delete(`protected/shipping/address/${id}`);
+    const res = await axiosInstance.delete(`/user/address/${id}`);
     return res.data || {};
   } catch (error) {
     return error;
@@ -47,7 +47,7 @@ export const deleteUserAddress = async (id) => {
 export const postuserOrderHistory = async (values) => {
   try {
     const axiosInstance = await createClientAxios(); 
-    const res = await axiosInstance.post(`protected/order/pagination`,values);
+    const res = await axiosInstance.post(`/orders/pagination`,values);
     return res.data || {};
   } catch (error) {
     return error;
@@ -56,7 +56,7 @@ export const postuserOrderHistory = async (values) => {
 export const getUserWishlist= async () => {
   try {
     const axiosInstance = await createClientAxios(); 
-    const res = await axiosInstance.get(`protected/wish-list`);
+    const res = await axiosInstance.get(`/wishlist`);
     return res.data || [];
   } catch (error) {
     return error;
@@ -65,7 +65,7 @@ export const getUserWishlist= async () => {
 export const postUserWishlist=async(values)=>{
   try {   
     const axiosInstance = await createClientAxios(); 
-    const res = await axiosInstance.post(`protected/wish-list`,values);
+    const res = await axiosInstance.post(`/wishlist`,values);
     return res.data || [];
   } catch (error) {
     return error;
@@ -74,7 +74,7 @@ export const postUserWishlist=async(values)=>{
 export const getOrderDetails = async (id) => {
   try {
     const axiosInstance = await createClientAxios();
-    const res = await axiosInstance.get(`/protected/order/details/${id}`);
+    const res = await axiosInstance.get(`/orders/details/${id}`);
     return res.data || {};
   } catch (error) {
     return error;

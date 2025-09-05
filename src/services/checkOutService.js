@@ -2,7 +2,7 @@ import  { createClientAxios } from "./apiClient";
 export const getPyamentMethod = async (values) => {
   try {
     const axiosInstance = await createClientAxios();
-    const res = await axiosInstance.get(`/payment/method`);
+    const res = await axiosInstance.get(`/public/payment`);
     return res.data || {};
   } catch (error) {
     return error;
@@ -11,7 +11,7 @@ export const getPyamentMethod = async (values) => {
 export const getShippingMethod = async (query) => {
   try {
     const axiosInstance = await createClientAxios();
-    const res = await axiosInstance.get(`/protected/shippingmethod?${query}`);
+    const res = await axiosInstance.get(`/public/shippingmethod?${query}`);
     return res.data || {};
   } catch (error) {
     return error;
@@ -21,7 +21,7 @@ export const getShippingMethod = async (query) => {
 export const postOrder = async (values) => {
   try {
     const axiosInstance = await createClientAxios();
-    const res = await axiosInstance.post(`/protected/orders`,values);
+    const res = await axiosInstance.post(`/user/orders`,values);
     return res.data || {};
   } catch (error) {
     return error;

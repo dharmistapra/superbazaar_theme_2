@@ -23,7 +23,7 @@ const TwoBanner = ({ data }) => {
           data.map((item, index) => (
             <div
               key={index}
-              className="relative overflow-hidden rounded-xl group h-[300px] sm:h-[400px] md:h-[500px] lg:h-[600px]"
+              className="relative overflow-hidden rounded-xl group h-[200px] sm:h-[200px] md:h-[300px] lg:h-[500px]"
             >
               <img
                 src={ImageUrl(item.image)}
@@ -61,7 +61,7 @@ const TwoBanner = ({ data }) => {
                 </p>
 
                 {item?.link && (
-                  <Link href={item?.link || "#"} className="inline-block bg-black hover:bg-gray-800 text-white font-semibold uppercase text-sm px-5 py-2 rounded-lg shadow-md transition-transform duration-300 hover:-translate-y-1">
+                  <Link href={item?.link || "#"} className="inline-block bg-black hover:bg-gray-800 text-white font-semibold uppercase text-sm px-5 py-2 rounded-md shadow-md transition-transform duration-300 hover:-translate-y-1">
                       {item.buttonText || "Shop Now"}
                   </Link>
                 )}

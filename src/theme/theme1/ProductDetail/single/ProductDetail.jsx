@@ -19,10 +19,12 @@ const StitchingForm = dynamic(() => import("./components/StitchingForm"));
 const ProductDescription = dynamic(() => import("./components/ProductDescription"));
 const StaticImage = dynamic(() => import("@/components/StaticImage"));
 const MoreColors = dynamic(() => import("./components/MoreColors"));
+const InquiryForm = dynamic(() => import("../components/inquiry"));
 const ProductDetailTheme1 = ({ product, Stitching, attributes, category }) => {
   const dispatch = useDispatch()
   const { open } = useModal();
   const { data: session, status } = useSession();
+  const [inquiry, setInquiry] = useState(false)
   const [quantity, setQuantity] = useState(1);
   const [selectedSize, setSelectedSize] = useState({});
   const [errors, setErrors] = useState(null)
@@ -84,9 +86,6 @@ const ProductDetailTheme1 = ({ product, Stitching, attributes, category }) => {
           <ProductImageGallery
             images={product.image}
             thumbs={product.thumbImage} />
-          <div className="justify-center items-center hidden md:flex">
-            <MoreColors moreColors={attributes.moreColors} basepath={category} />
-          </div>
         </div>
 
         <div className="flex flex-col gap-4 md:gap-4">
@@ -118,6 +117,8 @@ const ProductDetailTheme1 = ({ product, Stitching, attributes, category }) => {
           <p className="flex items-center gap-2 bg-slat-100 text-zinc-800 font-medium px-3 py-1 rounded-lg w-fit">
             <span className="font-bold">⏱</span> Dispatch Time: 7 Working Days
           </p>
+
+          <MoreColors moreColors={attributes.moreColors} basepath={category} />
           <OfferBanner discount={product.retail_discount} />
           {product.optionType === "Size" ? (
             <div className="-mt-1">
@@ -156,19 +157,12 @@ const ProductDetailTheme1 = ({ product, Stitching, attributes, category }) => {
               <Heart className="w-5 h-5" />
             </button>
             <button
-              onClick={toggleCompare}
-              className={`p-2 rounded-lg border transition ${compare
-                ? "bg-zinc-500 text-white border-zinc-900"
-                : "bg-white text-gray-700 border-zinc-900 hover:bg-zinc-900 hover:text-white"
-                }`}>
-              <Repeat className="w-5 h-5" />
-            </button>
-            <button
               onClick={() => setShareOpen(true)}
               className="p-2 rounded-lg border bg-white text-gray-700 border-zinc-900 hover:bg-zinc-900 hover:text-white transition">
               <Share2 className="w-5 h-5" />
             </button>
             <button
+              onClick={() => setInquiry((prev) => !prev)}
               className="p-2 rounded-lg border bg-white text-gray-700 border-zinc-900 hover:bg-zinc-900 hover:text-white transition">
               <CircleQuestionMark className="w-5 h-5" />
             </button>
@@ -193,9 +187,7 @@ const ProductDetailTheme1 = ({ product, Stitching, attributes, category }) => {
             <p className="text-red-500 text-sm mt-2">{errors}</p>
           )}
           <div className="border-t border-gray-500 border-dashed mt-3"></div>
-          <div className="justify-end items-end flex md:hidden">
-            <MoreColors moreColors={attributes.moreColors} basepath={category} />
-          </div>
+
 
           <div>
             <StaticImage />
@@ -215,6 +207,15 @@ const ProductDetailTheme1 = ({ product, Stitching, attributes, category }) => {
         onClose={() => setShareOpen(false)}
         url={`https://superbazaar.in/`}
       />
+
+      <InquiryForm
+        open={inquiry}
+        onClose={() => setInquiry(false)} 
+        catalogue_id={null}
+        product_id={product.id}
+        />
+        
+
     </div>
   );
 };

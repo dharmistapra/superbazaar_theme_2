@@ -34,7 +34,7 @@ const SearchBar = () => {
 
     const delayFetch = setTimeout(() => {
       axios
-        .get(`${BaseURL}recomended-search?q=${encodeURIComponent(searchTerm)}`)
+        .get(`${BaseURL}api/public/search-filter?q=${encodeURIComponent(searchTerm)}`)
         .then((res) => {
           setResults({
             products: res.data.products || [],

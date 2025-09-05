@@ -55,3 +55,10 @@ export const addressschema = Yup.object({
   zipCode: Yup.string().required("Zip code is required"),
   address1: Yup.string().required("Address is required"),
 });
+
+export const inquirySchema=Yup.object({
+  email: Yup.string().email("Invalid email").required("Email is required"),
+   mobile_number: Yup.string().required("Mobile number is required"),
+   description:Yup.string().required("Mobile number is required"),
+
+})

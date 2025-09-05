@@ -15,10 +15,14 @@ import { openCart } from "@/store/slice/MiniCartSlice"
 import SharePopup from "../single/components/SharePopup"
 import Link from "next/link"
 import WishlistButton from "@/components/cards/attribute/WishlistButton"
+import dynamic from "next/dynamic"
+const InquiryForm = dynamic(() => import("../components/inquiry"));
+
 const Catalogue = ({ CatalogueDetailData, stitching, category }) => {
     const dispatch = useDispatch()
     const { open } = useModal();
     const { data: session, status } = useSession();
+    const [inquiry, setInquiry] = useState(false)
     const [errors, setErrors] = useState(null)
     const [selectedSize, setSelectedSize] = useState({});
     const [quantity, setQuantity] = useState(1);
@@ -125,23 +129,16 @@ const Catalogue = ({ CatalogueDetailData, stitching, category }) => {
                                     className="w-12 py-2 bg-gray-200 hover:bg-gray-300 transition text-lg font-bold">
                                     +
                                 </button>
-                                {console.log(CatalogueDetailData)}
                             </div>
-                                <WishlistButton variant="detail" catalogueId={CatalogueDetailData?.id} type="catalogue"/>
-                            <button
-                                onClick={toggleCompare}
-                                className={`p-2 rounded-lg border transition ${compare
-                                    ? "bg-zinc-500 text-white border-zinc-900"
-                                    : "bg-white text-gray-700 border-zinc-900 hover:bg-zinc-900 hover:text-white"
-                                    }`}>
-                                <Repeat className="w-5 h-5" />
-                            </button>
+                            <WishlistButton variant="detail" catalogueId={CatalogueDetailData?.id} type="catalogue" />
+
                             <button
                                 onClick={() => setShareOpen(true)}
                                 className="p-2 rounded-lg border bg-white text-gray-700 border-zinc-900 hover:bg-zinc-900 hover:text-white transition">
                                 <Share2 className="w-5 h-5" />
                             </button>
                             <button
+                                onClick={() => setInquiry((prev) => !prev)}
                                 className="p-2 rounded-lg border bg-white text-gray-700 border-zinc-900 hover:bg-zinc-900 hover:text-white transition">
                                 <CircleQuestionMark className="w-5 h-5" />
                             </button>
@@ -184,6 +181,11 @@ const Catalogue = ({ CatalogueDetailData, stitching, category }) => {
                     url={`https://superbazaar.in/`}
                 />
             )}
+
+            <InquiryForm
+                open={inquiry}
+                onClose={() => setInquiry(false)}
+                catalogue_id={CatalogueDetailData.id}/>
         </div>
     )
 }

@@ -2,7 +2,7 @@ import Footer from "./components/common/Footer"
 import Navbar from "./components/common/Header/Navbar"
 import ModalManager from "./Modals/Auth/ModalManager"
 import MiniCart from "./Modals/Cart/MiniCart"
-const Layout = ({ children }) => {
+const LayoutTheme1 = ({ children }) => {
     return (
         <div>
             <Navbar />
@@ -14,4 +14,4 @@ const Layout = ({ children }) => {
         </div>
     )
 }
-export default Layout
+export default LayoutTheme1

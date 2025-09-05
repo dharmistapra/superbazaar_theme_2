@@ -30,12 +30,7 @@ const componentMap = {
 };
 
 const Collection = ({ homeContent, webSetting }) => {
-    console.log(
-        "homeContent ====>",
-        homeContent,
-        homeContent.map((item) => item.title)
-    );
-
+    
     return (
         <div className="container mx-auto px-4 mt-3 mb-0">
             {homeContent?.map((collection, idx) => {
@@ -99,8 +94,6 @@ export default Collection;
 // import CatalogCard from '../../ProductDetail/wholesale/component/CatalogCard';
 
 // const Collection = ({ homeContent, webSetting }) => {
-//     console.log("homeContent ====>", homeContent, homeContent.map((item) => item.title));
-//     console.log("twoBanner", homeContent.map((item) => item.twoBanner), "threeBanner", homeContent.map((item) => item.threeBanner), "fullSlider", homeContent.map((item) => item.fullSlider), "fourBanner", homeContent.map((item) => item.fourBanner), "cardSlider", homeContent.map((item) => item.cardSlider));
 
 //     return (
 //         <div>

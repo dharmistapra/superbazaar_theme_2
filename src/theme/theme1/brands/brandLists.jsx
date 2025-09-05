@@ -55,7 +55,7 @@ const BrandsList = () => {
       </div>
       <form
         onSubmit={(e) => e.preventDefault()}
-        className="relative flex items-center max-w-md mx-auto mb-8 bg-white border rounded-full shadow-sm px-4 py-2"
+        className="relative flex items-center max-w-md mx-auto mb-8 bg-white border rounded-md shadow-sm px-4 py-2"
       >
         <input
           type="text"

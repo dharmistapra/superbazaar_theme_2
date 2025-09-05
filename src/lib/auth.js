@@ -12,11 +12,8 @@ export const authOptions = {
                 try {
                     const axiosInstance = await createClientAxios()
                     const res = await axiosInstance.post(
-                        `${process.env.NEXT_PUBLIC_API_URL}login`,
-                        {
-                            email: credentials.email,
-                            password: credentials.password,
-                        }
+                        `${process.env.NEXT_PUBLIC_API_URL}api/auth/login`,
+                        { email: credentials.email,password: credentials.password,}
                     );
 
 

@@ -172,9 +172,15 @@ const MiniCart = () => {
         >
           View Cart
         </Link>
-          <button className="w-full py-2 bg-zinc-900 text-white rounded hover:bg-grey-700">
-            Proceed to Checkout
-          </button>
+
+
+        <Link
+          href="/checkout"
+        onClick={() => dispatch(closeCart())}
+          className="w-full py-2 bg-zinc-900 text-white rounded hover:bg-grey-700 text-center"
+        >
+           Proceed to Checkout
+        </Link>
         </div>
       </div>
     </>

@@ -2,7 +2,7 @@ import { createClientAxios, createServerAxios } from "./apiClient";
 export const getCategoryBanners = async (category) => {
   try {
     const axiosInstance = await createServerAxios();
-    const res = await axiosInstance.get(`/menu-pagewisebanner/${category}`);
+    const res = await axiosInstance.get(`/public/page-banner/${category}`);
     return res.data?.data || {};
   } catch (error) {
     return error;
@@ -18,7 +18,7 @@ export const getCategoryProducts = async (
 ) => {
   try {
     const axiosInstance = isServer ? await createServerAxios() : createClientAxios();
-    const res = await axiosInstance.get(`/product/${category}`, {
+    const res = await axiosInstance.get(`/public/product/${category}`, {
       params: {
         perPage,
         pageNo,
@@ -36,7 +36,7 @@ export const getCategoryProducts = async (
 export const getCategoryFilter = async (category) => {
   try {
     const axiosInstance = await createClientAxios();
-    const res = await axiosInstance.get(`/filter/${category}`);
+    const res = await axiosInstance.get(`/public/filter/${category}`);
     return res.data;
   } catch (error) {
     console.error("Error fetching category filter   :", error);
@@ -46,7 +46,7 @@ export const getCategoryFilter = async (category) => {
 export const getProductdetail = async (url) => {
   try {
     const axiosInstance = await createServerAxios();
-    const res = await axiosInstance.get(`/product-detail/${url}`);
+    const res = await axiosInstance.get(`/public/product-detail/${url}`);
     return res.data;
   } catch (error) {
     console.error("Error fetching product detail:", error);
@@ -56,7 +56,7 @@ export const getProductdetail = async (url) => {
 export const getProductStitching = async (url) => {
   try {
     const axiosInstance = await createServerAxios();
-    const res = await axiosInstance.get(`/product-stitching/${url}`);
+    const res = await axiosInstance.get(`/public/product-stitching/${url}`);
     return res.data;
   } catch (error) {
     console.error("Error fetching product stitching:", error);
@@ -66,7 +66,7 @@ export const getProductStitching = async (url) => {
 export const getProductAttributes = async (url) => {
   try {
     const axiosInstance = await createServerAxios();
-    const res = await axiosInstance.get(`/product-attributes/${url}`);
+    const res = await axiosInstance.get(`/public/product-attributes/${url}`);
     return res.data;
   } catch (error) {
     console.error("Error fetching product attributes:", error);
@@ -76,7 +76,7 @@ export const getProductAttributes = async (url) => {
 export const getRelatedProduct = async (url) => {
   try {
     const axiosInstance = await createClientAxios();
-    const res = await axiosInstance.get(`/related-product/${url}`);
+    const res = await axiosInstance.get(`/public/related-product/${url}`);
     return res.data;
   } catch (error) {
     console.error("Error fetching product detail:", error);
@@ -92,7 +92,7 @@ export const getWholeSaleProductslists = async (
 ) => {
   try {
     const axiosInstance = isServer ? await createServerAxios() : createClientAxios();
-    const res = await axiosInstance.get(`/catalogue/${category}`, {
+    const res = await axiosInstance.get(`/public/catalogue/${category}`, {
       params: {
         perPage,
         pageNo,
