@@ -49,8 +49,7 @@ export const getProductdetail = async (url) => {
     const res = await axiosInstance.get(`/public/product-detail/${url}`);
     return res.data;
   } catch (error) {
-    console.error("Error fetching product detail:", error);
-    throw error;
+    return { success: false, error: error?.response?.data || error.message };
   }
 };
 export const getProductStitching = async (url) => {

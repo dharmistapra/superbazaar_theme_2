@@ -27,7 +27,7 @@ export default function ConfirmPasswordModal() {
           otp: localStorage.getItem("otp"),
           email: localStorage.getItem("email")
         }
-        const response = await axiosInstance.post("reset-password", payload)
+        const response = await axiosInstance.post("auth/reset-password", payload)
         if (response.data.isSuccess) {
           localStorage.removeItem("email")
           localStorage.removeItem("otpsecrets")

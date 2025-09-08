@@ -35,7 +35,6 @@ const OrderDetail = ({ orderid }) => {
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-10 space-y-8">
-      {/* Order Header */}
       <div className="bg-white shadow-lg rounded-2xl p-6 border border-gray-100 transition hover:shadow-xl duration-300">
         <div className="flex items-center justify-between flex-wrap gap-4">
           <div>
@@ -56,8 +55,6 @@ const OrderDetail = ({ orderid }) => {
           </span>
         </div>
       </div>
-
-      {/* Address Section */}
       <div className="grid md:grid-cols-2 gap-6">
         <div className="bg-white shadow-md rounded-2xl p-6 border border-gray-100 transition hover:shadow-lg duration-300">
           <h2 className="text-lg font-semibold text-gray-800 mb-3 border-b pb-2">
@@ -92,7 +89,6 @@ const OrderDetail = ({ orderid }) => {
         </div>
       </div>
 
-      {/* Order Items */}
       <div className="bg-white shadow-md rounded-2xl p-6 border border-gray-100 transition hover:shadow-lg duration-300">
         <h2 className="text-lg font-semibold text-gray-800 mb-4 border-b pb-2">
           Order Items
@@ -119,10 +115,9 @@ const OrderDetail = ({ orderid }) => {
                 key={item.id}
                 className="flex flex-col md:grid md:grid-cols-12 items-center md:items-start py-4 gap-4 md:gap-2 group"
               >
-                {/* Product */}
                 <div className="col-span-6 flex gap-4 w-full">
                   <Image
-                    src={ImageUrl(item.image)}
+                    src={ImageUrl(item.productsnapshots?.image)}
                     alt={item.name}
                     width={100}
                     height={100}
@@ -132,15 +127,18 @@ const OrderDetail = ({ orderid }) => {
                     <h3 className="font-semibold text-sm md:text-base text-gray-800">
                       {item.name}
                     </h3>
-                    <StitchingOptions stitching={item.stitching} />
+                    {
+                      item.productsnapshots.stitching && item.productsnapshots.stitching?.length > 0 && (
+                        <StitchingOptions stitching={item.productsnapshots.stitching} />
+                      )
+                    }
                     {sizeObj?.value && (
                       <p className="text-sm text-gray-500">
                         Size: {sizeObj.value}
                       </p>
                     )}
 
-                    {/* Catalogue Toggle */}
-                    {item.isCatalogue && item.products && (
+                    {item?.isCatalogue && item?.products && (
                       <div className="mt-3">
                         <button
                           onClick={() => toggleCatalogue(item.id)}
@@ -150,8 +148,6 @@ const OrderDetail = ({ orderid }) => {
                             ? "Hide Products"
                             : "Show Products"}
                         </button>
-
-                        {/* Expanding Section */}
                         <div
                           className={`transition-all duration-500 ease-in-out overflow-hidden ${openCatalogueIds.includes(item.id)
                             ? "max-h-96 opacity-100 mt-3"
@@ -186,18 +182,12 @@ const OrderDetail = ({ orderid }) => {
                     )}
                   </div>
                 </div>
-
-                {/* Price */}
                 <div className="col-span-2 text-center font-medium text-gray-700">
                   ₹{item.productsnapshots?.price}
                 </div>
-
-                {/* Quantity */}
                 <div className="col-span-2 text-center text-gray-700">
                   {item.quantity}
                 </div>
-
-                {/* Subtotal */}
                 <div className="col-span-2 text-right font-semibold text-gray-800">
                   ₹{item.productsnapshots?.subtotal}
                 </div>
@@ -206,8 +196,6 @@ const OrderDetail = ({ orderid }) => {
           })}
         </div>
       </div>
-
-      {/* Payment Summary */}
       <div className="bg-white shadow-md rounded-2xl p-6 border border-gray-100 transition hover:shadow-lg duration-300">
         <h2 className="text-lg font-semibold text-gray-800 mb-4 border-b pb-2">
           Payment Summary

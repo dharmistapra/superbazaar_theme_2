@@ -28,7 +28,7 @@ export default function SignupModal() {
     onSubmit: async (values) => {
       try {
         const axiosInstance = createClientAxios();
-        const response = await axiosInstance.post("/register", values)
+        const response = await axiosInstance.post("auth/register", values)
         if (response.status == 200) {
           close("signup")
           setErrors(null)

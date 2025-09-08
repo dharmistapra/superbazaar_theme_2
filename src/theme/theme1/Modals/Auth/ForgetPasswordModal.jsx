@@ -18,7 +18,7 @@ export default function ForgetPasswordModal() {
     onSubmit: async (values) => {
       try {
         const axiosInstance = createClientAxios();
-        const response = await axiosInstance.post("otp", values)
+        const response = await axiosInstance.post("auth/otp", values)
         if (response.data.status == 200) {
           localStorage.setItem("otpsecrets", response?.data?.secret)
           localStorage.setItem("email", values.email)

@@ -21,7 +21,7 @@ export const getShippingMethod = async (query) => {
 export const postOrder = async (values) => {
   try {
     const axiosInstance = await createClientAxios();
-    const res = await axiosInstance.post(`/user/orders`,values);
+    const res = await axiosInstance.post(`/orders`,values);
     return res.data || {};
   } catch (error) {
     return error;
