@@ -22,6 +22,8 @@ export const getThemeModules = (theme = "theme1") => {
         WholeSalePage: load(() => import("./theme1/wholesalePage/wholesalepage")),
         OrderDetail: load(() => import("./theme1/Accounts/components/orderDetails")),
         Invoice: load(() => import("./theme1/Accounts/components/Invoice")),
+        Search: load(() => import("./theme1/Search/search")),
+
       };
 
     case "theme2":
@@ -45,7 +47,9 @@ export const getThemeModules = (theme = "theme1") => {
         WholeSaleProductList: load(() => import("./theme2/ProductDetail/wholesale/WholesaleProduct")),
         OrderDetail: load(() => import("./theme1/Accounts/components/orderDetails")),
         Invoice: load(() => import("./theme1/Accounts/components/Invoice")),
-        Cart: load(() => import("./theme2/Cart/CartPage"))
+        Cart: load(() => import("./theme2/Cart/CartPage")),
+                Search: load(() => import("./theme1/Search/search")),
+
       };
     default:
       return getThemeModules("theme1");

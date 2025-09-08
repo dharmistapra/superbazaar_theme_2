@@ -65,13 +65,15 @@ const CurrencySelector = ({ currencyData }) => {
                       : "hover:bg-gray-100"
                     }`}
                 >
-                  <Image
-                    src={ImageUrl(cur.flag)}
-                    alt={cur.code}
-                    width={25}
-                    height={25}
-                    className="object-cover"
-                  />
+                  <div className="relative w-[25px] h-[25px]">
+                    <Image
+                      src={ImageUrl(cur.flag)}
+                      alt={cur.code}
+                      fill
+                      className="object-contain"
+                    />
+                  </div>
+
                   <div className="flex flex-col">
                     <span className="text-xs text-gray-500">{cur.symbol}</span>
                   </div>

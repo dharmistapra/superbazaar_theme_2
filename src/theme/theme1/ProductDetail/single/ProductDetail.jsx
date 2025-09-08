@@ -26,7 +26,7 @@ const ProductDetailTheme1 = ({ product, Stitching, attributes, category }) => {
   const { data: session, status } = useSession();
   const [inquiry, setInquiry] = useState(false)
   const [quantity, setQuantity] = useState(1);
-  const [selectedSize, setSelectedSize] = useState({});
+  const [selectedSize, setSelectedSize] = useState(null);
   const [errors, setErrors] = useState(null)
   const [stitchingData, setStitchingData] = useState(null);
   const [wishlist, setWishlist] = useState(false);
@@ -37,9 +37,9 @@ const ProductDetailTheme1 = ({ product, Stitching, attributes, category }) => {
   const decrement = () => setQuantity((prev) => (prev > 1 ? prev - 1 : 1));
   const toggleWishlist = () => setWishlist((prev) => !prev);
   const toggleCompare = () => setCompare((prev) => !prev);
+
   const handleAddtoCart = async () => {
     setErrors(null);
-
     if (product.optionType === "Size" && !selectedSize) {
       return setErrors("⚠️ Please select size");
     }

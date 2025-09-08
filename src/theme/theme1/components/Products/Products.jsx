@@ -16,8 +16,6 @@ const Products = ({ tabsData = [], purchaseType }) => {
     }
   }, [tabsData])
   const activeTabData = tabsData.find((tab) => tab.url === active)
-
-
   const products =
     purchaseType === "wholesale"
       ? activeTabData?.products?.catalogue
@@ -79,7 +77,7 @@ const Products = ({ tabsData = [], purchaseType }) => {
             <SwiperSlide key={index} className="flex justify-center">
               {purchaseType === "wholesale" ?
                 (<CatalogueCard data={data} redirectUrl={`catalogue/${active}`} />
-                ) : (<ProductCard data={data} />)
+                ) : (<ProductCard data={data} redirectUrl={`${active}`}/>)
               }
             </SwiperSlide>
           ))}

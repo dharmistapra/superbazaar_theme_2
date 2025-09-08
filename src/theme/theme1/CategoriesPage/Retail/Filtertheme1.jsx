@@ -1,7 +1,9 @@
 "use client";
 import { useEffect, useState } from "react";
 import { X, Plus, Minus } from "lucide-react";
-
+import "rc-slider/assets/index.css";
+import Slider from "rc-slider";
+import PriceConverter from "@/components/PriceConverter";
 const Filtertheme1 = ({ open, setOpen, filterData, onApply, setSelectedAttributes, selectedAttributes }) => {
   const [openSections, setOpenSections] = useState({});
   const [priceRange, setPriceRange] = useState([0, 0]);
@@ -86,58 +88,39 @@ const Filtertheme1 = ({ open, setOpen, filterData, onApply, setSelectedAttribute
                 <h3 className="font-semibold">Price</h3>
                 {openSections["price"] ? <Minus /> : <Plus />}
               </div>
-              {openSections["price"] && (
-                <div className="mt-3">
-                  <div className="relative h-1 bg-gray-300 rounded mb-3">
-                    <div
-                      className="absolute h-1 bg-black rounded"
-                      style={{
-                        left: `${((priceRange[0] - filterData.priceRange.minPrice) /
-                          (filterData.priceRange.maxPrice -
-                            filterData.priceRange.minPrice)) *
-                          100
-                          }%`,
-                        right: `${100 -
-                          ((priceRange[1] - filterData.priceRange.minPrice) /
-                            (filterData.priceRange.maxPrice -
-                              filterData.priceRange.minPrice)) *
-                          100
-                          }%`,
-                      }}
-                    />
-                    <input
-                      type="range"
-                      min={filterData.priceRange.minPrice}
-                      max={filterData.priceRange.maxPrice}
-                      value={priceRange[0]}
-                      onChange={(e) => handlePriceChange(0, e.target.value)}
-                      className="absolute w-full h-1 bg-transparent appearance-none"
-                    />
-                    <input
-                      type="range"
-                      min={filterData.priceRange.minPrice}
-                      max={filterData.priceRange.maxPrice}
-                      value={priceRange[1]}
-                      onChange={(e) => handlePriceChange(1, e.target.value)}
-                      className="absolute w-full h-1 bg-transparent appearance-none"
-                    />
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span>
-                      Price: ${priceRange[0]} — ${priceRange[1]}
-                    </span>
-                    <button
-                      onClick={() => {
-                        setAppliedPrice(priceRange);
-                        if (onApply) onApply({ attributes: selectedAttributes, price: priceRange });
-                      }}
-                      className="ml-3 px-3 py-1 bg-blue-600 text-white rounded-md text-sm hover:bg-blue-700"
-                    >
-                      Apply
-                    </button>
-                  </div>
-                </div>
-              )}
+             {openSections["price"] && (
+  <div className="mt-3 space-y-3">
+    <Slider
+      min={filterData?.priceRange?.minPrice || 0}
+      max={filterData?.priceRange?.maxPrice || 1000}
+      range
+      value={priceRange}
+      onChange={(val) => setPriceRange(val)}
+      trackStyle={[{ backgroundColor: "#3B82F6", height: 6 }]}
+      handleStyle={[
+        { borderColor: "#3B82F6", height: 18, width: 18, marginTop: -7, backgroundColor: "#fff" },
+        { borderColor: "#3B82F6", height: 18, width: 18, marginTop: -7, backgroundColor: "#fff" }
+      ]}
+      railStyle={{ backgroundColor: "#E5E7EB", height: 6 }}
+    />
+
+    <div className="flex justify-between items-center">
+      <span>
+        Price:  <PriceConverter price={priceRange[0]}/> — <PriceConverter price={priceRange[1]}/>
+      </span>
+      <button
+        onClick={() => {
+          setAppliedPrice(priceRange);
+          if (onApply) onApply({ attributes: selectedAttributes, price: priceRange });
+        }}
+        className="ml-3 px-3 py-1 bg-blue-600 text-white rounded-md text-sm hover:bg-blue-700"
+      >
+        Apply
+      </button>
+    </div>
+  </div>
+)}
+
             </div>
           )}
           {filterData?.attributes?.map((attr) => (

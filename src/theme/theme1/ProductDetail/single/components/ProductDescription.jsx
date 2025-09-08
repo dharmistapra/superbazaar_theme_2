@@ -11,7 +11,6 @@ const ProductDescription = ({ description, attributes }) => {
 
   const fetchData=async()=>{
     const [shippingPolicy,returnPolicy]=await Promise.all([getPoliciesDetail("shipping-policy"),getPoliciesDetail("return-policy")])
-    console.log(shippingPolicy) 
     setReturnPolicy(shippingPolicy.data)
       setShippingPolicy(returnPolicy.data)
       
