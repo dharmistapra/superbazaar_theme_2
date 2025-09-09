@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { ArrowBigDown, Eye, Scissors } from "lucide-react";
 import "./style/StitchingOption.css"
+import PriceConverter from "./PriceConverter";
 const StitchingOptions = ({ stitching }) => {
     const [openMeasurements, setOpenMeasurements] = useState(null);
 
@@ -24,7 +25,12 @@ const StitchingOptions = ({ stitching }) => {
 
                     return (
                         <li key={idx} className="flex items-center gap-2">
-                            <span>{s.option?.name}</span>
+                             <span>
+    {s.option?.name}{" "}
+    {s.option?.price && (   
+      <span className="text-gray-600 text-xs"><PriceConverter price={s.option.price}/></span>
+    )}
+  </span>
                             {measurements.length > 0 && (
                                 <button
                                     type="button"

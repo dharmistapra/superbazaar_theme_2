@@ -10,6 +10,7 @@ import PriceConverter from "@/components/PriceConverter";
 import { useCartActions } from "@/hooks/useCartActions";
 import StitchingOptions from "@/components/StitchingOption";
 import Link from "next/link";
+import Label from "@/components/Label";
 const MiniCart = () => {
   const dispatch = useDispatch();
   const isCartOpen = useSelector((state) => state.minicart.isCartOpen);
@@ -72,6 +73,8 @@ const MiniCart = () => {
               <div key={item.id} className="p-3 border-b-1 border-gray-300">
                 <div className="flex justify-between items-start">
                   <div className="flex gap-3">
+                    <div className="relative">
+                      {item?.outOfStock && <Label text={"Out of stock"} danger={item?.outOfStock}/>}
                     <Image
                       src={ImageUrl(item.image)}
                       alt={item.name}
@@ -79,6 +82,8 @@ const MiniCart = () => {
                       width={300}
                       className="w-20 h-30  rounded-md"
                     />
+                     
+                     </div>
                     <div>
                       <h3 className="font-medium text-sm">{item.name}</h3>
                       <p className="text-sm">₹{item.price}</p>
@@ -104,7 +109,14 @@ const MiniCart = () => {
                           {isLoading ? <Loader2 className="animate-spin h-3 w-3 mx-auto" /> : "+"}
                         </button>
                       </div>
+
+                      <p className="text-xs text-gray-500 mt-1">
+  Available: {item?.availableQuantity || 0}
+</p>
                     </div>
+
+
+                    
                   </div>
                   <button
                     onClick={() => removeItem(item.id)}
@@ -133,7 +145,7 @@ const MiniCart = () => {
                         {item.products.map((p) => (
                           <div
                             key={p.code}
-                            className="flex items-center justify-between text-sm gap-2">
+                            className="flex items-center justify-between text-sm gap-2 relative">
                             <div className="flex  items-center gap-2">
                               <div className="w-10 h-10 relative flex-shrink-0">
                                 <Image
@@ -146,6 +158,8 @@ const MiniCart = () => {
                               </div>
                               <span className="truncate max-w-[150px]">{p.name}</span>
                             </div>
+                           
+                           {p?.outOfStock && <Label text={"Out of stock"} danger={p?.outOfStock}/>}
                           </div>
                         ))}
                       </div>

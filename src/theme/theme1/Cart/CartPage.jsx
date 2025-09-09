@@ -10,7 +10,7 @@ const CartPageTheme1 = () => {
   const { CartData } = useSelector((state) => state.cartItem);
   const [cartItems, setCartItemsState] = useState([]);
   useEffect(() => {
-    setCartItemsState(CartData?.data || []);
+    setCartItemsState(CartData || []);
   }, [CartData]);
   return (
     <div className="w-full">
@@ -23,7 +23,7 @@ const CartPageTheme1 = () => {
         <EmptyCart />
       ) : (
         <CartItems
-          cartItems={cartItems}
+          CartData={cartItems}
         />
       )}
     </div>

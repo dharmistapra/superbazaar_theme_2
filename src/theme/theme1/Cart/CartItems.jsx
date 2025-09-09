@@ -1,14 +1,15 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import { ShieldCheck, Lock, Trash2, Loader2 } from "lucide-react";
 import { ImageUrl } from "@/helper/imageUrl";
-import { useSelector } from "react-redux";
 import FreeShippingProgress from "@/theme/theme1/Modals/Cart/FreeShippingProgress";
 import StitchingOptions from "@/components/StitchingOption";
 import { useCartActions } from "@/hooks/useCartActions";
 import Link from "next/link";
-const CartItems = ({ cartItems }) => {
+import PriceConverter from "@/components/PriceConverter";
+import Label from "@/components/Label";
+const CartItems = ({ CartData }) => {
   const [openCatalogueIds, setOpenCatalogueIds] = useState([]);
   const {
     incrementQuantity,
@@ -22,9 +23,6 @@ const CartItems = ({ cartItems }) => {
       prev.includes(id) ? prev.filter((cid) => cid !== id) : [...prev, id]
     );
   };
-  const totalSubtotal = cartItems.reduce((acc, item) => acc + item.subtotal, 0);
-  const totalTax = 0;
-  const totalOrder = totalSubtotal + totalTax;
   return (
     <div className="mx-auto mt-7  
         w-full 
@@ -42,7 +40,7 @@ const CartItems = ({ cartItems }) => {
           />
           <h2 className="text-xl font-semibold mb-4">Cart Items</h2>
 
-          {cartItems.length === 0 ? (
+          {CartData?.data?.length === 0 ? (
             <p>Your cart is empty.</p>
           ) : (
             <>
@@ -54,7 +52,7 @@ const CartItems = ({ cartItems }) => {
               </div>
 
               <div className="divide-y">
-                {cartItems.map((item) => {
+                {CartData?.data?.length > 0 && CartData?.data?.map((item) => {
                   let sizeObj;
                   const isLoading = loadingIds.includes(item.id);
                   try {
@@ -66,6 +64,8 @@ const CartItems = ({ cartItems }) => {
                   return (
                     <div key={item.id} className="flex flex-col md:grid md:grid-cols-12 items-center md:items-start justify-between py-4 gap-4">
                       <div className="col-span-6 flex gap-4">
+                        <div className="relative">
+                            {item?.outOfStock && <Label text={"Out of stock"} danger={item?.outOfStock}/>}
                         <Image
                           src={ImageUrl(item.image)}
                           alt={item.name}
@@ -73,6 +73,8 @@ const CartItems = ({ cartItems }) => {
                           height={100}
                           className="rounded-lg object-cover max-h-[150px] w-auto "
                         />
+
+                        </div>
                         <div>
                           <h3 className="font-semibold text-sm md:text-base">{item.name}</h3>
                           <StitchingOptions stitching={item.stitching} />
@@ -95,9 +97,10 @@ const CartItems = ({ cartItems }) => {
                                   {item.products.map((p) => (
                                     <div
                                       key={p.code}
-                                      className="flex items-center justify-between text-sm gap-2">
+                                      className="flex items-center justify-between text-sm gap-2 ">
                                       <div className="flex  items-center gap-2">
                                         <div className="w-25 h-15 relative flex-shrink-0">
+                                           {p?.outOfStock && <Label text={"Out of stock"} danger={p?.outOfStock}/>}
                                           <Image
                                             src={ImageUrl(p.image[0])}
                                             alt={p.name}
@@ -106,8 +109,14 @@ const CartItems = ({ cartItems }) => {
                                             sizes="60px"
                                           />
                                         </div>
+                                        <div className="flex flex-col">
                                         <span className="truncate max-w-[150px]">{p.name}</span>
+                                        <div className="text-gray-500">Price:{p.price}</div>
+
+                                        </div>
                                       </div>
+
+                                     
                                     </div>
                                   ))}
                                 </div>
@@ -121,8 +130,9 @@ const CartItems = ({ cartItems }) => {
                       </div>
 
 
-                      <div className="col-span-2 flex items-center border border-gray-400 rounded-md overflow-hidden w-20 mt-2">
-                        <button
+                      <div className="col-span-2  mt-2">
+                       <div className="flex items-center border border-gray-400 rounded-md overflow-hidden w-20">
+                         <button
                           disabled={item.quantity <= 1 || isLoading}
                           onClick={() => decrementQuantity(item)}
                           className="w-5 p-1 bg-gray-200 hover:bg-gray-300 transition text-md disabled:opacity-50 disabled:cursor-not-allowed"
@@ -139,7 +149,15 @@ const CartItems = ({ cartItems }) => {
                         >
                           {isLoading ? <Loader2 className="animate-spin h-3 w-3 mx-auto" /> : "+"}
                         </button>
+                       </div>
+
+                         <p className="text-xs text-gray-500 mt-1">
+  Available: {item?.availableQuantity || 0}
+</p>
                       </div>
+
+                       
+          
                       <div className="col-span-2 flex justify-between md:justify-end items-center gap-2 font-medium">
                         <p>₹{item.subtotal}</p>
                         <button
@@ -168,15 +186,15 @@ const CartItems = ({ cartItems }) => {
           <div className="space-y-2 text-sm mt-5">
             <div className="flex justify-between">
               <span>Subtotal</span>
-              <span>₹{totalSubtotal}</span>
+              <PriceConverter price={CartData?.totalSubtotal}/>
             </div>
             <div className="flex justify-between">
               <span>Tax</span>
-              <span>₹{totalTax}</span>
+              <PriceConverter price={CartData?.totalTax}/>
             </div>
             <div className="flex justify-between font-semibold text-lg">
               <span>Total</span>
-              <span>₹{totalOrder}</span>
+               <PriceConverter price={CartData?.totalOrder}/>
             </div>
           </div>
           <div className="mt-8  w-full">

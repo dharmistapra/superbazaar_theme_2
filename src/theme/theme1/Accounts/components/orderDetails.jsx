@@ -9,7 +9,7 @@ const OrderDetail = ({ orderid }) => {
   const [order, setOrder] = useState(null);
   const [openCatalogueIds, setOpenCatalogueIds] = useState([]);
 
- useEffect(() => {
+  useEffect(() => {
     const fetchOrder = async () => {
       const res = await getOrderDetails(orderid);
       if (res.isSuccess) {
@@ -17,7 +17,7 @@ const OrderDetail = ({ orderid }) => {
       }
     };
     fetchOrder();
-  }, [orderid]); 
+  }, [orderid]);
 
   const toggleCatalogue = (id) => {
     setOpenCatalogueIds((prev) =>
@@ -227,5 +227,4 @@ const OrderDetail = ({ orderid }) => {
     </div>
   );
 };
-
 export default OrderDetail;
