@@ -1,17 +1,13 @@
 "use client";
 import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
-import { SlidersHorizontal, LayoutList, Grip, GripVertical } from "lucide-react";
-import { getCategoryProducts, getWholeSaleProductslists } from "@/services/productService";
+import { Columns2, Columns3, Columns4 } from "lucide-react";
 import ProductCardSkeleton from "@/components/ProductCardSkeleton";
-import { usePathname } from "next/navigation";
 import { getBrandCatalogueListing } from "@/services/brandService";
-import CatalogueCard from "@/components/cards/CatalogueCard";
-const ProductCard = dynamic(() => import("@/components/cards/ProductCards"))
+import CatalogCard from "../ProductDetail/wholesale/component/CatalogCard";
 const Pagination = dynamic(() => import("@/components/Pagination"))
-const BrandCatalogueList = ({ brands }) => {
-    const pathname = usePathname();
 
+const BrandCatalogueList = ({ brands, }) => {
     const [grid, setGrid] = useState(4);
     const [sort, setSort] = useState("");
     const [page, setPage] = useState(1);
@@ -52,43 +48,30 @@ const BrandCatalogueList = ({ brands }) => {
         { value: "high", label: "Price: High to Low" },
     ];
     const gridButtons = [
-        { icon: LayoutList, value: 2, label: "2 Grid" },
-        { icon: Grip, value: 3, label: "3 Grid" },
-        { icon: GripVertical, value: 4, label: "4 Grid" },
+        { icon: Columns2, value: 2, label: "2 Grid" },
+        { icon: Columns3, value: 3, label: "3 Grid" },
+        { icon: Columns4, value: 4, label: "4 Grid" },
     ];
 
 
     return (
-        <div className="mx-auto px-4 mt-7  
-  w-full 
-  sm:max-w-[540px] 
-  md:max-w-[720px] 
-  lg:max-w-[960px] 
-  xl:max-w-[1240px] 
-  2xl:max-w-[1320px]">
-            <div className="flex flex-wrap justify-between items-center mb-6 gap-4">
-                <div className="hidden md:flex items-center gap-5">
-                    {gridButtons.map((btn) => {
-                        const Icon = btn.icon;
-                        const isActive = grid === btn.value;
-                        return (
-                            <button
-                                key={btn.value}
-                                onClick={() => setGrid(btn.value)}
-                                title={btn.label}
-                                className={`p-2 rounded transition-all ${isActive
-                                    ? "bg-zinc-900 text-white "
-                                    : "text-zinc-900 hover:bg-zinc-900 hover:text-white"
-                                    }`}
-                            >
-                                <Icon size={20} />
-                            </button>
-                        );
-                    })}
-                </div>
+        <div className="mx-auto px-4 mt-7 w-full sm:max-w-[540px] md:max-w-[720px] lg:max-w-[960px] xl:max-w-[1240px] 2xl:max-w-[1320px]">
+            <div className="flex flex-wrap justify-end items-center mb-6 gap-4">
                 <div className="flex items-center gap-3">
-
-
+                    <div className="flex gap-1">
+                        {gridButtons.map((btn) => {
+                            const Icon = btn.icon;
+                            return (
+                                <button
+                                    key={btn.value}
+                                    onClick={() => setGrid(btn.value)}
+                                    className={`p-2 rounded ${grid === btn.value ? "bg-red-700 text-white" : "bg-gray-200 hover:bg-gray-300"}`}
+                                >
+                                    <Icon size={18} />
+                                </button>
+                            );
+                        })}
+                    </div>
                     <select
                         value={sort}
                         onChange={(e) => setSort(e.target.value)}
@@ -111,11 +94,13 @@ const BrandCatalogueList = ({ brands }) => {
                 {loading ? (
                     [...Array(grid * 2)].map((_, i) => <ProductCardSkeleton key={i} />)
                 ) : products?.length > 0 ? (
-                    products.map((item, index) => (
-                        <div key={index}>
-                            <CatalogueCard data={item} grid={grid} redirectUrl={`catalogue/${pathname?.split("/")?.[3]}`} />
-                        </div>
-                    ))
+                    products.map((item, index) => {
+                        return (
+                            <div key={index}>
+                                <CatalogCard product={item} grid={grid} category={brands} />
+                            </div>
+                        )
+                    })
                 ) : (
                     <p className="col-span-full text-center text-gray-500">
                         No products found.

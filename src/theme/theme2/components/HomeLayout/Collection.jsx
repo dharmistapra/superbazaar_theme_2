@@ -30,7 +30,7 @@ const componentMap = {
 };
 
 const Collection = ({ homeContent, webSetting }) => {
-    
+
     return (
         <div className="container mx-auto px-4 mt-3 mb-0">
             {homeContent?.map((collection, idx) => {

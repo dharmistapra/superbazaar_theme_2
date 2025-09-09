@@ -41,14 +41,14 @@ export const getThemeModules = (theme = "theme1") => {
         Login: load(() => import("./theme2/auth/login/page")),
         Signup: load(() => import("./theme2/auth/signup/page")),
         Catalogue: load(() => import("./theme2/ProductDetail/catalogue/catalogue")),
-        BrandList: load(() => import("./theme1/brands/brandLists")),
-        WholeSalePage: load(() => import("./theme1/wholesalePage/wholesalepage")),
-        BrandCatalogueList: load(() => import("./theme1/brands/brandCatalogueList")),
+        BrandList: load(() => import("./theme2/brands/brandLists")),
+        WholeSalePage: load(() => import("./theme2/wholesalePage/wholesalepage")),
+        BrandCatalogueList: load(() => import("./theme2/brands/brandCatalogueList")),
         WholeSaleProductList: load(() => import("./theme2/ProductDetail/wholesale/WholesaleProduct")),
         OrderDetail: load(() => import("./theme1/Accounts/components/orderDetails")),
         Invoice: load(() => import("./theme1/Accounts/components/Invoice")),
         Cart: load(() => import("./theme2/Cart/CartPage")),
-                Search: load(() => import("./theme1/Search/search")),
+        Search: load(() => import("./theme2/Search/search")),
 
       };
     default:

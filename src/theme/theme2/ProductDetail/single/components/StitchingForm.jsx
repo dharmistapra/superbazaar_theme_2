@@ -1,4 +1,5 @@
 "use client";
+import PriceConverter from "@/components/PriceConverter";
 import { useModal } from "@/hooks/useModal";
 import { Link } from "lucide-react";
 import { useState, useEffect } from "react";
@@ -136,7 +137,10 @@ export default function StitchingForm({ stitchingData, onChange }) {
                                                     className="w-4 h-4 accent-red-500"
                                                 />
                                                 <span>
-                                                    {option.name} {option.price > 0 && `– ₹${option.price}`}
+                                                    {option.name}{" "}
+                                                    {option.price > 0 && (
+                                                        <>– <PriceConverter price={option.price} /></>
+                                                    )}
                                                 </span>
                                             </label>
                                         )

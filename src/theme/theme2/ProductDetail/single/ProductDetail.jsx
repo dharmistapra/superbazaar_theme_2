@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { CircleQuestionMark, Facebook, Heart, MessageCircle, Minus, Plus, Repeat, Share2, Twitter } from "lucide-react";
+import { Facebook, MessageCircle, Minus, Plus, Twitter } from "lucide-react";
 import OfferBanner from "@/components/OfferBanner";
 import ProductImageGallery from "./components/ProductImageGallery";
 import SharePopup from "./components/SharePopup";
@@ -16,10 +16,10 @@ import ProductAccordion from "./components/ProductAccordion";
 import ProductCard from "../../ProductComponent/ProductCard";
 import { usePathname } from "next/navigation";
 import { ImageUrl } from "@/helper/imageUrl";
-import RealtedProduct from "./components/RelatedProduct";
 import Breadcrum from "../../components/BreadCrums/Breadcrum";
 import PriceConverter from "@/components/PriceConverter";
 import SizeSelector from "@/components/SizeSelector";
+import RealtedProduct from "./components/RelatedProduct";
 
 const ProductDetailTheme2 = ({ product, Stitching, attributes, category }) => {
   const dispatch = useDispatch()
@@ -192,7 +192,7 @@ const ProductDetailTheme2 = ({ product, Stitching, attributes, category }) => {
         </div >
       </div >
       <div>
-        <RealtedProduct />
+        <RealtedProduct url={product.url} />
       </div>
 
       {/* <SharePopup

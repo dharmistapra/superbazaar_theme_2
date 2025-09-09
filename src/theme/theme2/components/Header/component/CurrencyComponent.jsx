@@ -95,6 +95,7 @@ const CurrencyComponent = ({ currencyData }) => {
         dispatch(setSelectedCurrency(cur));
         setOpen(false);
     };
+
     useEffect(() => {
         const handleClickOutside = (event) => {
             if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {

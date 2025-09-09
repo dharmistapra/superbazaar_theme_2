@@ -189,7 +189,7 @@ const OrderDetail = ({ orderid }) => {
 
                                 {/* Price */}
                                 <div className="col-span-2 text-center font-medium text-gray-700">
-                                    ₹{item.productsnapshots?.price}
+                                    <PriceConverter price={product?.item.productsnapshots?.price} />
                                 </div>
 
                                 {/* Quantity */}

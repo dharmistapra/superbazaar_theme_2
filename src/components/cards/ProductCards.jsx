@@ -13,7 +13,7 @@ const ProductCard = ({ data, redirectUrl }) => {
             <div className="relative w-full aspect-[4/5] sm:aspect-[1/1] md:aspect-[3/4]">
                 <Link
                     href={redirectUrl ? `/retail/${redirectUrl}/${data?.url}` : `${pathname}/${data?.url || "/"}`}>
-                                        <Image
+                    <Image
                         src={data?.mediumImage?.[0] ? ImageUrl(data?.mediumImage?.[0]) : "/banner1.webp"}
                         alt={data?.name || "Product"}
                         fill

@@ -3,9 +3,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { Heart } from "lucide-react";
 import { ImageUrl } from "@/helper/imageUrl";
+import PriceConverter from "@/components/PriceConverter";
 
 const ProductCard = ({ product, pathname }) => {
     if (!product) return null;
+    console.log("product card ==========>", product);
 
     return (
         <div className="single-product-card bg-white rounded-md shadow hover:shadow-lg transition overflow-hidden">
@@ -60,11 +62,11 @@ const ProductCard = ({ product, pathname }) => {
                 {/* Product Price */}
                 <div className="product-price flex justify-between items-center gap-2">
                     <span className="price text-red-600 font-bold text-sm">
-                        Rs {product?.offer_price}
+                        <PriceConverter price={product?.offer_price} />
                     </span>
                     {product?.price && product?.price > product?.offer_price && (
                         <span className="line-through text-gray-500 text-xs">
-                            Rs {product?.price}
+                            <PriceConverter price={product?.price} />
                         </span>
                     )}
                 </div>

@@ -210,11 +210,11 @@ const ProductDetailTheme1 = ({ product, Stitching, attributes, category }) => {
 
       <InquiryForm
         open={inquiry}
-        onClose={() => setInquiry(false)} 
+        onClose={() => setInquiry(false)}
         catalogue_id={null}
         product_id={product.id}
-        />
-        
+      />
+
 
     </div>
   );

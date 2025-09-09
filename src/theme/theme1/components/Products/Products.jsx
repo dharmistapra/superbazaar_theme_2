@@ -77,7 +77,7 @@ const Products = ({ tabsData = [], purchaseType }) => {
             <SwiperSlide key={index} className="flex justify-center">
               {purchaseType === "wholesale" ?
                 (<CatalogueCard data={data} redirectUrl={`catalogue/${active}`} />
-                ) : (<ProductCard data={data} redirectUrl={`${active}`}/>)
+                ) : (<ProductCard data={data} redirectUrl={`${active}`} />)
               }
             </SwiperSlide>
           ))}

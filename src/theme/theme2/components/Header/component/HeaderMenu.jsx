@@ -18,6 +18,7 @@ import { getCartItems } from "@/services/cartService";
 import { getUserWishlist } from "@/services/accountsService";
 import { useRouter } from "next/navigation";
 import { openCart } from "@/store/slice/MiniCartSlice";
+import HeaderSearch from "./HeaderSearch";
 
 const HeaderMenu = ({ menudata, currencyData }) => {
     const { data: session, } = useSession();
@@ -29,7 +30,16 @@ const HeaderMenu = ({ menudata, currencyData }) => {
     const [isSticky, setIsSticky] = useState(false);
     const dispatch = useDispatch();
     const webSetting = useSelector(state => state.webSetting.webSetting)
+    const [showSearch, setShowSearch] = useState(false);
+    const [searchTerm, setSearchTerm] = useState("");
 
+
+    const handleSearchSubmit = (e) => {
+        e.preventDefault();
+        if (!searchTerm.trim()) return;
+        router.push(`/search?q=${encodeURIComponent(searchTerm)}`);
+        setShowSearch(false);
+    };
     const handleCartClick = () => dispatch(openCart());
     const fetchData = async () => {
         const data = await getWebSetting();
@@ -69,33 +79,38 @@ const HeaderMenu = ({ menudata, currencyData }) => {
     }, []);
 
     const handleLogout = async () => {
-        // localStorage.removeItem("token")
-        // signOut({ redirect: false })
+        localStorage.removeItem("token")
+        signOut({ redirect: false })
         router.push("/")
     }
 
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (userRef.current && !userRef.current.contains(event.target)) {
+                setOpenUser(false);
+            }
+        };
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => document.removeEventListener("mousedown", handleClickOutside);
+    }, []);
+
     return (
         <>
-
             <header className="w-full">
-                {/* Top black bar */}
                 <div className="z-[49] bg-black text-white text-center text-[12px] p-[11px] px-1.5">
                     FREE SHIPPING ON ORDER OVER ₹1000
                 </div>
 
-                {/* Middle section */}
                 <header className={`w-full bg-white transition-all duration-300 ${isSticky ? "fixed top-0 left-0 shadow-md z-50" : "relative"
                     }`}>
                     <div className="container mx-auto px-3">
                         <div className="flex items-center justify-between py-3">
-                            {/* Left: Mobile Menu Icon */}
                             <div className="flex items-center lg:hidden gap-4">
                                 <button>
                                     <Menu size={21} className="text-gray-800" />
                                 </button>
                             </div>
 
-                            {/* Logo */}
                             <div className=" flex items-center mx-4">
                                 <Link href="/">
                                     <Image
@@ -108,32 +123,21 @@ const HeaderMenu = ({ menudata, currencyData }) => {
                                     />
                                 </Link>
                             </div>
-
-                            {/* Center Shipping Info */}
                             <div className="hidden md:block w-[50%] mx-6">
-                                <div className="border-1 border-dashed border-slate-300 flex items-center justify-center py-2 text-sm">
-                                    <Truck className="mr-2 h-4 w-4 text-red-800" />
-                                    <p className="text-red-800">Only Ready To Ship Products</p>
-                                </div>
+                                <HeaderSearch open={showSearch} onClose={() => setShowSearch(false)} />
                             </div>
 
-                            {/* Right Icons */}
                             <div className="flex items-center space-x-4 text-gray-700 flex-shrink-0">
-                                {/* Search */}
-                                <Search className="cursor-pointer" size={20} />
 
-                                {/* Currency Dropdown */}
+                                <Search
+                                    className="cursor-pointer"
+                                    size={20}
+                                    onClick={() => setShowSearch((prev) => !prev)}
+                                />
+
                                 <CurrencyComponent currencyData={currencyData} />
-
-                                {/* User Dropdown */}
                                 <div className="hidden md:flex relative" ref={userRef}>
-                                    <button
-                                        onClick={() => {
-                                            setOpenUser((prev) => !prev);
-                                            setOpenCurrency(false);
-                                        }}
-                                        className="cursor-pointer"
-                                    >
+                                    <button onClick={() => { setOpenUser(!openUser) }} className="cursor-pointer">
                                         <User size={20} />
                                     </button>
 
@@ -180,7 +184,6 @@ const HeaderMenu = ({ menudata, currencyData }) => {
                                     )}
                                 </div>
 
-                                {/* Extra icons visible only when logged in */}
                                 {session?.accessToken && (
                                     <>
                                         <Heart size={20} className="cursor-pointer hidden md:flex" />
@@ -199,7 +202,10 @@ const HeaderMenu = ({ menudata, currencyData }) => {
                             {menudata.map((item) => (
                                 <div key={item.id} className="relative group">
                                     <Link
-                                        href={`${webSetting.purchaseType === "wholesale" ? `/wholesale/${item.url}` : `/retail/${item.url}`}`}
+                                        href={item.url === "wholesale"
+                                            ? "/wholesale" : webSetting?.purchaseType === "wholesale"
+                                                ? `/wholesale/${item.url}`
+                                                : `/retail/${item.url}`}
                                         className="hover:text-red-800 flex items-center text-[17px] text-gray-700 tracking-[2px]"
                                     >
                                         {item.name}
@@ -223,21 +229,28 @@ const HeaderMenu = ({ menudata, currencyData }) => {
                                     )}
                                 </div>
                             ))}
+
+                            {menudata && menudata.length > 0 &&
+                                <div>
+                                    <Link
+                                        href={webSetting?.purchaseType === "wholesale" ? `/brand` : `/brand`}
+                                        className="hover:text-red-800 flex items-center text-[17px] text-gray-700 tracking-[2px]"
+                                    >
+                                        Brand
+                                    </Link>
+                                </div>}
                         </nav>
                     </div>
-
                 </header>
 
-
-
-                {/* Mobile Sidebar */}
-                {
-                    openMenu && (
-                        <MobileMenu data={data} closeMenu={() => setOpenMenu(false)} />
-                    )
-                }
+                {openMenu && (
+                    <MobileMenu data={data} closeMenu={() => setOpenMenu(false)} />
+                )}
             </header >
             <MobileNav />
+
+
+
         </>
     );
 };

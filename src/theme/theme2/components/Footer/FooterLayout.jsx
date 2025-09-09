@@ -105,7 +105,7 @@ const FooterLayout = () => {
                                 {cmsData.map((cms, i) => {
                                     return (
                                         <li key={i}>
-                                            <Link href={cms?.url} className="hover:underline">{cms?.title}</Link>
+                                            <Link href={`/policies/${cms?.url}`} className="hover:underline">{cms?.title}</Link>
                                         </li>
                                     )
                                 })}

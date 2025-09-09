@@ -27,8 +27,8 @@ const Tabs = ({ url }) => {
                             <Link
                                 href={tab.url || "#"}
                                 className={`group inline-flex items-center px-3 py-3 w-full rounded-lg border-b ${isActive
-                                        ? "text-white bg-zinc-900 border-zinc-900 font-normal"
-                                        : "text-zinc-900 border-zinc-300 hover:bg-zinc-900 hover:text-white hover:border-zinc-900"
+                                    ? "text-white bg-zinc-900 border-zinc-900 font-normal"
+                                    : "text-zinc-900 border-zinc-300 hover:bg-zinc-900 hover:text-white hover:border-zinc-900"
                                     }`}
                             >
                                 {tab.title}

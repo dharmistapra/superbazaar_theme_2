@@ -108,7 +108,7 @@ const CartItems = ({ cartItems }) => {
                         </div>
                       </div>
                       <div className="col-span-2 text-center font-medium">
-                        ₹{item.price}
+                        <PriceConverter price={item.price} />
                       </div>
 
                       <div className="col-span-2 flex items-center border border-gray-400 rounded-md overflow-hidden w-20 mt-2">
@@ -178,7 +178,9 @@ const CartItems = ({ cartItems }) => {
                 <div className="space-y-2 text-sm mt-5">
                   <div className="flex justify-between">
                     <span>Subtotal</span>
-                    <span>₹{totalSubtotal}</span>
+                    <span>₹{totalSubtotal}
+                      <PriceConverter price={totalSubtotal} />
+                    </span>
                   </div>
                   <div className="flex justify-between">
                     <span>Tax</span>

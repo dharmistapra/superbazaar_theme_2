@@ -35,7 +35,7 @@ const CatalogCard = ({ product, category }) => {
 
 
                     <div className="absolute top-4 right-2">
-                        <button className="p-2 rounded-full bg-white text-gray-700 shadow-md 
+                        <button className="p-2 rounded-sm bg-white text-gray-700 shadow-md 
                    transition-all duration-300 hover:bg-black hover:text-white hover:shadow-lg">
                             <Heart className=" text-red-500" size={18} />
                             <span className="sr-only">Add to Wishlist</span>
@@ -57,7 +57,7 @@ const CatalogCard = ({ product, category }) => {
                             <span className="text-gray-500 text-xs">AVG PRICE</span>
                         </div>
                         <div>
-                            <div>Rs <PriceConverter price={product.offer_price} /></div>
+                            <div><PriceConverter price={product.offer_price} /></div>
                             <span className="text-gray-500 text-xs hidden sm:block text-center">FULL PRICE</span>
                         </div>
                     </div>
