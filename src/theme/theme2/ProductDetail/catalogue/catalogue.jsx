@@ -24,7 +24,7 @@ const Catalogue = ({ CatalogueDetailData, stitching, category }) => {
     const { open } = useModal();
     const { data: session, status } = useSession();
     const [errors, setErrors] = useState(null)
-    const [selectedSize, setSelectedSize] = useState({});
+    const [selectedSize, setSelectedSize] = useState(null);
     const [quantity, setQuantity] = useState(1);
     const [shareOpen, setShareOpen] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
@@ -36,11 +36,27 @@ const Catalogue = ({ CatalogueDetailData, stitching, category }) => {
     const [stitchingData, setStitchingData] = useState(null);
     const [wishlist, setWishlist] = useState(false);
     const [compare, setCompare] = useState(false);
-    const increment = () => setQuantity((prev) => prev + 1);
+
+    const increment = () => {
+        if (CatalogueDetailData.optionType === "Size" && !selectedSize) {
+            return setErrors("⚠️ Please select size");
+        }
+        if (CatalogueDetailData.optionType === "Stitching") {
+            if (!stitchingData || stitchingData.stitching.length === 0) {
+                return setErrors("⚠️ Please select stitching option");
+            }
+            if (!stitchingData.isValid) {
+                return setErrors("⚠️ Please fill all required measurements");
+            }
+        }
+        setQuantity((prev) => prev + 1);
+    };
     const decrement = () => setQuantity((prev) => (prev > 1 ? prev - 1 : 1));
     const toggleWishlist = () => setWishlist((prev) => !prev);
     const toggleCompare = () => setCompare((prev) => !prev);
     const brandUrl = CatalogueDetailData.CatalogueBrand[0]?.brand.url
+    console.log("catalog ===>", CatalogueDetailData, stitching, category);
+
     const handleAddtoCart = async () => {
         setErrors(null);
         if (CatalogueDetailData?.optionType === "Size" && Object.keys(selectedSize)?.length == 0) {
@@ -80,6 +96,7 @@ const Catalogue = ({ CatalogueDetailData, stitching, category }) => {
             setLoading(false);
         }
     };
+
     const usertoken = session?.accessToken
     const webSetting = {};
     return (
@@ -92,25 +109,6 @@ const Catalogue = ({ CatalogueDetailData, stitching, category }) => {
                 <div className="lg:col-span-5 lg:sticky lg:top-20 self-start">
                     <div className="">
                         <div className="mb-0">
-                            {/* {CatalogueDetailData?.CatalogueBrand?.length > 0 && (
-                                <div>
-                                    <h2
-                                        className={
-                                            status === "loading"
-                                                ? "animate-pulse h-6 w-48 bg-gray-200 rounded"
-                                                : "text-left text-2xl font-semibold mb-2"
-                                        }
-                                    >
-                                        <Link
-                                            href={`/brands/catalogue/${brandUrl}`}
-                                            className="no-underline flex items-center gap-2"
-                                        >
-                                            Brand: <span className="bg-red-500 text-white px-2 py-1 rounded">{barandName}</span>
-                                        </Link>
-                                    </h2>
-                                </div>
-                            )} */}
-
                             <h3 className={status === "loading" ? "animate-pulse h-8 w-64 bg-gray-200 rounded"
                                 : "text-left mb-2"}>
                                 {CatalogueDetailData?.name}
@@ -142,34 +140,25 @@ const Catalogue = ({ CatalogueDetailData, stitching, category }) => {
                                     ) : null}
                                 </div>
                             </div>
-                            {/* ) : (
-                            <div className="mb-3">
-                                <button
-                                    type="button"
-                                    onClick={handleLoginClick}
-                                    className={`w-full ${status === "loading" ? "animate-pulse h-10 bg-gray-200 rounded" : "bg-blue-600 text-white py-2 rounded"}`}
-                                >
-                                    LOGIN / REGISTER FOR PRICE
-                                </button>
-                            </div>
-                            )} */}
 
                             {Number(CatalogueDetailData?.catalogue_discount) > 0 && (
                                 <OfferBanner discount={Number(CatalogueDetailData?.catalogue_discount)} />
                             )}
 
+                            {CatalogueDetailData?.optionType === "Size" &&
 
-                            {CatalogueDetailData?.optionType === "Size" && <SizeSelector
-                                sizes={CatalogueDetailData?.Size}
-                                selectedSize={selectedSize}
-                                setSelectedSize={setSelectedSize}
-                                status={status}
-                            />
-                            }                            <div className="border border-gray-200 rounded-lg divide-y shadow-sm mt-5">
+                                <SizeSelector
+                                    sizes={CatalogueDetailData?.Size}
+                                    selectedSize={selectedSize}
+                                    onChange={setSelectedSize}
+                                    errors={errors}
+                                    setErrors={setErrors}
+                                />
+                            }
+                            <div className="border border-gray-200 rounded-lg divide-y shadow-sm mt-5">
                                 <ProductAccordion
                                     product={CatalogueDetailData}
-                                    // Stitching={Stitching}
-                                    // attributes={attributes}
+                                    Stitching={stitching}
                                     setStitchingData={setStitchingData}
                                 />
                             </div>
@@ -193,19 +182,23 @@ const Catalogue = ({ CatalogueDetailData, stitching, category }) => {
                                             value={quantity}
                                             className="w-7 text-center py-1 text-gray-700"
                                         />
-                                        <button type="button" onClick={increment} className="p-2">
+                                        <button type="button" onClick={increment} className="p-2"
+                                            disabled={quantity === CatalogueDetailData.quantity || quantity === selectedSize?.quantity}
+                                        >
                                             <Plus className="w-5 h-5 text-gray-600" />
                                         </button>
                                     </div>
 
-                                    <Link href="/cart">
+                                    <div>
                                         <button
+                                            disabled={loading}
+                                            onClick={handleAddtoCart}
                                             type="submit"
-                                            className="bg-white hover:bg-black hover:text-white text-black outline outline-1 px-6 py-2 rounded-md transition whitespace-nowrap"
+                                            className="bg-white hover:bg-black hover:text-white text-black outline-1 px-6 py-2 rounded-md transition whitespace-nowrap"
                                         >
                                             Add to cart
                                         </button>
-                                    </Link>
+                                    </div>
                                 </div>
 
                                 <div className="flex items-center justify-center gap-3 w-full md:w-2/3">
@@ -214,7 +207,6 @@ const Catalogue = ({ CatalogueDetailData, stitching, category }) => {
                                         className="p-2 rounded-md border border-s border-gray-400 hover:bg-blue-100"
                                     >
                                         <Heart size={18} />
-                                        {/* <Facebook className="w-6 h-6 text-blue-600" /> */}
                                     </button>
                                     <button
                                         title="Share on WhatsApp"
@@ -236,207 +228,16 @@ const Catalogue = ({ CatalogueDetailData, stitching, category }) => {
                                     </button>
                                 </div>
                             </div>
-                        </div>
-                        {/* <form className="mt-3">
-                            <div className="flex flex-col md:flex-row gap-3">
-                                
-                        <div className="flex flex-1 gap-3 items-center">
-                            <div className="flex items-center border border-gray-300 rounded">
-                                <button
-                                    type="button"
-                                    disabled={quantity <= 1}
-                                    onClick={() => setQuantity((prev) => Math.max(1, prev - 1))}
-                                    className="px-3 py-1 bg-gray-100 disabled:opacity-50"
-                                >
-                                    <Minus className="icon" aria-hidden="true" />
-                                </button>
-
-                                <input
-                                    type="text"
-                                    value={quantity}
-                                    readOnly
-                                    className="w-12 text-center border-x border-gray-300"
-                                />
-
-                                <button
-                                    type="button"
-                                    disabled={quantity === CatalogueDetailData?.no_of_product || quantity === selectedSize?.quantity}
-                                    onClick={() => {
-                                        if (CatalogueDetailData.optionType === "Size" && !selectedSize) {
-                                            setErrorMessage("Please select size");
-                                            return;
-                                        } else if (CatalogueDetailData.optionType === "Stitching" && !stitching) {
-                                            setErrorMessage("Please select stitching option");
-                                            return;
-                                        }
-                                        setQuantity((prev) => prev + 1);
-                                    }}
-                                    className="px-3 py-1 bg-gray-100 disabled:opacity-50"
-                                >
-                                    <Plus className="icon" aria-hidden="true" />
-                                </button>
-                            </div>
-
-                            {CatalogueDetailData?.quantity === 0 ? (
-                                <span className="bg-gray-400 text-white py-2 px-4 rounded w-full text-center">
-                                    Sold out
-                                </span>
-                            ) : (
-                                <button
-                                    type="submit"
-                                    // onClick={handleAddToCart}
-                                    className={`w-full py-2 px-4 rounded ${status === "loading" ? "animate-pulse bg-gray-200" : "bg-green-600 text-white"}`}
-                                >
-                                    {btnloading ? (
-                                        <span className="flex items-center justify-center gap-2">
-                                            <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                                            Adding...
-                                        </span>
-                                    ) : (
-                                        "Add to cart"
-                                    )}
-                                </button>
+                            {errors && (
+                                <p className="text-red-500 text-sm mt-2">{errors}</p>
                             )}
                         </div>
-
-                        <div className="flex flex-1 gap-2 items-center">
-                            <button
-                                disabled={wishlistLoading || CatalogueDetailData?.price === undefined}
-                                onClick={(e) => handleWishlistClick(e, CatalogueDetailData?.id)}
-                                className="p-2 bg-gray-100 rounded"
-                            >
-                                {wishlistLoading ? (
-                                    <span className="spinner-border spinner-border-sm"></span>
-                                ) : isWishlisted ? (
-                                    <Heart className="text-red-500" fill="#dc3545" size={18} />
-                                ) : (
-                                    <Heart size={18} />
-                                )}
-                            </button>
-
-                            <Link
-                                href="#"
-                                // href={whatsappURL}
-                                target="_blank" className="p-2 bg-gray-100 rounded">
-                                <MessageCircleMore aria-hidden="true" size={18} />
-                            </Link>
-
-                           <Suspense fallback={null}>
-                                        <ImageDownloader products={catalogDetails?.Product} status={status} />
-                                    </Suspense> 
-
-                         <DownloadZip products={catalogDetails?.Product} status={status} /> 
-                    </div>
-                </div>
-
-                {errorMessage && <p className="text-red-600 mt-2">{errorMessage}</p>}
-            </form> */}
-
                         <div className="mt-5">
                             <StaticImage status={status} />
                         </div>
                     </div>
-                </div >
-
-                {/* <div className="lg:col-span-5 lg:sticky lg:top-20 self-start">
-                    <div className="flex flex-col gap-4 md:gap-2">
-                        <div>
-                            {CatalogueDetailData?.CatalogueBrand?.map((item, index) => (
-                                <a
-                                    key={index}
-                                    href={`/brand/catalogue/${item?.brand.url}`}
-                                    className="text-blue-600 hover:underline">
-                                    {item.brand.name}
-                                </a>
-                            ))}
-                            <h1 className="text-xl font-medium">{CatalogueDetailData?.name}</h1>
-                            <p className="text-gray-500 mt-1">{CatalogueDetailData?.cat_code}</p>
-                            <p className="text-xl font-semibold mt-2">
-                                ₹{CatalogueDetailData?.offer_price}
-                            </p>
-                        </div>
-                        <p className="flex items-center gap-2 bg-slat-100 text-zinc-800 font-medium px-3 py-1 rounded-lg w-fit">
-                            <span className="font-bold">⏱</span> Dispatch Time: 7 Working Days
-                        </p>
-                        <p className="line-clamp-3">{CatalogueDetailData?.description}</p>
-                        {CatalogueDetailData.optionType === "Size" ? (
-                            <div className="-mt-1">
-                                <SizeSelector
-                                    sizes={CatalogueDetailData?.Size || ["S", "M", "L", "XL"]}
-                                    onChange={setSelectedSize}
-                                    errors={errors}
-                                    setErrors={setErrors}
-                                />
-                            </div>) : (
-                            <StitchingForm stitchingData={stitching || []} onChange={setStitchingData} />
-                        )}
-
-                        <div className="flex items-center gap-4 mt-4">
-                            <div className="flex items-center border rounded-lg overflow-hidden w-40">
-                                <button
-                                    onClick={decrement}
-                                    className="w-12 py-2 bg-gray-200 hover:bg-gray-300 transition text-lg font-bold">
-                                    -
-                                </button>
-                                <span className="flex-1 text-center py-2 text-lg font-medium">
-                                    {quantity}
-                                </span>
-                                <button
-                                    onClick={increment}
-                                    className="w-12 py-2 bg-gray-200 hover:bg-gray-300 transition text-lg font-bold">
-                                    +
-                                </button>
-                            </div>
-                            <button
-                                onClick={toggleWishlist}
-                                className={`p-2 rounded-lg border transition ${wishlist
-                                    ? "bg-zinc-900 text-white border-zinc-900"
-                                    : "bg-white text-gray-700 border-zinc-900 hover:bg-zinc-900 hover:text-white"
-                                    }`}>
-                                <Heart className="w-5 h-5" />
-                            </button>
-                            <button
-                                onClick={toggleCompare}
-                                className={`p-2 rounded-lg border transition ${compare
-                                    ? "bg-zinc-500 text-white border-zinc-900"
-                                    : "bg-white text-gray-700 border-zinc-900 hover:bg-zinc-900 hover:text-white"
-                                    }`}>
-                                <Repeat className="w-5 h-5" />
-                            </button>
-                            <button
-                                onClick={() => setShareOpen(true)}
-                                className="p-2 rounded-lg border bg-white text-gray-700 border-zinc-900 hover:bg-zinc-900 hover:text-white transition">
-                                <Share2 className="w-5 h-5" />
-                            </button>
-                            <button
-                                className="p-2 rounded-lg border bg-white text-gray-700 border-zinc-900 hover:bg-zinc-900 hover:text-white transition">
-                                <CircleQuestionMark className="w-5 h-5" />
-                            </button>
-                        </div>
-                        <div className="flex flex-row gap-4 mt-4 w-full">
-                            <button
-                                disabled={loading}
-                                onClick={handleAddtoCart}
-                                className="w-full flex items-center justify-center bg-zinc-900 text-white px-6 py-3 rounded-lg  transition disabled:opacity-70 gap-2"
-                            >
-                                <span className="flex gap-2"> <ShoppingCart />Add to Cart</span>
-                                {loading && <Loader2 className="w-5 h-5 animate-spin" />}
-                            </button>
-
-                            <button className="w-full flex items-center justify-center gap-2 bg-green-700 text-white px-6 py-3 rounded-lg hover:bg-green-600 transition">
-                                <MessageCircle className="w-5 h-5" />
-                                Order on WhatsApp
-                            </button>
-                        </div>
-                        {errors && (
-                            <p className="text-red-500 text-sm mt-2">{errors}</p>
-                        )}
-                        <div>
-                            <StaticImage />
-                        </div>
-                    </div>
-                </div> */}
-            </div >
+                </div>
+            </div>
 
             <div className="w-full mt-10">
                 <h1 className="text-2xl font-normal text-center mb-10">You May Also Like this</h1>

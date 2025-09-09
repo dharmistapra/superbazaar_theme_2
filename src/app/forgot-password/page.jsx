@@ -1,10 +1,10 @@
 import { getThemeModules } from "@/theme/themeConfig";
 import { redirect } from "next/navigation";
-export default function LoginRoute() {
+export default function ForgotRoute() {
     const currentTheme = process.env.NEXT_THEME || "theme1";
-    const Login = getThemeModules(currentTheme).Login;
-    if (!Login) {
+    const ForgotPassword = getThemeModules(currentTheme).ForgotPassword;
+    if (!ForgotPassword) {
         redirect("/");
     }
-    return <Login />;
+    return <ForgotPassword />;
 }

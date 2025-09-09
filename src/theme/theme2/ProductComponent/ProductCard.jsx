@@ -7,8 +7,6 @@ import PriceConverter from "@/components/PriceConverter";
 
 const ProductCard = ({ product, pathname }) => {
     if (!product) return null;
-    console.log("product card ==========>", product);
-
     return (
         <div className="single-product-card bg-white rounded-md shadow hover:shadow-lg transition overflow-hidden">
             <div className="product-image relative">

@@ -32,8 +32,6 @@ const WholesaleProduct = ({ category }) => {
         fetchProducts();
     }, [page, sort, category]);
 
-
-
     const sortOptions = [
         { value: "", label: "New Arrivals" },
         { value: "AtoZ", label: "A To Z" },

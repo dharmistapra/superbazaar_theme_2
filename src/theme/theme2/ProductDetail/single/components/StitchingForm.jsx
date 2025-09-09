@@ -110,7 +110,7 @@ export default function StitchingForm({ stitchingData, onChange }) {
                                                     className="mt-1 accent-blue-600"
                                                 />
                                                 <span>
-                                                    <span>{option.name} – ₹{option.price || 0}.00 </span>
+                                                    <span>{option.name} – <PriceConverter price={option.price} /> </span>
                                                     {option.fastDelivery && (
                                                         <span className="text-red-600">(Same day dispatch)</span>
                                                     )}

@@ -96,10 +96,6 @@ export default function ForgetPasswordModal() {
             </button>
           </p>
 
-
-
-
-
           <button
             type="submit"
             disabled={formik.isSubmitting}
@@ -113,8 +109,6 @@ export default function ForgetPasswordModal() {
             ) : (
               "Send OTP"
             )}
-
-
           </button>
           {errors && <p className="text-red-400 text-sm">{errors}</p>}
         </form>

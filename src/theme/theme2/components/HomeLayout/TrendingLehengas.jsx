@@ -68,7 +68,7 @@ const TrendingLehengas = ({ tabsData = [], purchaseType }) => {
                                         return (
                                             <SwiperSlide key={i} className="flex justify-center">
                                                 {purchaseType === "wholesale" ? (
-                                                    <CatalogCard product={data} grid={grid} category={block.url} />
+                                                    <CatalogCard product={data} category={block.url} />
                                                     // <CatalogCard data={data} redirectUrl={`catalogue/${block.url}`} />
                                                 ) : (
                                                     <ProductCard

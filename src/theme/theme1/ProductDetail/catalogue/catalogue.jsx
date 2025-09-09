@@ -184,7 +184,7 @@ const Catalogue = ({ CatalogueDetailData, stitching, category }) => {
             <InquiryForm
                 open={inquiry}
                 onClose={() => setInquiry(false)}
-                catalogue_id={CatalogueDetailData.id}/>
+                catalogue_id={CatalogueDetailData.id} />
         </div>
     )
 }

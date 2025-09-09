@@ -20,6 +20,9 @@ import Breadcrum from "../../components/BreadCrums/Breadcrum";
 import PriceConverter from "@/components/PriceConverter";
 import SizeSelector from "@/components/SizeSelector";
 import RealtedProduct from "./components/RelatedProduct";
+import { addToCartProduct, getCartItems } from "@/services/cartService";
+import { setCartItems } from "@/store/slice/cartItemSlice";
+import { openCart } from "@/store/slice/MiniCartSlice";
 
 const ProductDetailTheme2 = ({ product, Stitching, attributes, category }) => {
   const dispatch = useDispatch()
@@ -27,20 +30,38 @@ const ProductDetailTheme2 = ({ product, Stitching, attributes, category }) => {
   const pathname = usePathname();
   const { data: session, status } = useSession();
   const [quantity, setQuantity] = useState(1);
-  const [selectedSize, setSelectedSize] = useState({});
+  const [selectedSize, setSelectedSize] = useState(null);
   const [errors, setErrors] = useState(null)
   const [stitchingData, setStitchingData] = useState(null);
+  const [loading, setLoading] = useState(false);
   const [wishlist, setWishlist] = useState(false);
   const [compare, setCompare] = useState(false);
   const [shareOpen, setShareOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState(product.image[0]);
-  const increment = () => setQuantity((prev) => prev + 1);
+  // const increment = () => setQuantity((prev) => prev + 1);
+  const increment = () => {
+    if (product.optionType === "Size" && !selectedSize) {
+      return setErrors("⚠️ Please select size");
+    }
+    if (product.optionType === "Stitching") {
+      if (!stitchingData || stitchingData.stitching.length === 0) {
+        return setErrors("⚠️ Please select stitching option");
+      }
+      if (!stitchingData.isValid) {
+        return setErrors("⚠️ Please fill all required measurements");
+      }
+    }
+    setQuantity((prev) => prev + 1);
+  };
+
+
   const decrement = () => setQuantity((prev) => (prev > 1 ? prev - 1 : 1));
   const toggleWishlist = () => setWishlist((prev) => !prev);
   const toggleCompare = () => setCompare((prev) => !prev);
-  const handleAddtoCart = () => {
-    setErrors(null);
 
+  const handleAddtoCart = async () => {
+
+    setErrors(null);
     if (product.optionType === "Size" && !selectedSize) {
       return setErrors("⚠️ Please select size");
     }
@@ -53,18 +74,30 @@ const ProductDetailTheme2 = ({ product, Stitching, attributes, category }) => {
         return setErrors("⚠️ Please fill all required measurements");
       }
     }
-    if (!session.accessToken) {
-      open("login")
+    if (!session?.accessToken) {
+      open("/login")
       return
     }
 
-    const finalCartData = {
-      productId: product.id,
-      qty: quantity,
-      ...(product.optionType === "Size" && { size: selectedSize }),
-      stitching: stitchingData?.stitching || [],
-    };
-    alert("✅ Added to cart successfully!");
+    setLoading(true);
+    try {
+      const finalCartData = {
+        product_id: product.id,
+        quantity: quantity,
+        user_id: session?.user?.id,
+        ...(product.optionType === "Size" && { size: selectedSize }),
+        ...(product.optionType === "Stitching" && { stitching: stitchingData?.stitching || [] }),
+      };
+
+      const response = await addToCartProduct(finalCartData)
+      if (response?.isSuccess) {
+        const fetchCartData = await getCartItems(session?.user?.id)
+        dispatch(setCartItems(fetchCartData))
+        dispatch(openCart())
+      }
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -93,7 +126,7 @@ const ProductDetailTheme2 = ({ product, Stitching, attributes, category }) => {
 
               {
                 product.optionType === "Size" && (
-                  <div className="-mt-1">
+                  <div className="-mt-1 mb-3">
                     <SizeSelector
                       sizes={attributes.sizes || ["S", "M", "L", "XL"]}
                       onChange={setSelectedSize}
@@ -130,19 +163,23 @@ const ProductDetailTheme2 = ({ product, Stitching, attributes, category }) => {
                         value={quantity}
                         className="w-7 text-center py-1 text-gray-700"
                       />
-                      <button type="button" onClick={increment} className="p-2">
+                      <button type="button" onClick={increment} className="p-2"
+                        disabled={quantity === product.quantity || quantity === selectedSize?.quantity}
+                      >
                         <Plus className="w-5 h-5 text-gray-600" />
                       </button>
                     </div>
 
-                    <Link href="/cart">
+                    <div>
                       <button
+                        disabled={loading}
+                        onClick={handleAddtoCart}
                         type="submit"
-                        className="bg-white hover:bg-black hover:text-white text-black outline outline-1 px-6 py-2 rounded-md transition"
+                        className="bg-white hover:bg-black hover:text-white text-black outline-1 px-6 py-2 rounded-md transition"
                       >
                         Add to cart
                       </button>
-                    </Link>
+                    </div>
                   </div>
 
                   <div className="flex items-center justify-center gap-3 w-full md:w-1/3">
@@ -165,18 +202,21 @@ const ProductDetailTheme2 = ({ product, Stitching, attributes, category }) => {
                       <Twitter className="w-6 h-6 text-sky-500" />
                     </button>
                   </div>
+
                 </div>
               </div>
-
-
-              < div className="mt-10" >
+              {errors && (
+                <p className="text-red-500 text-sm mt-2">{errors}</p>
+              )}
+              {attributes?.moreColors?.length > 0 && <div className="mt-10" >
                 <h2 className="text-xl font-semibold mb-4">Similar Products</h2>
                 <div className="flex gap-2 overflow-x-auto">
                   {
                     attributes?.moreColors?.map((product, i) => {
+                      console.log(product, category, pathname, "product");
 
                       return (
-                        <Link key={i} href="/retail/sarees/mahotsav-erisha-s3689-to-s3693-designer-saree-erisha-s3690" className="flex-shrink-0 ">
+                        <Link key={i} href={`/retail/${category}/${product.url}`} className="flex-shrink-0 ">
                           <Image src={ImageUrl(product.image[0])} alt="Thumb 1" className="w-20 h-32 object-cover rounded"
                             width={133}
                             height={200}
@@ -186,11 +226,11 @@ const ProductDetailTheme2 = ({ product, Stitching, attributes, category }) => {
                     })
                   }
                 </div>
-              </div >
+              </div>}
             </div>
           </div>
-        </div >
-      </div >
+        </div>
+      </div>
       <div>
         <RealtedProduct url={product.url} />
       </div>

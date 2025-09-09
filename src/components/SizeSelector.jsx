@@ -8,7 +8,8 @@ const SizeSelector = ({ sizes = [], onChange, errors, setErrors }) => {
     setActiveSize(size.value);
     const data = {
       id: size?.id,
-      value: size?.value
+      value: size?.value,
+      quantity: size?.quantity
     }
     if (onChange) onChange(data);
     setErrors(null);

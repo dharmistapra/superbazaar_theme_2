@@ -20,9 +20,6 @@ const RealtedProduct = ({ url }) => {
   useEffect(() => {
     fetchdata()
   }, [url])
-
-  console.log("ProductData ===>", ProductData);
-
   return (
     <section className="pb-0 mb-5 mt-5">
       <div className="container mx-auto px-4">
@@ -60,7 +57,6 @@ const RealtedProduct = ({ url }) => {
             }}
           >
             {ProductData?.map((item, index) => {
-              console.log("relaed product", item);
               return (
                 <SwiperSlide
                   key={item.id || index}

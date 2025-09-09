@@ -5,6 +5,7 @@ import { Trash2, Loader2 } from "lucide-react";
 import { ImageUrl } from "@/helper/imageUrl";
 import StitchingOptions from "@/components/StitchingOption";
 import { useCartActions } from "@/hooks/useCartActions";
+import PriceConverter from "@/components/PriceConverter";
 
 const CartItems = ({ cartItems }) => {
   const [openCatalogueIds, setOpenCatalogueIds] = useState([]);
@@ -24,20 +25,14 @@ const CartItems = ({ cartItems }) => {
   const totalTax = 0;
   const totalOrder = totalSubtotal + totalTax;
   return (
-    <div className="container mx-auto text-left 
-        w-full 
-        sm:max-w-[540px] 
-        md:max-w-[720px] 
-        lg:max-w-[960px] 
-        xl:max-w-[1240px] 
-        2xl:max-w-[1320px] px-4 py-8">
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+    <div className="container mx-auto text-left w-full sm:max-w-[540px] md:max-w-[720px] lg:max-w-[960px] xl:max-w-[1280px] 2xl:max-w-[1320px] px-4 py-8">
+      <div className="grid grid-cols-1 lg:grid-cols-12 ">
         <div className="lg:col-span-8 bg-white rounded-2xl p-6">
           {cartItems.length === 0 ? (
             <p>Your cart is empty.</p>
           ) : (
             <>
-              <div className="hidden md:grid grid-cols-12 text-gray-600 text-sm font-medium border-b pb-2 mb-4">
+              <div className="hidden md:grid grid-cols-12 text-gray-900 text-sm font-medium border-b pb-2 mb-4 border-gray-300 uppercase ">
                 <div className="col-span-6">Product</div>
                 <div className="col-span-2 text-center">Price</div>
                 <div className="col-span-2 text-center">Quantity</div>
@@ -55,8 +50,19 @@ const CartItems = ({ cartItems }) => {
                   }
 
                   return (
-                    <div key={item.id} className="flex flex-col md:grid md:grid-cols-12 items-center md:items-start justify-between py-4 gap-4">
+                    <div key={item.id} className="flex flex-col md:grid md:grid-cols-12 items-center md:items-start justify-between py-4 gap-4 border-b border-gray-300">
                       <div className="col-span-6 flex gap-4">
+                        <button
+                          onClick={() => removeItem(item.id)}
+                          className="text-red-500"
+                          disabled={deleteLoading === item.id}
+                        >
+                          {deleteLoading === item.id ? (
+                            <Loader2 className="animate-spin" size={20} />
+                          ) : (
+                            <Trash2 size={20} />
+                          )}
+                        </button>
                         <Image
                           src={ImageUrl(item.image)}
                           alt={item.name}
@@ -65,7 +71,7 @@ const CartItems = ({ cartItems }) => {
                           className="rounded-lg object-cover max-h-[150px] w-auto "
                         />
                         <div>
-                          <h3 className="font-semibold text-sm md:text-base">{item.name}</h3>
+                          <p className="text-[12px] md:text-base ">{item.name}</p>
                           <StitchingOptions stitching={item.stitching} />
                           {sizeObj?.value && (
                             <p className="text-sm text-gray-500">Size: {sizeObj.value}</p>
@@ -82,12 +88,12 @@ const CartItems = ({ cartItems }) => {
                               </button>
 
                               {openCatalogueIds.includes(item.id) && (
-                                <div className="mt-2 space-y-2 pl-4 border-l">
+                                <div className="mt-2 space-y-2 pl-4 border-l ">
                                   {item.products.map((p) => (
                                     <div
                                       key={p.code}
                                       className="flex items-center justify-between text-sm gap-2">
-                                      <div className="flex  items-center gap-2">
+                                      <div className="flex items-center gap-2">
                                         <div className="w-25 h-15 relative flex-shrink-0">
                                           <Image
                                             src={ImageUrl(p.image[0])}
@@ -107,7 +113,7 @@ const CartItems = ({ cartItems }) => {
                           )}
                         </div>
                       </div>
-                      <div className="col-span-2 text-center font-medium">
+                      <div className="col-span-2 text-center font-sm">
                         <PriceConverter price={item.price} />
                       </div>
 
@@ -130,19 +136,8 @@ const CartItems = ({ cartItems }) => {
                           {isLoading ? <Loader2 className="animate-spin h-3 w-3 mx-auto" /> : "+"}
                         </button>
                       </div>
-                      <div className="col-span-2 flex justify-between md:justify-end items-center gap-2 font-medium">
-                        <p>₹{item.subtotal}</p>
-                        <button
-                          onClick={() => removeItem(item.id)}
-                          className="text-red-500"
-                          disabled={deleteLoading === item.id}
-                        >
-                          {deleteLoading === item.id ? (
-                            <Loader2 className="animate-spin" size={20} />
-                          ) : (
-                            <Trash2 size={20} />
-                          )}
-                        </button>
+                      <div className="col-span-2 flex justify-between md:justify-end items-center gap-2 font-sm">
+                        <p><PriceConverter price={item.subtotal} /></p>
                       </div>
                     </div>
                   );
@@ -178,17 +173,15 @@ const CartItems = ({ cartItems }) => {
                 <div className="space-y-2 text-sm mt-5">
                   <div className="flex justify-between">
                     <span>Subtotal</span>
-                    <span>₹{totalSubtotal}
-                      <PriceConverter price={totalSubtotal} />
-                    </span>
+                    <span><PriceConverter price={totalSubtotal} /></span>
                   </div>
                   <div className="flex justify-between">
                     <span>Tax</span>
                     <span>₹{totalTax}</span>
                   </div>
-                  <div className="flex justify-between font-semibold text-lg mb-3">
+                  <div className="flex justify-between font-semibold text-sm mb-3">
                     <span>Total</span>
-                    <span>₹{totalOrder}</span>
+                    <span> <PriceConverter price={totalOrder} /></span>
                   </div>
                 </div>
                 <button

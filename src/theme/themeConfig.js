@@ -40,6 +40,7 @@ export const getThemeModules = (theme = "theme1") => {
         ProductDetail: load(() => import("./theme2/ProductDetail/single/ProductDetail")),
         Login: load(() => import("./theme2/auth/login/page")),
         Signup: load(() => import("./theme2/auth/signup/page")),
+        ForgotPassword: load(() => import("./theme2/auth/forgotpassword/page")),
         Catalogue: load(() => import("./theme2/ProductDetail/catalogue/catalogue")),
         BrandList: load(() => import("./theme2/brands/brandLists")),
         WholeSalePage: load(() => import("./theme2/wholesalePage/wholesalepage")),
