@@ -1,8 +1,10 @@
 import { getCataloguedetail, getCatalogueStitching, getRelatedCatalogue } from "@/services/catalogueService";
+import { getTheme } from "@/services/layout";
 import { getThemeModules } from "@/theme/themeConfig";
 
 const CatalogueDetailPage = async ({ params }) => {
-    const currentTheme = process.env.NEXT_THEME || "theme1";
+     const themeData = await getTheme();
+      const currentTheme = themeData?.name || "theme1"; 
     const { category, url } = await params;
     const { Catalogue } = getThemeModules(currentTheme);
     const [data, stitching] = await Promise.all([

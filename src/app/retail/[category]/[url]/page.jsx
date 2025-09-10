@@ -1,3 +1,4 @@
+import { getTheme } from "@/services/layout";
 import { getProductAttributes, getProductdetail, getProductStitching } from "@/services/productService";
 import { getThemeModules } from "@/theme/themeConfig";
 
@@ -16,8 +17,9 @@ export async function generateMetadata({ params }) {
 
 
 const ProductDetailpage = async ({ params }) => {
-     const currentTheme = process.env.NEXT_THEME || "theme1";
-    const { category, url } = await params;
+  const themeData = await getTheme();
+      const currentTheme = themeData?.name || "theme1"; 
+          const { category, url } = await params;
     const { ProductDetail } = getThemeModules(currentTheme);
 
     const [data, stitching, attributes] = await Promise.all([

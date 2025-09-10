@@ -1,6 +1,9 @@
+import { getTheme } from "@/services/layout";
+
 const { getThemeModules } = require("@/theme/themeConfig");
 const BrandCataloguePage=async({params})=>{
-     const currentTheme = process.env.NEXT_THEME || "theme1";
+       const themeData = await getTheme();
+      const currentTheme = themeData?.name || "theme1"; 
         const { url } = await params;
         const { BrandCatalogueList } = getThemeModules(currentTheme);
     return(

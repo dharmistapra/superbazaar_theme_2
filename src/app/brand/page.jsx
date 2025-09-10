@@ -1,3 +1,4 @@
+import { getTheme } from "@/services/layout";
 import { getThemeModules } from "@/theme/themeConfig";
 
 const BrandListPage = () => {
