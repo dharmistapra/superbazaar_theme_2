@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useSelector } from "react-redux";
 const MobileMenu = ({ open, handleMenu }) => {
-    const { webSetting } = useSelector((state) => state.webSetting)
+  const { webSetting } = useSelector((state) => state.webSetting)
   const [expanded, setExpanded] = useState({});
   const toggleSubMenu = (id) => {
     setExpanded((prev) => ({ ...prev, [id]: !prev[id] }));
@@ -29,17 +29,17 @@ const MobileMenu = ({ open, handleMenu }) => {
         </div>
       </div>
 
-      
+
       <ul className="py-3">
         {data.map((item) => (
           <li key={item.id} className="px-4 py-2">
             <div className="flex justify-between items-center cursor-pointer px-2 py-2 rounded-lg hover:bg-gray-50 transition">
-             
+
               {item.children.length === 0 ? (
                 <Link
                   href={item.url === "wholesale"
                     ? "/wholesale" : webSetting?.purchaseType === "wholesale"
-                      ? `/wholesale/${item.url}`
+                      ? `/catalogue/${item.url}`
                       : `/retail/${item.url}`}
                   className="font-medium text-gray-900 hover:text-red-500 transition-colors"
                   onClick={handleMenu}
@@ -50,16 +50,16 @@ const MobileMenu = ({ open, handleMenu }) => {
                 <Link
                   href={item.url === "wholesale"
                     ? "/wholesale" : webSetting?.purchaseType === "wholesale"
-                      ? `/wholesale/${item.url}`
+                      ? `/catalogue/${item.url}`
                       : `/retail/${item.url}`}
                   className="font-medium text-gray-900 hover:text-red-500 transition-colors"
                 >
                   <span className="font-medium text-gray-900">{item.name}</span>
                 </Link>
-                
+
               )}
 
-            
+
               {item.children.length > 0 && (
                 <button
                   onClick={() => toggleSubMenu(item.id)}
@@ -74,18 +74,17 @@ const MobileMenu = ({ open, handleMenu }) => {
               )}
             </div>
 
-            
+
             {item.children.length > 0 && (
               <div
-                className={`overflow-hidden transition-all duration-300 ease-in-out ${
-                  expanded[item.id] ? "max-h-96 mt-2" : "max-h-0"
-                }`}
+                className={`overflow-hidden transition-all duration-300 ease-in-out ${expanded[item.id] ? "max-h-96 mt-2" : "max-h-0"
+                  }`}
               >
                 <ul className="pl-6 border-l border-gray-200">
                   {item.children[0].children.map((child) => (
                     <li key={child.id} className="py-2">
                       <Link
-                          href={`${webSetting?.purchaseType === "wholesale" ? `/wholesale/${child.url}` : `/retail/${child.url}`}`}
+                        href={`${webSetting?.purchaseType === "wholesale" ? `/catalogue/${child.url}` : `/retail/${child.url}`}`}
                         className="text-gray-700 hover:text-red-500 transition-colors"
                         onClick={handleMenu}
                       >

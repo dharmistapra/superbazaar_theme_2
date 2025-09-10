@@ -204,7 +204,7 @@ const HeaderMenu = ({ menudata, currencyData }) => {
                                     <Link
                                         href={item.url === "wholesale"
                                             ? "/wholesale" : webSetting?.purchaseType === "wholesale"
-                                                ? `/wholesale/${item.url}`
+                                                ? `/catalogue/${item.url}`
                                                 : `/retail/${item.url}`}
                                         className="hover:text-red-800 flex items-center text-[17px] text-gray-700 tracking-[2px]"
                                     >

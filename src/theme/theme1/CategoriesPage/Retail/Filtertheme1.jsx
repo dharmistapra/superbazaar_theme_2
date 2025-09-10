@@ -88,38 +88,38 @@ const Filtertheme1 = ({ open, setOpen, filterData, onApply, setSelectedAttribute
                 <h3 className="font-semibold">Price</h3>
                 {openSections["price"] ? <Minus /> : <Plus />}
               </div>
-             {openSections["price"] && (
-  <div className="mt-3 space-y-3">
-    <Slider
-      min={filterData?.priceRange?.minPrice || 0}
-      max={filterData?.priceRange?.maxPrice || 1000}
-      range
-      value={priceRange}
-      onChange={(val) => setPriceRange(val)}
-      trackStyle={[{ backgroundColor: "#3B82F6", height: 6 }]}
-      handleStyle={[
-        { borderColor: "#3B82F6", height: 18, width: 18, marginTop: -7, backgroundColor: "#fff" },
-        { borderColor: "#3B82F6", height: 18, width: 18, marginTop: -7, backgroundColor: "#fff" }
-      ]}
-      railStyle={{ backgroundColor: "#E5E7EB", height: 6 }}
-    />
+              {openSections["price"] && (
+                <div className="mt-3 space-y-3">
+                  <Slider
+                    min={filterData?.priceRange?.minPrice || 0}
+                    max={filterData?.priceRange?.maxPrice || 1000}
+                    range
+                    value={priceRange}
+                    onChange={(val) => setPriceRange(val)}
+                    trackStyle={[{ backgroundColor: "#3B82F6", height: 6 }]}
+                    handleStyle={[
+                      { borderColor: "#3B82F6", height: 18, width: 18, marginTop: -7, backgroundColor: "#fff" },
+                      { borderColor: "#3B82F6", height: 18, width: 18, marginTop: -7, backgroundColor: "#fff" }
+                    ]}
+                    railStyle={{ backgroundColor: "#E5E7EB", height: 6 }}
+                  />
 
-    <div className="flex justify-between items-center">
-      <span>
-        Price:  <PriceConverter price={priceRange[0]}/> — <PriceConverter price={priceRange[1]}/>
-      </span>
-      <button
-        onClick={() => {
-          setAppliedPrice(priceRange);
-          if (onApply) onApply({ attributes: selectedAttributes, price: priceRange });
-        }}
-        className="ml-3 px-3 py-1 bg-blue-600 text-white rounded-md text-sm hover:bg-blue-700"
-      >
-        Apply
-      </button>
-    </div>
-  </div>
-)}
+                  <div className="flex justify-between items-center">
+                    <span>
+                      Price:  <PriceConverter price={priceRange[0]} /> — <PriceConverter price={priceRange[1]} />
+                    </span>
+                    <button
+                      onClick={() => {
+                        setAppliedPrice(priceRange);
+                        if (onApply) onApply({ attributes: selectedAttributes, price: priceRange });
+                      }}
+                      className="ml-3 px-3 py-1 bg-blue-600 text-white rounded-md text-sm hover:bg-blue-700"
+                    >
+                      Apply
+                    </button>
+                  </div>
+                </div>
+              )}
 
             </div>
           )}

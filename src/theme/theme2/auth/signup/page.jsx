@@ -81,7 +81,8 @@ export default function Signup() {
                             name="name"
                             placeholder="Name"
                             {...formik.getFieldProps("name")}
-                            className="w-full border border-gray-300 rounded-lg px-4 py-2 placeholder:text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-700"
+                            className={`w-full border border-gray-300 rounded-lg px-4 py-2 placeholder:text-sm focus:outline-none focus:border-zinc-500 text-gray-700 ${formik.touched.name && formik.errors.name ? "border-red-500 focus:ring-red-400" : "border-gray-300 focus:ring-gray-500"
+                                }`}
                         />
                         {formik.touched.name && formik.errors.name && (
                             <span className="text-red-500 text-xs mt-1 block">
@@ -97,7 +98,8 @@ export default function Signup() {
                             name="email"
                             placeholder="Email"
                             {...formik.getFieldProps("email")}
-                            className="w-full border border-gray-300 rounded-lg px-4 py-2 placeholder:text-sm focus:outline-none focus:ring-2 focus:ring-gray-500 text-gray-700"
+                            className={`w-full border border-gray-300 rounded-lg px-4 py-2 placeholder:text-sm focus:outline-none focus:border-zinc-500 text-gray-700 ${formik.touched.email && formik.errors.email ? "border-red-500 focus:ring-red-400" : "border-gray-300 ocus:ring-gray-500"
+                                }`}
                         />
                         {formik.touched.email && formik.errors.email && (
                             <span className="text-red-500 text-xs mt-1 block">
@@ -106,60 +108,77 @@ export default function Signup() {
                         )}
                     </div>
 
-                    {/* Password */}
-                    <div className="relative">
-                        <input
-                            type={showPassword ? "text" : "password"}
-                            name="password"
-                            placeholder="Password"
-                            {...formik.getFieldProps("password")}
-                            className="w-full border border-gray-300 rounded-lg px-4 py-2 placeholder:text-sm focus:outline-none focus:ring-2 focus:ring-gray-500 text-gray-700"
-                        />
-                        <button
-                            type="button"
-                            onClick={() => setShowPassword(!showPassword)}
-                            className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
-                        >
-                            {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
-                        </button>
+
+                    <div className="w-full">
+                        <div className="relative flex items-center">
+                            <input
+                                type={showPassword ? "text" : "password"}
+                                name="Password"
+                                placeholder="Password"
+                                {...formik.getFieldProps("password")}
+                                className={`w-full border border-gray-300 rounded-lg px-4 py-2 placeholder:text-sm focus:outline-none focus:border-zinc-500 text-gray-700 ${formik.touched.password && formik.errors.password ? "border-red-500 focus:ring-red-400"
+                                    : "border-gray-300 focus:ring-gray-500"
+                                    }`}
+                            />
+
+                            {/* Eye Icon Button */}
+                            <button
+                                type="button"
+                                onClick={() => setShowConfirmPassword(!showPassword)}
+                                className="absolute right-3 flex items-center justify-center h-full"
+                            >
+                                {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                            </button>
+                        </div>
+
+                        {/* Error message */}
                         {formik.touched.password && formik.errors.password && (
-                            <span className="text-red-500 text-xs mt-1 block">
+                            <span className="text-red-500 text-xs mt-1 block text-start">
                                 {formik.errors.password}
                             </span>
                         )}
                     </div>
 
-                    {/* Confirm Password */}
-                    <div className="relative">
-                        <input
-                            type={showConfirmPassword ? "text" : "password"}
-                            name="confirmPassword"
-                            placeholder="Confirm Password"
-                            {...formik.getFieldProps("confirmPassword")}
-                            className="w-full border border-gray-300 rounded-lg px-4 py-2 placeholder:text-sm focus:outline-none focus:ring-2 focus:ring-gray-500 text-gray-700"
-                        />
-                        <button
-                            type="button"
-                            onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                            className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
-                        >
-                            {showConfirmPassword ? <EyeOff size={18} /> : <Eye size={18} />}
-                        </button>
+                    <div className="w-full">
+                        <div className="relative flex items-center">
+                            <input
+                                type={showConfirmPassword ? "text" : "password"}
+                                name="confirmPassword"
+                                placeholder="Confirm Password"
+                                {...formik.getFieldProps("confirmPassword")}
+                                className={`w-full border border-gray-300 rounded-lg px-4 py-2 placeholder:text-sm focus:outline-none focus:border-zinc-500 text-gray-700 ${formik.touched.confirmPassword && formik.errors.confirmPassword ? "border-red-500 focus:ring-red-400"
+                                    : "border-gray-300 focus:ring-gray-500"
+                                    }`}
+                            />
+
+                            {/* Eye Icon Button */}
+                            <button
+                                type="button"
+                                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                                className="absolute right-3 flex items-center justify-center h-full"
+                            >
+                                {showConfirmPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                            </button>
+                        </div>
+
+                        {/* Error message */}
                         {formik.touched.confirmPassword && formik.errors.confirmPassword && (
-                            <span className="text-red-500 text-xs mt-1 block">
+                            <span className="text-red-500 text-xs mt-1 block text-start">
                                 {formik.errors.confirmPassword}
                             </span>
                         )}
                     </div>
 
                     {/* Mobile Number */}
-                    <div className="relative">
+                    <div className="relative mt-2">
                         <input
                             type="text"
                             name="mobile_number"
                             placeholder="Mobile Number"
                             {...formik.getFieldProps("mobile_number")}
-                            className="w-full border border-gray-300 rounded-lg px-4 py-2 placeholder:text-sm focus:outline-none focus:ring-2 focus:ring-gray-500 text-gray-700"
+                            className={`w-full border border-gray-300 rounded-lg px-4 py-2 placeholder:text-sm focus:outline-none focus:border-zinc-500 text-gray-700 ${formik.touched.mobile_number && formik.errors.mobile_number ? "border-red-500 focus:ring-red-400"
+                                : "border-gray-300 focus:ring-gray-500"
+                                }`}
                         />
                         {formik.touched.mobile_number && formik.errors.mobile_number && (
                             <span className="text-red-500 text-xs mt-1 block">

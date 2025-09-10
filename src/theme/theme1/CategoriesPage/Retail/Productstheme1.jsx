@@ -126,6 +126,24 @@ const Productstheme1 = ({ category }) => {
                 >
                     {loading ? (
                         [...Array(grid * 2)].map((_, i) => <ProductCardSkeleton key={i} />)
+                    ) : Array.isArray(products) && products.length > 0 ? (
+                        products.map((item, index) => (
+                            <div key={index}>
+                                <CatalogueCard
+                                    data={item}
+                                    grid={grid}
+                                    redirectUrl={`catalogue/${pathname?.split("/")?.[3]}`}
+                                />
+                            </div>
+                        ))
+                    ) : (
+                        <p className="col-span-full text-center text-gray-500">
+                            No products found.
+                        </p>
+                    )}
+
+                    {/* {loading ? (
+                        [...Array(grid * 2)].map((_, i) => <ProductCardSkeleton key={i} />)
                     ) : products?.length > 0 ? (
                         products.map((item, index) => (
                             <div key={index}>
@@ -136,7 +154,7 @@ const Productstheme1 = ({ category }) => {
                         <p className="col-span-full text-center text-gray-500">
                             No products found.
                         </p>
-                    )}
+                    )} */}
                 </div>
 
                 <div className="flex justify-center items-center ">

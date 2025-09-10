@@ -1,9 +1,8 @@
 import { getThemeModules } from "@/theme/themeConfig";
-const BrandListPage = async () => {
+
+const BrandListPage = () => {
     const currentTheme = process.env.NEXT_THEME || "theme1";
     const { BrandList } = getThemeModules(currentTheme);
-    return (
-            <BrandList />
-    )
-}
-export default BrandListPage 
+    return <BrandList />;
+};
+export default BrandListPage;

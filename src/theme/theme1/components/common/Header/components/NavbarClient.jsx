@@ -248,14 +248,14 @@ const NavbarClient = ({ Menudata, currencyData }) => {
       </div>
       <Menu Menudata={Menudata} />
       <MobileMenu open={menuOpen} handleMenu={handleMenu} Menudata={Menudata} />
-      
-{mobileSearchOpen && (
-  <div className="sm:hidden absolute top-full left-0 w-full bg-white shadow-md z-40 animate-slideDown px-2 py-2">
-    <div className="w-full">
-      <SeachBar className="w-full" />
-    </div>
-  </div>
-)}
+
+      {mobileSearchOpen && (
+        <div className="sm:hidden absolute top-full left-0 w-full bg-white shadow-md z-40 animate-slideDown px-2 py-2">
+          <div className="w-full">
+            <SeachBar className="w-full" />
+          </div>
+        </div>
+      )}
     </nav>
   );
 };

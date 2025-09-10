@@ -31,10 +31,10 @@ export const otpSchema = Yup.object().shape({
     .required("OTP is required"),
 });
 export const ResetPasswordschema = Yup.object({
-  password: Yup.string().min(6, "Password must be at least 6 characters").required("Required"),
+  password: Yup.string().min(6, "Password must be at least 6 characters").required("Required password"),
   confirmPassword: Yup.string()
     .oneOf([Yup.ref("password"), null], "Passwords must match")
-    .required("Required"),
+    .required("Required confirm password"),
 });
 
 export const profileschema = Yup.object().shape({
@@ -56,9 +56,9 @@ export const addressschema = Yup.object({
   address1: Yup.string().required("Address is required"),
 });
 
-export const inquirySchema=Yup.object({
+export const inquirySchema = Yup.object({
   email: Yup.string().email("Invalid email").required("Email is required"),
-   mobile_number: Yup.string().required("Mobile number is required"),
-   description:Yup.string().required("Mobile number is required"),
+  mobile_number: Yup.string().required("Mobile number is required"),
+  description: Yup.string().required("Mobile number is required"),
 
 })

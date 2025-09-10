@@ -86,7 +86,33 @@ const BrandsList = () => {
 
         {/* Brand Grid */}
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6">
-          {loading ? (
+          {Array.isArray(data?.data) && data.data.length > 0 ? (
+            data.data.map((brand, id) => {
+              const imageUrl = brand?.image ? ImageUrl(brand.image) : null;
+              return (
+                <div key={id} className="group relative ...">
+                  <Link href={`/brand/catalogue/${brand.url}`} className="flex flex-col ...">
+                    <div className="flex items-center justify-center ...">
+                      {imageUrl ? (
+                        <img src={imageUrl} alt={brand.name} className="max-h-16 max-w-[80%] object-contain" />
+                      ) : (
+                        <div className="h-16 w-16 bg-gray-200 rounded-md" />
+                      )}
+                    </div>
+                    <h6 className="text-sm font-bold text-gray-800 group-hover:text-blue-600 ...">
+                      {brand?.name || "Other"}
+                    </h6>
+                  </Link>
+                </div>
+              );
+            })
+          ) : (
+            <h1 className="col-span-full text-center text-gray-500">
+              Brands Not Found
+            </h1>
+          )}
+
+          {/* {loading ? (
             Array.from({ length: perPage }).map((_, i) => (
               <div
                 key={i}
@@ -123,16 +149,15 @@ const BrandsList = () => {
                     <span className="mt-2 h-0.5 w-8 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full opacity-0 group-hover:opacity-100 transition" />
                   </Link>
 
-                  {/* hover overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-tr from-blue-100/40 via-purple-100/40 to-transparent opacity-0 group-hover:opacity-100 transition duration-500 pointer-events-none" />
-                </div>
-              );
+          <div className="absolute inset-0 bg-gradient-to-tr from-blue-100/40 via-purple-100/40 to-transparent opacity-0 group-hover:opacity-100 transition duration-500 pointer-events-none" />
+        </div>
+        );
             })
-          ) : (
-            <h1 className="col-span-full text-center text-gray-500">
-              Brands Not Found
-            </h1>
-          )}
+        ) : (
+        <h1 className="col-span-full text-center text-gray-500">
+          Brands Not Found
+        </h1>
+          )} */}
         </div>
 
         {/* Pagination */}
@@ -144,7 +169,7 @@ const BrandsList = () => {
             onPageChange={handlePageClick}
           />
         </div>
-      </div>
+      </div >
     </>
   );
 };

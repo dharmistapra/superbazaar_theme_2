@@ -55,7 +55,6 @@ const Catalogue = ({ CatalogueDetailData, stitching, category }) => {
     const toggleWishlist = () => setWishlist((prev) => !prev);
     const toggleCompare = () => setCompare((prev) => !prev);
     const brandUrl = CatalogueDetailData.CatalogueBrand[0]?.brand.url
-    console.log("catalog ===>", CatalogueDetailData, stitching, category);
 
     const handleAddtoCart = async () => {
         setErrors(null);
