@@ -65,7 +65,7 @@ const NavbarClient = ({ Menudata, currencyData }) => {
     const handleResize = () => {
       if (window.innerWidth >= 640) {
         setMenuOpen(false);
-        setMobileSearchOpen(false); // reset mobile search when switching to desktop
+        setMobileSearchOpen(false); 
       }
     };
     const handleClickOutside = (event) => {

@@ -5,11 +5,17 @@ import { SlidersHorizontal, LayoutList, Grip, GripVertical } from "lucide-react"
 import { getCategoryFilter, getCategoryProducts } from "@/services/productService";
 import ProductCardSkeleton from "@/components/ProductCardSkeleton";
 import cleanFilters from "@/helper/FilterClean";
+import { usePathname } from "next/navigation";
+
+import CatalogueCard from "@/components/cards/CatalogueCard";
+import { useSelector } from "react-redux";
 const Filtertheme1 = dynamic(() => import("./Filtertheme1"))
 const ProductCard = dynamic(() => import("@/components/cards/ProductCards"))
 const Pagination = dynamic(() => import("@/components/Pagination"))
 const SelectedFilters = dynamic(() => import("@/components/SelctedFilter"))
 const Productstheme1 = ({ category }) => {
+     const pathname = usePathname();
+     const { webSetting } = useSelector((state) => state.webSetting)
     const [grid, setGrid] = useState(4);
     const [open, setOpen] = useState(false);
     const [sort, setSort] = useState("");
@@ -118,7 +124,7 @@ const Productstheme1 = ({ category }) => {
                     setSelectedAttributes={setSelectedAttributes}
                     fetchProducts={fetchProducts}
                 />
-                <div
+                {/* <div
                     className={`grid gap-4 
             ${grid === 2 ? "grid-cols-2 sm:grid-cols-2 lg:grid-cols-2" : ""} 
             ${grid === 3 ? "grid-cols-2 sm:grid-cols-2 md:grid-cols-3" : ""} 
@@ -142,7 +148,7 @@ const Productstheme1 = ({ category }) => {
                         </p>
                     )}
 
-                    {/* {loading ? (
+                    {loading ? (
                         [...Array(grid * 2)].map((_, i) => <ProductCardSkeleton key={i} />)
                     ) : products?.length > 0 ? (
                         products.map((item, index) => (
@@ -154,8 +160,37 @@ const Productstheme1 = ({ category }) => {
                         <p className="col-span-full text-center text-gray-500">
                             No products found.
                         </p>
-                    )} */}
-                </div>
+                    )}
+                </div> */}
+
+<div
+  className={`grid gap-4 
+    ${grid === 2 ? "grid-cols-2 sm:grid-cols-2 lg:grid-cols-2" : ""} 
+    ${grid === 3 ? "grid-cols-2 sm:grid-cols-2 md:grid-cols-3" : ""} 
+    ${grid === 4 ? "grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4" : ""}`}
+>
+  {loading ? (
+    [...Array(grid * 2)].map((_, i) => <ProductCardSkeleton key={i} />)
+  ) : Array.isArray(products) && products.length > 0 ? (
+    products.map((item, index) => (
+      <div key={index}>
+        {webSetting?.purchaseType === "retail" ? (
+          <ProductCard data={item} grid={grid} />
+        ) : (
+          <CatalogueCard
+            data={item}
+            grid={grid}
+            redirectUrl={`catalogue/${pathname?.split("/")?.[3]}`}
+          />
+        )}
+      </div>
+    ))
+  ) : (
+    <p className="col-span-full text-center text-gray-500">
+      No products found.
+    </p>
+  )}
+</div>
 
                 <div className="flex justify-center items-center ">
                     <Pagination
