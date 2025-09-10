@@ -17,23 +17,22 @@ const Hero = ({ banners }) => {
                 loop={true}
                 className="w-full"
             >
-                {banners.map((banner, index) => (
+                {Array.isArray(banners) && banners.map((banner, index) => (
                     <SwiperSlide key={index}>
                         <picture>
-                            {/* Mobile Image */}
                             <source
                                 media="(max-width: 767px)"
                                 srcSet={ImageUrl(banner.mobileImage)}
                             />
-                            {/* Desktop Image */}
                             <img
                                 src={ImageUrl(banner.desktopImage)}
                                 alt={`Banner ${index + 1}`}
-                                className="w-full h-[auto] sm:h-[auto] md:h-[auto] lg:h-[auto] object-cover"
+                                className="w-full object-cover"
                             />
                         </picture>
                     </SwiperSlide>
                 ))}
+
             </Swiper>
         </section>
     );

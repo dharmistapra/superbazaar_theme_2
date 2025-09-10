@@ -21,7 +21,7 @@ const TrendingLehengas = ({ tabsData = [], purchaseType }) => {
       xl:max-w-[1240px] 
       2xl:max-w-[1320px]"
         >
-            {tabsData.map((block, idx) => {
+            {Array.isArray(tabsData) && tabsData.map((block, idx) => {
                 const products = purchaseType === "wholesale" ? block?.products?.catalogue : block?.products?.products;
                 return (
                     <div key={idx} className="mb-12">

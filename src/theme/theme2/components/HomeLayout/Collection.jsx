@@ -33,17 +33,17 @@ const Collection = ({ homeContent, webSetting }) => {
 
     return (
         <div className="container mx-auto px-4 mt-3 mb-0">
-            {homeContent?.map((collection, idx) => {
+            {Array.isArray(homeContent) && homeContent.map((collection, idx) => {
                 const RenderComponent = componentMap[collection.type];
                 const hasData =
                     (RenderComponent && (
-                        (collection.type === "full slider" && collection.fullSlider?.length > 0) ||
-                        (collection.type === "cards slider" && collection.cardSlider?.length > 0) ||
-                        (collection.type === "two banner" && collection.twoBanner?.length > 0) ||
-                        (collection.type === "three banner" && collection.threeBanner?.length > 0) ||
-                        (collection.type === "four banner" && collection.fourBanner?.length > 0)
+                        (collection.type === "full slider" && Array.isArray(collection.fullSlider) && collection.fullSlider.length > 0) ||
+                        (collection.type === "cards slider" && Array.isArray(collection.cardSlider) && collection.cardSlider.length > 0) ||
+                        (collection.type === "two banner" && Array.isArray(collection.twoBanner) && collection.twoBanner.length > 0) ||
+                        (collection.type === "three banner" && Array.isArray(collection.threeBanner) && collection.threeBanner.length > 0) ||
+                        (collection.type === "four banner" && Array.isArray(collection.fourBanner) && collection.fourBanner.length > 0)
                     )) ||
-                    (!RenderComponent && collection.products?.catalogue?.length > 0);
+                    (!RenderComponent && Array.isArray(collection.products?.catalogue) && collection.products.catalogue.length > 0);
 
                 if (!hasData) return null;
 
@@ -61,18 +61,20 @@ const Collection = ({ homeContent, webSetting }) => {
                             RenderComponent(collection)
                         ) : (
                             <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-                                {collection?.products?.catalogue?.map((img, i) => (
-                                    <CatalogCard
-                                        key={i}
-                                        product={img}
-                                        category={collection.url}
-                                    />
-                                ))}
+                                {Array.isArray(collection.products?.catalogue) &&
+                                    collection.products.catalogue.map((img, i) => (
+                                        <CatalogCard
+                                            key={i}
+                                            product={img}
+                                            category={collection.url}
+                                        />
+                                    ))}
                             </div>
                         )}
                     </React.Fragment>
                 );
             })}
+
         </div>
     );
 };

@@ -29,10 +29,9 @@ const Testimonial = ({ testimonials }) => {
             1024: { slidesPerView: 3 },
           }}
         >
-          {testimonials.map((testimonial, index) => (
+          {Array.isArray(testimonials) && testimonials.map((testimonial, index) => (
             <SwiperSlide key={index}>
-              <div className="bg-white rounded-xl p-6 flex flex-col items-center text-center 
-            border border-gray-200 shadow-lg shadow-gray-300/50 hover:shadow-xl transition-all h-80">
+              <div className="bg-white rounded-xl p-6 flex flex-col items-center text-center border shadow-lg h-80">
                 <div className="w-24 h-28 mb-4 rounded-full overflow-hidden">
                   <Image
                     src={ImageUrl(testimonial.image)}
@@ -45,12 +44,11 @@ const Testimonial = ({ testimonials }) => {
                 <p className="text-gray-700 text-sm leading-6 mb-4 line-clamp-3">
                   {testimonial.review}
                 </p>
-
                 <div className="flex gap-1 mb-3">
                   {Array.from({ length: 5 }).map((_, i) => (
                     <Star
                       key={i}
-                      className={i < testimonial.rating ? "text-amber-400" : "text-amber-400"}
+                      className="text-amber-400"
                       fill={i < testimonial.rating ? "#FBBF24" : "none"}
                     />
                   ))}
@@ -61,6 +59,7 @@ const Testimonial = ({ testimonials }) => {
               </div>
             </SwiperSlide>
           ))}
+
         </Swiper>
       </div>
     </section>
