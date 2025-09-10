@@ -17,7 +17,7 @@ const WishlistTheme2 = () => {
         <button
           onClick={() => {
             setActiveTab("full");
-            router.push(`/wholesale/${category}`);
+            router.push(`/catalogue/${category}`);
           }}
           className={`flex items-center gap-2 p-3 rounded shadow text-sm font-medium ${activeTab === "full" ? "bg-red-700 text-white" : "bg-gray-200 hover:bg-gray-400"
             }`}

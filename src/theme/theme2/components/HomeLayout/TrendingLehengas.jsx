@@ -28,12 +28,12 @@ const TrendingLehengas = ({ tabsData = [], purchaseType }) => {
                         {/* Section Header */}
                         <div className="flex justify-between items-center mb-6">
                             <h2 className="text-xl md:text-2xl font-semibold">{block.title}</h2>
-                            <Link
+                            {/* <Link
                                 href={`/${purchaseType || "retail"}/${block.url}`}
                                 className="text-sm md:text-base font-bold hover:text-pink-600 transition"
                             >
                                 View All →
-                            </Link>
+                            </Link> */}
                         </div>
 
                         {/* Slider */}

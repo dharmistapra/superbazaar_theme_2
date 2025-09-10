@@ -173,7 +173,7 @@ const FooterLayout = () => {
             <div className="py-4 flex flex-col md:flex-row items-center justify-between container mx-auto px-4 text-gray-400">
                 <div className="uppercase text-sm mb-2 md:mb-0">  © {new Date().getFullYear()}  {webSetting?.copyRightText}.</div>
                 <Image
-                    src="/static/media/payment.020e7c82487e5bff608b.webp"
+                    src="/safepayment.webp"
                     alt="Payment"
                     width={300}
                     height={35}

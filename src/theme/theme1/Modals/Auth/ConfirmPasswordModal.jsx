@@ -8,7 +8,7 @@ import { ResetPasswordschema } from "@/schema/schema";
 import { createClientAxios } from "@/services/apiClient";
 
 export default function ConfirmPasswordModal() {
-  const { modal, close,open } = useModal();
+  const { modal, close, open } = useModal();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [errors, setErrors] = useState(null)
@@ -141,20 +141,20 @@ export default function ConfirmPasswordModal() {
               )}
           </div>
           <button
-    type="submit"
-    disabled={formik.isSubmitting}
-    className={`w-full bg-zinc-900 text-white py-2 rounded-sm hover:bg-black transition-colors duration-200
+            type="submit"
+            disabled={formik.isSubmitting}
+            className={`w-full bg-zinc-900 text-white py-2 rounded-sm hover:bg-black transition-colors duration-200
        ${formik.isSubmitting ? "bg-gray-400 cursor-not-allowed" : "bg-zinc-950 text-white hover:bg-zinc-700"}`}
-  >
-    {formik.isSubmitting ? (
-      <>
-        <Loader2 className="animate-spin" />
-        <span>Processing...</span>
-      </>
-    ) : (
-      "Reset Password"
-    )}
-  </button>
+          >
+            {formik.isSubmitting ? (
+              <>
+                <Loader2 className="animate-spin" />
+                <span>Processing...</span>
+              </>
+            ) : (
+              "Reset Password"
+            )}
+          </button>
           {errors && <p className="text-red-400 text-sm">{errors}</p>}
         </form>
       </div>

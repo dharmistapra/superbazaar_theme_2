@@ -11,7 +11,7 @@ const Menu = ({ Menudata }) => {
             <Link
               href={item.url === "wholesale"
                 ? "/wholesale" : webSetting?.purchaseType === "wholesale"
-                  ? `/wholesale/${item.url}`
+                  ? `/catalogue/${item.url}`
                   : `/retail/${item.url}`}
               className="flex items-center gap-1 px-3 py-2 text-black-900 hover:text-red-400 font-normal transition-colors" >
               {item.name}
