@@ -1,3 +1,4 @@
+import { getTheme } from "@/services/layout";
 import { getCategoryBanners } from "@/services/productService";
 import Breadcrum from "@/theme/theme2/components/BreadCrums/Breadcrum";
 import { getThemeModules } from "@/theme/themeConfig";
@@ -10,7 +11,8 @@ export async function generateMetadata({ params }) {
     };
 }
 const WholesaleCategoryPage = async ({ params }) => {
-    const currentTheme = process.env.NEXT_THEME || "theme1";
+      const themeData = await getTheme();
+      const currentTheme = themeData?.name || "theme1"; 
     const { category } = await params;
     const { CategoryBanner, WholeSaleProductList } = getThemeModules(currentTheme);
     const data = await getCategoryBanners(category);

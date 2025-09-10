@@ -7,6 +7,7 @@ import CartItemSlice from "./slice/cartItemSlice";
 import WebSettingSlice from "./slice/webSettingSlice";
 import CategorySlice from "./slice/categorySlice"
 import cmsSlice from "./slice/cmsSlice"
+import ThemeSlice from "./slice/themeSlice"
 export const store=configureStore({
     reducer:{
         modal:ModalReucer,
@@ -16,6 +17,7 @@ export const store=configureStore({
         cartItem:CartItemSlice,
         webSetting:WebSettingSlice,
         categorystore:CategorySlice,
-        cmsStore:cmsSlice
+        cmsStore:cmsSlice,
+        theme:ThemeSlice
     }
 })

@@ -213,7 +213,6 @@ const ProductDetailTheme2 = ({ product, Stitching, attributes, category }) => {
                 <div className="flex gap-2 overflow-x-auto">
                   {
                     attributes?.moreColors?.map((product, i) => {
-                      console.log(product, category, pathname, "product");
 
                       return (
                         <Link key={i} href={`/retail/${category}/${product.url}`} className="flex-shrink-0 ">

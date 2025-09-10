@@ -7,7 +7,7 @@ const roboto = Roboto({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
 });
-const LayoutTheme1 = ({ children }) => {
+const LayoutTheme1 = ({ children ,theme }) => {
     return (
         <div className={roboto.className}>
             <Navbar />

@@ -2,8 +2,10 @@ import { authOptions } from "@/lib/auth";
 import { getServerSession } from "next-auth";
 import { getUserInfo } from "@/services/accountsService";
 import { getThemeModules } from "@/theme/themeConfig";
+import { getTheme } from "@/services/layout";
 const AccountDetailsPag = async () => {
-   const currentTheme = process.env.NEXT_THEME || "theme1";
+    const themeData = await getTheme();
+      const currentTheme = themeData?.name || "theme1"; 
   const session = await getServerSession(authOptions);
   const { id } = session?.user
   const data = await getUserInfo(id)

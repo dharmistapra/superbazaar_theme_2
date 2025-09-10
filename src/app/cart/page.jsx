@@ -1,17 +1,10 @@
-// import CartPageTheme1 from "@/theme/theme1/Cart/CartPage";
-// const CartPage = () => {
-//   return (
-//     <CartPageTheme1/>
-//   );
-// };
 
-// export default CartPage;
-
-
+import { getTheme } from "@/services/layout";
 import { getThemeModules } from "@/theme/themeConfig";
 
-export default function CartPage() {
-  const currentTheme = process.env.NEXT_THEME || "theme1";
+export default async function CartPage() {
+    const themeData = await getTheme();
+      const currentTheme = themeData?.name || "theme1"; 
   const Cart = getThemeModules(currentTheme).Cart;
   return <Cart />;
 }

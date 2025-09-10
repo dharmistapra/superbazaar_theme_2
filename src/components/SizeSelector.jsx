@@ -9,7 +9,6 @@ const SizeSelector = ({ sizes = [], onChange, errors, setErrors }) => {
     const data = {
       id: size?.id,
       value: size?.value,
-      quantity: size?.quantity
     }
     if (onChange) onChange(data);
     setErrors(null);
