@@ -124,44 +124,6 @@ const Productstheme1 = ({ category }) => {
                     setSelectedAttributes={setSelectedAttributes}
                     fetchProducts={fetchProducts}
                 />
-                {/* <div
-                    className={`grid gap-4 
-            ${grid === 2 ? "grid-cols-2 sm:grid-cols-2 lg:grid-cols-2" : ""} 
-            ${grid === 3 ? "grid-cols-2 sm:grid-cols-2 md:grid-cols-3" : ""} 
-            ${grid === 4 ? "grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4" : ""}`}
-                >
-                    {loading ? (
-                        [...Array(grid * 2)].map((_, i) => <ProductCardSkeleton key={i} />)
-                    ) : Array.isArray(products) && products.length > 0 ? (
-                        products.map((item, index) => (
-                            <div key={index}>
-                                <CatalogueCard
-                                    data={item}
-                                    grid={grid}
-                                    redirectUrl={`catalogue/${pathname?.split("/")?.[3]}`}
-                                />
-                            </div>
-                        ))
-                    ) : (
-                        <p className="col-span-full text-center text-gray-500">
-                            No products found.
-                        </p>
-                    )}
-
-                    {loading ? (
-                        [...Array(grid * 2)].map((_, i) => <ProductCardSkeleton key={i} />)
-                    ) : products?.length > 0 ? (
-                        products.map((item, index) => (
-                            <div key={index}>
-                                <ProductCard data={item} grid={grid} />
-                            </div>
-                        ))
-                    ) : (
-                        <p className="col-span-full text-center text-gray-500">
-                            No products found.
-                        </p>
-                    )}
-                </div> */}
 
 <div
   className={`grid gap-4 
