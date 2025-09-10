@@ -122,7 +122,6 @@ const WholeSalePage = ({ category }) => {
                         return (
                             <div key={index}>
                                 <CatalogCard product={item} grid={grid} category={category} />
-                                {/* <CatalogCard data={item} grid={grid} redirectUrl={`catalogue/${categoryUrl}`} /> */}
                             </div>
                         )
                     })
