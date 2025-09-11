@@ -6,7 +6,7 @@ import PaymentMethod from "./components/paymentMethod";
 import OrderSummary from "./components/OrderSummary";
 import { useSelector } from "react-redux";
 import ShippingMethod from "./components/ShippingMethod";
-import { postOrder } from "@/services/checkOutService";
+import { postCCAvenueOrder, postOrder } from "@/services/checkOutService";
 
 const CheckoutPage = () => {
   const [country, setCountry] = useState("India");
@@ -47,7 +47,26 @@ const CheckoutPage = () => {
         shippingMethodId: shippingMethod?.id,
         paymentName: paymentMethod?.name,
       };
-      const response = await postOrder(body);
+
+      console.log(body);
+      return
+     
+      let response={}
+     if (paymentMethod?.name === "ccAvenue") {
+  setSuccessMsg("Redirecting to CCAvenue...");
+  const htmlResponse = await postCCAvenueOrder(body);
+
+  const newWindow = window.open("", "CCAvenuePayment", "width=600,height=700");
+  if (newWindow) {
+    newWindow.document.write(htmlResponse);
+    newWindow.document.close();
+  } else {
+    setErrorMsg("Please allow popups for payment.");
+  }
+}else{
+        response = await postOrder(body);
+
+      }
 
       if (response?.isSuccess) {
         setSuccessMsg("Order placed successfully!");

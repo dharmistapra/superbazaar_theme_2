@@ -25,12 +25,12 @@ const StitchingOptions = ({ stitching }) => {
 
                     return (
                         <li key={idx} className="flex items-center gap-2">
-                             <span>
-    {s.option?.name}{" "}
-    {s.option?.price && (   
-      <span className="text-gray-600 text-xs"><PriceConverter price={s.option.price}/></span>
-    )}
-  </span>
+                            <span>
+                                {s.option?.name}{" "}
+                                {s.option?.price && (
+                                    <span className="text-gray-600 text-xs"><PriceConverter price={s.option.price} /></span>
+                                )}
+                            </span>
                             {measurements.length > 0 && (
                                 <button
                                     type="button"

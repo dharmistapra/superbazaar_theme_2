@@ -16,6 +16,7 @@ const CheckoutAddress = ({ onCountryChange, onAddressChange }) => {
   const [sameAsBilling, setSameAsBilling] = useState(true);
   const [shippingAddress, setShippingAddress] = useState("");
   const [billingAddress, setBillingAddress] = useState("");
+  
   const fetchAddress = async () => {
     if (!session?.user?.id) return;
     const data = await getUserAddress(session.user.id);

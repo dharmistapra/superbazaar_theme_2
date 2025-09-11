@@ -1,4 +1,4 @@
-import { getHomeBanners, getHomeContent, getTestimonal } from "@/services/homeService";
+import { getHomeBanners, getHomeContent, getHomeProductlist, getTestimonal } from "@/services/homeService";
 import Testimonial from "./components/Testimonial/Testimonial";
 import { getWebSetting } from "@/services/webSetting";
 import Hero from "./components/Hero/Hero";
