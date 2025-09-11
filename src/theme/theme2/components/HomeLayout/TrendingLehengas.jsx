@@ -12,15 +12,7 @@ import ProductCard from "../../ProductComponent/ProductCard";
 
 const TrendingLehengas = ({ tabsData = [], purchaseType }) => {
     return (
-        <div
-            className="mx-auto px-4 mt-15  
-      w-full 
-      sm:max-w-[540px] 
-      md:max-w-[720px] 
-      lg:max-w-[960px] 
-      xl:max-w-[1240px] 
-      2xl:max-w-[1320px]"
-        >
+        <div className="mx-auto px-4 mt-15 w-full sm:max-w-[540px] md:max-w-[720px] lg:max-w-[960px] xl:max-w-[1240px] 2xl:max-w-[1320px]">
             {Array.isArray(tabsData) && tabsData.map((block, idx) => {
                 const products = purchaseType === "wholesale" ? block?.products?.catalogue : block?.products?.products;
                 return (
@@ -55,10 +47,11 @@ const TrendingLehengas = ({ tabsData = [], purchaseType }) => {
                                 modules={[Autoplay, Navigation]}
                                 className="w-full"
                                 breakpoints={{
-                                    0: { slidesPerView: 2, spaceBetween: 10 },
-                                    480: { slidesPerView: 2, spaceBetween: 15 },
-                                    640: { slidesPerView: 3, spaceBetween: 15 },
-                                    768: { slidesPerView: 3, spaceBetween: 20 },
+                                    0: { slidesPerView: 2, spaceBetween: 10 }, // 📱 small screens
+                                    360: { slidesPerView: 2, spaceBetween: 12 },
+                                    480: { slidesPerView: 2, spaceBetween: 14 },
+                                    640: { slidesPerView: 3, spaceBetween: 16 },
+                                    768: { slidesPerView: 3, spaceBetween: 18 },
                                     1024: { slidesPerView: 3, spaceBetween: 20 },
                                     1280: { slidesPerView: 4, spaceBetween: 24 },
                                 }}
@@ -69,7 +62,6 @@ const TrendingLehengas = ({ tabsData = [], purchaseType }) => {
                                             <SwiperSlide key={i} className="flex justify-center">
                                                 {purchaseType === "wholesale" ? (
                                                     <CatalogCard product={data} category={block.url} />
-                                                    // <CatalogCard data={data} redirectUrl={`catalogue/${block.url}`} />
                                                 ) : (
                                                     <ProductCard
                                                         key={data.id}

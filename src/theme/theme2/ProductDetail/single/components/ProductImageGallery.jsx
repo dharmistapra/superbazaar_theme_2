@@ -3,9 +3,12 @@
 // import Image from "next/image";
 // import { Fancybox } from "@fancyapps/ui";
 // import "@fancyapps/ui/dist/fancybox/fancybox.css";
+// import { Heart } from "lucide-react"; // wishlist icon
+// import WishlistButton from "@/components/cards/attribute/WishlistButton";
 
 // const ProductImageGallery = ({ images, thumbs }) => {
 //   const [selectedImage, setSelectedImage] = useState(images[0]);
+//   const [inWishlist, setInWishlist] = useState(false);
 
 //   const handleFancyBox = (startIndex) => {
 //     Fancybox.show(
@@ -21,12 +24,13 @@
 //   };
 
 //   return (
-//     <div className="flex flex-col md:flex-row gap-4">
+//     <div className="flex flex-col md:flex-row gap-4 px-4">
+//       {/* Thumbnails */}
 //       <div className="flex md:flex-col gap-2 order-2 md:order-1">
 //         {thumbs.map((thumb, index) => (
 //           <button
 //             key={index}
-//             onClick={() => { setSelectedImage(images[index]) }}
+//             onClick={() => setSelectedImage(images[index])}
 //             className={`border rounded-md overflow-hidden ${selectedImage === images[index]
 //               ? "border-dashed border-gray-800"
 //               : "border-gray-300"
@@ -43,7 +47,22 @@
 //         ))}
 //       </div>
 
+//       {/* Main Image with Wishlist */}
+
 //       <div className="relative w-full flex-1 cursor-pointer order-1 md:order-2">
+//         {/* Wishlist button */}
+//         <button
+//           onClick={() => setInWishlist(!inWishlist)}
+//           className="absolute top-3 right-3 z-10 bg-white p-2 rounded-full shadow-md hover:scale-110 transition"
+//         >
+//           <Heart
+//             size={22}
+//             className={`${inWishlist ? "fill-red-500 stroke-red-500" : "stroke-gray-600"
+//               }`}
+//           />
+//         </button>
+
+//         {/* Fancybox Main Image */}
 //         <a
 //           href={`https://cdn.superbazaar.in/${selectedImage}`}
 //           data-fancybox="gallery"
@@ -67,16 +86,16 @@
 
 // export default ProductImageGallery;
 
+
 "use client";
 import { useState } from "react";
 import Image from "next/image";
 import { Fancybox } from "@fancyapps/ui";
 import "@fancyapps/ui/dist/fancybox/fancybox.css";
-import { Heart } from "lucide-react"; // wishlist icon
+import WishlistButton from "@/components/cards/attribute/WishlistButton";
 
-const ProductImageGallery = ({ images, thumbs }) => {
+const ProductImageGallery = ({ images, thumbs, product_id }) => {
   const [selectedImage, setSelectedImage] = useState(images[0]);
-  const [inWishlist, setInWishlist] = useState(false);
 
   const handleFancyBox = (startIndex) => {
     Fancybox.show(
@@ -92,7 +111,7 @@ const ProductImageGallery = ({ images, thumbs }) => {
   };
 
   return (
-    <div className="flex flex-col md:flex-row gap-4">
+    <div className="flex flex-col md:flex-row gap-4 px-4">
       {/* Thumbnails */}
       <div className="flex md:flex-col gap-2 order-2 md:order-1">
         {thumbs.map((thumb, index) => (
@@ -117,17 +136,10 @@ const ProductImageGallery = ({ images, thumbs }) => {
 
       {/* Main Image with Wishlist */}
       <div className="relative w-full flex-1 cursor-pointer order-1 md:order-2">
-        {/* Wishlist button */}
-        <button
-          onClick={() => setInWishlist(!inWishlist)}
-          className="absolute top-3 right-3 z-10 bg-white p-2 rounded-full shadow-md hover:scale-110 transition"
-        >
-          <Heart
-            size={22}
-            className={`${inWishlist ? "fill-red-500 stroke-red-500" : "stroke-gray-600"
-              }`}
-          />
-        </button>
+        {/* ✅ Wishlist button */}
+        <div className="absolute top-3 right-3 z-10">
+          <WishlistButton productId={product_id} type="product" variant="detail" />
+        </div>
 
         {/* Fancybox Main Image */}
         <a

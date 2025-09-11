@@ -31,15 +31,7 @@ const HeaderMenu = ({ menudata, currencyData }) => {
     const dispatch = useDispatch();
     const webSetting = useSelector(state => state.webSetting.webSetting)
     const [showSearch, setShowSearch] = useState(false);
-    const [searchTerm, setSearchTerm] = useState("");
 
-
-    const handleSearchSubmit = (e) => {
-        e.preventDefault();
-        if (!searchTerm.trim()) return;
-        router.push(`/search?q=${encodeURIComponent(searchTerm)}`);
-        setShowSearch(false);
-    };
     const handleCartClick = () => dispatch(openCart());
     const fetchData = async () => {
         const data = await getWebSetting();
@@ -106,9 +98,11 @@ const HeaderMenu = ({ menudata, currencyData }) => {
                     <div className="container mx-auto px-3">
                         <div className="flex items-center justify-between py-3">
                             <div className="flex items-center lg:hidden gap-4">
-                                <button>
-                                    <Menu size={21} className="text-gray-800" />
-                                </button>
+                                <div className="flex items-center lg:hidden gap-4">
+                                    <button onClick={() => setOpenMenu(true)}>
+                                        <Menu size={21} className="text-gray-800" />
+                                    </button>
+                                </div>
                             </div>
 
                             <div className=" flex items-center mx-4">
@@ -204,7 +198,7 @@ const HeaderMenu = ({ menudata, currencyData }) => {
                                     <Link
                                         href={item.url === "wholesale"
                                             ? "/wholesale" : webSetting?.purchaseType === "wholesale"
-                                                ? `/catalogue/${item.url}`
+                                                ? `/wholesale/${item.url}`
                                                 : `/retail/${item.url}`}
                                         className="hover:text-red-800 flex items-center text-[17px] text-gray-700 tracking-[2px]"
                                     >
@@ -217,7 +211,10 @@ const HeaderMenu = ({ menudata, currencyData }) => {
                                                 {item.children[0]?.children?.map((child) => (
                                                     <li key={child.id}>
                                                         <Link
-                                                            href={`/${child.url}`}
+                                                            href={item.url === "wholesale"
+                                                                ? "/wholesale" : webSetting?.purchaseType === "wholesale"
+                                                                    ? `/wholesale/${child.url}`
+                                                                    : `/retail/${child.url}`}
                                                             className="block hover:text-red-800"
                                                         >
                                                             {child.name}
@@ -244,13 +241,12 @@ const HeaderMenu = ({ menudata, currencyData }) => {
                 </header>
 
                 {openMenu && (
-                    <MobileMenu data={data} closeMenu={() => setOpenMenu(false)} />
+                    <div className="fixed inset-0 z-50 bg-black bg-opacity-50" onClick={() => setOpenMenu(false)}>
+                        <MobileMenu webSetting={webSetting} data={data} closeMenu={() => setOpenMenu(false)} />
+                    </div>
                 )}
             </header >
             <MobileNav />
-
-
-
         </>
     );
 };

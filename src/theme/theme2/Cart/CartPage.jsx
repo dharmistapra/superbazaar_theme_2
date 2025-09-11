@@ -10,8 +10,9 @@ const CartPageTheme2 = () => {
   const { CartData } = useSelector((state) => state.cartItem);
   const [cartItems, setCartItemsState] = useState([]);
   useEffect(() => {
-    setCartItemsState(CartData?.data || []);
+    setCartItemsState(Array.isArray(CartData?.data) ? CartData.data : []);
   }, [CartData]);
+
   return (
     <div className="w-full">
       <Breadcrum name="cart" />
@@ -19,11 +20,9 @@ const CartPageTheme2 = () => {
         Object.keys(CartData)?.length === 0 ? (
           <CartLoading />
         ) : cartItems?.length === 0 ? (
-          <EmptyCart />
+          Array.isArray(cartItems) && cartItems.length === 0 && <EmptyCart />
         ) : (
-          <CartItems
-            cartItems={cartItems}
-          />
+          Array.isArray(cartItems) && cartItems.length > 0 && <CartItems cartItems={cartItems} />
         )
       }
     </div >

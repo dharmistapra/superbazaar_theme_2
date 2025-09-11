@@ -65,7 +65,7 @@ const NavbarClient = ({ Menudata, currencyData }) => {
     const handleResize = () => {
       if (window.innerWidth >= 640) {
         setMenuOpen(false);
-        setMobileSearchOpen(false); 
+        setMobileSearchOpen(false);
       }
     };
     const handleClickOutside = (event) => {
@@ -125,16 +125,12 @@ const NavbarClient = ({ Menudata, currencyData }) => {
               className="h-10 w-auto"
             />
           </div>
-
-
         </div>
-
         <div
           className="flex items-center gap-5 text-zinc-800 relative"
           ref={dropdownRef}
         >
           <CurrencySelector currencyData={currencyData} />
-
           <div className="sm:hidden">
             <Search
               size={23}

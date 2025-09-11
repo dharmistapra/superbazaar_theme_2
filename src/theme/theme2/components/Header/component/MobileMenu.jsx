@@ -1,22 +1,80 @@
 "use client"
 import { X, Plus, Minus } from "lucide-react"
+import Link from "next/link"
 import { useState } from "react"
 
-const MobileMenu = ({ data, closeMenu }) => {
-    const [openMenus, setOpenMenus] = useState({})
+const MobileMenu = ({ data, closeMenu, webSetting }) => {
+    const [openMenus, setOpenMenus] = useState({}) // tracks which menu/submenu is open
 
-    const toggleMenu = (id) => {
-        setOpenMenus((prev) => ({
-            ...prev,
-            [id]: !prev[id],
-        }))
+    // Toggle top-level menu or nested submenu
+    const toggleMenu = (id, subId) => {
+        setOpenMenus((prev) => {
+            if (subId) {
+                // toggle nested submenu
+                return {
+                    ...prev,
+                    [id]: {
+                        ...prev[id],
+                        [subId]: !prev[id]?.[subId],
+                    },
+                }
+            }
+            // toggle top-level menu
+            return {
+                ...prev,
+                [id]: !prev[id],
+            }
+        })
     }
 
+    // Recursive function to render submenus
+    const renderSubMenu = (parentId, items) => (
+        <ul className="pl-4 mt-2 space-y-2">
+            {items.map((item) => (
+                <li key={item.id} className="pt-[15px] pr-[45px] pb-[0px] pl-[15px]">
+                    <div className="flex justify-between items-center">
+                        <Link
+                            href={
+                                item.url === "wholesale"
+                                    ? "/wholesale"
+                                    : webSetting?.purchaseType === "wholesale"
+                                        ? `/wholesale/${item.url}`
+                                        : `/retail/${item.url}`
+                            }
+                            className="block text-gray-600 hover:text-red-700 text-sm"
+                            onClick={closeMenu}
+                        >
+                            {item.name || item.title}
+                        </Link>
+                        {item.children?.length > 0 && (
+                            <button
+                                onClick={(e) => {
+                                    e.preventDefault()
+                                    toggleMenu(parentId, item.id)
+                                }}
+                                className="ml-2 text-gray-700"
+                            >
+                                {openMenus[parentId]?.[item.id] ? (
+                                    <Minus size={14} />
+                                ) : (
+                                    <Plus size={14} />
+                                )}
+                            </button>
+                        )}
+                    </div>
+                    {item.children?.length > 0 && openMenus[parentId]?.[item.id] && renderSubMenu(parentId, item.children)}
+                </li>
+            ))}
+        </ul>
+    )
+
     return (
-        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex">
+        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex" onClick={closeMenu}>
             {/* Sidebar */}
-            <div className="w-72 bg-white h-full shadow-lg overflow-y-auto border-b">
-                {/* Header */}
+            <div
+                className="w-72 bg-white h-full shadow-lg overflow-y-auto border-b"
+                onClick={(e) => e.stopPropagation()}
+            >
                 {/* Header */}
                 <div className="bg-gray-300 sticky top-0 z-10">
                     <div className="flex justify-between items-center p-4 border-b border-gray-200 h-18">
@@ -30,68 +88,46 @@ const MobileMenu = ({ data, closeMenu }) => {
                 {/* Menu List */}
                 <ul className="space-y-2">
                     {data.map((item) => {
-                        // actual children live in item.children[0]?.children
                         const subCategories = item.children?.[0]?.children || []
 
                         return (
-                            <li key={item.id} className="border-b border-gray-400 pt-[15px] pr-[45px] pb-[15px] pl-[15px]">
+                            <li
+                                key={item.id}
+                                className="border-b border-gray-400 pt-[15px] pr-[45px] pb-[15px] pl-[15px]"
+                            >
                                 <div className="flex justify-between items-center">
-                                    {subCategories.length > 0 ? (
-                                        <button
-                                            onClick={() => toggleMenu(item.id)}
-                                            className="flex-1 text-left text-gray-800 font-medium hover:text-red-800"
-                                        >
-                                            {item.name}
-                                        </button>
-                                    ) : (
-                                        <Link
-                                            href={`/${item.url}`}
-                                            className="block flex-1 text-gray-800 hover:text-red-800 font-medium"
-                                        >
-                                            {item.name}
-                                        </Link>
-                                    )}
+                                    <Link
+                                        href={
+                                            item.url === "wholesale"
+                                                ? "/wholesale"
+                                                : webSetting?.purchaseType === "wholesale"
+                                                    ? `/wholesale/${item.url}`
+                                                    : `/retail/${item.url}`
+                                        }
+                                        className="block flex-1 text-gray-800 hover:text-red-800 font-medium"
+                                        onClick={closeMenu}
+                                    >
+                                        {item.name}
+                                    </Link>
 
                                     {subCategories.length > 0 && (
                                         <button
                                             onClick={() => toggleMenu(item.id)}
                                             className="ml-2 text-gray-700"
                                         >
-                                            {openMenus[item.id] ? (
-                                                <Minus size={18} />
-                                            ) : (
-                                                <Plus size={18} />
-                                            )}
+                                            {openMenus[item.id] ? <Minus size={18} /> : <Plus size={18} />}
                                         </button>
                                     )}
                                 </div>
 
-                                {/* Submenu */}
-                                {subCategories.length > 0 && openMenus[item.id] && (
-                                    <ul className="pl-4 mt-2 space-y-2">
-                                        {subCategories.map((subItem) => (
-                                            <li key={subItem.id} className="pt-[15px] pr-[45px] pb-[0px] pl-[15px]">
-                                                <Link
-                                                    href={`/${subItem.url}`}
-                                                    className="block text-gray-600 hover:text-red-700 text-sm"
-                                                >
-                                                    {subItem.name}
-                                                </Link>
-                                            </li>
-                                        ))}
-                                    </ul>
-                                )}
+                                {subCategories.length > 0 && openMenus[item.id] && renderSubMenu(item.id, subCategories)}
                             </li>
                         )
                     })}
                 </ul>
             </div>
-
-            {/* Click outside to close */}
-            <div className="flex-1" onClick={closeMenu}></div>
         </div>
     )
 }
 
-export default MobileMenu
-
+export default MobileMenu;

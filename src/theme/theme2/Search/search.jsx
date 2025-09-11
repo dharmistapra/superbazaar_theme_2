@@ -27,11 +27,16 @@ const Search = () => {
             const base_url = `search=${search}&tab=${active}`;
             const res = await getsearchData(base_url);
             if (res?.isSuccess) {
-                setCatalogues(res.data.catalogues || []);
-                setProducts(res.data.products || []);
+                setCatalogues(Array.isArray(res.data?.catalogues) ? res.data.catalogues : []);
+                setProducts(Array.isArray(res.data?.products) ? res.data.products : []);
+            } else {
+                setCatalogues([]);
+                setProducts([]);
             }
         } catch (err) {
             console.error("Error fetching search data:", err);
+            setCatalogues([]);
+            setProducts([]);
         } finally {
             setLoading(false);
         }
@@ -42,36 +47,27 @@ const Search = () => {
     }, [active, search]);
 
     const renderCatalogues = () => (
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4 mb-5" >
-            {catalogues.map((item, index) => (
-                <div key={index}>
-                    <CatalogCard product={item} category={item.url} />
-                    {/* <CatalogCard
-                        data={item}
-                    // redirectUrl={`catalogue/${item?.CatalogueCategory?.[0]?.category?.url}`}
-                    /> */}
-                </div>
-            ))}
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4 mb-5">
+            {Array.isArray(catalogues) &&
+                catalogues.map((item, index) => (
+                    <div key={index}>
+                        <CatalogCard product={item} category={item.url} />
+                    </div>
+                ))}
         </div>
     );
 
     const renderProducts = () => (
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {products.map((item, index) => (
-                <div key={index}>
-                    <ProductCard
-                        key={item.id}
-                        product={item}
-                    // pathname={`${item.url}/${item?.url || "/"}`}
-                    />
-                    {/* <ProductCard
-                        data={item}
-                    // redirectUrl={item.categories?.[0]?.category?.url}
-                    /> */}
-                </div>
-            ))}
+            {Array.isArray(products) &&
+                products.map((item, index) => (
+                    <div key={index}>
+                        <ProductCard key={item.id} product={item} />
+                    </div>
+                ))}
         </div>
     );
+
 
     return (
         <div className="mx-auto px-4 mt-10 w-full sm:max-w-[540px] md:max-w-[720px] lg:max-w-[960px] xl:max-w-[1240px] 2xl:max-w-[1320px]">

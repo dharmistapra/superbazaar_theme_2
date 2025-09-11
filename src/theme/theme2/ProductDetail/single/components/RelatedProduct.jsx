@@ -1,7 +1,9 @@
-import { Autoplay, Navigation } from "swiper/modules"
+"use client";
+
+import { Autoplay, Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
-import SliderNavigation from "@/theme/theme1/components/CardsSlider/SliderNavigation"
-import { useEffect, useRef, useState } from "react"
+import SliderNavigation from "@/theme/theme1/components/CardsSlider/SliderNavigation";
+import { useEffect, useRef, useState } from "react";
 import ProductCard from "@/theme/theme2/ProductComponent/ProductCard";
 import { usePathname } from "next/navigation";
 import { getRelatedProduct } from "@/services/productService";
@@ -11,15 +13,17 @@ const RealtedProduct = ({ url }) => {
   const nextRef = useRef(null);
 
   const pathname = usePathname();
-  const [ProductData, setProductData] = useState([])
+  const [ProductData, setProductData] = useState([]);
+
   const fetchdata = async () => {
-    const response = await getRelatedProduct(url)
-    setProductData(response.data)
-  }
+    const response = await getRelatedProduct(url);
+    setProductData(Array.isArray(response.data) ? response.data : []);
+  };
 
   useEffect(() => {
-    fetchdata()
-  }, [url])
+    fetchdata();
+  }, [url]);
+
   return (
     <section className="pb-0 mb-5 mt-5">
       <div className="container mx-auto px-4">
@@ -53,11 +57,11 @@ const RealtedProduct = ({ url }) => {
             breakpoints={{
               0: { slidesPerView: 2, spaceBetween: 10 },
               640: { slidesPerView: 3, spaceBetween: 16 },
-              1024: { slidesPerView: 4, spaceBetween: 20 },
+              1024: { slidesPerView: 5, spaceBetween: 20 },
             }}
           >
-            {ProductData?.map((item, index) => {
-              return (
+            {Array.isArray(ProductData) &&
+              ProductData.map((item, index) => (
                 <SwiperSlide
                   key={item.id || index}
                   className="flex justify-center"
@@ -65,13 +69,12 @@ const RealtedProduct = ({ url }) => {
                 >
                   <ProductCard product={item} pathname={item.url} />
                 </SwiperSlide>
-              )
-            })}
+              ))}
           </Swiper>
         </div>
       </div>
     </section>
-  )
-}
+  );
+};
 
-export default RealtedProduct
+export default RealtedProduct;

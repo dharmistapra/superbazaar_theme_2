@@ -30,6 +30,7 @@ const componentMap = {
 };
 
 const Collection = ({ homeContent, webSetting }) => {
+    console.log("homeContent ===>", homeContent);
 
     return (
         <div className="container mx-auto px-4 mt-3 mb-0">
@@ -49,14 +50,13 @@ const Collection = ({ homeContent, webSetting }) => {
 
                 return (
                     <React.Fragment key={idx}>
-                        <div className="flex flex-col sm:flex-row justify-between items-center ">
+                        {/* <div className="flex flex-col sm:flex-row justify-between items-center ">
                             <div className="text-center my-4">
                                 <p className="text-xl font-semibold sm:text-xl">
                                     {collection.title}
                                 </p>
                             </div>
-                        </div>
-
+                        </div> */}
                         {RenderComponent ? (
                             RenderComponent(collection)
                         ) : (

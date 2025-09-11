@@ -6,7 +6,7 @@ import { updateUserInfo } from "@/services/accountsService";
 import { inquirySchema } from "@/schema/schema";
 import { postInquiry } from "@/services/inquiry";
 
-const InquiryForm = ({ open, onClose,product_id,catalogue_id }) => {
+const InquiryForm = ({ open, onClose, product_id, catalogue_id }) => {
     const initialValues = {
         email: "",
         mobile_number: "",
@@ -25,23 +25,23 @@ const InquiryForm = ({ open, onClose,product_id,catalogue_id }) => {
     } = useFormik({
         initialValues,
         validationSchema: inquirySchema,
-      onSubmit: async (values) => {
-  try {
-    const payload = {
-      ...values,
-      ...(catalogue_id ? { catalogue_id } : { product_id }),
-    };
+        onSubmit: async (values) => {
+            try {
+                const payload = {
+                    ...values,
+                    ...(catalogue_id ? { catalogue_id } : { product_id }),
+                };
 
-    const response = await postInquiry(payload);
+                const response = await postInquiry(payload);
 
-    if (response.isSuccess) {
-      onClose();
-    }
-  } catch (error) {
-    console.error(error);
-    return error;
-  }
-}
+                if (response.isSuccess) {
+                    onClose();
+                }
+            } catch (error) {
+                console.error(error);
+                return error;
+            }
+        }
 
     });
 

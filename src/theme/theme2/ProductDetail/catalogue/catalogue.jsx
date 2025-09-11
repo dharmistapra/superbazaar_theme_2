@@ -98,6 +98,7 @@ const Catalogue = ({ CatalogueDetailData, stitching, category }) => {
 
     const usertoken = session?.accessToken
     const webSetting = {};
+    console.log("CatalogueDetailData", CatalogueDetailData)
     return (
         <div className="container mx-auto p-4">
             <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
@@ -159,6 +160,8 @@ const Catalogue = ({ CatalogueDetailData, stitching, category }) => {
                                     product={CatalogueDetailData}
                                     Stitching={stitching}
                                     setStitchingData={setStitchingData}
+                                    type="catalogue"
+                                    category={CatalogueDetailData?.url}
                                 />
                             </div>
                         </div>
