@@ -1,5 +1,6 @@
 import dynamic from "next/dynamic";
 const load = (importFn) => dynamic(importFn, { ssr: true });
+const Empty = () => null;
 export const getThemeModules = (theme = "theme1") => {
   switch (theme) {
     case "theme1":
@@ -23,6 +24,7 @@ export const getThemeModules = (theme = "theme1") => {
         OrderDetail: load(() => import("./theme1/Accounts/components/orderDetails")),
         Invoice: load(() => import("./theme1/Accounts/components/Invoice")),
         Search: load(() => import("./theme1/Search/search")),
+        ConfirmPassword:Empty
 
       };
 

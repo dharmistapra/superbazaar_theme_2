@@ -46,9 +46,7 @@ export default function ConfirmPassword() {
         <div className="flex items-center justify-center min-h-screen bg-gray-100 p-6">
             <div className="relative bg-white rounded border w-full max-w-md mt-7 mb-36 p-8">
                 <h2 className="text-2xl font-normal mb-6 text-left">Reset Password</h2>
-
                 <form className="space-y-6" onSubmit={formik.handleSubmit}>
-                    {/* Password Input */}
                     <div className="w-full">
                         <div className="relative flex items-center">
                             <input
@@ -62,7 +60,6 @@ export default function ConfirmPassword() {
                                     }`}
                             />
 
-                            {/* Eye Icon Button */}
                             <button
                                 type="button"
                                 onClick={() => setShowPassword(!showPassword)}
@@ -79,7 +76,6 @@ export default function ConfirmPassword() {
                         )}
                     </div>
 
-                    {/* Confirm Password Input */}
                     <div className="w-full">
                         <div className="relative flex items-center">
                             <input
@@ -93,7 +89,6 @@ export default function ConfirmPassword() {
                                     }`}
                             />
 
-                            {/* Eye Icon Button */}
                             <button
                                 type="button"
                                 onClick={() => setShowConfirmPassword(!showConfirmPassword)}
@@ -110,7 +105,6 @@ export default function ConfirmPassword() {
                         )}
                     </div>
 
-                    {/* Submit */}
                     <button
                         type="submit"
                         disabled={formik.isSubmitting}

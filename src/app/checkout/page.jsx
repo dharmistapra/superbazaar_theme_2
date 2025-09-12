@@ -48,8 +48,7 @@ const CheckoutPage = () => {
         paymentName: paymentMethod?.name,
       };
 
-      console.log(body);
-      return
+     
      
       let response={}
      if (paymentMethod?.name === "ccAvenue") {
