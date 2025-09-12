@@ -4,8 +4,11 @@ import { Heart } from "lucide-react";
 import Image from "next/image";
 import { ImageUrl } from "@/helper/imageUrl";
 import PriceConverter from "@/components/PriceConverter";
+import WishlistButton from "@/components/cards/attribute/WishlistButton";
 
 const CatalogCard = ({ product, category }) => {
+    console.log(product.id, "<================ catalog card");
+
     return (
         <div >
             <div className="bg-white rounded-lg shadow hover:shadow-lg transition-shadow relative">
@@ -35,11 +38,9 @@ const CatalogCard = ({ product, category }) => {
 
 
                     <div className="absolute top-4 right-2">
-                        <button className="p-2 rounded-sm bg-white text-gray-700 shadow-md 
-                   transition-all duration-300 hover:bg-black hover:text-white hover:shadow-lg">
-                            <Heart className=" text-red-500" size={18} />
-                            <span className="sr-only">Add to Wishlist</span>
-                        </button>
+                        <div className="absolute top-3 right-3 z-10">
+                            <WishlistButton catalogueId={product.id} type="catalogue" variant="detail" />
+                        </div>
                     </div>
                 </div>
 

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Heart } from "lucide-react";
 import { ImageUrl } from "@/helper/imageUrl";
 import PriceConverter from "@/components/PriceConverter";
+import WishlistButton from "@/components/cards/attribute/WishlistButton";
 
 const ProductCard = ({ product, pathname }) => {
     if (!product) return null;
@@ -38,9 +39,7 @@ const ProductCard = ({ product, pathname }) => {
 
                     {/* Wishlist Button */}
                     <div className="absolute top-2 right-2 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                        <button className="bg-white p-2 shadow rounded-md hover:bg-black hover:text-white transition-colors duration-200 flex items-center justify-center">
-                            <Heart size={20} className="text-gray-600 hover:text-white" />
-                        </button>
+                        <WishlistButton productId={product.id} type="product" variant="detail" />
                     </div>
                 </Link>
             </div>

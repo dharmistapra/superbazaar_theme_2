@@ -98,7 +98,7 @@ const Catalogue = ({ CatalogueDetailData, stitching, category }) => {
 
     const usertoken = session?.accessToken
     const webSetting = {};
-    console.log("CatalogueDetailData", CatalogueDetailData)
+
     return (
         <div className="container mx-auto p-4">
             <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
@@ -204,29 +204,24 @@ const Catalogue = ({ CatalogueDetailData, stitching, category }) => {
                                 </div>
 
                                 <div className="flex items-center justify-center gap-3 w-full md:w-2/3">
-                                    <button
-                                        title="Share on Facebook"
-                                        className="p-2 rounded-md border border-s border-gray-400 hover:bg-blue-100"
-                                    >
-                                        <Heart size={18} />
-                                    </button>
+                                    <WishlistButton catalogueId={CatalogueDetailData.id} type="catalogue" variant="detail" />
                                     <button
                                         title="Share on WhatsApp"
                                         className="p-2 rounded-md border border-s border-gray-400 hover:bg-green-100 "
                                     >
-                                        <MessageCircle size={18} />
+                                        <MessageCircle size={20} />
                                     </button>
                                     <button
                                         title="Share on Twitter"
                                         className="p-2 border rounded-md border-s border-gray-400 hover:bg-sky-100"
                                     >
-                                        <Download size={18} />
+                                        <Download size={20} />
                                     </button>
                                     <button
                                         title="Share on Twitter"
                                         className="p-2 border rounded-md border-s border-gray-400 hover:bg-sky-100"
                                     >
-                                        <FileArchive size={18} />
+                                        <FileArchive size={20} />
                                     </button>
                                 </div>
                             </div>

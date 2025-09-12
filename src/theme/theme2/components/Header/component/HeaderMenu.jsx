@@ -31,12 +31,15 @@ const HeaderMenu = ({ menudata, currencyData }) => {
     const dispatch = useDispatch();
     const webSetting = useSelector(state => state.webSetting.webSetting)
     const [showSearch, setShowSearch] = useState(false);
+    const { list } = useSelector((state) => state.wishlist);
+    const cartItems = useSelector((state) => state.cartItems);
 
     const handleCartClick = () => dispatch(openCart());
     const fetchData = async () => {
         const data = await getWebSetting();
         dispatch(setWebSetting(data));
     }
+    console.log("Header", cartItems);
 
     useEffect(() => {
         fetchData();
@@ -180,7 +183,11 @@ const HeaderMenu = ({ menudata, currencyData }) => {
 
                                 {session?.accessToken && (
                                     <>
-                                        <Heart size={20} className="cursor-pointer hidden md:flex" />
+                                        {list.product?.length > 0 || list.catalogue
+                                            ?.lemgth > 0 ? <Heart size={20}
+                                                className="cursor-pointer hidden md:flex text-red-500"
+                                                fill="currentColor" /> : <Heart size={20} className="cursor-pointer hidden md:flex" />}
+
                                         <div className="relative hidden md:flex">
                                             <ShoppingCart className="cursor-pointer" size={20} onClick={handleCartClick} />
                                             <span className="absolute -top-2 -right-2 bg-black text-white text-xs rounded-full px-1" >

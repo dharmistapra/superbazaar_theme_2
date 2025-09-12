@@ -17,12 +17,14 @@ const WishlistButton = ({
   const { open } = useModal()
   const dispatch = useDispatch()
   const { list } = useSelector((state) => state.wishlist)
+  console.log(catalogueId, "<============ wishlist ");
 
   const currentId = type === "product" ? productId : catalogueId
   const isWishlisted =
     type === "catalogue"
       ? list?.catalogue?.some((item) => item?.id === currentId)
       : list?.product?.some((item) => item?.id === currentId)
+  console.log("currentId", currentId);
 
   const [wishlistLoading, setWishlistLoading] = useState(false)
   const debounceTimeout = useRef(null)
@@ -76,20 +78,33 @@ const WishlistButton = ({
         className={`flex items-center justify-center transition-all duration-300 
     ${variant === "detail"
             ? `w-10 h-10 rounded-md border ${isWishlisted
-              ? "bg-black text-white"
+              ? "bg-white text-red-300"
               : "bg-white text-gray-700 hover:bg-black hover:text-white"
             }`
-            : "p-2 rounded-full bg-white text-gray-700 shadow-md hover:bg-black hover:text-white hover:shadow-lg"
+            : "p-2 rounded-full bg-white text-white-700 shadow-md hover:bg-black hover:text-white hover:shadow-lg"
           }`}
         aria-label="Add to Wishlist"
       >
         {wishlistLoading ? (
           <Loader2 className="h-5 w-5 animate-spin" />
+        ) : isWishlisted ? (
+          <Heart
+            size={20}
+            className="text-red-500"
+            fill="currentColor" // 👈 fills with text color
+          // stroke="currentColor" // 👈 keeps border same color
+          />
         ) : (
-          <Heart size={20} className={`${isWishlisted ? "fill-current" : ""}`} />
+          <Heart
+            size={20}
+            className="text-gray-700"
+            fill="none" // 👈 no fill when not wishlisted
+            stroke="currentColor"
+          />
         )}
-      </button>
 
+      </button>
+      {console.log("isWishlisted", isWishlisted)}
 
       {variant === "card" && (
         <span
