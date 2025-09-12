@@ -23,10 +23,10 @@ const CardsSlider3D = ({ slides }) => {
           disableOnInteraction: false,
         }}
         coverflowEffect={{
-          rotate: 2,
-          stretch: 10,
-          depth: 60,
-          modifier: 2.5,
+          rotate: 12,
+          stretch: 18,
+          depth: 40,
+          modifier: 2.6,
           slideShadows: true,
         }}
         pagination={{ clickable: true }}
@@ -34,18 +34,18 @@ const CardsSlider3D = ({ slides }) => {
         className="max-w-6xl mx-auto"       >
         {slides.map((item, index) => (
           <SwiperSlide
-  key={index}
-  className="!w-[320px] !h-[400px] flex justify-center items-center"
->
-  <div className="relative w-[320px] h-[400px]">
-    <Image
-      src={ImageUrl(item.image)}
-      alt={`Slide ${index + 1}`}
-      fill
-      className="rounded-lg shadow-lg object-cover"
-    />
-  </div>
-</SwiperSlide>
+            key={index}
+            className="!w-[320px] !h-[400px] flex justify-center items-center"
+          >
+            <div className="relative w-[320px] h-[400px]">
+              <Image
+                src={ImageUrl(item.image)}
+                alt={`Slide ${index + 1}`}
+                fill
+                className="rounded-lg shadow-lg object-cover"
+              />
+            </div>
+          </SwiperSlide>
 
         ))}
       </Swiper>

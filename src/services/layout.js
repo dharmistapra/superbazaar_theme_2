@@ -26,7 +26,7 @@ export const getCurrency = async () => {
 export const getTheme = async () => {
   try {
     const axiosInstance = await createServerAxios();
-    // const res = await axiosInstance.get(`/public/theme`);
+    const res = await axiosInstance.get(`/public/theme`);
 
     return res.data?.data || {};
   } catch (error) {

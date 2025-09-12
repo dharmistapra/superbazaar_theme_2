@@ -3,7 +3,7 @@ import { useState } from "react"
 import SizeSelector from "@/components/SizeSelector"
 import CatalogueImages from "./components/catalogueimage"
 import StitchingForm from "../single/components/StitchingForm"
-import { CircleQuestionMark, Heart, MessageCircle, Repeat, Share2, ShoppingCart, Loader2 } from "lucide-react";
+import { CircleQuestionMark, Heart, MessageCircle, Repeat, Share2, ShoppingCart, Loader2, X } from "lucide-react";
 import StaticImage from "@/components/StaticImage"
 import RalatedCatalogue from "./components/realtedCatalogue"
 import { useDispatch } from "react-redux"
@@ -157,9 +157,17 @@ const Catalogue = ({ CatalogueDetailData, stitching, category }) => {
                                 Order on WhatsApp
                             </button>
                         </div>
-                        {errors && (
-                            <p className="text-red-500 text-sm mt-2">{errors}</p>
-                        )}
+                     {errors && (
+  <div className="bg-red-300 border border-dotted border-red-400 text-red-600 px-4 py-3 rounded relative mt-2 flex items-start justify-between" role="alert">
+    <div>
+      <strong className="font-bold">Error: </strong>
+      <span className="block sm:inline">{errors}</span>
+    </div>
+    <button onClick={() => setErrors(null)} className="ml-4">
+      <X className="w-5 h-5 text-red-500" />
+    </button>
+  </div>
+)}
                         <div>
                             <StaticImage />
                         </div>
