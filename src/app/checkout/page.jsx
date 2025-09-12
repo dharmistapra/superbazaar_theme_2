@@ -15,10 +15,9 @@ const CheckoutPage = () => {
   const [successMsg, setSuccessMsg] = useState("");
 
   const { CartData } = useSelector((state) => state?.cartItem);
-  const totalWeight = CartData?.data?.reduce(
-    (acc, item) => acc + (item.weight || 0) * item.quantity,
-    0
-  );
+  const totalWeight = Array.isArray(CartData?.data)
+    ? CartData.data.reduce((acc, item) => acc + (item.weight || 0) * item.quantity, 0)
+    : 0;
 
   const [payload, setPayload] = useState({
     billingAddress: null,

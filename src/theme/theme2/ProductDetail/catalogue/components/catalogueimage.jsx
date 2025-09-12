@@ -42,14 +42,23 @@ export default function CatalogueImages({
                           Not Available in This Size
                         </div>
                       )}
-                      <div className="flex justify-between items-center w-full text-[12px] uppercase text-sm font-medium bg-red-50 p-2 px-1">
+                      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center w-full text-[12px] uppercase text-xs font-medium bg-red-50 p-2">
+                        {item?.average_price && (
+                          <span className="whitespace-normal">
+                            Price: <PriceConverter price={item?.average_price} />
+                          </span>
+                        )}
+                        <span className="whitespace-nowrap text-xs">SKU: {item.sku}</span>
+                      </div>
+
+                      {/* <div className="flex justify-between items-center w-full text-[12px] uppercase text-sm font-medium bg-red-50 p-2 px-1">
                         {item?.average_price && (
                           <span className="whitespace-normal">
                             Price: <PriceConverter price={item?.average_price} />
                           </span>
                         )}
                         <span className="whitespace-normal">SKU: {item.sku}</span>
-                      </div>
+                      </div> */}
 
                       <div className="text-center">
                         {/* <div className="flex items-center  uppercase text-sm font-medium bg-red-50 p-2">

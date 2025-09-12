@@ -8,7 +8,7 @@ import PriceConverter from "@/components/PriceConverter";
 const CatalogCard = ({ product, category }) => {
     return (
         <div >
-            <div className="bg-white rounded-lg overflow-hidden shadow hover:shadow-lg transition-shadow relative">
+            <div className="bg-white rounded-lg shadow hover:shadow-lg transition-shadow relative">
 
                 {/* Product Image */}
                 <div className="relative w-full">
@@ -45,10 +45,10 @@ const CatalogCard = ({ product, category }) => {
 
                 {/* Product Details */}
                 <div className="text-center p-2 bg-gray-50">
-                    <h3 className="truncate font-semibold text-sm">
-                        <Link href="/catalogue/new-arrivals/georgette-readymade-palazzo-set-jasmine">
-                            <p className="hover:underline">{product.name}</p>
-                        </Link>
+                    <h3 className=" font-semibold text-sm ">
+                        {/* <Link href="/catalogue/new-arrivals/georgette-readymade-palazzo-set-jasmine"> */}
+                        <p className="line-clamp-1 text-left">{product.name}</p>
+                        {/* </Link> */}
                     </h3>
 
                     <div className="flex justify-between mt-2 text-sm">
@@ -58,7 +58,7 @@ const CatalogCard = ({ product, category }) => {
                         </div>
                         <div>
                             <div><PriceConverter price={product.offer_price} /></div>
-                            <span className="text-gray-500 text-xs hidden sm:block text-center">FULL PRICE</span>
+                            <span className="text-gray-500 text-xs  text-center">FULL PRICE</span>
                         </div>
                     </div>
                 </div>

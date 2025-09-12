@@ -103,15 +103,15 @@ const ProductDetailTheme2 = ({ product, Stitching, attributes, category }) => {
   return (
     <>
       <Breadcrum category={category} name={product.name} />
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto px-4 mt-7">
         <div className="flex flex-wrap -mx-4">
           <div className="w-full md:w-1/2 lg:w-7/12 mb-4 md:pr-4 lg:pr-6 relative">
             <div className="flex gap-4">
-              <ProductImageGallery images={product.image} thumbs={product.thumbImage} />
+              <ProductImageGallery images={product.image} thumbs={product.thumbImage} product_id={product.id} />
             </div>
           </div>
 
-          <div className="w-full md:w-1/2 lg:w-5/12 mt-4 md:mt-0">
+          <div className="w-full md:w-1/2 lg:w-5/12 mt-4 md:mt-0 px-4">
             <div className="sticky top-4">
               {product.ProductBrand?.length === 0 ? "" :
                 <h2 className="text-lg font-medium mb-2">
@@ -142,6 +142,7 @@ const ProductDetailTheme2 = ({ product, Stitching, attributes, category }) => {
                   Stitching={Stitching}
                   attributes={attributes}
                   setStitchingData={setStitchingData}
+                  catalogUrl={product?.catalogue?.url}
                 />
               </div>
 

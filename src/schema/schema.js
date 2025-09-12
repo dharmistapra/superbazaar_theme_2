@@ -59,6 +59,6 @@ export const addressschema = Yup.object({
 export const inquirySchema = Yup.object({
   email: Yup.string().email("Invalid email").required("Email is required"),
   mobile_number: Yup.string().required("Mobile number is required"),
-  description: Yup.string().required("Mobile number is required"),
+  description: Yup.string().required("Description is required"),
 
 })

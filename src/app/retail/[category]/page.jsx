@@ -14,8 +14,8 @@ export async function generateMetadata({ params }) {
 }
 
 const RetailCategoryPage = async ({ params }) => {
-     const themeData = await getTheme();
-      const currentTheme = themeData?.name || "theme1"; 
+    const themeData = await getTheme();
+    const currentTheme = themeData?.name || "theme1";
     const { category } = await params;
     const { CategoryBanner, Products } = getThemeModules(currentTheme);
     const data = await getCategoryBanners(category);
@@ -23,7 +23,7 @@ const RetailCategoryPage = async ({ params }) => {
     return (
         <>
             {data?.PageWiseBanner?.length > 0 ? <CategoryBanner data={data} /> : <Breadcrum name={data.name} />}
-            <Products category={category} />
+            <Products category={category} title={data.name} />
         </>
     )
 }

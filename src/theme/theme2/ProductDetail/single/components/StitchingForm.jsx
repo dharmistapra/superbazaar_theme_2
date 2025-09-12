@@ -1,7 +1,6 @@
 "use client";
+
 import PriceConverter from "@/components/PriceConverter";
-import { useModal } from "@/hooks/useModal";
-import { Link } from "lucide-react";
 import { useState, useEffect } from "react";
 
 export default function StitchingForm({ stitchingData, onChange }) {
@@ -9,9 +8,11 @@ export default function StitchingForm({ stitchingData, onChange }) {
     const [formData, setFormData] = useState({});
     const [errors, setErrors] = useState({});
     const [open, setOpen] = useState("stitching");
+
     const toggle = (section) => {
         setOpen(open === section ? null : section);
     };
+
     const handleRadioChange = (option) => {
         setSelectedStitch(option.id);
         setFormData({ [option.id]: {} });
@@ -40,6 +41,7 @@ export default function StitchingForm({ stitchingData, onChange }) {
                 [fieldId]: value,
             },
         }));
+
         setErrors((prev) => {
             const newErrors = { ...prev };
             if (!value || value.trim() === "") {
@@ -51,28 +53,33 @@ export default function StitchingForm({ stitchingData, onChange }) {
         });
     };
 
+    // Build-safe effect for final form data
     useEffect(() => {
+        const sections = Array.isArray(stitchingData) ? stitchingData : [];
+        const allOptions = sections.flatMap((s) =>
+            Array.isArray(s.stitchingOption) ? s.stitchingOption : []
+        );
+
         const finalData = {
             stitching: Object.entries(formData).map(([optionId, fields]) => {
-                const option = stitchingData
-                    .flatMap((s) => s.stitchingOption)
-                    .find((o) => o.id === optionId);
+                const option = allOptions.find((o) => o.id === optionId);
 
                 return {
                     optionid: optionId,
                     measurment:
-                        option?.stitchingValues?.map((field) => ({
-                            name: field.name,
-                            value: fields[field.id] || "",
-                        })) || [],
+                        Array.isArray(option?.stitchingValues)
+                            ? option.stitchingValues.map((field) => ({
+                                name: field.name,
+                                value: fields[field.id] || "",
+                            }))
+                            : [],
                 };
             }),
             isValid: Object.entries(formData).every(([optionId, fields]) => {
-                const option = stitchingData
-                    .flatMap((s) => s.stitchingOption)
-                    .find((o) => o.id === optionId);
+                const option = allOptions.find((o) => o.id === optionId);
+                if (!Array.isArray(option?.stitchingValues) || option.stitchingValues.length === 0)
+                    return true;
 
-                if (!option?.stitchingValues?.length) return true;
                 return option.stitchingValues.every(
                     (field) => fields[field.id] && fields[field.id].trim() !== ""
                 );
@@ -82,79 +89,86 @@ export default function StitchingForm({ stitchingData, onChange }) {
         onChange?.(finalData);
     }, [formData, stitchingData, onChange]);
 
+    const sections = Array.isArray(stitchingData) ? stitchingData : [];
 
     return (
-        <>
-            <div className="px-4 pb-4 text-sm border-">
-                {stitchingData?.map((section) => (
+        <div className="px-4 pb-4 text-sm">
+            {sections.map((section) => {
+                const options = Array.isArray(section.stitchingOption)
+                    ? section.stitchingOption
+                    : [];
+                const radioOptions = options.filter((o) => o.type === "Redio");
+                const checkboxOptions = options.filter((o) => o.type === "CheckBox");
+
+                return (
                     <div key={section.id} className="mb-6">
-                        {/* Section Title */}
                         <h4 className="font-semibold mb-2">{section.name}</h4>
 
                         {/* Radio Options */}
-                        {section.stitchingOption.some((o) => o.type === "Redio") && (
+                        {radioOptions.length > 0 && (
                             <div className="space-y-2">
-                                {section.stitchingOption.map(
-                                    (option) =>
-                                        option.type === "Redio" && (
-                                            <label
-                                                key={option.id}
-                                                className="flex items-start gap-2 mb-2 cursor-pointer"
-                                            >
-                                                <input
-                                                    type="radio"
-                                                    name={`stitching_${section.id}`}
-                                                    value={option.id}
-                                                    checked={selectedStitch === option.id}
-                                                    onChange={() => handleRadioChange(option)}
-                                                    className="mt-1 accent-blue-600"
-                                                />
-                                                <span>
-                                                    <span>{option.name} – <PriceConverter price={option.price} /> </span>
-                                                    {option.fastDelivery && (
-                                                        <span className="text-red-600">(Same day dispatch)</span>
-                                                    )}
-                                                </span>
-                                            </label>
-                                        )
-                                )}
+                                {radioOptions.map((option) => (
+                                    <label
+                                        key={option.id}
+                                        className="flex items-start gap-2 mb-2 cursor-pointer"
+                                    >
+                                        <input
+                                            type="radio"
+                                            name={`stitching_${section.id}`}
+                                            value={option.id}
+                                            checked={selectedStitch === option.id}
+                                            onChange={() => handleRadioChange(option)}
+                                            className="mt-1 accent-blue-600"
+                                        />
+                                        <span>
+                                            <span>
+                                                {option.name} – <PriceConverter price={option.price} />{" "}
+                                            </span>
+                                            {option.fastDelivery && (
+                                                <span className="text-red-600">(Same day dispatch)</span>
+                                            )}
+                                        </span>
+                                    </label>
+                                ))}
                             </div>
                         )}
 
-                        {section.stitchingOption.some((o) => o.type === "CheckBox") && (
+                        {/* Checkbox Options */}
+                        {checkboxOptions.length > 0 && (
                             <div className="space-y-2">
-                                {section.stitchingOption.map(
-                                    (option) =>
-                                        option.type === "CheckBox" && (
-                                            <label
-                                                key={option.id}
-                                                className="flex items-center gap-2 cursor-pointer"
-                                            >
-                                                <input
-                                                    type="checkbox"
-                                                    checked={!!formData[option.id]}
-                                                    onChange={() => handleCheckboxChange(option)}
-                                                    className="w-4 h-4 accent-red-500"
-                                                />
-                                                <span>
-                                                    {option.name}{" "}
-                                                    {option.price > 0 && (
-                                                        <>– <PriceConverter price={option.price} /></>
-                                                    )}
-                                                </span>
-                                            </label>
-                                        )
-                                )}
+                                {checkboxOptions.map((option) => (
+                                    <label
+                                        key={option.id}
+                                        className="flex items-center gap-2 cursor-pointer"
+                                    >
+                                        <input
+                                            type="checkbox"
+                                            checked={!!formData[option.id]}
+                                            onChange={() => handleCheckboxChange(option)}
+                                            className="w-4 h-4 accent-red-500"
+                                        />
+                                        <span>
+                                            {option.name}{" "}
+                                            {option.price > 0 && <>– <PriceConverter price={option.price} /></>}
+                                        </span>
+                                    </label>
+                                ))}
                             </div>
                         )}
 
-                        {section.stitchingOption
+                        {/* Stitching Values Inputs */}
+                        {options
                             .filter((opt) => opt.id === selectedStitch)
-                            .map((option) =>
-                                option.stitchingValues.length > 0 ? (
+                            .map((option) => {
+                                const values = Array.isArray(option.stitchingValues)
+                                    ? option.stitchingValues
+                                    : [];
+                                if (values.length === 0) return null;
+
+                                return (
                                     <div key={option.id} className="mt-4 pt-4 space-y-4">
                                         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                                            {option.stitchingValues.map((field) => (
+                                            {values.map((field) => (
                                                 <div key={field.id} className="flex flex-col">
                                                     <label className="mb-1 font-medium">
                                                         {field.name}{" "}
@@ -184,7 +198,7 @@ export default function StitchingForm({ stitchingData, onChange }) {
                                                                 }`}
                                                         >
                                                             <option value="">Select</option>
-                                                            {field.values.split(",").map((val) => (
+                                                            {(field.values || "").split(",").map((val) => (
                                                                 <option key={val} value={val}>
                                                                     {val}
                                                                 </option>
@@ -201,11 +215,11 @@ export default function StitchingForm({ stitchingData, onChange }) {
                                             ))}
                                         </div>
                                     </div>
-                                ) : null
-                            )}
+                                );
+                            })}
                     </div>
-                ))}
-            </div>
-        </>
+                );
+            })}
+        </div>
     );
 }

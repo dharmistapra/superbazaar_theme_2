@@ -1,6 +1,5 @@
 "use client";
 import { useEffect, useState } from "react";
-import { Package, Shirt, Funnel, Columns2, Columns3, Columns4 } from "lucide-react";
 import { getCategoryFilter, getCategoryProducts } from "@/services/productService";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import ProductCard from "../ProductComponent/ProductCard";
@@ -8,8 +7,10 @@ import FilterSidebar from "./FilterSidebar";
 import Pagination from "@/components/Pagination";
 import cleanFilters from "@/helper/FilterClean";
 import SelectedFilters from "@/components/SelctedFilter";
+import ProductViewTabs from "../components/common/ProductViewTabs";
+import ProductListToolbar from "../components/common/ProductListToolbar";
 
-const Productstheme2 = ({ category }) => {
+const Productstheme2 = ({ category, title }) => {
     const router = useRouter();
     const pathname = usePathname();
     const searchParams = useSearchParams();
@@ -25,53 +26,29 @@ const Productstheme2 = ({ category }) => {
     const [filterData, setFilterData] = useState([]);
     const [selectedAttributes, setSelectedAttributes] = useState({});
 
-    const gridButtons = [
-        { icon: Columns2, value: 2, label: "2 Grid" },
-        { icon: Columns3, value: 3, label: "3 Grid" },
-        { icon: Columns4, value: 4, label: "4 Grid" },
-    ];
-
     const buildFilterQuery = (selectedAttributes) => {
         const params = new URLSearchParams();
-
         Object.entries(selectedAttributes).forEach(([key, values]) => {
             const arr = Array.isArray(values) ? values : [];
-            if (arr.length > 0) {
-                params.set(
-                    key,
-                    arr.map((v) => v.value).join(",")
-                );
-            }
+            if (arr.length > 0) params.set(key, arr.map((v) => v.value).join(","));
         });
-
         return params.toString();
     };
 
     useEffect(() => {
         if (!searchParams) return;
-
         const paramsObj = {};
         for (const [key, value] of searchParams.entries()) {
-            paramsObj[key] = value.split(",").map((v) => ({
-                value: v,
-                label: v,
-            }));
+            paramsObj[key] = value.split(",").map((v) => ({ value: v, label: v }));
         }
-
         setSelectedAttributes(paramsObj);
     }, [searchParams, category]);
 
-
     useEffect(() => {
         if (!category) return;
-
         const queryString = buildFilterQuery(selectedAttributes);
         const newUrl = `/retail/${category}${queryString ? `?${queryString}` : ""}`;
-
-
-        if (newUrl !== pathname) {
-            router.replace(newUrl, { scroll: false });
-        }
+        if (newUrl !== pathname) router.replace(newUrl, { scroll: false });
     }, [selectedAttributes, pathname, category]);
 
     const fetchProducts = async (filters = {}) => {
@@ -90,7 +67,7 @@ const Productstheme2 = ({ category }) => {
 
     useEffect(() => {
         fetchProducts();
-    }, [page, sort,]);
+    }, [page, sort]);
 
     useEffect(() => {
         const fetchFilter = async () => {
@@ -105,74 +82,25 @@ const Productstheme2 = ({ category }) => {
     return (
         <>
             <div className="container mx-auto px-4 mt-7">
-                <div className="flex gap-2 mb-3">
-                    <button
-                        onClick={() => {
-                            setActiveTab("full");
-                            router.push(`/catalogue/${category}`);
-                        }}
-                        className={`flex items-center gap-2 p-3 rounded shadow text-sm font-medium ${activeTab === "full" ? "bg-red-700 text-white" : "bg-gray-200 hover:bg-gray-400"
-                            }`}
-                    >
-                        <Package size={18} />
-                        FULL SET
-                    </button>
+                {/* Product Tabs */}
+                <ProductViewTabs
+                    category={category}
+                    activeTab={activeTab}
+                    setActiveTab={setActiveTab}
+                />
 
-                    <button
-                        onClick={() => setActiveTab("single")}
-                        className={`flex items-center gap-2 p-3 rounded shadow text-sm font-medium ${activeTab === "single" ? "bg-red-700 text-white" : "bg-white hover:bg-gray-200"
-                            }`}
-                    >
-                        <Shirt size={18} />
-                        SINGLE
-                    </button>
-                </div>
-
-                <div className="bg-white border-b border-gray-200 sm:px-4 lg:px-5 py-3 mb-3 flex flex-wrap items-center justify-between gap-3">
-                    <div className="flex gap-2 flex-wrap items-center">
-                        <h1 className="text-[25px] font-semibold">Sarees</h1>
-                        <p className="text-sm text-gray-500 justify-center">
-                            Showing 1–{products.length} of {totalCount} results
-                        </p>
-                    </div>
-
-                    <div className="flex gap-2 flex-wrap items-center">
-                        <button
-                            onClick={() => setOpen(!open)}
-                            className="flex items-center gap-2 p-2 rounded shadow bg-black text-white hover:bg-gray-800 text-sm lg:hidden"
-                        >
-                            <Funnel size={18} />
-                            FILTER
-                        </button>
-
-                        <select
-                            value={sort}
-                            onChange={(e) => setSort(e.target.value)}
-                            className="border rounded p-2 text-sm shadow-sm hover:shadow-md"
-                        >
-                            <option value="">New Arrivals</option>
-                            <option value="AtoZ">A to Z</option>
-                            <option value="ZtoA">Z to A</option>
-                            <option value="low">Price: Low to High</option>
-                            <option value="high">Price: High to Low</option>
-                        </select>
-
-                        <div className="flex gap-1">
-                            {gridButtons.map((btn) => {
-                                const Icon = btn.icon;
-                                return (
-                                    <button
-                                        key={btn.value}
-                                        onClick={() => setGrid(btn.value)}
-                                        className={`p-2 rounded ${grid === btn.value ? "bg-red-700 text-white" : "bg-gray-200 hover:bg-gray-300"}`}
-                                    >
-                                        <Icon size={18} />
-                                    </button>
-                                );
-                            })}
-                        </div>
-                    </div>
-                </div>
+                {/* Toolbar */}
+                <ProductListToolbar
+                    title={title}
+                    products={products}
+                    totalCount={totalCount}
+                    sort={sort}
+                    setSort={setSort}
+                    grid={grid}
+                    setGrid={setGrid}
+                    open={open}
+                    setOpen={setOpen}
+                />
 
                 {/* Mobile Drawer */}
                 <FilterSidebar
@@ -197,8 +125,10 @@ const Productstheme2 = ({ category }) => {
                             mobile={false}
                         />
                     </div>
+
+                    {/* Product Grid */}
                     <div className="w-full lg:w-3/4 px-2">
-                        {/* Active Filters - SHOW ABOVE PRODUCTS */}
+                        {/* Active Filters */}
                         <SelectedFilters
                             selectedAttributes={selectedAttributes}
                             onFiltersChange={handleApplyFilters}
@@ -206,7 +136,14 @@ const Productstheme2 = ({ category }) => {
                             fetchProducts={fetchProducts}
                         />
 
-                        <div className={`grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-${grid}`}>
+                        <div
+                            className={`grid gap-4 ${grid === 2
+                                ? "grid-cols-2 sm:grid-cols-2 lg:grid-cols-2"
+                                : grid === 3
+                                    ? "grid-cols-2 sm:grid-cols-2 md:grid-cols-3"
+                                    : "grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
+                                }`}
+                        >
                             {products.map((product) => (
                                 <ProductCard
                                     key={product.id}
@@ -216,19 +153,17 @@ const Productstheme2 = ({ category }) => {
                             ))}
                         </div>
                     </div>
-                    {/* Product Grid */}
-                    {/* <div className={`w-full lg:w-3/4 px-2 grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-${grid}`}>
-
-                        {products.map((product) => (
-                            <ProductCard key={product.id} product={product} pathname={`${pathname}/${product?.url || "/"}`} />
-                        ))}
-                    </div> */}
                 </div>
             </div>
 
             {/* Pagination */}
             <div className="flex justify-center items-center my-4">
-                <Pagination currentPage={page} totalCount={totalCount} perPage={20} onPageChange={(p) => setPage(p)} />
+                <Pagination
+                    currentPage={page}
+                    totalCount={totalCount}
+                    perPage={20}
+                    onPageChange={(p) => setPage(p)}
+                />
             </div>
         </>
     );

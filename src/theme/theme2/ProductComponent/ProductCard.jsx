@@ -8,8 +8,8 @@ import PriceConverter from "@/components/PriceConverter";
 const ProductCard = ({ product, pathname }) => {
     if (!product) return null;
     return (
-        <div className="single-product-card bg-white rounded-md shadow hover:shadow-lg transition overflow-hidden">
-            <div className="product-image relative">
+        <div className="single-product-card bg-white rounded-md shadow hover:shadow-lg transition">
+            <div className="product-image relative overflow-hidden">
                 <Link
                     href={`${pathname}`}
                     className="product-img hover-image-container block relative group"
@@ -46,20 +46,19 @@ const ProductCard = ({ product, pathname }) => {
             </div>
 
             <div className="product-details text-start mt-2 p-2">
-                <div className="product-name text-truncate font-semibold text-sm mb-1">
+                <div className="product-name font-semibold mb-1">
                     <Link
-                        href={`${pathname}}`}
-                        className="text-gray-800 hover:text-amber-700 transition"
+                        href={`${pathname}`}
+                        className="text-gray-800 hover:text-amber-700 transition text-xs sm:text-sm md:text-base"
                     >
-                        {product?.name?.length > 33
-                            ? product?.name?.slice(0, 33) + "..."
-                            : product?.name}
+                        <span className="line-clamp-1 ">
+                            {product?.name}
+                        </span>
                     </Link>
                 </div>
-
                 {/* Product Price */}
                 <div className="product-price flex justify-between items-center gap-2">
-                    <span className="price text-red-600 font-bold text-sm">
+                    <span className="price text-red-600 font-bold text-xs">
                         <PriceConverter price={product?.offer_price} />
                     </span>
                     {product?.price && product?.price > product?.offer_price && (

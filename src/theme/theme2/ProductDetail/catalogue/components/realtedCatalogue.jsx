@@ -6,7 +6,8 @@ import SliderNavigation from "@/theme/theme1/components/CardsSlider/SliderNaviga
 import { useEffect, useState } from "react"
 import { usePathname } from "next/navigation"
 import { getRelatedCatalogue } from "@/services/catalogueService"
-import CatalogueCard from "@/components/cards/CatalogueCard"
+import CatalogCard from "../../wholesale/component/CatalogCard"
+
 const RalatedCatalogue = ({ url }) => {
   const pathname = usePathname();
   const [catalogue, setCatalogue] = useState([])
@@ -47,7 +48,8 @@ const RalatedCatalogue = ({ url }) => {
         }}>
         {catalogue && catalogue?.length > 0 && catalogue?.map((data, index) => (
           <SwiperSlide key={index} className="flex justify-center h-10 " >
-            <CatalogueCard data={data} redirectUrl={pathname?.split("/")?.[2]} />
+            {/* <CatalogueCard data={data} redirectUrl={pathname?.split("/")?.[2]} /> */}
+            <CatalogCard product={data} category={pathname?.split("/")?.[2]} />
           </SwiperSlide>
         ))}
       </Swiper>

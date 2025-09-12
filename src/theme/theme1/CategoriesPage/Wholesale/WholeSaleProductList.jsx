@@ -107,7 +107,7 @@ const WholeSaleProductList = ({ category }) => {
                 ) : products?.length > 0 ? (
                     products.map((item, index) => (
                         <div key={index}>
-                            <CatalogueCard data={item} grid={grid} redirectUrl={`catalogue/${pathname?.split("/")?.[2]}`}/>
+                            <CatalogueCard data={item} grid={grid} redirectUrl={`catalogue/${pathname?.split("/")?.[2]}`} />
                         </div>
                     ))
                 ) : (

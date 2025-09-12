@@ -25,7 +25,7 @@ const BrandCatalogueList = ({ brands, }) => {
                 sortOption: sort
             }
             const res = await getBrandCatalogueListing(payload);
-            setProducts(res.data || []);
+            setProducts(Array.isArray(res.data) ? res.data : []); // ✅ always array
             setTotalCount(res?.totalCount || 0);
         } catch (err) {
             setProducts([]);
@@ -33,6 +33,7 @@ const BrandCatalogueList = ({ brands, }) => {
             setLoading(false);
         }
     };
+
 
     useEffect(() => {
         fetchProducts();
@@ -52,7 +53,6 @@ const BrandCatalogueList = ({ brands, }) => {
         { icon: Columns3, value: 3, label: "3 Grid" },
         { icon: Columns4, value: 4, label: "4 Grid" },
     ];
-
 
     return (
         <div className="mx-auto px-4 mt-7 w-full sm:max-w-[540px] md:max-w-[720px] lg:max-w-[960px] xl:max-w-[1240px] 2xl:max-w-[1320px]">
@@ -93,19 +93,18 @@ const BrandCatalogueList = ({ brands, }) => {
             >
                 {loading ? (
                     [...Array(grid * 2)].map((_, i) => <ProductCardSkeleton key={i} />)
-                ) : products?.length > 0 ? (
-                    products.map((item, index) => {
-                        return (
-                            <div key={index}>
-                                <CatalogCard product={item} grid={grid} category={brands} />
-                            </div>
-                        )
-                    })
+                ) : Array.isArray(products) && products.length > 0 ? (
+                    products.map((item, index) => (
+                        <div key={index}>
+                            <CatalogCard product={item} grid={grid} category={brands} />
+                        </div>
+                    ))
                 ) : (
                     <p className="col-span-full text-center text-gray-500">
                         No products found.
                     </p>
                 )}
+
             </div>
 
             <div className="flex justify-center items-center ">

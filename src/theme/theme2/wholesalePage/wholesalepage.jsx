@@ -7,9 +7,11 @@ import { useEffect, useState } from "react";
 import CategorySidebar from "./components/categorySidebar";
 import { getAllCatalogue } from "@/services/catalogueService";
 import CatalogCard from "../ProductDetail/wholesale/component/CatalogCard";
+import ProductViewTabs from "../components/common/ProductViewTabs";
 
 const WholeSalePage = ({ category }) => {
     const [grid, setGrid] = useState(4);
+    const [activeTab, setActiveTab] = useState("full");
     const [open, setOpen] = useState(false);
     const [sort, setSort] = useState("");
     const [page, setPage] = useState(1);
@@ -70,13 +72,12 @@ const WholeSalePage = ({ category }) => {
     ];
 
     return (
-        <div className="mx-auto px-4 mt-7  
-  w-full 
-  sm:max-w-[540px] 
-  md:max-w-[720px] 
-  lg:max-w-[960px] 
-  xl:max-w-[1240px] 
-  2xl:max-w-[1320px]">
+        <div className="mx-auto px-4 mt-7 w-full sm:max-w-[540px] md:max-w-[720px] lg:max-w-[960px] xl:max-w-[1240px] 2xl:max-w-[1320px]">
+            <ProductViewTabs
+                category={category}
+                activeTab={activeTab}
+                setActiveTab={setActiveTab}
+            />
             <div className="flex flex-wrap justify-end items-center mb-6 gap-4">
                 <div className="flex items-center gap-3">
                     <div className="flex gap-1">
@@ -107,30 +108,23 @@ const WholeSalePage = ({ category }) => {
                 </div>
             </div>
 
-            <div
-                className={`grid gap-4 
-            ${grid === 2 ? "grid-cols-2 sm:grid-cols-2 lg:grid-cols-2" : ""} 
-            ${grid === 3 ? "grid-cols-2 sm:grid-cols-2 md:grid-cols-3" : ""} 
-            ${grid === 4 ? "grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4" : ""}`}
+            <div className={`grid gap-4 ${grid === 2 ? "grid-cols-2 sm:grid-cols-2 lg:grid-cols-2" : ""} ${grid === 3 ? "grid-cols-2 sm:grid-cols-2 md:grid-cols-3" : ""} ${grid === 4 ? "grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4" : ""}`}
             >
                 {loading ? (
                     [...Array(grid * 2)].map((_, i) => <ProductCardSkeleton key={i} />)
-                ) : data?.length > 0 ? (
-                    data.map((item, index) => {
-                        const categoryUrl = item?.CatalogueCategory?.[0]?.category?.url ||
-                            null;
-                        return (
-                            <div key={index}>
-                                <CatalogCard product={item} grid={grid} category={category} />
-                            </div>
-                        )
-                    })
+                ) : Array.isArray(data) && data.length > 0 ? (
+                    data.map((item, index) => (
+                        <div key={index}>
+                            <CatalogCard product={item} grid={grid} category={category} />
+                        </div>
+                    ))
                 ) : (
                     <p className="col-span-full text-center text-gray-500">
                         No products found.
                     </p>
                 )}
             </div>
+
 
             <div className="flex justify-center items-center ">
                 <Pagination

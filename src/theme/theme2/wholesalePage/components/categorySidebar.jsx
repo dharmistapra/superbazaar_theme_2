@@ -5,8 +5,8 @@ import { X } from "lucide-react";
 
 const CategorySidebar = ({ onClose, onFilterChange, selectedcategory, setselectedcategory, open }) => {
 
-  const { data } = useSelector((state) => state.categorystore) || [];
-  const filtermenu = data.filter((item) => item.url !== "wholesale");
+  const { data } = useSelector((state) => state.categorystore) || {};
+  const filtermenu = Array.isArray(data) ? data.filter((item) => item.url !== "wholesale") : [];
   const handleCheckboxChange = (url) => {
     const updatedSelected = selectedcategory.includes(url)
       ? selectedcategory.filter((item) => item !== url)

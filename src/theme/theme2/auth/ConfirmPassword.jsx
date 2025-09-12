@@ -21,9 +21,9 @@ export default function ConfirmPassword() {
                 const axiosInstance = createClientAxios();
                 const payload = {
                     password: values.password,
-                    secret: localStorage.getItem("otpsecrets"),
-                    otp: localStorage.getItem("otp"),
-                    email: localStorage.getItem("email"),
+                    secret: typeof window !== "undefined" ? localStorage.getItem("otpsecrets") : "",
+                    otp: typeof window !== "undefined" ? localStorage.getItem("otp") : "",
+                    email: typeof window !== "undefined" ? localStorage.getItem("email") : "",
                 };
 
                 const response = await axiosInstance.post("auth/reset-password", payload);

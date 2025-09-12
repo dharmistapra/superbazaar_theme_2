@@ -89,7 +89,7 @@ const CartItems = ({ cartItems }) => {
 
                               {openCatalogueIds.includes(item.id) && (
                                 <div className="mt-2 space-y-2 pl-4 border-l ">
-                                  {item.products.map((p) => (
+                                  {Array.isArray(item.products) && item.products.map((p) => (
                                     <div
                                       key={p.code}
                                       className="flex items-center justify-between text-sm gap-2">
