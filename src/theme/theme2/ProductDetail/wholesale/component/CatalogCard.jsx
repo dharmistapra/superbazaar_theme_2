@@ -7,8 +7,6 @@ import PriceConverter from "@/components/PriceConverter";
 import WishlistButton from "@/components/cards/attribute/WishlistButton";
 
 const CatalogCard = ({ product, category }) => {
-    console.log(product.id, "<================ catalog card");
-
     return (
         <div >
             <div className="bg-white rounded-lg shadow hover:shadow-lg transition-shadow relative">

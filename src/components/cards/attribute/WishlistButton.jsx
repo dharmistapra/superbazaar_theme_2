@@ -17,15 +17,12 @@ const WishlistButton = ({
   const { open } = useModal()
   const dispatch = useDispatch()
   const { list } = useSelector((state) => state.wishlist)
-  console.log(catalogueId, "<============ wishlist ");
 
   const currentId = type === "product" ? productId : catalogueId
   const isWishlisted =
     type === "catalogue"
       ? list?.catalogue?.some((item) => item?.id === currentId)
       : list?.product?.some((item) => item?.id === currentId)
-  console.log("currentId", currentId);
-
   const [wishlistLoading, setWishlistLoading] = useState(false)
   const debounceTimeout = useRef(null)
 
@@ -104,7 +101,6 @@ const WishlistButton = ({
         )}
 
       </button>
-      {console.log("isWishlisted", isWishlisted)}
 
       {variant === "card" && (
         <span

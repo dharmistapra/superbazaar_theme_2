@@ -33,7 +33,6 @@ export default function Login() {
                     email: values.email,
                     password: values.password,
                 });
-                console.log("res login ====>", res);
                 const session = await fetch("/api/auth/session").then(r => r.json());
                 if (session?.accessToken) {
                     localStorage.setItem("token", session.accessToken);

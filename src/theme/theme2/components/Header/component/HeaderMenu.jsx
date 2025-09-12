@@ -39,7 +39,6 @@ const HeaderMenu = ({ menudata, currencyData }) => {
         const data = await getWebSetting();
         dispatch(setWebSetting(data));
     }
-    console.log("Header", cartItems);
 
     useEffect(() => {
         fetchData();
@@ -200,7 +199,7 @@ const HeaderMenu = ({ menudata, currencyData }) => {
 
                         </div>
                         <nav className="hidden lg:flex justify-center space-x-6 py-2 text-sm font-medium text-gray-800 relative mb-1">
-                            {menudata.map((item) => (
+                            {menudata.length > 0 && menudata.map((item) => (
                                 <div key={item.id} className="relative group">
                                     <Link
                                         href={item.url === "wholesale"

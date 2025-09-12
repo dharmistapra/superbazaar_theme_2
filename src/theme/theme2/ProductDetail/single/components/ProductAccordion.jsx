@@ -17,8 +17,6 @@ const ProductAccordion = ({ product, Stitching, setStitchingData, attributes, ty
         mobile_number: "",
         description: "",
     };
-    console.log("type", type);
-
     const {
         errors,
         values,
@@ -54,7 +52,6 @@ const ProductAccordion = ({ product, Stitching, setStitchingData, attributes, ty
     const toggle = (section) => {
         setOpen(open === section ? null : section);
     };
-    console.log("product ====>", product);
 
     return (
         <div>

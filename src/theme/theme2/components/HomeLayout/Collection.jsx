@@ -30,8 +30,6 @@ const componentMap = {
 };
 
 const Collection = ({ homeContent, webSetting }) => {
-    console.log("homeContent ===>", homeContent);
-
     return (
         <div className="container mx-auto px-4 mt-3 mb-0">
             {Array.isArray(homeContent) && homeContent.map((collection, idx) => {
