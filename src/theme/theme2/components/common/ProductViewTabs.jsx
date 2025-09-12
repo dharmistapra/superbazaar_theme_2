@@ -19,7 +19,7 @@ const ProductViewTabs = ({ category, activeTab, setActiveTab }) => {
             <button
                 onClick={handleFullSetClick}
                 className={`flex items-center gap-2 p-3 rounded shadow text-sm font-medium ${activeTab === "full"
-                    ? "bg-red-700 text-white"
+                    ? "bg-red-500 text-white"
                     : "bg-gray-200 hover:bg-gray-400"
                     }`}
             >
@@ -30,7 +30,7 @@ const ProductViewTabs = ({ category, activeTab, setActiveTab }) => {
             <button
                 onClick={handleSingleClick}
                 className={`flex items-center gap-2 p-3 rounded shadow text-sm font-medium ${activeTab === "single"
-                    ? "bg-red-700 text-white"
+                    ? "bg-red-500 text-white"
                     : "bg-white hover:bg-gray-200"
                     }`}
             >

@@ -31,7 +31,7 @@ const Testimonial = ({ testimonials }) => {
         >
           {Array.isArray(testimonials) && testimonials.map((testimonial, index) => (
             <SwiperSlide key={index}>
-              <div className="bg-white rounded-xl p-6 flex flex-col items-center text-center border shadow-lg h-80">
+              <div className="bg-white rounded-xl p-6 flex flex-col items-center text-center shadow-lg h-80">
                 <div className="w-24 h-28 mb-4 rounded-full overflow-hidden">
                   <Image
                     src={ImageUrl(testimonial.image)}

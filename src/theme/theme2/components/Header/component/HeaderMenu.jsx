@@ -23,8 +23,7 @@ import HeaderSearch from "./HeaderSearch";
 const HeaderMenu = ({ menudata, currencyData }) => {
     const { data: session, } = useSession();
     const [openUser, setOpenUser] = useState(false)
-    const [openMenu, setOpenMenu] = useState(false) // 👈 for sidebar
-    // const [Menudata, currencyData] = Promise.all([getMenu(), getCurrency()]);
+    const [openMenu, setOpenMenu] = useState(false)
     const router = useRouter();
     const userRef = useRef(null)
     const [isSticky, setIsSticky] = useState(false);
@@ -107,7 +106,7 @@ const HeaderMenu = ({ menudata, currencyData }) => {
                                 </div>
                             </div>
 
-                            <div className=" flex items-center mx-4">
+                            <div className="flex-shrink-0 w-1/2 sm:w-1/2 md:w-1/4 lg:w-1/4 flex items-center">
                                 <Link href="/">
                                     <Image
                                         src="/logo.png"
@@ -119,7 +118,7 @@ const HeaderMenu = ({ menudata, currencyData }) => {
                                     />
                                 </Link>
                             </div>
-                            <div className="hidden md:block w-[50%] mx-6">
+                            <div className="flex-1 w-full md:w-1/2 lg:w-1/2 mx-0 lg:mx-6 my-2 lg:my-0">
                                 <HeaderSearch open={showSearch} onClose={() => setShowSearch(false)} />
                             </div>
 
@@ -182,8 +181,8 @@ const HeaderMenu = ({ menudata, currencyData }) => {
 
                                 {session?.accessToken && (
                                     <>
-                                        {list.product?.length > 0 || list.catalogue
-                                            ?.lemgth > 0 ? <Heart size={20}
+                                        {list?.product?.length > 0 || list?.catalogue?.lemgth > 0 ?
+                                            <Heart size={20}
                                                 className="cursor-pointer hidden md:flex text-red-500"
                                                 fill="currentColor" /> : <Heart size={20} className="cursor-pointer hidden md:flex" />}
 
@@ -198,15 +197,13 @@ const HeaderMenu = ({ menudata, currencyData }) => {
                             </div>
 
                         </div>
-                        <nav className="hidden lg:flex justify-center space-x-6 py-2 text-sm font-medium text-gray-800 relative mb-1">
+                        <nav className="hidden lg:flex justify-center space-x-6 py-2 text-sm font-normal text-gray-800 relative mb-1">
                             {menudata.length > 0 && menudata.map((item) => (
                                 <div key={item.id} className="relative group">
                                     <Link
-                                        href={item.url === "wholesale"
-                                            ? "/wholesale" : webSetting?.purchaseType === "wholesale"
-                                                ? `/wholesale/${item.url}`
-                                                : `/retail/${item.url}`}
-                                        className="hover:text-red-800 flex items-center text-[17px] text-gray-700 tracking-[2px]"
+                                        href={item.url === "wholesale" ? "/wholesale" : webSetting?.purchaseType === "wholesale" ? `/wholesale/${item.url}`
+                                            : `/retail/${item.url}`}
+                                        className="hover:text-red-800 flex items-center text-[17px] text-gray-700 tracking-normal"
                                     >
                                         {item.name}
                                     </Link>
@@ -237,7 +234,7 @@ const HeaderMenu = ({ menudata, currencyData }) => {
                                 <div>
                                     <Link
                                         href={webSetting?.purchaseType === "wholesale" ? `/brand` : `/brand`}
-                                        className="hover:text-red-800 flex items-center text-[17px] text-gray-700 tracking-[2px]"
+                                        className="hover:text-red-800 flex items-center text-[17px] text-gray-700 tracking-normal"
                                     >
                                         Brand
                                     </Link>

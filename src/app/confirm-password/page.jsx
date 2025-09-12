@@ -9,10 +9,5 @@ export default async function ConfirmPasswordPage() {
     if (!ConfirmPassword) {
         redirect("/");
     }
-    // const currentTheme = process.env.NEXT_THEME || "theme1";
-    // const OTP = getThemeModules(currentTheme).OTP;
-    // if (!OTP) {
-    //     redirect("/");
-    // }
     return <ConfirmPassword />;
 }

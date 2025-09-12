@@ -56,7 +56,7 @@ const FooterLayout = () => {
     };
 
     return (
-        <footer className="bg-gray-900 text-white">
+        <footer className="bg-black text-white">
             {/* Top Section */}
             <div className="py-8 border-b border-gray-700">
                 <div className="container mx-auto px-4 text-center">

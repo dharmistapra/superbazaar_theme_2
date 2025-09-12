@@ -74,7 +74,7 @@ const Search = () => {
             <div className="w-full flex justify-center items-center mb-10">
                 <div className="flex gap-3 flex-wrap">
                     {tabsData.map((tab) => {
-                        const Icon = tab.icon || Package; // fallback if no icon
+                        const Icon = tab.icon || Package;
                         return (
                             <button
                                 key={tab.url}
@@ -91,26 +91,6 @@ const Search = () => {
                         );
                     })}
                 </div>
-                {/* 
-                <div className="flex bg-gray-100 rounded-full p-1 shadow-md">
-
-                    {tabsData.map((tab) => {
-                        const Icon = tab.icon;
-                        return (
-                            <button
-                                key={tab.url}
-                                onClick={() => setActive(tab.url)}
-                                className={`relative flex items-center gap-2 px-6 py-2 text-sm sm:text-base md:text-lg font-medium rounded transition-all duration-300 
-                  ${active === tab.url
-                                        ? "bg-black text-white shadow-lg scale-105"
-                                        : "text-gray-600 hover:text-black"
-                                    }`}>
-                                <Icon className="w-4 h-4 sm:w-5 sm:h-5" />
-                                {tab.title}
-                            </button>
-                        );
-                    })}
-                </div> */}
             </div>
 
             {loading ? (

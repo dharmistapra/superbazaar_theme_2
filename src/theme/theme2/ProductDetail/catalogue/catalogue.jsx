@@ -1,5 +1,5 @@
 "use client"
-import { useState } from "react"
+import { useMemo, useState } from "react"
 import SizeSelector from "@/components/SizeSelector"
 import CatalogueImages from "./components/catalogueimage"
 import StitchingForm from "../single/components/StitchingForm"
@@ -18,6 +18,9 @@ import ProductAccordion from "../single/components/ProductAccordion"
 import OfferBanner from "@/components/OfferBanner"
 import Link from "next/link"
 import WishlistButton from "@/components/cards/attribute/WishlistButton"
+import { ImageUrl } from "@/helper/imageUrl"
+import DownloadImage from "../../components/common/DownloadImage"
+import DownloadZip from "../../components/common/DownloadZip"
 
 const Catalogue = ({ CatalogueDetailData, stitching, category }) => {
     const dispatch = useDispatch()
@@ -36,6 +39,20 @@ const Catalogue = ({ CatalogueDetailData, stitching, category }) => {
     const [stitchingData, setStitchingData] = useState(null);
     const [wishlist, setWishlist] = useState(false);
     const [compare, setCompare] = useState(false);
+
+    const whatsappURL = useMemo(() => {
+        if (!CatalogueDetailData) return "#";
+
+        const productPageURL = window.location.href; // this is the page with OG tags
+        const message =
+            `Hi, I want to inquire about this product:\n\n` +
+            `🛍 Name: ${CatalogueDetailData.name}\n` +
+            `💰 Price: ₹${CatalogueDetailData.offer_price}\n` +
+            `🔗 View: ${productPageURL}`;
+
+        return `https://api.whatsapp.com/send?phone=+917226813589&text=${encodeURIComponent(message)}`;
+    }, [CatalogueDetailData]);
+
 
     const increment = () => {
         if (CatalogueDetailData.optionType === "Size" && !selectedSize) {
@@ -98,159 +115,164 @@ const Catalogue = ({ CatalogueDetailData, stitching, category }) => {
 
     const usertoken = session?.accessToken
     const webSetting = {};
+    console.log("CatalogueDetailData ====>", ImageUrl(CatalogueDetailData.coverImage));
+
 
     return (
-        <div className="container mx-auto p-4">
-            <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
-                <div className="lg:col-span-7">
-                    <CatalogueImages catalogDetails={CatalogueDetailData} category={category} />
-                </div>
+        <>
+            {/* <Head>
+                <title>{CatalogueDetailData.name} | Superbazaar</title>
+                <meta property="og:title" content={CatalogueDetailData.name} />
+                <meta property="og:description" content={`Price: ₹${CatalogueDetailData.offer_price}`} />
+                <meta property="og:image" content={ImageUrl(CatalogueDetailData.coverImage)} />
+                <meta property="og:url" content={`https://superbazaar.in/catalogue/${CatalogueDetailData.url}`} />
+                <meta property="og:type" content="product" />
+            </Head> */}
 
-                <div className="lg:col-span-5 lg:sticky lg:top-20 self-start">
-                    <div className="">
-                        <div className="mb-0">
-                            <h3 className={status === "loading" ? "animate-pulse h-8 w-64 bg-gray-200 rounded"
-                                : "text-left mb-2"}>
-                                {CatalogueDetailData?.name}
-                            </h3>
+            <div className="container mx-auto p-4">
+                <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
+                    <div className="lg:col-span-7 md:col-span-6">
+                        <CatalogueImages catalogDetails={CatalogueDetailData} category={category} />
+                    </div>
 
-                            <h6
-                                className={`text-gray-700 ${status === "loading" ? "animate-pulse h-4 w-32 bg-gray-200 rounded" : ""}`}
-                            >
-                                SKU: {CatalogueDetailData?.cat_code}
-                            </h6>
+                    <div className="lg:col-span-5 md:col-span-6 lg:sticky lg:top-20 self-start">
+                        <div className="">
+                            <div className="mb-0">
+                                <h3 className={status === "loading" ? "animate-pulse h-8 w-64 bg-gray-200 rounded"
+                                    : "text-left mb-2"}>
+                                    {CatalogueDetailData?.name}
+                                </h3>
 
-                            {/* {shouldShowPrice(usertoken, webSetting) ? ( */}
-                            <div className="py-1">
-                                <div className="flex items-center gap-2">
-                                    {CatalogueDetailData?.catalogue_discount ? (
-                                        <span className="line-through text-gray-400">
-                                            <PriceConverter price={CatalogueDetailData?.price} />
+                                <h6
+                                    className={`text-gray-700 ${status === "loading" ? "animate-pulse h-4 w-32 bg-gray-200 rounded" : ""}`}
+                                >
+                                    SKU: {CatalogueDetailData?.cat_code}
+                                </h6>
+
+                                {/* {shouldShowPrice(usertoken, webSetting) ? ( */}
+                                <div className="py-1">
+                                    <div className="flex items-center gap-2">
+                                        {CatalogueDetailData?.catalogue_discount ? (
+                                            <span className="line-through text-gray-400">
+                                                <PriceConverter price={CatalogueDetailData?.price} />
+                                            </span>
+                                        ) : null}
+
+                                        <span className="text-xl font-semibold text-black">
+                                            <PriceConverter price={CatalogueDetailData?.offer_price} />
                                         </span>
-                                    ) : null}
 
-                                    <span className="text-xl font-semibold text-black">
-                                        <PriceConverter price={CatalogueDetailData?.offer_price} />
-                                    </span>
-
-                                    {CatalogueDetailData?.catalogue_discount ? (
-                                        <span className="ml-1 bg-red-100 text-red-600 px-2 py-1 rounded">
-                                            {CatalogueDetailData?.catalogue_discount}% off
-                                        </span>
-                                    ) : null}
-                                </div>
-                            </div>
-
-                            {Number(CatalogueDetailData?.catalogue_discount) > 0 && (
-                                <OfferBanner discount={Number(CatalogueDetailData?.catalogue_discount)} />
-                            )}
-
-                            {CatalogueDetailData?.optionType === "Size" &&
-
-                                <SizeSelector
-                                    sizes={CatalogueDetailData?.Size}
-                                    selectedSize={selectedSize}
-                                    onChange={setSelectedSize}
-                                    errors={errors}
-                                    setErrors={setErrors}
-                                />
-                            }
-                            <div className="border border-gray-200 rounded-lg divide-y shadow-sm mt-5">
-                                <ProductAccordion
-                                    product={CatalogueDetailData}
-                                    Stitching={stitching}
-                                    setStitchingData={setStitchingData}
-                                    type="catalogue"
-                                    category={CatalogueDetailData?.url}
-                                />
-                            </div>
-                        </div>
-
-                        <div className="w-full mt-3 rounded-lg p-4 px-0 ">
-                            <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-                                <div className="flex items-center gap-4 w-full md:w-2/3">
-                                    <div className="flex items-center border rounded-md py-0.5  ">
-                                        <button
-                                            type="button"
-                                            onClick={decrement}
-                                            disabled={quantity === 1}
-                                            className="p-2 disabled:opacity-50"
-                                        >
-                                            <Minus className="w-5 h-5 text-gray-600" />
-                                        </button>
-                                        <input
-                                            type="text"
-                                            readOnly
-                                            value={quantity}
-                                            className="w-7 text-center py-1 text-gray-700"
-                                        />
-                                        <button type="button" onClick={increment} className="p-2"
-                                            disabled={quantity === CatalogueDetailData.quantity || quantity === selectedSize?.quantity}
-                                        >
-                                            <Plus className="w-5 h-5 text-gray-600" />
-                                        </button>
-                                    </div>
-
-                                    <div>
-                                        <button
-                                            disabled={loading}
-                                            onClick={handleAddtoCart}
-                                            type="submit"
-                                            className="bg-white hover:bg-black hover:text-white text-black outline-1 px-6 py-2 rounded-md transition whitespace-nowrap"
-                                        >
-                                            Add to cart
-                                        </button>
+                                        {CatalogueDetailData?.catalogue_discount ? (
+                                            <span className="ml-1 bg-red-100 text-red-600 px-2 py-1 rounded">
+                                                {CatalogueDetailData?.catalogue_discount}% off
+                                            </span>
+                                        ) : null}
                                     </div>
                                 </div>
 
-                                <div className="flex items-center justify-center gap-3 w-full md:w-2/3">
-                                    <WishlistButton catalogueId={CatalogueDetailData.id} type="catalogue" variant="detail" />
-                                    <button
-                                        title="Share on WhatsApp"
-                                        className="p-2 rounded-md border border-s border-gray-400 hover:bg-green-100 "
-                                    >
-                                        <MessageCircle size={20} />
-                                    </button>
-                                    <button
-                                        title="Share on Twitter"
-                                        className="p-2 border rounded-md border-s border-gray-400 hover:bg-sky-100"
-                                    >
-                                        <Download size={20} />
-                                    </button>
-                                    <button
-                                        title="Share on Twitter"
-                                        className="p-2 border rounded-md border-s border-gray-400 hover:bg-sky-100"
-                                    >
-                                        <FileArchive size={20} />
-                                    </button>
+                                {Number(CatalogueDetailData?.catalogue_discount) > 0 && (
+                                    <OfferBanner discount={Number(CatalogueDetailData?.catalogue_discount)} />
+                                )}
+
+                                {CatalogueDetailData?.optionType === "Size" &&
+
+                                    <SizeSelector
+                                        sizes={CatalogueDetailData?.Size}
+                                        selectedSize={selectedSize}
+                                        onChange={setSelectedSize}
+                                        errors={errors}
+                                        setErrors={setErrors}
+                                    />
+                                }
+                                <div className="border border-gray-200 rounded-lg divide-y shadow-sm mt-5">
+                                    <ProductAccordion
+                                        product={CatalogueDetailData}
+                                        Stitching={stitching}
+                                        setStitchingData={setStitchingData}
+                                        type="catalogue"
+                                        category={CatalogueDetailData?.url}
+                                    />
                                 </div>
                             </div>
-                            {errors && (
-                                <p className="text-red-500 text-sm mt-2">{errors}</p>
-                            )}
-                        </div>
-                        <div className="mt-5">
-                            <StaticImage status={status} />
+
+                            <div className="w-full mt-3 rounded-lg p-4 px-0 ">
+                                <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+                                    <div className="flex items-center gap-4 w-full md:w-2/3">
+                                        <div className="flex items-center border rounded-md py-0.5  ">
+                                            <button
+                                                type="button"
+                                                onClick={decrement}
+                                                disabled={quantity === 1}
+                                                className="p-2 disabled:opacity-50"
+                                            >
+                                                <Minus className="w-5 h-5 text-gray-600" />
+                                            </button>
+                                            <input
+                                                type="text"
+                                                readOnly
+                                                value={quantity}
+                                                className="w-7 text-center py-1 text-gray-700"
+                                            />
+                                            <button type="button" onClick={increment} className="p-2"
+                                                disabled={quantity === CatalogueDetailData.quantity || quantity === selectedSize?.quantity}
+                                            >
+                                                <Plus className="w-5 h-5 text-gray-600" />
+                                            </button>
+                                        </div>
+
+                                        <div>
+                                            <button
+                                                disabled={loading}
+                                                onClick={handleAddtoCart}
+                                                type="submit"
+                                                className="bg-white hover:bg-black hover:text-white text-black outline-1 px-6 py-2 rounded-md transition whitespace-nowrap"
+                                            >
+                                                Add to cart
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <div className="flex items-center justify-center gap-3 w-full md:w-2/3">
+                                        <WishlistButton catalogueId={CatalogueDetailData.id} type="catalogue" variant="detail" />
+                                        <Link
+                                            href={whatsappURL}
+                                            target="_blank"
+                                            title="Share on WhatsApp"
+                                            className="p-2 rounded-md border border-s border-gray-400 hover:bg-green-100 "
+                                        >
+                                            <MessageCircle size={20} />
+                                        </Link>
+                                        <DownloadImage CatalogueDetailData={CatalogueDetailData} />
+                                        <DownloadZip CatalogueDetailData={CatalogueDetailData} />
+                                    </div>
+                                </div>
+                                {errors && (
+                                    <p className="text-red-500 text-sm mt-2">{errors}</p>
+                                )}
+                            </div>
+                            <div className="mt-5">
+                                <StaticImage status={status} />
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <div className="w-full mt-10">
-                <h1 className="text-2xl font-normal text-center mb-10">You May Also Like this</h1>
-                <RalatedCatalogue url={CatalogueDetailData.url} />
-            </div>
+                <div className="w-full mt-10">
+                    <h1 className="text-2xl font-normal text-center mb-10">You May Also Like this</h1>
+                    <RalatedCatalogue url={CatalogueDetailData.url} />
+                </div>
 
-            {
-                shareOpen && (
-                    <SharePopup
-                        isOpen={shareOpen}
-                        onClose={() => setShareOpen(false)}
-                        url={`https://superbazaar.in/`}
-                    />
-                )
-            }
-        </div >
+                {
+                    shareOpen && (
+                        <SharePopup
+                            isOpen={shareOpen}
+                            onClose={() => setShareOpen(false)}
+                            url={`https://superbazaar.in/`}
+                        />
+                    )
+                }
+            </div>
+        </>
     )
 }
 
