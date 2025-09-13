@@ -24,7 +24,7 @@ export const getThemeModules = (theme = "theme1") => {
         OrderDetail: load(() => import("./theme1/Accounts/components/orderDetails")),
         Invoice: load(() => import("./theme1/Accounts/components/Invoice")),
         Search: load(() => import("./theme1/Search/search")),
-        ConfirmPassword:Empty
+        ConfirmPassword: Empty
 
       };
 

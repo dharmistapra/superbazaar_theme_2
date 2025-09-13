@@ -1,4 +1,4 @@
-import { Columns2, Columns3, Columns4, Funnel } from "lucide-react";
+import { Columns2, Columns3, Columns4, Funnel, SlidersHorizontal } from "lucide-react";
 
 const ProductListToolbar = ({
     title,
@@ -10,7 +10,8 @@ const ProductListToolbar = ({
     setGrid,
     open,
     setOpen,
-    type
+    type,
+    pathname
 }) => {
     const gridButtons = [
         { icon: Columns2, value: 2, label: "2 Grid" },
@@ -27,6 +28,15 @@ const ProductListToolbar = ({
             </div>
 
             <div className="flex gap-2 flex-wrap items-center">
+                {pathname === "/wholesale" &&
+
+                    <button
+                        onClick={() => setOpen(!open)}
+                        className="flex items-center gap-2 px-3 py-1 border rounded-sm shadow-sm hover:shadow-md hover:bg-gray-100 transition-all duration-200 text-sm font-medium"
+                    >
+                        <SlidersHorizontal size={18} />
+                        Filter
+                    </button>}
                 {type !== "wholesale" &&
                     <button
                         onClick={() => setOpen(!open)}

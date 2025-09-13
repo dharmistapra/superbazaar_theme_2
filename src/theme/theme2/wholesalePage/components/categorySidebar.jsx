@@ -3,7 +3,7 @@
 import { useSelector } from "react-redux";
 import { X } from "lucide-react";
 
-const CategorySidebar = ({ onClose, onFilterChange, selectedcategory, setselectedcategory, open }) => {
+const CategorySidebar = ({ onClose, onFilterChange, selectedcategory, setselectedcategory, open, pathname }) => {
 
   const { data } = useSelector((state) => state.categorystore) || {};
   const filtermenu = Array.isArray(data) ? data.filter((item) => item.url !== "wholesale") : [];
@@ -38,23 +38,25 @@ const CategorySidebar = ({ onClose, onFilterChange, selectedcategory, setselecte
         </div>
         {filtermenu.length > 0 ? (
           <div className="space-y-3 ml-10 mt-5">
-            {filtermenu.map((item, index) => (
-              <div key={index} className="flex items-center gap-2">
-                <input
-                  type="checkbox"
-                  id={`filter-${index}`}
-                  className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-                  checked={selectedcategory.includes(item.url)}
-                  onChange={() => handleCheckboxChange(item.url)}
-                />
-                <label
-                  htmlFor={`filter-${index}`}
-                  className="text-sm font-medium text-gray-700 cursor-pointer"
-                >
-                  {item.name}
-                </label>
-              </div>
-            ))}
+            {filtermenu.map((item, index) => {
+              return (
+                <div key={index} className="flex items-center gap-2">
+                  <input
+                    type="checkbox"
+                    id={`filter-${index}`}
+                    className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                    checked={selectedcategory.includes(item.url)}
+                    onChange={() => handleCheckboxChange(item.url)}
+                  />
+                  <label
+                    htmlFor={`filter-${index}`}
+                    className="text-sm font-medium text-gray-700 cursor-pointer"
+                  >
+                    {item.name}
+                  </label>
+                </div>
+              )
+            })}
           </div>
         ) : (
           <p className="text-sm text-gray-500">No filters available</p>

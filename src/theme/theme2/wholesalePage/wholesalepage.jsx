@@ -5,13 +5,15 @@ import ProductCardSkeleton from "@/components/ProductCardSkeleton";
 import { SlidersHorizontal, LayoutList, Grip, GripVertical, Columns2, Columns3, Columns4 } from "lucide-react";
 import { useEffect, useState } from "react";
 import CategorySidebar from "./components/categorySidebar";
-import { getAllCatalogue } from "@/services/catalogueService";
 import CatalogCard from "../ProductDetail/wholesale/component/CatalogCard";
 import ProductViewTabs from "../components/common/ProductViewTabs";
+import ProductListToolbar from "../components/common/ProductListToolbar";
+import { usePathname } from "next/navigation";
+import { getAllCatalogue } from "@/services/catalogueService";
 
-const WholeSalePage = ({ category }) => {
+const WholeSalePage = ({ category, title }) => {
+    const pathname = usePathname();
     const [grid, setGrid] = useState(4);
-    const [activeTab, setActiveTab] = useState("full");
     const [open, setOpen] = useState(false);
     const [sort, setSort] = useState("");
     const [page, setPage] = useState(1);
@@ -23,10 +25,7 @@ const WholeSalePage = ({ category }) => {
         try {
             setLoading(true);
 
-            let category =
-                selectedCategory.length > 0
-                    ? `&categories=${selectedCategory.join(",")}`
-                    : "";
+            let category = selectedCategory.length > 0 ? `&categories=${selectedCategory.join(",")}` : "";
 
             const response = await getAllCatalogue(page, category, null, sort);
 
@@ -41,11 +40,9 @@ const WholeSalePage = ({ category }) => {
         }
     };
 
-
     useEffect(() => {
         fetchData()
     }, [sort])
-
 
     const handlePageClick = (page) => {
         setCurrentPage(page);
@@ -58,6 +55,7 @@ const WholeSalePage = ({ category }) => {
         setTotalCount(1);
     };
 
+
     const sortOptions = [
         { value: "", label: "New Arrivals" },
         { value: "AtoZ", label: "A To Z" },
@@ -66,21 +64,33 @@ const WholeSalePage = ({ category }) => {
         { value: "high", label: "Price: High to Low" },
     ];
     const gridButtons = [
-        { icon: Columns2, value: 2, label: "2 Grid" },
-        { icon: Columns3, value: 3, label: "3 Grid" },
-        { icon: Columns4, value: 4, label: "4 Grid" },
+        { icon: LayoutList, value: 2, label: "2 Grid" },
+        { icon: Grip, value: 3, label: "3 Grid" },
+        { icon: GripVertical, value: 4, label: "4 Grid" },
     ];
-
     return (
         <div className="mx-auto px-4 mt-7 w-full sm:max-w-[540px] md:max-w-[720px] lg:max-w-[960px] xl:max-w-[1240px] 2xl:max-w-[1320px]">
-            <ProductViewTabs
+
+            {/* <ProductViewTabs
                 category={category}
                 activeTab={activeTab}
                 setActiveTab={setActiveTab}
+            /> */}
+
+
+            <ProductListToolbar
+                title="Wholesale Product"
+                products={data}
+                totalCount={totalCount}
+                sort={sort}
+                setSort={setSort}
+                grid={grid}
+                setGrid={setGrid}
+                open={open}
+                setOpen={setOpen}
+                pathname={pathname}
             />
-            <div className="flex flex-wrap justify-end items-center mb-6 gap-4">
-                <div className="flex items-center gap-3">
-                    <div className="flex gap-1">
+            {/* <div className="flex gap-1">
                         {gridButtons.map((btn) => {
                             const Icon = btn.icon;
                             return (
@@ -104,9 +114,8 @@ const WholeSalePage = ({ category }) => {
                                 {option.label}
                             </option>
                         ))}
-                    </select>
-                </div>
-            </div>
+                    </select> */}
+
 
             <div className={`grid gap-4 ${grid === 2 ? "grid-cols-2 sm:grid-cols-2 lg:grid-cols-2" : ""} ${grid === 3 ? "grid-cols-2 sm:grid-cols-2 md:grid-cols-3" : ""} ${grid === 4 ? "grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4" : ""}`}
             >
@@ -134,15 +143,15 @@ const WholeSalePage = ({ category }) => {
                     onPageChange={handlePageClick}
                 />
             </div>
-            {open && (
-                <CategorySidebar
-                    onClose={() => setOpen(false)}
-                    onFilterChange={handleFilterChange}
-                    selectedcategory={selectedcategory}
-                    setselectedcategory={setselectedcategory}
-                    open={open}
-                />
-            )}
+
+            <CategorySidebar
+                onClose={() => setOpen(false)}
+                onFilterChange={handleFilterChange}
+                selectedcategory={selectedcategory}
+                setselectedcategory={setselectedcategory}
+                open={open}
+            />
+
         </div>
     )
 }

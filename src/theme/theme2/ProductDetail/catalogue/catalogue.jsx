@@ -115,20 +115,10 @@ const Catalogue = ({ CatalogueDetailData, stitching, category }) => {
 
     const usertoken = session?.accessToken
     const webSetting = {};
-    console.log("CatalogueDetailData ====>", ImageUrl(CatalogueDetailData.coverImage));
 
 
     return (
         <>
-            {/* <Head>
-                <title>{CatalogueDetailData.name} | Superbazaar</title>
-                <meta property="og:title" content={CatalogueDetailData.name} />
-                <meta property="og:description" content={`Price: ₹${CatalogueDetailData.offer_price}`} />
-                <meta property="og:image" content={ImageUrl(CatalogueDetailData.coverImage)} />
-                <meta property="og:url" content={`https://superbazaar.in/catalogue/${CatalogueDetailData.url}`} />
-                <meta property="og:type" content="product" />
-            </Head> */}
-
             <div className="container mx-auto p-4">
                 <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
                     <div className="lg:col-span-7 md:col-span-6">

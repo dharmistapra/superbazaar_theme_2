@@ -19,6 +19,7 @@ import { getUserWishlist } from "@/services/accountsService";
 import { useRouter } from "next/navigation";
 import { openCart } from "@/store/slice/MiniCartSlice";
 import HeaderSearch from "./HeaderSearch";
+import { setCategoyData } from "@/store/slice/categorySlice";
 
 const HeaderMenu = ({ menudata, currencyData }) => {
     const { data: session, } = useSession();
@@ -55,7 +56,7 @@ const HeaderMenu = ({ menudata, currencyData }) => {
         if (session?.accessToken) {
             fetchProtectedData()
         }
-        // dispatch(setCategoyData(Menudata))
+        dispatch(setCategoyData(menudata))
     }, [session])
 
     useEffect(() => {

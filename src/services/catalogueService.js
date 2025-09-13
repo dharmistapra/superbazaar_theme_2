@@ -37,6 +37,7 @@ export const getAllCatalogue = async (page, category, perPage = 20, sortOption) 
     const url = `/public/wholesale?page=${page}&perPage=20${category}&sortOption=${sortOption}`
     const axiosInstance = await createClientAxios();
     const res = await axiosInstance.get(url);
+
     return res.data;
   } catch (error) {
     console.error("Error fetching product detail:", error);

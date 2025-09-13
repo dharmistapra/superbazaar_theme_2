@@ -18,7 +18,6 @@ const FooterLayout = () => {
     const [cmsData, setCmsData] = useState([])
     const [socialIcons, setSocialIcons] = useState([])
     const [webSetting, setWebSettingState] = useState({})
-
     const socialColors = {
         facebook: "bg-blue-600 text-white hover:bg-blue-700",
         twitter: "bg-sky-500 text-white hover:bg-sky-600",
@@ -76,25 +75,19 @@ const FooterLayout = () => {
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 text-left mt-8">
-                        {/* Online Shopping Links */}
                         <div>
                             <h4 className="font-medium mb-3 uppercase tracking-[3px]">Online Shopping</h4>
                             <ul className="space-y-1 text-[13px] tracking-wider">
-                                {[
-                                    ["New Arrivals", "/catalogue/new-arrivals"],
-                                    ["Sarees", "/catalogue/sarees"],
-                                    ["Salwar Suits", "/catalogue/salwar-suits"],
-                                    ["Lehengas", "/catalogue/lehengas"],
-                                    ["Gowns", "/catalogue/gowns"],
-                                    ["Kurtis", "/catalogue/kurtis"],
-                                    ["Mens's Wear", "/catalogue/menss-wear"],
-                                    ["Wholesale", "/catalogue/wholesale"],
-                                    ["Brands", "/brands"],
-                                ].map(([label, href]) => (
-                                    <li key={label} className="gap-5">
-                                        <Link href={href} className="hover:underline ">{label}</Link>
-                                    </li>
-                                ))}
+                                {data && data?.length > 0 && data.map((item, i) => {
+                                    return (
+                                        <li key={i}>
+                                            <Link href={item.url === "wholesale" ? "/wholesale" : webSetting?.purchaseType === "wholesale" ? `/wholesale/${item.url}`
+                                                : `/retail/${item.url}`} className="hover:text-white transition-colors">
+                                                {item?.name}
+                                            </Link>
+                                        </li>
+                                    )
+                                })}
                             </ul>
                         </div>
 

@@ -45,7 +45,7 @@ const Footer = () => {
       <div className="relative max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8 p-8 md:p-10 items-start">
         <div className="flex flex-col gap-4">
           <Image
-            src={ImageUrl(webSetting?.footerLogo)|| "/logo.png"}
+            src={ImageUrl(webSetting?.footerLogo) || "/logo.png"}
             alt="Logo"
             width={230}
             height={80}
