@@ -62,3 +62,8 @@ export const inquirySchema = Yup.object({
   description: Yup.string().required("Description is required"),
 
 })
+
+export const bankPaymentSchema=Yup.object({
+  transactionId:Yup.string().required("transaction ID is required"),
+  receiptImage:Yup.string().required("Receipt image is requireed")
+})

@@ -26,6 +26,9 @@ const PaymentMethod = ({ onPaymentChange }) => {
     }
   };
 
+
+  
+
   return (
     <div className="shadow-lg rounded-lg p-6 mt-6 bg-white">
       <div className="flex gap-2 items-center mb-4">

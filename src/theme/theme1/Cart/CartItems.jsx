@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import Image from "next/image";
-import { ShieldCheck, Lock, Trash2, Loader2 } from "lucide-react";
+import { ShieldCheck, Lock, Trash2, Loader2, X } from "lucide-react";
 import { ImageUrl } from "@/helper/imageUrl";
 import FreeShippingProgress from "@/theme/theme1/Modals/Cart/FreeShippingProgress";
 import StitchingOptions from "@/components/StitchingOption";
@@ -9,8 +9,11 @@ import { useCartActions } from "@/hooks/useCartActions";
 import Link from "next/link";
 import PriceConverter from "@/components/PriceConverter";
 import Label from "@/components/Label";
+import { useRouter } from "next/navigation";
 const CartItems = ({ CartData }) => {
+  const router=useRouter()
   const [openCatalogueIds, setOpenCatalogueIds] = useState([]);
+  const [error,setError]=useState(null)
   const {
     incrementQuantity,
     decrementQuantity,
@@ -23,6 +26,25 @@ const CartItems = ({ CartData }) => {
       prev.includes(id) ? prev.filter((cid) => cid !== id) : [...prev, id]
     );
   };
+
+  
+   const handleCheckout = () => {
+if (!CartData?.data || CartData.data.length === 0) {
+    setError("Your cart is empty");
+    return; 
+  }
+    const outOfStock = CartData?.data?.filter((item) => item.outOfStock);
+
+
+    if (outOfStock && outOfStock.length > 0) {
+      setError("Remove out of Stock Product");
+      return; 
+    }
+    setError(null); 
+    router.push("/checkout")
+   
+  };
+  
   return (
     <div className="mx-auto mt-7  
         w-full 
@@ -180,7 +202,20 @@ const CartItems = ({ CartData }) => {
           )}
         </div>
 
+
         <div className="lg:col-span-4 bg-white shadow rounded-2xl p-6">
+          
+  {error && (
+            <div className="bg-red-200 border border-dotted border-red-400 text-red-600 px-4 py-3 rounded relative mt-2 flex items-start justify-between" role="alert">
+              <div>
+                <strong className="font-medium">Error: </strong>
+                <span className="block sm:inline text-sm">{error}</span>
+              </div>
+              <button onClick={() => setError(null)} className="ml-4">
+                <X className="w-5 h-5 text-white" />
+              </button>
+            </div>
+          )}
           <h2 className="text-xl font-semibold mb-4 ">Order Summary</h2>
           <div className="border-b-1 border-gray-300"></div>
           <div className="space-y-2 text-sm mt-5">
@@ -198,14 +233,14 @@ const CartItems = ({ CartData }) => {
             </div>
           </div>
           <div className="mt-8  w-full">
-  <Link
-    href="/checkout"
-    className="mt-6 mb-10 block w-full bg-indigo-600 hover:bg-indigo-700 
+  <button
+  onClick={handleCheckout}
+      className="mt-6 mb-10 block w-full bg-indigo-600 hover:bg-indigo-700 
                text-white p-3 rounded-lg font-medium shadow-lg 
                transition-transform transform hover:scale-105 text-center"
   >
     Proceed to Checkout
-  </Link>
+  </button>
 
   <div className="mt-6 flex flex-col items-center">
     <Image

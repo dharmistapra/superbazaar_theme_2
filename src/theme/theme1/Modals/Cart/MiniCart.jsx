@@ -11,12 +11,15 @@ import { useCartActions } from "@/hooks/useCartActions";
 import StitchingOptions from "@/components/StitchingOption";
 import Link from "next/link";
 import Label from "@/components/Label";
+import { useRouter } from "next/navigation";
 const MiniCart = () => {
+  const router=useRouter()
   const dispatch = useDispatch();
   const isCartOpen = useSelector((state) => state.minicart.isCartOpen);
   const { CartData } = useSelector((state) => state.cartItem);
   const [cartItems, setCartItemsState] = useState([]);
   const [openCatalogueIds, setOpenCatalogueIds] = useState([]);
+  const [error,setError]=useState(null)
   const {
     incrementQuantity,
     decrementQuantity,
@@ -33,6 +36,24 @@ const MiniCart = () => {
       prev.includes(id) ? prev.filter((cid) => cid !== id) : [...prev, id]
     );
   };
+
+
+ const handleCheckout = () => {
+  if (!CartData?.data || CartData.data.length === 0) {
+    setError("Your cart is empty");
+    return; 
+  }
+  
+  const outOfStock = cartItems?.data?.filter((item) => item.outOfStock);
+  if (outOfStock && outOfStock.length > 0) {
+    setError("Remove out of Stock Product");
+    return; 
+  }
+  setError(null); 
+  dispatch(closeCart());
+  router.push("/checkout")
+ 
+};
 
   return (
     <>
@@ -64,6 +85,17 @@ const MiniCart = () => {
             isModalOpen={isCartOpen}
           />
         </div>
+          {error && (
+            <div className="bg-red-200 border border-dotted border-red-400 text-red-600 px-4 py-3 rounded relative mt-2 flex items-start justify-between" role="alert">
+              <div>
+                <strong className="font-medium">Error: </strong>
+                <span className="block sm:inline">{error}</span>
+              </div>
+              <button onClick={() => setError(null)} className="ml-4">
+                <X className="w-5 h-5 text-white" />
+              </button>
+            </div>
+          )}
         <div className="flex-1 overflow-y-auto p-4 space-y-4">
           {cartItems?.data?.length === 0 && <p className="text-center font-bold">Your cart is empty.</p>}
           {cartItems?.data?.map((item) => {
@@ -74,16 +106,16 @@ const MiniCart = () => {
                 <div className="flex justify-between items-start">
                   <div className="flex gap-3">
                     <div className="relative">
-                      {item?.outOfStock && <Label text={"Out of stock"} danger={item?.outOfStock}/>}
-                    <Image
-                      src={ImageUrl(item.image)}
-                      alt={item.name}
-                      height={300}
-                      width={300}
-                      className="w-20 h-30  rounded-md"
-                    />
-                     
-                     </div>
+                      {item?.outOfStock && <Label text={"Out of stock"} danger={item?.outOfStock} />}
+                      <Image
+                        src={ImageUrl(item.image)}
+                        alt={item.name}
+                        height={300}
+                        width={300}
+                        className="w-20 h-30  rounded-md"
+                      />
+
+                    </div>
                     <div>
                       <h3 className="font-medium text-sm">{item.name}</h3>
                       <p className="text-sm">₹{item.price}</p>
@@ -111,12 +143,12 @@ const MiniCart = () => {
                       </div>
 
                       <p className="text-xs text-gray-500 mt-1">
-  Available: {item?.availableQuantity || 0}
-</p>
+                        Available: {item?.availableQuantity || 0}
+                      </p>
                     </div>
 
 
-                    
+
                   </div>
                   <button
                     onClick={() => removeItem(item.id)}
@@ -158,8 +190,8 @@ const MiniCart = () => {
                               </div>
                               <span className="truncate max-w-[150px]">{p.name}</span>
                             </div>
-                           
-                           {p?.outOfStock && <Label text={"Out of stock"} danger={p?.outOfStock}/>}
+
+                            {p?.outOfStock && <Label text={"Out of stock"} danger={p?.outOfStock} />}
                           </div>
                         ))}
                       </div>
@@ -178,22 +210,21 @@ const MiniCart = () => {
           </div>
 
 
-           <Link
-          href="/cart"
-        onClick={() => dispatch(closeCart())}
-          className="flex-1 py-2 text-center rounded-lg bg-gray-100 hover:bg-gray-200 transition font-medium"
-        >
-          View Cart
-        </Link>
+          <Link
+            href="/cart"
+            onClick={() => dispatch(closeCart())}
+            className="flex-1 py-2 text-center rounded-lg bg-gray-100 hover:bg-gray-200 transition font-medium"
+          >
+            View Cart
+          </Link>
 
 
-        <Link
-          href="/checkout"
-        onClick={() => dispatch(closeCart())}
-          className="w-full py-2 bg-zinc-900 text-white rounded hover:bg-grey-700 text-center"
-        >
-           Proceed to Checkout
-        </Link>
+          <button
+            onClick={handleCheckout}
+            className="w-full py-2 bg-zinc-900 text-white rounded hover:bg-grey-700 text-center"
+          >
+            Proceed to Checkout
+          </button>
         </div>
       </div>
     </>

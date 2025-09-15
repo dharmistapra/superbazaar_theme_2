@@ -16,6 +16,7 @@ import SharePopup from "../single/components/SharePopup"
 import Link from "next/link"
 import WishlistButton from "@/components/cards/attribute/WishlistButton"
 import dynamic from "next/dynamic"
+import { downloadAllImages, ImageZip } from "@/helper/imageDownload"
 const InquiryForm = dynamic(() => import("../components/inquiry"));
 
 const Catalogue = ({ CatalogueDetailData, stitching, category }) => {
@@ -143,11 +144,13 @@ const Catalogue = ({ CatalogueDetailData, stitching, category }) => {
                             </button>
 
                              <button
+                              onClick={()=>{downloadAllImages(CatalogueDetailData)}}
                                 className="p-2 rounded-lg border bg-white text-gray-700 border-zinc-900 hover:bg-zinc-900 hover:text-white transition">
                                 <Download  className="w-5 h-5" />
                             </button>
 
                              <button
+                               onClick={()=>{ImageZip(CatalogueDetailData)}}
                                 className="p-2 rounded-lg border bg-white text-gray-700 border-zinc-900 hover:bg-zinc-900 hover:text-white transition">
                                 <FolderArchive   className="w-5 h-5" />
                             </button>

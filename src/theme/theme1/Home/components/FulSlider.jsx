@@ -10,7 +10,7 @@ const FullSlider = ({ slides = [] }) => {
   if (!slides.length) return null;
 
   return (
-    <div className="container mx-auto px-4 mt-10">
+    <div className="w-full">
       <Swiper
         modules={[Pagination, Autoplay]}
         loop={true}
@@ -20,7 +20,7 @@ const FullSlider = ({ slides = [] }) => {
       >
         {slides.map((slide, index) => (
           <SwiperSlide key={index}>
-            <div className="relative w-full h-[400px]">
+            <div className="relative w-full h-[430px]">
               <Image
                 src={ImageUrl(slide.image)}
                 alt={slide.title || "Slider Image"}
