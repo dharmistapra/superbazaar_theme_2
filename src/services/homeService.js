@@ -1,4 +1,4 @@
-import { createServerAxios } from "./apiClient";
+import { createClientAxios, createServerAxios } from "./apiClient";
 
 export const getHomeBanners = async () => {
   try {
@@ -39,3 +39,15 @@ export const getTestimonal = async () => {
     return error;
   }
 };
+
+
+export const getPopups = async () => {
+  try {
+    const axiosInstance = await createClientAxios();
+    const res = await axiosInstance.get(`/public/popups`);
+    return res.data?.data || {};
+  } catch (error) {
+    return {}
+  }
+};
+

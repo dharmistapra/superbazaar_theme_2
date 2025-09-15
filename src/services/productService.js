@@ -5,7 +5,7 @@ export const getCategoryBanners = async (category) => {
     const res = await axiosInstance.get(`/public/page-banner/${category}`);
     return res.data?.data || {};
   } catch (error) {
-    return error;
+    return { success: false, error: error?.response?.data || error.message };
   }
 };
 export const getCategoryProducts = async (
@@ -30,7 +30,7 @@ export const getCategoryProducts = async (
     return res.data;
   } catch (error) {
     console.error("Error fetching category products:", error);
-    throw error;
+    return { success: false, error: error?.response?.data || error.message };
   }
 };
 export const getCategoryFilter = async (category) => {
@@ -40,7 +40,7 @@ export const getCategoryFilter = async (category) => {
     return res.data;
   } catch (error) {
     console.error("Error fetching category filter   :", error);
-    throw error;
+    return { success: false, error: error?.response?.data || error.message };
   }
 };
 export const getProductdetail = async (url) => {
@@ -59,7 +59,7 @@ export const getProductStitching = async (url) => {
     return res.data;
   } catch (error) {
     console.error("Error fetching product stitching:", error);
-    throw error;
+  return { success: false, error: error?.response?.data || error.message };
   }
 };
 export const getProductAttributes = async (url) => {
@@ -69,7 +69,7 @@ export const getProductAttributes = async (url) => {
     return res.data;
   } catch (error) {
     console.error("Error fetching product attributes:", error);
-    throw error;
+    return { success: false, error: error?.response?.data || error.message };
   }
 };
 export const getRelatedProduct = async (url) => {
@@ -79,7 +79,7 @@ export const getRelatedProduct = async (url) => {
     return res.data;
   } catch (error) {
     console.error("Error fetching product detail:", error);
-    throw error;
+   return { success: false, error: error?.response?.data || error.message };
   }
 };
 export const getWholeSaleProductslists = async (
@@ -102,6 +102,6 @@ export const getWholeSaleProductslists = async (
     return res.data;
   } catch (error) {
     console.error("Error fetching category products:", error);
-    throw error;
+    return { success: false, error: error?.response?.data || error.message };
   }
 };

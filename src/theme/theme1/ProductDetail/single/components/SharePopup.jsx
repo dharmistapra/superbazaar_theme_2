@@ -1,8 +1,11 @@
 "use client";
-import { Facebook, Twitter, Pinterest, MessageCircle, Copy, X } from "lucide-react"
-const SharePopup = ({ isOpen, onClose, url }) => {
+import { Facebook, Twitter, Pinterest, MessageCircle, Copy, X, } from "lucide-react"
+const SharePopup = ({ isOpen, onClose, url,name ,image}) => {
   if (!isOpen) return null;
-
+  const message = encodeURIComponent(`${name} ${url}`);
+    const handleWhatsAppShare = () => {
+    window.open(`https://wa.me/?text=${message}`, "_blank");
+  };
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black/40 z-50">
       <div className="bg-white rounded-lg shadow-lg p-6 w-96 relative">
@@ -40,13 +43,12 @@ const SharePopup = ({ isOpen, onClose, url }) => {
             <Twitter size={22} />
           </a>
 
-          <a
-            href={`https://api.whatsapp.com/send?text=${url}`}
-            target="_blank"
+          <button
+            onClick={handleWhatsAppShare}
             className="text-zinc-900 hover:text-green-700 transition"
           >
             <MessageCircle size={22} />
-          </a>
+          </button>
         </div>
       </div>
     </div>

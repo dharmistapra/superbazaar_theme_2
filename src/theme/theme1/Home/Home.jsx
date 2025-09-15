@@ -2,6 +2,7 @@ import dynamic from "next/dynamic";
 import Banner from "./components/Banner";
 import { getHomeBanners, getHomeContent, getHomeProductlist, getTestimonal } from "@/services/homeService";
 import { getWebSetting } from "@/services/webSetting";
+import Popups from "@/components/Popups";
 const Topcategories = dynamic(() => import("./components/TopCategores"))
 const Products = dynamic(() => import("../components/Products/Products"))
 const ThreeFourBanner = dynamic(() => import("./components/ThreeFourBanner"))
@@ -49,6 +50,7 @@ export default async function Home() {
         return renderFn ? renderFn(item) : null;
       })}
       <TestimonialSlider data={testimonal} />
+      <Popups/>
     </>
   );
 }
