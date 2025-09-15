@@ -45,7 +45,7 @@ const CatalogCard = ({ product, category }) => {
 
                 {/* Product Details */}
                 <div className="text-center p-2 bg-gray-50">
-                    <h3 className="font-semibold text-sm">
+                    <h3 className="font-semibold text-xs">
                         <p className="line-clamp-1 text-left">{product.name}</p>
                     </h3>
 

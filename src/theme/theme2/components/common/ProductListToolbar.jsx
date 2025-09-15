@@ -21,8 +21,8 @@ const ProductListToolbar = ({
     return (
         <div className="bg-white border-b border-gray-200 sm:px-4 lg:px-5 py-3 mb-3 flex flex-wrap items-center justify-between gap-3">
             <div className="flex gap-2 flex-wrap items-center">
-                <h1 className="text-[25px] font-semibold">{title}</h1>
-                <p className="text-sm text-gray-500 justify-center">
+                <p className="text-[#222222] text-[20px] font-semibold text-center">{title}</p>
+                <p className="text-xs text-gray-500 justify-center">
                     Showing 1–{products.length} of {totalCount} results
                 </p>
             </div>

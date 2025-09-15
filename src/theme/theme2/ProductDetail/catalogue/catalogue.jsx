@@ -248,7 +248,12 @@ const Catalogue = ({ CatalogueDetailData, stitching, category }) => {
                 </div>
 
                 <div className="w-full mt-10">
-                    <h1 className="text-2xl font-normal text-center mb-10">You May Also Like this</h1>
+                    <div className="flex flex-col md:flex-row md:justify-center items-center mb-6 text-center ">
+                        <div>
+                            <p className="text-[#222222] text-[18px] font-semibold text-center uppercase mt-4"> You may also like this</p>
+                            <p className="text-gray-500 text-sm lowercase mb-6">TOP SALE IN THIS WEEK</p>
+                        </div>
+                    </div>
                     <RalatedCatalogue url={CatalogueDetailData.url} />
                 </div>
 

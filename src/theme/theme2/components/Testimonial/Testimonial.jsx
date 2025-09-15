@@ -14,11 +14,12 @@ const Testimonial = ({ testimonials }) => {
   return (
     <section className="testimonial-wrapper py-8 bg-gray-50 mt-3 mb-5">
       <div className="container mx-auto px-4">
-        <h3 className="text-2xl font-semibold mb-6 text-center">TESTIMONIALS</h3>
-
+        <p className="text-[#222222] text-[18px] font-semibold text-center uppercase mb-6">
+          Testimonials
+        </p>
         <Swiper
           modules={[Pagination, Autoplay]}
-          pagination={{ clickable: true }}
+          // pagination={{ clickable: true }}
           autoplay={{ delay: 3000 }}
           loop
           spaceBetween={24}

@@ -102,7 +102,7 @@ const HeaderMenu = ({ menudata, currencyData }) => {
                             <div className="flex items-center lg:hidden gap-4">
                                 <div className="flex items-center lg:hidden gap-4">
                                     <button onClick={() => setOpenMenu(true)}>
-                                        <Menu size={21} className="text-gray-800" />
+                                        <Menu size={21} className="text-gray-800 mx-2 -mt-1" />
                                     </button>
                                 </div>
                             </div>
@@ -250,7 +250,7 @@ const HeaderMenu = ({ menudata, currencyData }) => {
                     </div>
                 )}
             </header >
-            <MobileNav />
+            <MobileNav handleCartClick={handleCartClick} list={list} />
         </>
     );
 };

@@ -50,7 +50,7 @@ const ProductCard = ({ product, pathname }) => {
                         href={`${pathname}`}
                         className="text-gray-800 hover:text-amber-700 transition text-xs sm:text-sm md:text-base"
                     >
-                        <span className="line-clamp-1 ">
+                        <span className="line-clamp-1 text-sm">
                             {product?.name}
                         </span>
                     </Link>
