@@ -4,6 +4,7 @@ import Collection from "./components/HomeLayout/Collection";
 import TrendingLehengas from "./components/HomeLayout/TrendingLehengas";
 import Testimonial from "./components/Testimonial/Testimonial";
 import { getWebSetting } from "@/services/webSetting";
+import Popups from "@/components/Popups";
 
 export default async function Home() {
     const [bannerdata,
@@ -33,6 +34,7 @@ export default async function Home() {
             <TrendingLehengas tabsData={productTabsData} purchaseType={webSetting?.purchaseType} />
             <Collection homeContent={HomeContent} webSetting={webSetting} productTabsData={productTabsData} />
             <Testimonial testimonials={testimonal} />
+            <Popups />
         </>
     )
 }
