@@ -23,12 +23,17 @@ const TrendingLehengas = ({ tabsData = [], purchaseType }) => {
                                 {block.title}
                             </p>
 
-                            {/* <Link
-                                href={`/${purchaseType || "retail"}/${block.url}`}
-                                className="text-sm md:text-base font-bold hover:text-pink-600 transition"
+                            <Link
+                                href={
+                                    purchaseType === "retail"
+                                        ? `/retail/${block.url}`
+                                        : `/wholesale/${block.url}`
+                                }
+                                className="text-sm md:text-base font-bold hover:text-red-400 transition"
                             >
                                 View All →
-                            </Link> */}
+                            </Link>
+
                         </div>
 
                         {/* Slider */}

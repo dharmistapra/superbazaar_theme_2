@@ -53,7 +53,6 @@ const Catalogue = ({ CatalogueDetailData, stitching, category }) => {
         return `https://api.whatsapp.com/send?phone=+917226813589&text=${encodeURIComponent(message)}`;
     }, [CatalogueDetailData]);
 
-
     const increment = () => {
         if (CatalogueDetailData.optionType === "Size" && !selectedSize) {
             return setErrors("⚠️ Please select size");

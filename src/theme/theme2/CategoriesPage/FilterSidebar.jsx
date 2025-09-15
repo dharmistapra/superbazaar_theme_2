@@ -65,19 +65,18 @@ const FilterSidebar = ({
         if (mobile) setOpen(false);
     };
 
-    const renderSection = (title, name, children) => (
-        <div className="mb-4">
+    const renderSection = (title, name, children, key) => (
+        <div key={key} className="mb-4">
             <div
                 className="flex justify-between items-center border-b border-gray-200 pb-2 mb-4 mt-5 cursor-pointer"
                 onClick={() => toggleSection(name)}
             >
-                {/* <h2 className="text-lg font-semibold uppercase text-gray-600">{title}</h2> */}
-                <p className="text-[#222222] text-[17px] font-normal text-center uppercase ">{title}</p>
-                {sections[name] ? <Minus className="text-gray-600" /> : <Plus className="text-gray-600" />}
+                <span className="font-semibold">{title}</span>
             </div>
-            {sections[name] && <div>{children}</div>}
+            <div>{children}</div>
         </div>
     );
+
 
     const content = (
         <div className="bg-white rounded-lg shadow p-4 space-y-6 h-full overflow-y-auto">

@@ -36,7 +36,7 @@ const Testimonial = ({ testimonials }) => {
                 <div className="w-24 h-28 mb-4 rounded-full overflow-hidden">
                   <Image
                     src={ImageUrl(testimonial.image)}
-                    alt={testimonial.name}
+                    alt={testimonial.name || "Customer Testimonial"}
                     width={96}
                     height={96}
                     className="object-cover mx-auto"

@@ -50,7 +50,7 @@ export default async function Home() {
         return renderFn ? renderFn(item) : null;
       })}
       <TestimonialSlider data={testimonal} />
-      <Popups/>
+      <Popups />
     </>
   );
 }

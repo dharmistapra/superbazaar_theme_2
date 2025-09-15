@@ -26,7 +26,7 @@ const MobileNav = ({ handleCartClick, list }) => {
 
                 {/* Wishlist */}
                 <Link
-                    href="/myaccount/wishlist"
+                    href="/account/wishlist"
                     className="flex flex-col items-center text-gray-700 hover:text-red-600"
                 >
                     <Heart size={20} />
