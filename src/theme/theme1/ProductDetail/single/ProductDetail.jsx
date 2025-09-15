@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import dynamic from "next/dynamic";
-import { CircleQuestionMark, Heart, MessageCircle, Repeat, Share2, ShoppingCart } from "lucide-react";
+import { CircleQuestionMark, Heart, MessageCircle, Repeat, Share2, ShoppingCart, X } from "lucide-react";
 import OfferBanner from "@/components/OfferBanner";
 import ProductImageGallery from "./components/ProductImageGallery";
 import { useSession } from "next-auth/react";
@@ -12,6 +12,7 @@ import { addToCartProduct, getCartItems } from "@/services/cartService";
 import { setCartItems } from "@/store/slice/cartItemSlice";
 import { Loader2 } from "lucide-react";
 import Link from "next/link";
+import { ImageUrl } from "@/helper/imageUrl";
 const SizeSelector = dynamic(() => import("@/components/SizeSelector"));
 const SharePopup = dynamic(() => import("./components/SharePopup"));
 const RalatedProduct = dynamic(() => import("./components/RelatedProduct"));
@@ -184,7 +185,15 @@ const ProductDetailTheme1 = ({ product, Stitching, attributes, category }) => {
             </button>
           </div>
           {errors && (
-            <p className="text-red-500 text-sm mt-2">{errors}</p>
+            <div className="bg-red-200 border border-dotted border-red-400 text-red-600 px-4 py-3 rounded relative mt-2 flex items-start justify-between" role="alert">
+              <div>
+                <strong className="font-medium">Error: </strong>
+                <span className="block sm:inline">{errors}</span>
+              </div>
+              <button onClick={() => setErrors(null)} className="ml-4">
+                <X className="w-5 h-5 text-white" />
+              </button>
+            </div>
           )}
           <div className="border-t border-gray-500 border-dashed mt-3"></div>
 
@@ -205,7 +214,9 @@ const ProductDetailTheme1 = ({ product, Stitching, attributes, category }) => {
       <SharePopup
         isOpen={shareOpen}
         onClose={() => setShareOpen(false)}
-        url={`https://superbazaar.in/`}
+        name={product.name}
+        image={ImageUrl(product?.image[0])}
+        url={`${process.env.NEXT_PUBLIC_API_URL}api/public/shareproduct/${product.id}`}
       />
 
       <InquiryForm
