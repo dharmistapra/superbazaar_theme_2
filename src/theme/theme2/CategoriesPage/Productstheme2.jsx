@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { getCategoryFilter, getCategoryProducts } from "@/services/productService";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import ProductCard from "../ProductComponent/ProductCard";
@@ -25,6 +25,12 @@ const Productstheme2 = ({ category, title }) => {
     const [activeTab, setActiveTab] = useState("single");
     const [filterData, setFilterData] = useState([]);
     const [selectedAttributes, setSelectedAttributes] = useState({});
+    const productSectionRef = useRef(null);
+
+    const handlePageChange = (page) => {
+        setCurrentPage(page);
+        productSectionRef.current?.scrollIntoView({ behavior: "smooth" });
+    };
 
     const buildFilterQuery = (selectedAttributes) => {
         const params = new URLSearchParams();
@@ -162,7 +168,7 @@ const Productstheme2 = ({ category, title }) => {
                     currentPage={page}
                     totalCount={totalCount}
                     perPage={20}
-                    onPageChange={(p) => setPage(p)}
+                    onPageChange={handlePageChange}
                 />
             </div>
         </>

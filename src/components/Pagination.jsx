@@ -7,11 +7,24 @@ const Pagination = ({ currentPage, totalCount, perPage, onPageChange }) => {
 
   if (totalPages <= 1) return null;
 
+  // const handleClick = (page) => {
+  //   if (page >= 1 && page <= totalPages && page !== currentPage) {
+  //     onPageChange(page);
+  //   }
+  // };
+
   const handleClick = (page) => {
     if (page >= 1 && page <= totalPages && page !== currentPage) {
       onPageChange(page);
+
+      // Scroll to top smoothly after page change
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
     }
   };
+
 
   const renderPageNumbers = () => {
     const pageNumbers = [];

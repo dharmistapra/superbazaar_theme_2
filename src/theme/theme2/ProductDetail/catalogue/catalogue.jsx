@@ -21,10 +21,11 @@ import WishlistButton from "@/components/cards/attribute/WishlistButton"
 import { ImageUrl } from "@/helper/imageUrl"
 import DownloadImage from "../../components/common/DownloadImage"
 import DownloadZip from "../../components/common/DownloadZip"
+import { useRouter } from "next/navigation"
 
 const Catalogue = ({ CatalogueDetailData, stitching, category }) => {
     const dispatch = useDispatch()
-    const { open } = useModal();
+    const router = useRouter();
     const { data: session, status } = useSession();
     const [errors, setErrors] = useState(null)
     const [selectedSize, setSelectedSize] = useState(null);
@@ -34,7 +35,7 @@ const Catalogue = ({ CatalogueDetailData, stitching, category }) => {
     const [isWishlisted, setIsWishlisted] = useState(false);
     const [wishlistLoading, setWishlistLoading] = useState(false);
     const [btnloading, setBtnLoading] = useState(false);
-    const [shouldShowPrice, setShouldShowPrice] = useState(true); // Replace with actual logic
+    const [shouldShowPrice, setShouldShowPrice] = useState(true);
     const [loading, setLoading] = useState(false);
     const [stitchingData, setStitchingData] = useState(null);
     const [wishlist, setWishlist] = useState(false);
@@ -74,6 +75,10 @@ const Catalogue = ({ CatalogueDetailData, stitching, category }) => {
 
     const handleAddtoCart = async () => {
         setErrors(null);
+        if (!session?.accessToken) {
+            router.push("/login");
+            return;
+        }
         if (CatalogueDetailData?.optionType === "Size" && Object.keys(selectedSize)?.length == 0) {
             return setErrors("⚠️ Please select size");
         }
@@ -85,10 +90,6 @@ const Catalogue = ({ CatalogueDetailData, stitching, category }) => {
             if (!stitchingData.isValid) {
                 return setErrors("⚠️ Please fill all required measurements");
             }
-        }
-        if (!session?.accessToken) {
-            open("login")
-            return
         }
 
         setLoading(true);

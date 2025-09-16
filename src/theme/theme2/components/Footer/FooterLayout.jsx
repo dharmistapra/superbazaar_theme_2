@@ -91,7 +91,6 @@ const FooterLayout = () => {
                             </ul>
                         </div>
 
-                        {/* Help & Support */}
                         <div>
                             <h4 className="font-medium mb-3 uppercase tracking-[3px]">Help & Support</h4>
                             <ul className="space-y-1 text-[13px] tracking-wider">

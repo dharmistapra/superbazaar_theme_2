@@ -38,7 +38,11 @@ const TrendingLehengas = ({ tabsData = [], purchaseType }) => {
 
                         {/* Slider */}
                         <div className="relative">
-                            <SliderNavigation position="center" />
+                            <SliderNavigation
+                                position="center"
+                                prevClass={`swiper-button-prev-${idx}`}
+                                nextClass={`swiper-button-next-${idx}`}
+                            />
                             <Swiper
                                 grabCursor
                                 loop
@@ -49,13 +53,13 @@ const TrendingLehengas = ({ tabsData = [], purchaseType }) => {
                                     disableOnInteraction: false,
                                 }}
                                 navigation={{
-                                    nextEl: ".swiper-button-next",
-                                    prevEl: ".swiper-button-prev",
+                                    nextEl: `.swiper-button-next-${idx}`,
+                                    prevEl: `.swiper-button-prev-${idx}`,
                                 }}
                                 modules={[Autoplay, Navigation]}
                                 className="w-full"
                                 breakpoints={{
-                                    0: { slidesPerView: 2, spaceBetween: 10 }, // 📱 small screens
+                                    0: { slidesPerView: 2, spaceBetween: 10 },
                                     360: { slidesPerView: 2, spaceBetween: 12 },
                                     480: { slidesPerView: 2, spaceBetween: 14 },
                                     640: { slidesPerView: 3, spaceBetween: 16 },

@@ -2,19 +2,13 @@
 
 import { useState } from "react";
 import { Facebook, MessageCircle, Minus, Plus, Twitter } from "lucide-react";
-import OfferBanner from "@/components/OfferBanner";
 import ProductImageGallery from "./components/ProductImageGallery";
-import SharePopup from "./components/SharePopup";
-import StitchingForm from "./components/StitchingForm";
-import ProductDescription from "./components/ProductDescription";
 import Image from "next/image";
 import Link from "next/link";
 import { useDispatch } from "react-redux";
 import { useSession } from "next-auth/react";
-import { useModal } from "@/hooks/useModal";
 import ProductAccordion from "./components/ProductAccordion";
-import ProductCard from "../../ProductComponent/ProductCard";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { ImageUrl } from "@/helper/imageUrl";
 import Breadcrum from "../../components/BreadCrums/Breadcrum";
 import PriceConverter from "@/components/PriceConverter";
@@ -26,7 +20,7 @@ import { openCart } from "@/store/slice/MiniCartSlice";
 
 const ProductDetailTheme2 = ({ product, Stitching, attributes, category }) => {
   const dispatch = useDispatch()
-  const { open } = useModal();
+  const router = useRouter();
   const pathname = usePathname();
   const { data: session, status } = useSession();
   const [quantity, setQuantity] = useState(1);
@@ -58,10 +52,17 @@ const ProductDetailTheme2 = ({ product, Stitching, attributes, category }) => {
   const decrement = () => setQuantity((prev) => (prev > 1 ? prev - 1 : 1));
   const toggleWishlist = () => setWishlist((prev) => !prev);
   const toggleCompare = () => setCompare((prev) => !prev);
+  console.log("accce =========>", session, !session?.accessToken);
 
   const handleAddtoCart = async () => {
-
     setErrors(null);
+
+    if (!session?.accessToken) {
+      router.push("/login");
+      return;
+    }
+
+
     if (product.optionType === "Size" && !selectedSize) {
       return setErrors("⚠️ Please select size");
     }
@@ -73,10 +74,6 @@ const ProductDetailTheme2 = ({ product, Stitching, attributes, category }) => {
       if (!stitchingData.isValid) {
         return setErrors("⚠️ Please fill all required measurements");
       }
-    }
-    if (!session?.accessToken) {
-      open("/login")
-      return
     }
 
     setLoading(true);

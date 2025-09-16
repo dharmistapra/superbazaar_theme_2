@@ -32,9 +32,9 @@ const HeaderMenu = ({ menudata, currencyData }) => {
     const webSetting = useSelector(state => state.webSetting.webSetting)
     const [showSearch, setShowSearch] = useState(false);
     const { list } = useSelector((state) => state.wishlist);
-    const cartItems = useSelector((state) => state.cartItems);
-
+    const cartData = useSelector((state) => state.cartItem.CartData.data);
     const handleCartClick = () => dispatch(openCart());
+
     const fetchData = async () => {
         const data = await getWebSetting();
         dispatch(setWebSetting(data));
@@ -44,13 +44,15 @@ const HeaderMenu = ({ menudata, currencyData }) => {
         fetchData();
     }, []);
 
+
     const fetchProtectedData = async () => {
-        const [wishlist, cartItems] = await Promise.all(
-            [getUserWishlist(), getCartItems(session?.user?.id)]
-        )
-        dispatch(setWishlistData(wishlist.data))
-        dispatch(setCartItems(cartItems))
-    }
+        const [wishlist, cartItems] = await Promise.all([
+            getUserWishlist(),
+            getCartItems(session?.user?.id),
+        ]);
+        dispatch(setWishlistData(wishlist.data));
+        dispatch(setCartItems(cartItems));
+    };
 
     useEffect(() => {
         if (session?.accessToken) {
@@ -71,7 +73,6 @@ const HeaderMenu = ({ menudata, currencyData }) => {
         window.addEventListener("scroll", handleScroll);
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
-
     const handleLogout = async () => {
         localStorage.removeItem("token")
         signOut({ redirect: false })
@@ -182,15 +183,16 @@ const HeaderMenu = ({ menudata, currencyData }) => {
 
                                 {session?.accessToken && (
                                     <>
-                                        {list?.product?.length > 0 || list?.catalogue?.lemgth > 0 ?
-                                            <Heart size={20}
-                                                className="cursor-pointer hidden md:flex text-red-500"
-                                                fill="currentColor" /> : <Heart size={20} className="cursor-pointer hidden md:flex" />}
-
+                                        <Link href="/account/wishlist">
+                                            {list?.product?.length > 0 || list?.catalogue?.lemgth > 0 ?
+                                                <Heart size={20}
+                                                    className="cursor-pointer hidden md:flex text-red-500"
+                                                    fill="currentColor" /> : <Heart size={20} className="cursor-pointer hidden md:flex" />}
+                                        </Link>
                                         <div className="relative hidden md:flex">
                                             <ShoppingCart className="cursor-pointer" size={20} onClick={handleCartClick} />
                                             <span className="absolute -top-2 -right-2 bg-black text-white text-xs rounded-full px-1" >
-                                                1
+                                                {cartData?.length > 0 ? cartData?.length : 0}
                                             </span>
                                         </div>
                                     </>

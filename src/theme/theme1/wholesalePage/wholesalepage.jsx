@@ -120,7 +120,7 @@ const WholeSalePage = () => {
             </div>
 
             <div
-                className={`grid gap-4 
+                className={`grid gap-4 mb-5
             ${grid === 2 ? "grid-cols-2 sm:grid-cols-2 lg:grid-cols-2" : ""} 
             ${grid === 3 ? "grid-cols-2 sm:grid-cols-2 md:grid-cols-3" : ""} 
             ${grid === 4 ? "grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4" : ""}`}

@@ -29,7 +29,6 @@ const MobileNav = ({ handleCartClick, list }) => {
                     href="/account/wishlist"
                     className="flex flex-col items-center text-gray-700 hover:text-red-600"
                 >
-                    <Heart size={20} />
                     {list?.product?.length > 0 || list?.catalogue?.lemgth > 0 ?
                         <Heart size={20}
                             className="cursor-pointer hidden md:flex text-red-500"

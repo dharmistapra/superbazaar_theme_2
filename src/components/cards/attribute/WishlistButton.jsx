@@ -5,6 +5,7 @@ import { useModal } from "@/hooks/useModal"
 import { getUserWishlist, postUserWishlist } from "@/services/accountsService"
 import { useDispatch, useSelector } from "react-redux"
 import { setWishlistData } from "@/store/slice/WishlistSlice"
+import { useRouter } from "next/navigation"
 
 const WishlistButton = ({
   productId = null,
@@ -17,7 +18,7 @@ const WishlistButton = ({
   const { open } = useModal()
   const dispatch = useDispatch()
   const { list } = useSelector((state) => state.wishlist)
-
+  const router = useRouter()
   const currentId = type === "product" ? productId : catalogueId
   const isWishlisted =
     type === "catalogue"
@@ -37,6 +38,11 @@ const WishlistButton = ({
         open("login")
         return
       }
+      if (!session?.accessToken) {
+        router.push("/login");
+        return;
+      }
+
 
       const data =
         type === "catalogue"
@@ -74,11 +80,7 @@ const WishlistButton = ({
         disabled={wishlistLoading}
         className={`flex items-center justify-center transition-all duration-300 
     ${variant === "detail"
-            ? `w-10 h-10 rounded-md border ${isWishlisted
-              ? "bg-white text-red-300"
-              : "bg-white text-gray-700 hover:bg-black hover:text-white"
-            }`
-            : "p-2 rounded-full bg-white text-white-700 shadow-md hover:bg-black hover:text-white hover:shadow-lg"
+            ? `w-10 h-10 rounded-md border ${isWishlisted ? "bg-white text-red-300" : "bg-white text-white-700 hover:bg-black hover:text-white"}` : "p-2 rounded-full bg-white text-white-700 shadow-md hover:bg-black hover:text-white hover:shadow-lg"
           }`}
         aria-label="Add to Wishlist"
       >
@@ -87,14 +89,14 @@ const WishlistButton = ({
         ) : isWishlisted ? (
           <Heart
             size={20}
-            className="text-red-500"
+            className="text-red-500 "
             fill="currentColor" // 👈 fills with text color
           // stroke="currentColor" // 👈 keeps border same color
           />
         ) : (
           <Heart
             size={20}
-            className="text-gray-700"
+            className="text-gray-700 hover:text-white"
             fill="none" // 👈 no fill when not wishlisted
             stroke="currentColor"
           />

@@ -10,7 +10,7 @@ const FullSlider = ({ slides = [] }) => {
   if (!slides.length) return null;
 
   return (
-    <div className="w-full">
+    <div className="container mx-auto px-4 mt-7">
       <Swiper
         modules={[Pagination, Autoplay]}
         loop={true}
