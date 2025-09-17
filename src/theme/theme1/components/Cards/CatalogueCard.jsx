@@ -34,7 +34,7 @@ const CatalogueCard = ({ data, redirectUrl }) => {
         )}
 
         <div className="absolute top-5 right-3 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-all duration-500">
-          <WishlistButton productId={data?.id} type="catalogue" />
+          <WishlistButton productId={data?.id} type="catalogue" loginMode="modal" />
           <QuickViewButton />
           <CompareButton />
         </div>

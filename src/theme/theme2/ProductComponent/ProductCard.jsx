@@ -39,7 +39,7 @@ const ProductCard = ({ product, pathname }) => {
 
                     {/* Wishlist Button */}
                     <div className="absolute top-2 right-2 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                        <WishlistButton productId={product.id} type="product" variant="detail" />
+                        <WishlistButton productId={product.id} type="product" variant="detail" loginMode="page" />
                     </div>
                 </Link>
             </div>

@@ -6,8 +6,10 @@ import { ImageUrl } from "@/helper/imageUrl";
 import StitchingOptions from "@/components/StitchingOption";
 import { useCartActions } from "@/hooks/useCartActions";
 import PriceConverter from "@/components/PriceConverter";
+import { useRouter } from "next/navigation";
 
 const CartItems = ({ cartItems }) => {
+  const router = useRouter()
   const [openCatalogueIds, setOpenCatalogueIds] = useState([]);
   const {
     incrementQuantity,
@@ -24,6 +26,25 @@ const CartItems = ({ cartItems }) => {
   const totalSubtotal = cartItems.reduce((acc, item) => acc + item.subtotal, 0);
   const totalTax = 0;
   const totalOrder = totalSubtotal + totalTax;
+
+  // const handleCheckout = () => {
+  //   if (!cartItems?.data || cartItems.data.length === 0) {
+  //     setError("Your cart is empty");
+  //     return;
+  //   }
+  //   const outOfStock = cartItems?.data?.filter((item) => item.outOfStock);
+
+
+  //   if (outOfStock && outOfStock.length > 0) {
+  //     setError("Remove out of Stock Product");
+  //     return;
+  //   }
+  //   setError(null);
+  //   router.push("/checkout")
+
+  // };
+
+
   return (
     <div className="container mx-auto text-left w-full sm:max-w-[540px] md:max-w-[720px] lg:max-w-[960px] xl:max-w-[1280px] 2xl:max-w-[1320px] px-4 py-8">
       <div className="grid grid-cols-1 lg:grid-cols-12 ">
@@ -185,10 +206,10 @@ const CartItems = ({ cartItems }) => {
                   </div>
                 </div>
                 <button
-                  id="cartCheckout"
-                  className="w-full py-2 bg-green-600 text-white rounded mb-4"
+                  onClick={() => router.push("/checkout")}
+                  className="w-full py-2 bg-zinc-900 text-white rounded hover:bg-grey-700 text-center"
                 >
-                  Proceed To Checkout
+                  Proceed to Checkout
                 </button>
                 <div className="text-center">
                   <Image
@@ -202,63 +223,6 @@ const CartItems = ({ cartItems }) => {
               </div>
             </div>
           </div>
-
-
-
-          {/* <div className="border-b-1 border-gray-300"></div>
-          <div className="space-y-2 text-sm mt-5">
-            <div className="flex justify-between">
-              <span>Subtotal</span>
-              <span>₹{totalSubtotal}</span>
-            </div>
-            <div className="flex justify-between">
-              <span>Tax</span>
-              <span>₹{totalTax}</span>
-            </div>
-            <div className="flex justify-between font-semibold text-lg">
-              <span>Total</span>
-              <span>₹{totalOrder}</span>
-            </div>
-          </div>
-          <div className="mt-8  w-full">
-            <Link
-              href="/checkout"
-              className="mt-6 mb-10 block w-full bg-indigo-600 hover:bg-indigo-700 
-               text-white p-3 rounded-lg font-medium shadow-lg 
-               transition-transform transform hover:scale-105 text-center"
-            >
-              Proceed to Checkout
-            </Link>
-
-            <div className="mt-6 flex flex-col items-center">
-              <Image
-                alt="safe payment"
-                src={"/safepayment.webp"}
-                height={100}
-                width={250}
-                className="rounded-lg object-contain"
-              />
-              <p className="mt-2 text-sm text-zinc-900">
-                100% Safe & Secure Payments
-              </p>
-
-              <div className="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-4 w-full max-w-md">
-                <div className="flex items-center justify-center gap-2 p-3 rounded-lg bg-green-50 shadow-sm">
-                  <Lock className="w-5 h-5 text-green-600" />
-                  <span className="text-sm font-medium text-gray-700">
-                    SSL Encrypted
-                  </span>
-                </div>
-                <div className="flex items-center justify-center gap-2 p-3 rounded-lg bg-yellow-50 shadow-sm">
-                  <ShieldCheck className="w-5 h-5 text-yellow-600" />
-                  <span className="text-sm font-medium text-gray-700">
-                    Money Back Guarantee
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div> */}
-
         </div>
       </div>
     </div >

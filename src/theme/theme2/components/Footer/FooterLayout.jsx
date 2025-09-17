@@ -154,7 +154,6 @@ const FooterLayout = () => {
                                         </Link>
                                     );
                                 })}
-
                             </div>
                         </div>
                     </div>
@@ -163,7 +162,7 @@ const FooterLayout = () => {
 
             {/* Bottom Section */}
             <div className="py-4 flex flex-col md:flex-row items-center justify-between container mx-auto px-4 text-gray-400">
-                <div className="uppercase text-sm mb-2 md:mb-0">  © {new Date().getFullYear()}  {webSetting?.copyRightText}.</div>
+                <div className="uppercase text-sm mb-2 md:mb-0">  © {new Date().getFullYear()}  {webSetting?.copyRightText}</div>
                 <Image
                     src="/safepayment.webp"
                     alt="Payment"

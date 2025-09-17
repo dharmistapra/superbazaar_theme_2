@@ -47,21 +47,21 @@ const CheckoutPage = () => {
         paymentName: paymentMethod?.name,
       };
 
-     
-     
-      let response={}
-     if (paymentMethod?.name === "ccAvenue") {
-  setSuccessMsg("Redirecting to CCAvenue...");
-  const htmlResponse = await postCCAvenueOrder(body);
 
-  const newWindow = window.open("", "CCAvenuePayment", "width=600,height=700");
-  if (newWindow) {
-    newWindow.document.write(htmlResponse);
-    newWindow.document.close();
-  } else {
-    setErrorMsg("Please allow popups for payment.");
-  }
-}else{
+
+      let response = {}
+      if (paymentMethod?.name === "ccAvenue") {
+        setSuccessMsg("Redirecting to CCAvenue...");
+        const htmlResponse = await postCCAvenueOrder(body);
+
+        const newWindow = window.open("", "CCAvenuePayment", "width=600,height=700");
+        if (newWindow) {
+          newWindow.document.write(htmlResponse);
+          newWindow.document.close();
+        } else {
+          setErrorMsg("Please allow popups for payment.");
+        }
+      } else {
         response = await postOrder(body);
 
       }

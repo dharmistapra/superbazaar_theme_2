@@ -7,11 +7,6 @@ export default function StitchingForm({ stitchingData, onChange }) {
     const [selectedStitch, setSelectedStitch] = useState(null);
     const [formData, setFormData] = useState({});
     const [errors, setErrors] = useState({});
-    const [open, setOpen] = useState("stitching");
-
-    const toggle = (section) => {
-        setOpen(open === section ? null : section);
-    };
 
     const handleRadioChange = (option) => {
         setSelectedStitch(option.id);
@@ -33,7 +28,7 @@ export default function StitchingForm({ stitchingData, onChange }) {
         setErrors({});
     };
 
-    const handleInputChange = (optionId, fieldId, value) => {
+    const handleInputChange = (optionId, fieldId, value, field) => {
         setFormData((prev) => ({
             ...prev,
             [optionId]: {
@@ -44,14 +39,58 @@ export default function StitchingForm({ stitchingData, onChange }) {
 
         setErrors((prev) => {
             const newErrors = { ...prev };
+
             if (!value || value.trim() === "") {
                 newErrors[`${optionId}_${fieldId}`] = "This field is required";
+            } else if (field && field.range) { // <-- check field exists
+                const [min, max] = field.range.split("-").map(Number);
+                const num = Number(value);
+                if (isNaN(num) || num < min || num > max) {
+                    newErrors[`${optionId}_${fieldId}`] = `Value must be between ${min} and ${max}`;
+                } else {
+                    delete newErrors[`${optionId}_${fieldId}`];
+                }
             } else {
                 delete newErrors[`${optionId}_${fieldId}`];
             }
+
             return newErrors;
         });
     };
+
+
+    // const handleInputChange = (optionId, fieldId, value, field) => {
+    //     setFormData((prev) => ({
+    //         ...prev,
+    //         [optionId]: {
+    //             ...(prev[optionId] || {}),
+    //             [fieldId]: value,
+    //         },
+    //     }));
+
+    //     setErrors((prev) => {
+    //         const newErrors = { ...prev };
+
+    //         // Required check
+    //         if (!value || value.trim() === "") {
+    //             newErrors[`${optionId}_${fieldId}`] = "This field is required";
+    //         } else if (field.range) {
+    //             // Range check
+    //             const [min, max] = field.range.split("-").map(Number);
+    //             const num = Number(value);
+    //             if (isNaN(num) || num < min || num > max) {
+    //                 newErrors[`${optionId}_${fieldId}`] = `Value must be between ${min} and ${max}`;
+    //             } else {
+    //                 delete newErrors[`${optionId}_${fieldId}`];
+    //             }
+    //         } else {
+    //             delete newErrors[`${optionId}_${fieldId}`];
+    //         }
+
+    //         return newErrors;
+    //     });
+    // };
+
 
     // Build-safe effect for final form data
     useEffect(() => {
@@ -167,7 +206,7 @@ export default function StitchingForm({ stitchingData, onChange }) {
 
                                 return (
                                     <div key={option.id} className="mt-4 pt-4 space-y-4">
-                                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                             {values.map((field) => (
                                                 <div key={field.id} className="flex flex-col">
                                                     <label className="mb-1 font-medium">
@@ -183,16 +222,28 @@ export default function StitchingForm({ stitchingData, onChange }) {
                                                             placeholder={field.range}
                                                             value={formData[option.id]?.[field.id] || ""}
                                                             onChange={(e) =>
-                                                                handleInputChange(option.id, field.id, e.target.value)
+                                                                handleInputChange(option.id, field.id, e.target.value, field)
                                                             }
-                                                            className={`border rounded-lg px-3 py-2 outline-none ${errors[`${option.id}_${field.id}`] ? "border-red-500" : ""
+                                                            className={`border rounded-lg px-3 py-2 outline-none ${errors[`${option.id}_${field.id}`] ? "border-red-500" : "border-gray-300"
                                                                 }`}
                                                         />
+
+
+                                                        // <input
+                                                        //     type="number"
+                                                        //     placeholder={field.range}
+                                                        //     value={formData[option.id]?.[field.id] || ""}
+                                                        //     onChange={(e) =>
+                                                        //         handleInputChange(option.id, field.id, e.target.value)
+                                                        //     }
+                                                        //     className={`border rounded-lg px-3 py-2 outline-none ${errors[`${option.id}_${field.id}`] ? "border-red-500" : ""
+                                                        //         }`}
+                                                        // />
                                                     ) : field.type === "Dropdown" ? (
                                                         <select
                                                             value={formData[option.id]?.[field.id] || ""}
                                                             onChange={(e) =>
-                                                                handleInputChange(option.id, field.id, e.target.value)
+                                                                handleInputChange(option.id, field.id, e.target.value, field)
                                                             }
                                                             className={`border rounded-lg px-3 py-2 outline-none ${errors[`${option.id}_${field.id}`] ? "border-red-500" : ""
                                                                 }`}
@@ -207,7 +258,7 @@ export default function StitchingForm({ stitchingData, onChange }) {
                                                     ) : null}
 
                                                     {errors[`${option.id}_${field.id}`] && (
-                                                        <p className="text-red-500 text-sm mt-1">
+                                                        <p className="text-red-500 text-xs mt-1">
                                                             {errors[`${option.id}_${field.id}`]}
                                                         </p>
                                                     )}

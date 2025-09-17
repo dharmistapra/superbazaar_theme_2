@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import { SlidersHorizontal, LayoutList, Grip, GripVertical } from "lucide-react";
 import { getCategoryFilter, getCategoryProducts } from "@/services/productService";
@@ -14,8 +14,8 @@ const ProductCard = dynamic(() => import("@/components/cards/ProductCards"))
 const Pagination = dynamic(() => import("@/components/Pagination"))
 const SelectedFilters = dynamic(() => import("@/components/SelctedFilter"))
 const Productstheme1 = ({ category }) => {
-     const pathname = usePathname();
-     const { webSetting } = useSelector((state) => state.webSetting)
+    const pathname = usePathname();
+    const { webSetting } = useSelector((state) => state.webSetting)
     const [grid, setGrid] = useState(4);
     const [open, setOpen] = useState(false);
     const [sort, setSort] = useState("");
@@ -25,6 +25,7 @@ const Productstheme1 = ({ category }) => {
     const [selectedAttributes, setSelectedAttributes] = useState({});
     const [loading, setLoading] = useState(true);
     const [filterData, setFilterData] = useState([]);
+    const productSectionRef = useRef(null);
 
     const fetchProducts = async (filters = {}) => {
         setLoading(true);
@@ -53,6 +54,11 @@ const Productstheme1 = ({ category }) => {
     }, [category])
 
     const handleApplyFilters = (filters) => fetchProducts(filters);
+
+    const handlePageChange = (page) => {
+        setPage(page); // ✅ use setPage, not setCurrentPage
+        productSectionRef.current?.scrollIntoView({ behavior: "smooth" });
+    };
 
     const sortOptions = [
         { value: "", label: "New Arrivals" },
@@ -125,41 +131,41 @@ const Productstheme1 = ({ category }) => {
                     fetchProducts={fetchProducts}
                 />
 
-<div
-  className={`grid gap-4 
+                <div
+                    className={`grid gap-4 
     ${grid === 2 ? "grid-cols-2 sm:grid-cols-2 lg:grid-cols-2" : ""} 
     ${grid === 3 ? "grid-cols-2 sm:grid-cols-2 md:grid-cols-3" : ""} 
     ${grid === 4 ? "grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4" : ""}`}
->
-  {loading ? (
-    [...Array(grid * 2)].map((_, i) => <ProductCardSkeleton key={i} />)
-  ) : Array.isArray(products) && products.length > 0 ? (
-    products.map((item, index) => (
-      <div key={index}>
-        {webSetting?.purchaseType === "retail" ? (
-          <ProductCard data={item} grid={grid} />
-        ) : (
-          <CatalogueCard
-            data={item}
-            grid={grid}
-            redirectUrl={`catalogue/${pathname?.split("/")?.[3]}`}
-          />
-        )}
-      </div>
-    ))
-  ) : (
-    <p className="col-span-full text-center text-gray-500">
-      No products found.
-    </p>
-  )}
-</div>
+                >
+                    {loading ? (
+                        [...Array(grid * 2)].map((_, i) => <ProductCardSkeleton key={i} />)
+                    ) : Array.isArray(products) && products.length > 0 ? (
+                        products.map((item, index) => (
+                            <div key={index}>
+                                {webSetting?.purchaseType === "retail" ? (
+                                    <ProductCard data={item} grid={grid} />
+                                ) : (
+                                    <CatalogueCard
+                                        data={item}
+                                        grid={grid}
+                                        redirectUrl={`catalogue/${pathname?.split("/")?.[3]}`}
+                                    />
+                                )}
+                            </div>
+                        ))
+                    ) : (
+                        <p className="col-span-full text-center text-gray-500">
+                            No products found.
+                        </p>
+                    )}
+                </div>
 
                 <div className="flex justify-center items-center ">
                     <Pagination
                         currentPage={page}
                         totalCount={totalCount}
                         perPage={20}
-                        onPageChange={(p) => setPage(p)}
+                        onPageChange={handlePageChange}
                     />
                 </div>
             </div>

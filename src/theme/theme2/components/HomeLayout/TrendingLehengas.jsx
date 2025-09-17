@@ -78,9 +78,8 @@ const TrendingLehengas = ({ tabsData = [], purchaseType }) => {
                                                     <ProductCard
                                                         key={data.id}
                                                         product={data}
-                                                        pathname={`${block.url}/${data?.url || "/"}`}
+                                                        pathname={purchaseType === "retail" ? `/retail/${block.url}/${data?.url || "/"}` : `/wholesale/${block.url}/${data?.url || "/"}`}
                                                     />
-                                                    // <ProductCard data={data} />
                                                 )}
                                             </SwiperSlide>
                                         )

@@ -2,11 +2,12 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { getPolicies, getPoliciesDetail } from "@/services/cmsService";
+import { usePathname } from "next/navigation";
 
 const Tabs = ({ url }) => {
     const [policies, setPolicies] = useState([]);
     const [policesDetail, setpolicesDetail] = useState([])
-
+    const pathname = usePathname();
     const fetchData = async () => {
         const [polices, policesDetail] = await Promise.all([getPolicies(), getPoliciesDetail(url)]);
         setPolicies(polices?.data || []);
@@ -21,7 +22,10 @@ const Tabs = ({ url }) => {
         <div className="container mx-auto px-4 mt-7 md:flex">
             <ul className="flex flex-col space-y-3 text-base font-medium md:me-6 mb-6 md:mb-0 w-60">
                 {policies.map((tab) => {
-                    const isActive = false;
+
+                    const lastSegment = pathname.split("/").filter(Boolean).pop();
+
+                    const isActive = tab.url && lastSegment === tab.url;
                     return (
                         <li key={tab.title}>
                             <Link

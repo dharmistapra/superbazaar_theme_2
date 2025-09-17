@@ -41,7 +41,7 @@ export const getThemeModules = (theme = "theme1") => {
         AccountsLayout: load(() => import("./theme2/Accounts/layout")),
         ProductDetail: load(() => import("./theme2/ProductDetail/single/ProductDetail")),
         Login: load(() => import("./theme2/auth/Login")),
-        Signup: load(() => import("./theme2/auth/signup/page")),
+        Signup: load(() => import("./theme2/auth/Signup")),
         ForgotPassword: load(() => import("./theme2/auth/ForgotPassword")),
         OTP: load(() => import("./theme2/auth/OtpPage")),
         ConfirmPassword: load(() => import("./theme2/auth/ConfirmPassword")),

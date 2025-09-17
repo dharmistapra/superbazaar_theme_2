@@ -4,6 +4,7 @@ import Image from "next/image";
 import { Fancybox } from "@fancyapps/ui";
 import "@fancyapps/ui/dist/fancybox/fancybox.css";
 import WishlistButton from "@/components/cards/attribute/WishlistButton";
+import Link from "next/link";
 
 const ProductImageGallery = ({ images, thumbs, product_id }) => {
   const [selectedImage, setSelectedImage] = useState(images[0]);
@@ -45,15 +46,26 @@ const ProductImageGallery = ({ images, thumbs, product_id }) => {
         ))}
       </div>
 
-      {/* Main Image with Wishlist */}
       <div className="relative w-full flex-1 cursor-pointer order-1 md:order-2">
-        {/* ✅ Wishlist button */}
-        <div className="absolute top-3 right-3 z-10">
-          <WishlistButton productId={product_id} type="product" variant="detail" />
+        {/* <div className="absolute top-3 right-3 z-10">
+          <WishlistButton productId={product_id} type="product" variant="detail" loginMode="page" />
+        </div> */}
+        <div className="mt-3 absolute top-3 right-3 z-10">
+          <WishlistButton
+            productId={product_id}
+            type="product"
+            variant="detail"
+            loginMode="page"
+          />
         </div>
+        {/* <WishlistButton
+          productId={product_id}
+          type="product"
+          variant="detail"
+          loginMode="page"
+        /> */}
 
-        {/* Fancybox Main Image */}
-        <a
+        <Link
           href={`https://cdn.superbazaar.in/${selectedImage}`}
           data-fancybox="gallery"
           onClick={(e) => {
@@ -68,7 +80,7 @@ const ProductImageGallery = ({ images, thumbs, product_id }) => {
             height={500}
             className="w-full h-auto rounded transition-transform duration-200 ease-out"
           />
-        </a>
+        </Link>
       </div>
     </div>
   );

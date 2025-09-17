@@ -13,6 +13,7 @@ const WishlistButton = ({
   type = "product",
   delay = 0,
   variant = "card",
+  loginMode
 }) => {
   const { data: session } = useSession()
   const { open } = useModal()
@@ -34,15 +35,15 @@ const WishlistButton = ({
 
     try {
       setWishlistLoading(true)
+
       if (!session?.accessToken) {
-        open("login")
+        if (loginMode === "page") {
+          router.push("/login")
+        } else {
+          open("login")
+        }
         return
       }
-      if (!session?.accessToken) {
-        router.push("/login");
-        return;
-      }
-
 
       const data =
         type === "catalogue"
@@ -54,10 +55,7 @@ const WishlistButton = ({
         const response = await getUserWishlist()
         dispatch(setWishlistData(response.data))
       }
-      if (!response?.isSuccess) {
-        open("login")
-        return
-      }
+
     } catch (error) {
       console.error(error)
     } finally {

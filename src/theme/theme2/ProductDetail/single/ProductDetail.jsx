@@ -48,11 +48,7 @@ const ProductDetailTheme2 = ({ product, Stitching, attributes, category }) => {
     setQuantity((prev) => prev + 1);
   };
 
-
   const decrement = () => setQuantity((prev) => (prev > 1 ? prev - 1 : 1));
-  const toggleWishlist = () => setWishlist((prev) => !prev);
-  const toggleCompare = () => setCompare((prev) => !prev);
-  console.log("accce =========>", session, !session?.accessToken);
 
   const handleAddtoCart = async () => {
     setErrors(null);
@@ -61,7 +57,6 @@ const ProductDetailTheme2 = ({ product, Stitching, attributes, category }) => {
       router.push("/login");
       return;
     }
-
 
     if (product.optionType === "Size" && !selectedSize) {
       return setErrors("⚠️ Please select size");

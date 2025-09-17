@@ -159,9 +159,7 @@ export default function Login() {
                                         >
                                             Forgot Password?
                                         </Link>
-                                        <Link href="/signup" className="text-blue-600 hover:underline">
-                                            Create Account
-                                        </Link>
+
                                     </div>
                                 </form>
                             </div>

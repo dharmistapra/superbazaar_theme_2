@@ -131,7 +131,7 @@ const Catalogue = ({ CatalogueDetailData, stitching, category }) => {
                                     +
                                 </button>
                             </div>
-                            <WishlistButton variant="detail" catalogueId={CatalogueDetailData?.id} type="catalogue" />
+                            <WishlistButton variant="detail" catalogueId={CatalogueDetailData?.id} type="catalogue" loginMode="page" />
                             <button
                                 onClick={() => setShareOpen(true)}
                                 className="p-2 rounded-lg border bg-white text-gray-700 border-zinc-900 hover:bg-zinc-900 hover:text-white transition">
@@ -143,16 +143,16 @@ const Catalogue = ({ CatalogueDetailData, stitching, category }) => {
                                 <CircleQuestionMark className="w-5 h-5" />
                             </button>
 
-                             <button
-                              onClick={()=>{downloadAllImages(CatalogueDetailData)}}
+                            <button
+                                onClick={() => { downloadAllImages(CatalogueDetailData) }}
                                 className="p-2 rounded-lg border bg-white text-gray-700 border-zinc-900 hover:bg-zinc-900 hover:text-white transition">
-                                <Download  className="w-5 h-5" />
+                                <Download className="w-5 h-5" />
                             </button>
 
-                             <button
-                               onClick={()=>{ImageZip(CatalogueDetailData)}}
+                            <button
+                                onClick={() => { ImageZip(CatalogueDetailData) }}
                                 className="p-2 rounded-lg border bg-white text-gray-700 border-zinc-900 hover:bg-zinc-900 hover:text-white transition">
-                                <FolderArchive   className="w-5 h-5" />
+                                <FolderArchive className="w-5 h-5" />
                             </button>
                         </div>
                         <div className="flex flex-row gap-4 mt-4 w-full">
@@ -170,17 +170,17 @@ const Catalogue = ({ CatalogueDetailData, stitching, category }) => {
                                 Order on WhatsApp
                             </button>
                         </div>
-                     {errors && (
-            <div className="bg-red-200 border border-dotted border-red-400 text-red-600 px-4 py-3 rounded relative mt-2 flex items-start justify-between" role="alert">
-    <div>
-      <strong className="font-bold">Error: </strong>
-      <span className="block sm:inline">{errors}</span>
-    </div>
-    <button onClick={() => setErrors(null)} className="ml-4">
-      <X className="w-5 h-5 text-white" />
-    </button>
-  </div>
-)}
+                        {errors && (
+                            <div className="bg-red-200 border border-dotted border-red-400 text-red-600 px-4 py-3 rounded relative mt-2 flex items-start justify-between" role="alert">
+                                <div>
+                                    <strong className="font-bold">Error: </strong>
+                                    <span className="block sm:inline">{errors}</span>
+                                </div>
+                                <button onClick={() => setErrors(null)} className="ml-4">
+                                    <X className="w-5 h-5 text-white" />
+                                </button>
+                            </div>
+                        )}
                         <div>
                             <StaticImage />
                         </div>

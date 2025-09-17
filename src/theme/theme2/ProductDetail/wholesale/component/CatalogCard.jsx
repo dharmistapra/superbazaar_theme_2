@@ -39,7 +39,7 @@ const CatalogCard = ({ product, category }) => {
 
                     {/* Wishlist button - hidden until hover */}
                     <div className="absolute top-3 right-3 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                        <WishlistButton catalogueId={product.id} type="catalogue" variant="detail" />
+                        <WishlistButton catalogueId={product.id} type="catalogue" variant="detail" loginMode="page" />
                     </div>
                 </div>
 

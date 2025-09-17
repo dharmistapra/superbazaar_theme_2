@@ -2,12 +2,10 @@
 import { useMemo, useState } from "react"
 import SizeSelector from "@/components/SizeSelector"
 import CatalogueImages from "./components/catalogueimage"
-import StitchingForm from "../single/components/StitchingForm"
-import { CircleQuestionMark, Heart, MessageCircle, Repeat, Share2, ShoppingCart, Loader2, Minus, Plus, MessageCircleMore, Download, FileArchive } from "lucide-react";
+import { MessageCircle, Minus, Plus, } from "lucide-react";
 import StaticImage from "@/components/StaticImage"
 import RalatedCatalogue from "./components/realtedCatalogue"
 import { useDispatch } from "react-redux"
-import { useModal } from "@/hooks/useModal"
 import { useSession } from "next-auth/react"
 import { addToCartProduct, getCartItems } from "@/services/cartService"
 import { setCartItems } from "@/store/slice/cartItemSlice"
@@ -18,7 +16,6 @@ import ProductAccordion from "../single/components/ProductAccordion"
 import OfferBanner from "@/components/OfferBanner"
 import Link from "next/link"
 import WishlistButton from "@/components/cards/attribute/WishlistButton"
-import { ImageUrl } from "@/helper/imageUrl"
 import DownloadImage from "../../components/common/DownloadImage"
 import DownloadZip from "../../components/common/DownloadZip"
 import { useRouter } from "next/navigation"
@@ -223,7 +220,7 @@ const Catalogue = ({ CatalogueDetailData, stitching, category }) => {
                                     </div>
 
                                     <div className="flex items-center justify-center gap-3 w-full md:w-2/3">
-                                        <WishlistButton catalogueId={CatalogueDetailData.id} type="catalogue" variant="detail" />
+                                        <WishlistButton catalogueId={CatalogueDetailData.id} type="catalogue" variant="detail" loginMode="page" />
                                         <Link
                                             href={whatsappURL}
                                             target="_blank"

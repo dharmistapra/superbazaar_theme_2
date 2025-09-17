@@ -124,7 +124,7 @@ export default function Signup() {
                             {/* Eye Icon Button */}
                             <button
                                 type="button"
-                                onClick={() => setShowConfirmPassword(!showPassword)}
+                                onClick={() => setShowPassword(!showPassword)}
                                 className="absolute right-3 flex items-center justify-center h-full"
                             >
                                 {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
