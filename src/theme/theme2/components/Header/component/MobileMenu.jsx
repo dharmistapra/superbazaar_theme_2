@@ -1,5 +1,6 @@
 "use client"
 import { X, Plus, Minus } from "lucide-react"
+import Image from "next/image"
 import Link from "next/link"
 import { useState } from "react"
 
@@ -76,9 +77,18 @@ const MobileMenu = ({ data, closeMenu, webSetting }) => {
                 onClick={(e) => e.stopPropagation()}
             >
                 {/* Header */}
-                <div className="bg-gray-300 sticky top-0 z-10">
+                <div className="bg-white sticky top-0 z-10">
                     <div className="flex justify-between items-center p-4 border-b border-gray-200 h-18">
-                        <h2 className="text-lg font-bold">Menu</h2>
+                        <Link href="/">
+                            <Image
+                                src="/logo.png"
+                                alt="Superbazaar Logo"
+                                className=" object-contain"
+                                width={260}
+                                height={100}
+                                priority
+                            />
+                        </Link>
                         <button onClick={closeMenu} className="text-gray-700 hover:text-red-800">
                             <X size={28} />
                         </button>

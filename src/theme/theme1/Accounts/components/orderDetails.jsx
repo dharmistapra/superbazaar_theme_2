@@ -11,7 +11,7 @@ const OrderDetail = ({ orderid }) => {
   const [order, setOrder] = useState(null);
   const [openCatalogueIds, setOpenCatalogueIds] = useState([]);
 
-  
+
 
   useEffect(() => {
     const fetchOrder = async () => {
@@ -57,11 +57,10 @@ const OrderDetail = ({ orderid }) => {
             </p>
           </div>
           <span
-            className={`px-5 py-2 rounded-full text-sm font-medium shadow-sm transition ${
-              order.status === "PENDING"
-                ? "bg-yellow-100 text-yellow-800 border border-yellow-200"
-                : "bg-green-100 text-green-800 border border-green-200"
-            }`}
+            className={`px-5 py-2 rounded-full text-sm font-medium shadow-sm transition ${order.status === "PENDING"
+              ? "bg-yellow-100 text-yellow-800 border border-yellow-200"
+              : "bg-green-100 text-green-800 border border-green-200"
+              }`}
           >
             {order.status}
           </span>
@@ -161,11 +160,10 @@ const OrderDetail = ({ orderid }) => {
                             : "Show Products"}
                         </button>
                         <div
-                          className={`transition-all duration-500 ease-in-out overflow-hidden ${
-                            openCatalogueIds.includes(item.id)
-                              ? "max-h-96 opacity-100 mt-3"
-                              : "max-h-0 opacity-0"
-                          }`}
+                          className={`transition-all duration-500 ease-in-out overflow-hidden ${openCatalogueIds.includes(item.id)
+                            ? "max-h-96 opacity-100 mt-3"
+                            : "max-h-0 opacity-0"
+                            }`}
                         >
                           <div className="space-y-2 pl-4 border-l">
                             {item.products.map((p) => (
@@ -244,24 +242,23 @@ const OrderDetail = ({ orderid }) => {
           <h2 className="text-xl font-semibold text-gray-800 mb-4 border-b pb-2">
             Payment Method
           </h2>
-         
-            <div
-              className="flex flex-col md:flex-row md:justify-between items-start md:items-center text-gray-600 py-2 border-b last:border-b-0">
-              <span className="capitalize font-medium">{order?.payment[0]?.paymentMethod}</span>
-              <span
-                className={`mt-1 md:mt-0 px-3 py-1 rounded-full text-sm font-medium ${
-                  order?.payment[0]?.status === "PENDING"
-                    ? "bg-yellow-100 text-yellow-800 border border-yellow-200"
-                    : "bg-green-100 text-green-800 border border-green-200"
+
+          <div
+            className="flex flex-col md:flex-row md:justify-between items-start md:items-center text-gray-600 py-2 border-b last:border-b-0">
+            <span className="capitalize font-medium">{order?.payment[0]?.paymentMethod}</span>
+            <span
+              className={`mt-1 md:mt-0 px-3 py-1 rounded-full text-sm font-medium ${order?.payment[0]?.status === "PENDING"
+                ? "bg-yellow-100 text-yellow-800 border border-yellow-200"
+                : "bg-green-100 text-green-800 border border-green-200"
                 }`}
-              >
-                {order?.payment[0]?.status}
-              </span>
-            </div>
+            >
+              {order?.payment[0]?.status}
+            </span>
+          </div>
 
 
-             {order?.payment[0]?.status === "PENDING" && (
-           <BankPayment orderId={orderid}/>
+          {order?.payment[0]?.status === "PENDING" && (
+            <BankPayment orderId={orderid} />
           )}
           {/* {order.payment.map((p, idx) => (
           ))} */}

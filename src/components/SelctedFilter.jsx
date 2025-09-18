@@ -1,22 +1,40 @@
 import { X } from "lucide-react";
 
 const SelectedFilters = ({ selectedAttributes, onFiltersChange, setSelectedAttributes, fetchProducts }) => {
+  // const handleRemove = (key, value) => {
+  //   const updated = { ...selectedAttributes };
+  //   if (!updated[key]) return;
+
+  //   updated[key] = updated[key]?.filter((item) => item.value !== value);
+  //   if (updated[key].length === 0) {
+  //     delete updated[key];
+  //   }
+
+  //   setSelectedAttributes(updated);
+  //   onFiltersChange(updated);
+  // };
+
+  // const handleClearAll = () => {
+  //   setSelectedAttributes({});
+  //   fetchProducts();
+  // };
+
+  // check if any filter is active
+
   const handleRemove = (key, value) => {
     const updated = { ...selectedAttributes };
     if (!updated[key]) return;
 
-    updated[key] = updated[key]?.filter((item) => item.value !== value);
+    updated[key] = updated[key].filter((item) => item.value !== value);
     if (updated[key].length === 0) {
       delete updated[key];
     }
 
-    setSelectedAttributes(updated);
-    onFiltersChange(updated);
+    setSelectedAttributes(updated); // ✅ only update state
   };
 
   const handleClearAll = () => {
     setSelectedAttributes({});
-    fetchProducts();
   };
   const hasFilters = Object.values(selectedAttributes).some(
     (items) => Array.isArray(items) && items.length > 0

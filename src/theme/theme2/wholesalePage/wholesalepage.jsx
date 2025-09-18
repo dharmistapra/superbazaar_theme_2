@@ -2,16 +2,14 @@
 
 import Pagination from "@/components/Pagination";
 import ProductCardSkeleton from "@/components/ProductCardSkeleton";
-import { SlidersHorizontal, LayoutList, Grip, GripVertical, Columns2, Columns3, Columns4 } from "lucide-react";
 import { useEffect, useState } from "react";
 import CategorySidebar from "./components/categorySidebar";
 import CatalogCard from "../ProductDetail/wholesale/component/CatalogCard";
-import ProductViewTabs from "../components/common/ProductViewTabs";
 import ProductListToolbar from "../components/common/ProductListToolbar";
 import { usePathname } from "next/navigation";
 import { getAllCatalogue } from "@/services/catalogueService";
 
-const WholeSalePage = ({ category, title }) => {
+const WholeSalePage = ({ category }) => {
     const pathname = usePathname();
     const [grid, setGrid] = useState(4);
     const [open, setOpen] = useState(false);
@@ -55,28 +53,8 @@ const WholeSalePage = ({ category, title }) => {
         setTotalCount(1);
     };
 
-
-    const sortOptions = [
-        { value: "", label: "New Arrivals" },
-        { value: "AtoZ", label: "A To Z" },
-        { value: "ZtoA", label: "Z To A" },
-        { value: "low", label: "Price: Low to High" },
-        { value: "high", label: "Price: High to Low" },
-    ];
-    const gridButtons = [
-        { icon: LayoutList, value: 2, label: "2 Grid" },
-        { icon: Grip, value: 3, label: "3 Grid" },
-        { icon: GripVertical, value: 4, label: "4 Grid" },
-    ];
     return (
         <div className="mx-auto px-4 mt-7 w-full sm:max-w-[540px] md:max-w-[720px] lg:max-w-[960px] xl:max-w-[1240px] 2xl:max-w-[1320px]">
-
-            {/* <ProductViewTabs
-                category={category}
-                activeTab={activeTab}
-                setActiveTab={setActiveTab}
-            /> */}
-
 
             <ProductListToolbar
                 title="Wholesale Product"
@@ -90,32 +68,6 @@ const WholeSalePage = ({ category, title }) => {
                 setOpen={setOpen}
                 pathname={pathname}
             />
-            {/* <div className="flex gap-1">
-                        {gridButtons.map((btn) => {
-                            const Icon = btn.icon;
-                            return (
-                                <button
-                                    key={btn.value}
-                                    onClick={() => setGrid(btn.value)}
-                                    className={`p-2 rounded ${grid === btn.value ? "bg-red-700 text-white" : "bg-gray-200 hover:bg-gray-300"}`}
-                                >
-                                    <Icon size={18} />
-                                </button>
-                            );
-                        })}
-                    </div>
-                    <select
-                        value={sort}
-                        onChange={(e) => setSort(e.target.value)}
-                        className="border rounded-md px-2 py-1 text-sm shadow-sm hover:shadow-md transition-all duration-200 bg-white w-auto"
-                    >
-                        {sortOptions.map((option) => (
-                            <option key={option.value} value={option.value}>
-                                {option.label}
-                            </option>
-                        ))}
-                    </select> */}
-
 
             <div className={`grid gap-4 ${grid === 2 ? "grid-cols-2 sm:grid-cols-2 lg:grid-cols-2" : ""} ${grid === 3 ? "grid-cols-2 sm:grid-cols-2 md:grid-cols-3" : ""} ${grid === 4 ? "grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4" : ""}`}
             >
@@ -134,7 +86,6 @@ const WholeSalePage = ({ category, title }) => {
                 )}
             </div>
 
-
             <div className="flex justify-center items-center ">
                 <Pagination
                     currentPage={page}
@@ -151,7 +102,6 @@ const WholeSalePage = ({ category, title }) => {
                 setselectedcategory={setselectedcategory}
                 open={open}
             />
-
         </div>
     )
 }

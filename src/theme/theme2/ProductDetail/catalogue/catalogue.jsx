@@ -1,11 +1,11 @@
 "use client"
-import { useMemo, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import SizeSelector from "@/components/SizeSelector"
 import CatalogueImages from "./components/catalogueimage"
-import { MessageCircle, Minus, Plus, } from "lucide-react";
+import { Loader2, MessageCircle, Minus, Plus, } from "lucide-react";
 import StaticImage from "@/components/StaticImage"
 import RalatedCatalogue from "./components/realtedCatalogue"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { useSession } from "next-auth/react"
 import { addToCartProduct, getCartItems } from "@/services/cartService"
 import { setCartItems } from "@/store/slice/cartItemSlice"
@@ -19,6 +19,9 @@ import WishlistButton from "@/components/cards/attribute/WishlistButton"
 import DownloadImage from "../../components/common/DownloadImage"
 import DownloadZip from "../../components/common/DownloadZip"
 import { useRouter } from "next/navigation"
+import { setWebSetting } from "@/store/slice/webSettingSlice";
+import { getWebSetting } from "@/services/webSetting";
+import shouldShowPrice from "@/helper/shouldShowPrice";
 
 const Catalogue = ({ CatalogueDetailData, stitching, category }) => {
     const dispatch = useDispatch()
@@ -28,15 +31,21 @@ const Catalogue = ({ CatalogueDetailData, stitching, category }) => {
     const [selectedSize, setSelectedSize] = useState(null);
     const [quantity, setQuantity] = useState(1);
     const [shareOpen, setShareOpen] = useState(false);
-    const [errorMessage, setErrorMessage] = useState("");
-    const [isWishlisted, setIsWishlisted] = useState(false);
-    const [wishlistLoading, setWishlistLoading] = useState(false);
-    const [btnloading, setBtnLoading] = useState(false);
-    const [shouldShowPrice, setShouldShowPrice] = useState(true);
     const [loading, setLoading] = useState(false);
     const [stitchingData, setStitchingData] = useState(null);
     const [wishlist, setWishlist] = useState(false);
     const [compare, setCompare] = useState(false);
+
+    const webSetting = useSelector(state => state.webSetting.webSetting)
+
+    const fetchData = async () => {
+        const data = await getWebSetting();
+        dispatch(setWebSetting(data));
+    }
+
+    useEffect(() => {
+        fetchData();
+    }, []);
 
     const whatsappURL = useMemo(() => {
         if (!CatalogueDetailData) return "#";
@@ -110,10 +119,6 @@ const Catalogue = ({ CatalogueDetailData, stitching, category }) => {
         }
     };
 
-    const usertoken = session?.accessToken
-    const webSetting = {};
-
-
     return (
         <>
             <div className="container mx-auto p-4">
@@ -136,26 +141,34 @@ const Catalogue = ({ CatalogueDetailData, stitching, category }) => {
                                     SKU: {CatalogueDetailData?.cat_code}
                                 </h6>
 
-                                {/* {shouldShowPrice(usertoken, webSetting) ? ( */}
-                                <div className="py-1">
-                                    <div className="flex items-center gap-2">
-                                        {CatalogueDetailData?.catalogue_discount ? (
-                                            <span className="line-through text-gray-400">
-                                                <PriceConverter price={CatalogueDetailData?.price} />
-                                            </span>
-                                        ) : null}
-
-                                        <span className="text-xl font-semibold text-black">
-                                            <PriceConverter price={CatalogueDetailData?.offer_price} />
+                                {shouldShowPrice(session?.accessToken, webSetting?.showPrice) ? <div className="flex items-center gap-2">
+                                    {CatalogueDetailData?.catalogue_discount ? (
+                                        <span className="line-through text-gray-400">
+                                            <PriceConverter price={CatalogueDetailData?.price} />
                                         </span>
+                                    ) : null}
 
-                                        {CatalogueDetailData?.catalogue_discount ? (
-                                            <span className="ml-1 bg-red-100 text-red-600 px-2 py-1 rounded">
-                                                {CatalogueDetailData?.catalogue_discount}% off
-                                            </span>
-                                        ) : null}
-                                    </div>
-                                </div>
+                                    <span className="text-xl font-semibold text-black">
+                                        <PriceConverter price={CatalogueDetailData?.offer_price} />
+                                    </span>
+
+                                    {CatalogueDetailData?.catalogue_discount ? (
+                                        <span className="ml-1 bg-red-100 text-red-600 px-2 py-1 rounded">
+                                            {CatalogueDetailData?.catalogue_discount}% off
+                                        </span>
+                                    ) : null}
+                                </div> : (
+                                    <button
+                                        type="button"
+                                        name="add"
+                                        onClick={() => router.push("/login")}
+                                        className="w-full mb-3 mt-2 bg-red-500 text-white hover:bg-gray-700 py-2 px-4 rounded-none text-center"
+
+                                    >
+                                        <span className="text-sm">LOGIN / REGISTER FOR PRICE</span>
+                                    </button>
+                                )}
+
 
                                 {Number(CatalogueDetailData?.catalogue_discount) > 0 && (
                                     <OfferBanner discount={Number(CatalogueDetailData?.catalogue_discount)} />
@@ -214,7 +227,7 @@ const Catalogue = ({ CatalogueDetailData, stitching, category }) => {
                                                 type="submit"
                                                 className="bg-white hover:bg-black hover:text-white text-black outline-1 px-6 py-2 rounded-md transition whitespace-nowrap"
                                             >
-                                                Add to cart
+                                                {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : " Add to cart"}
                                             </button>
                                         </div>
                                     </div>

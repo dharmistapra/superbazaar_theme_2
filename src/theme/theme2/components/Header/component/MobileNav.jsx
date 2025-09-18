@@ -3,8 +3,6 @@ import { User, House, Heart, ShoppingCart } from "lucide-react";
 import Link from "next/link";
 
 const MobileNav = ({ handleCartClick, list }) => {
-    console.log("list ======>", list, list?.product?.length > 0 || list?.catalogue?.lemgth > 0);
-
     return (
         <div className="fixed bottom-0 left-0 right-0 bg-white shadow-lg  z-50 lg:hidden">
             <div className="flex justify-around items-center py-2">
@@ -33,10 +31,10 @@ const MobileNav = ({ handleCartClick, list }) => {
                 >
                     {list?.product?.length > 0 || list?.catalogue?.length > 0 ?
                         <Heart size={20}
-                            className="cursor-pointer hidden md:flex text-red-500"
+                            className="cursor-pointer md:flex text-red-500"
                             fill="currentColor" /> :
-                        <> <Heart size={20} className="cursor-pointer hidden md:flex" /> <span className="text-xs">Wishlist</span></>}
-
+                        <Heart size={20} className="cursor-pointer hidden md:flex" />}
+                    <span className="text-xs">Wishlist</span>
                 </Link>
 
                 {/* Cart */}

@@ -40,7 +40,7 @@ export default function Signup() {
         onSubmit: async (values, { setSubmitting }) => {
             try {
                 const axiosInstance = createClientAxios();
-                const response = await axiosInstance.post("/register", values);
+                const response = await axiosInstance.post("/auth/register", values);
 
                 if (response.status === 200) {
                     setErrors(null);

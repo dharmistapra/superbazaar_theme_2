@@ -17,7 +17,7 @@ export default async function RootLayout({ children }) {
   const Layout = getThemeLayout(currentTheme);
   return (
     <html lang="en">
-      <body style={config}>
+      <body style={config} suppressHydrationWarning={true}>
         <Providers >
           <Layout theme={{ name: currentTheme, config }}>{children}</Layout>
         </Providers>

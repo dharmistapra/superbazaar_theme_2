@@ -27,14 +27,12 @@ const RealtedProduct = ({ url }) => {
   return (
     <section className="pb-0 mb-5 mt-5">
       <div className="container mx-auto px-4">
-        {/* Section Header */}
         <div className="flex flex-col md:flex-row md:justify-center items-center mb-6 text-center ">
           <div>
             <p className="text-[#222222] text-[18px] font-semibold text-center uppercase mt-4"> You may also like this</p>
             <p className="text-gray-500 text-sm lowercase mb-6">TOP SALE IN THIS WEEK</p>
           </div>
         </div>
-
 
         <div className="relative">
           <SliderNavigation position="center" ref={prevRef} />

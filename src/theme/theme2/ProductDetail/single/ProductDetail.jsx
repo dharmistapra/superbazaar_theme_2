@@ -1,11 +1,11 @@
 "use client";
 
-import { useState } from "react";
-import { Facebook, MessageCircle, Minus, Plus, Twitter } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Facebook, Loader2, MessageCircle, Minus, Plus, Twitter } from "lucide-react";
 import ProductImageGallery from "./components/ProductImageGallery";
 import Image from "next/image";
 import Link from "next/link";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useSession } from "next-auth/react";
 import ProductAccordion from "./components/ProductAccordion";
 import { usePathname, useRouter } from "next/navigation";
@@ -17,6 +17,9 @@ import RealtedProduct from "./components/RelatedProduct";
 import { addToCartProduct, getCartItems } from "@/services/cartService";
 import { setCartItems } from "@/store/slice/cartItemSlice";
 import { openCart } from "@/store/slice/MiniCartSlice";
+import shouldShowPrice from "@/helper/shouldShowPrice";
+import { getWebSetting } from "@/services/webSetting";
+import { setWebSetting } from "@/store/slice/webSettingSlice";
 
 const ProductDetailTheme2 = ({ product, Stitching, attributes, category }) => {
   const dispatch = useDispatch()
@@ -28,11 +31,17 @@ const ProductDetailTheme2 = ({ product, Stitching, attributes, category }) => {
   const [errors, setErrors] = useState(null)
   const [stitchingData, setStitchingData] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [wishlist, setWishlist] = useState(false);
-  const [compare, setCompare] = useState(false);
-  const [shareOpen, setShareOpen] = useState(false);
-  const [selectedImage, setSelectedImage] = useState(product.image[0]);
-  // const increment = () => setQuantity((prev) => prev + 1);
+  const webSetting = useSelector(state => state.webSetting.webSetting)
+
+  const fetchData = async () => {
+    const data = await getWebSetting();
+    dispatch(setWebSetting(data));
+  }
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   const increment = () => {
     if (product.optionType === "Size" && !selectedSize) {
       return setErrors("⚠️ Please select size");
@@ -111,14 +120,24 @@ const ProductDetailTheme2 = ({ product, Stitching, attributes, category }) => {
                 </h2>}
               <h5 className="text-[18px] mb-1">{product.name}</h5>
               <p className="text-gray-600 mb-2">SKU:{product.sku}</p>
-              <div className="mb-4">
-                <span className="line-through "><PriceConverter price={product.offer_price} /></span>
-                <span className=" text-gray-400 mx-3"><PriceConverter price={product.retail_price} /></span>
-              </div>
+              {shouldShowPrice(session?.accessToken, webSetting?.showPrice) ?
+                <div className="mb-4">
+                  <span className="line-through "><PriceConverter price={product.offer_price} /></span>
+                  <span className=" text-gray-400 mx-3"><PriceConverter price={product.retail_price} /></span>
+                </div> : (
+                  <button
+                    type="button"
+                    name="add"
+                    onClick={() => router.push("/login")}
+                    className="w-full mb-3 bg-red-500 text-white hover:bg-gray-700 py-2 px-4 rounded-none text-center"
 
+                  >
+                    <span className="text-sm">LOGIN / REGISTER FOR PRICE</span>
+                  </button>
+                )}
               {
                 product.optionType === "Size" && (
-                  <div className="-mt-1 mb-3">
+                  <div className=" mb-3">
                     <SizeSelector
                       sizes={attributes.sizes || ["S", "M", "L", "XL"]}
                       onChange={setSelectedSize}
@@ -170,7 +189,7 @@ const ProductDetailTheme2 = ({ product, Stitching, attributes, category }) => {
                         type="submit"
                         className="bg-white hover:bg-black hover:text-white text-black outline-1 px-6 py-2 rounded-md transition"
                       >
-                        Add to cart
+                        {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : " Add to cart"}
                       </button>
                     </div>
                   </div>

@@ -47,9 +47,6 @@ const ProductImageGallery = ({ images, thumbs, product_id }) => {
       </div>
 
       <div className="relative w-full flex-1 cursor-pointer order-1 md:order-2">
-        {/* <div className="absolute top-3 right-3 z-10">
-          <WishlistButton productId={product_id} type="product" variant="detail" loginMode="page" />
-        </div> */}
         <div className="mt-3 absolute top-3 right-3 z-10">
           <WishlistButton
             productId={product_id}
@@ -58,12 +55,6 @@ const ProductImageGallery = ({ images, thumbs, product_id }) => {
             loginMode="page"
           />
         </div>
-        {/* <WishlistButton
-          productId={product_id}
-          type="product"
-          variant="detail"
-          loginMode="page"
-        /> */}
 
         <Link
           href={`https://cdn.superbazaar.in/${selectedImage}`}

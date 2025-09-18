@@ -5,9 +5,28 @@ import { Heart } from "lucide-react";
 import { ImageUrl } from "@/helper/imageUrl";
 import PriceConverter from "@/components/PriceConverter";
 import WishlistButton from "@/components/cards/attribute/WishlistButton";
+import shouldShowPrice from "@/helper/shouldShowPrice";
+import { useSession } from "next-auth/react";
+import { getWebSetting } from "@/services/webSetting";
+import { setWebSetting } from "@/store/slice/webSettingSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
 
 const ProductCard = ({ product, pathname }) => {
     if (!product) return null;
+    const { data: session } = useSession();
+    const dispatch = useDispatch();
+    const webSetting = useSelector(state => state.webSetting.webSetting)
+
+    const fetchData = async () => {
+        const data = await getWebSetting();
+        dispatch(setWebSetting(data));
+    }
+
+    useEffect(() => {
+        fetchData();
+    }, []);
+
     return (
         <div className="single-product-card bg-white rounded-md shadow hover:shadow-lg transition">
             <div className="product-image relative overflow-hidden">
@@ -55,8 +74,24 @@ const ProductCard = ({ product, pathname }) => {
                         </span>
                     </Link>
                 </div>
+                {shouldShowPrice(session?.accessToken, webSetting?.showPrice) ? (
+                    <div className="product-price flex justify-between items-center gap-2">
+                        <span className="price text-red-600 font-bold text-xs">
+                            <PriceConverter price={product?.offer_price} />
+                        </span>
+                    </div>
+                ) : (
+                    <Link href="/login"
+                        // onClick={handleLoginClick}
+                        className="text-red-600 font-bold text-center text-xs cursor-pointer"
+                    >
+                        Login To View Price
+                    </Link>
+                )}
+
+
                 {/* Product Price */}
-                <div className="product-price flex justify-between items-center gap-2">
+                {/* {shouldShowPrice(session) ? <div className="product-price flex justify-between items-center gap-2">
                     <span className="price text-red-600 font-bold text-xs">
                         <PriceConverter price={product?.offer_price} />
                     </span>
@@ -65,7 +100,7 @@ const ProductCard = ({ product, pathname }) => {
                             <PriceConverter price={product?.price} />
                         </span>
                     )}
-                </div>
+                </div> : <h2>Hello</h2>} */}
             </div>
         </div>
     );

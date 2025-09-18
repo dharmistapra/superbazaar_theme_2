@@ -164,7 +164,6 @@ export default function Login() {
                                 </form>
                             </div>
 
-                            {/* Right - Info Section */}
                             <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-2xl border border-gray-200 p-10 shadow-inner">
                                 <h2 className="text-2xl font-semibold text-gray-900 mb-4">
                                     New Here?

@@ -13,13 +13,13 @@ import Link from "next/link";
 import Label from "@/components/Label";
 import { useRouter } from "next/navigation";
 const MiniCart = () => {
-  const router=useRouter()
+  const router = useRouter()
   const dispatch = useDispatch();
   const isCartOpen = useSelector((state) => state.minicart.isCartOpen);
   const { CartData } = useSelector((state) => state.cartItem);
   const [cartItems, setCartItemsState] = useState([]);
   const [openCatalogueIds, setOpenCatalogueIds] = useState([]);
-  const [error,setError]=useState(null)
+  const [error, setError] = useState(null)
   const {
     incrementQuantity,
     decrementQuantity,
@@ -38,22 +38,21 @@ const MiniCart = () => {
   };
 
 
- const handleCheckout = () => {
-  if (!CartData?.data || CartData.data.length === 0) {
-    setError("Your cart is empty");
-    return; 
-  }
-  
-  const outOfStock = cartItems?.data?.filter((item) => item.outOfStock);
-  if (outOfStock && outOfStock.length > 0) {
-    setError("Remove out of Stock Product");
-    return; 
-  }
-  setError(null); 
-  dispatch(closeCart());
-  router.push("/checkout")
- 
-};
+  const handleCheckout = () => {
+    if (!CartData?.data || CartData.data.length === 0) {
+      setError("Your cart is empty");
+      return;
+    }
+
+    const outOfStock = cartItems?.data?.filter((item) => item.outOfStock);
+    if (outOfStock && outOfStock.length > 0) {
+      setError("Remove out of Stock Product");
+      return;
+    }
+    setError(null);
+    dispatch(closeCart());
+    router.push("/checkout")
+  };
 
   return (
     <>
@@ -85,17 +84,17 @@ const MiniCart = () => {
             isModalOpen={isCartOpen}
           />
         </div>
-          {error && (
-            <div className="bg-red-200 border border-dotted border-red-400 text-red-600 px-4 py-3 rounded relative mt-2 flex items-start justify-between" role="alert">
-              <div>
-                <strong className="font-medium">Error: </strong>
-                <span className="block sm:inline">{error}</span>
-              </div>
-              <button onClick={() => setError(null)} className="ml-4">
-                <X className="w-5 h-5 text-white" />
-              </button>
+        {error && (
+          <div className="bg-red-200 border border-dotted border-red-400 text-red-600 px-4 py-3 rounded relative mt-2 flex items-start justify-between" role="alert">
+            <div>
+              <strong className="font-medium">Error: </strong>
+              <span className="block sm:inline">{error}</span>
             </div>
-          )}
+            <button onClick={() => setError(null)} className="ml-4">
+              <X className="w-5 h-5 text-white" />
+            </button>
+          </div>
+        )}
         <div className="flex-1 overflow-y-auto p-4 space-y-4">
           {cartItems?.data?.length === 0 && <p className="text-center font-bold">Your cart is empty.</p>}
           {cartItems?.data?.map((item) => {

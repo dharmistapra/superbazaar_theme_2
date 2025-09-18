@@ -50,12 +50,12 @@ const Productstheme2 = ({ category, title }) => {
         setSelectedAttributes(paramsObj);
     }, [searchParams, category]);
 
-    useEffect(() => {
-        if (!category) return;
-        const queryString = buildFilterQuery(selectedAttributes);
-        const newUrl = `/retail/${category}${queryString ? `?${queryString}` : ""}`;
-        if (newUrl !== pathname) router.replace(newUrl, { scroll: false });
-    }, [selectedAttributes, pathname, category]);
+    // useEffect(() => {
+    //     if (!category) return;
+    //     const queryString = buildFilterQuery(selectedAttributes);
+    //     const newUrl = `/retail/${category}${queryString ? `?${queryString}` : ""}`;
+    //     if (newUrl !== pathname) router.replace(newUrl, { scroll: false });
+    // }, [selectedAttributes, pathname, category]);
 
     const fetchProducts = async (filters = {}) => {
         setLoading(true);

@@ -125,7 +125,6 @@ const HeaderMenu = ({ menudata, currencyData }) => {
                             </div>
 
                             <div className="flex items-center space-x-4 text-gray-700 flex-shrink-0">
-
                                 <Search
                                     className="cursor-pointer"
                                     size={20}

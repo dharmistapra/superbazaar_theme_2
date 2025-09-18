@@ -30,13 +30,13 @@ const FilterSidebar = ({
         if (filterData.attributes) {
             filterData.attributes.forEach((attr) => (sectionsInit[attr.attribute.key] = true));
         }
-        if (filterData.brands) sectionsInit["brands"] = true;
+        if (filterData.brands) sectionsInit["brand"] = true;
         if (filterData.priceRange) sectionsInit["price"] = true;
         setOpenSections(sectionsInit);
 
         const initAttributes = {};
         filterData.attributes?.forEach((attr) => (initAttributes[attr.attribute.key] = []));
-        if (filterData.brands) initAttributes["brands"] = [];
+        if (filterData.brands) initAttributes["brand"] = [];
         setSelectedAttributes(initAttributes);
 
         if (filterData.priceRange) {
@@ -120,7 +120,7 @@ const FilterSidebar = ({
                     att.attribute.name === "Color" ? (
                         <ul className="flex flex-wrap gap-3">
                             {att?.value?.map((color) => (
-                                <li key={color.name}>
+                                <li key={`${att.attribute.key}-${color.value}`}>
                                     <span
                                         onClick={() => handleAttributeChange(att.attribute.key, color.value, color.name)}
                                         className={`block w-8 h-8 rounded-md cursor-pointer relative group ${selectedAttributes[att.attribute.key]?.some((item) => item.value === color.value)
@@ -142,7 +142,7 @@ const FilterSidebar = ({
                     ) : (
                         <ul className="flex flex-col gap-2">
                             {att.value.map((val) => (
-                                <li key={val.id || val.name} className="flex items-center gap-2">
+                                <li key={`${att.attribute.key}-${val.id || val.value}`} className="flex items-center gap-2">
                                     <input
                                         id={`${att.attribute.key}-${val.id || val.name}`}
                                         type="checkbox"
@@ -166,33 +166,37 @@ const FilterSidebar = ({
             {/* Brands */}
             {renderSection(
                 "Brands",
-                "brands",
+                "brand",
                 <ul className="flex flex-col gap-2">
-                    {filterData?.brands?.map((brand) => (
-                        <li key={brand.value} className="flex items-center gap-2">
+                    {filterData?.brands?.map((brand, id) => (
+                        <li key={`brand-${brand.url}`} className="flex items-center gap-2">
                             <input
-                                id={brand.value}
+                                id={brand.url}
                                 type="checkbox"
-                                value={brand.value || ""}
-                                checked={selectedAttributes["brands"]?.some((item) => item.value === brand.value)}
-                                onChange={() => handleAttributeChange("brands", brand.value, brand.name)}
+                                checked={
+                                    selectedAttributes["brand"]?.some(
+                                        (item) => item.value === brand.url
+                                    ) || false
+                                }
+                                onChange={() =>
+                                    handleAttributeChange("brand", brand.url, brand.name)
+                                }
                                 className="w-4 h-4"
                             />
-                            <label htmlFor={brand.value} className="text-sm">
+                            <label htmlFor={brand.url} className="text-sm">
                                 {brand.name}
                             </label>
                         </li>
                     ))}
                 </ul>
             )}
-        </div>
+        </div >
     );
 
     if (mobile) {
         return (
             <div
-                className={`fixed top-0 left-0 z-50 h-full w-full bg-black bg-opacity-50 transition-transform ${open ? "translate-x-0" : "-translate-x-full"
-                    }`}
+                className={`fixed top-0 left-0 z-50 h-full w-full bg-black bg-opacity-50 transition-transform ${open ? "translate-x-0" : "-translate-x-full"}`}
             >
                 <div className="bg-white w-3/4 h-full p-4 shadow-lg relative">
                     <button
@@ -208,6 +212,7 @@ const FilterSidebar = ({
     }
 
     return content;
+
 };
 
 export default FilterSidebar;

@@ -6,12 +6,12 @@ import { saveAs } from "file-saver";
 
 const DownloadZip = ({ CatalogueDetailData }) => {
     return (
-            <button
-                onClick={()=>{ImageZip(CatalogueDetailData)}}
-                title="Share on Twitter"
-                className="p-2 border rounded-md border-s border-gray-400 hover:bg-sky-100">
-                <FileArchive size={20} />
-            </button>
+        <button
+            onClick={() => { ImageZip(CatalogueDetailData) }}
+            title="Product Zip"
+            className="p-2 border rounded-md border-s border-gray-400 hover:bg-sky-100">
+            <FileArchive size={20} />
+        </button>
     )
 }
 

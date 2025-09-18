@@ -1,5 +1,4 @@
 "use client";
-
 import PriceConverter from "@/components/PriceConverter";
 import { useState, useEffect } from "react";
 
@@ -58,41 +57,6 @@ export default function StitchingForm({ stitchingData, onChange }) {
         });
     };
 
-
-    // const handleInputChange = (optionId, fieldId, value, field) => {
-    //     setFormData((prev) => ({
-    //         ...prev,
-    //         [optionId]: {
-    //             ...(prev[optionId] || {}),
-    //             [fieldId]: value,
-    //         },
-    //     }));
-
-    //     setErrors((prev) => {
-    //         const newErrors = { ...prev };
-
-    //         // Required check
-    //         if (!value || value.trim() === "") {
-    //             newErrors[`${optionId}_${fieldId}`] = "This field is required";
-    //         } else if (field.range) {
-    //             // Range check
-    //             const [min, max] = field.range.split("-").map(Number);
-    //             const num = Number(value);
-    //             if (isNaN(num) || num < min || num > max) {
-    //                 newErrors[`${optionId}_${fieldId}`] = `Value must be between ${min} and ${max}`;
-    //             } else {
-    //                 delete newErrors[`${optionId}_${fieldId}`];
-    //             }
-    //         } else {
-    //             delete newErrors[`${optionId}_${fieldId}`];
-    //         }
-
-    //         return newErrors;
-    //     });
-    // };
-
-
-    // Build-safe effect for final form data
     useEffect(() => {
         const sections = Array.isArray(stitchingData) ? stitchingData : [];
         const allOptions = sections.flatMap((s) =>

@@ -18,6 +18,13 @@ const ProductListToolbar = ({
         { icon: Columns3, value: 3, label: "3 Grid" },
         { icon: Columns4, value: 4, label: "4 Grid" },
     ];
+    const sortOptions = [
+        { value: "", label: "New Arrivals" },
+        { value: "AtoZ", label: "A To Z" },
+        { value: "ZtoA", label: "Z To A" },
+        { value: "low", label: "Price: Low to High" },
+        { value: "high", label: "Price: High to Low" },
+    ];
     return (
         <div className="bg-white border-b border-gray-200 sm:px-4 lg:px-5 py-3 mb-3 flex flex-wrap items-center justify-between gap-3">
             <div className="flex gap-2 flex-wrap items-center">
@@ -51,12 +58,23 @@ const ProductListToolbar = ({
                     onChange={(e) => setSort(e.target.value)}
                     className="border rounded p-2 text-sm shadow-sm hover:shadow-md"
                 >
+                    {sortOptions.map((option) => (
+                        <option key={option.value} value={option.value}>
+                            {option.label}
+                        </option>
+                    ))}
+                </select>
+                {/* <select
+                    value={sort}
+                    onChange={(e) => setSort(e.target.value)}
+                    className="border rounded p-2 text-sm shadow-sm hover:shadow-md"
+                >
                     <option value="">New Arrivals</option>
                     <option value="AtoZ">A to Z</option>
                     <option value="ZtoA">Z to A</option>
                     <option value="low">Price: Low to High</option>
                     <option value="high">Price: High to Low</option>
-                </select>
+                </select> */}
 
                 {/* Grid view toggle for desktop */}
                 <div className="hidden md:flex gap-1">
