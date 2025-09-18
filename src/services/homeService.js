@@ -1,5 +1,4 @@
 import { createClientAxios, createServerAxios } from "./apiClient";
-
 export const getHomeBanners = async () => {
   try {
     const axiosInstance = await createServerAxios();
@@ -9,7 +8,6 @@ export const getHomeBanners = async () => {
     return error;
   }
 };
-
 export const getHomeContent = async () => {
   try {
     const axiosInstance = await createServerAxios();
@@ -19,7 +17,6 @@ export const getHomeContent = async () => {
     return error;
   }
 };
-
 export const getHomeProductlist = async (url, purchaseType) => {
   try {
     const axiosInstance = await createServerAxios();
@@ -29,7 +26,6 @@ export const getHomeProductlist = async (url, purchaseType) => {
     return error;
   }
 };
-
 export const getTestimonal = async () => {
   try {
     const axiosInstance = await createServerAxios();
@@ -39,8 +35,15 @@ export const getTestimonal = async () => {
     return error;
   }
 };
-
-
+export const getCategorySlider = async () => {
+  try {
+    const axiosInstance = await createServerAxios();
+    const res = await axiosInstance.get(`/public/category`);
+    return res.data?.data || {};
+  } catch (error) {
+    return error;
+  }
+};
 export const getPopups = async () => {
   try {
     const axiosInstance = await createClientAxios();

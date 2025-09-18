@@ -23,15 +23,14 @@ const Products = ({ tabsData = [], purchaseType }) => {
 
   return (
     <div
-      className="mx-auto px-4 mt-15  
-      w-full 
-      sm:max-w-[540px] 
-      md:max-w-[720px] 
-      lg:max-w-[960px] 
-      xl:max-w-[1240px] 
+      className="mx-auto px-4 mt-10 w-full
+      sm:max-w-[680px] 
+      md:max-w-[980px] 
+      lg:max-w-[980px] 
+      xl:max-w-[1280px] 
       2xl:max-w-[1320px]"
     >
-      <div className="w-full flex justify-center items-center gap-6 mb-10">
+      <div className="w-full flex justify-center items-center gap-6 mb-4">
         {tabsData.map((tab) => (
           <button
             key={tab.url}
@@ -53,7 +52,7 @@ const Products = ({ tabsData = [], purchaseType }) => {
           grabCursor
           loop
           slidesPerView="auto"
-          spaceBetween={20}
+          spaceBetween={2}
           autoplay={{
             delay: 2500,
             disableOnInteraction: false,
@@ -65,14 +64,13 @@ const Products = ({ tabsData = [], purchaseType }) => {
           modules={[Autoplay, Navigation]}
           className="w-full"
           breakpoints={{
-            0: { slidesPerView: 2, spaceBetween: 10 },
+            0: { slidesPerView: 2, spaceBetween: 15 },
             480: { slidesPerView: 2, spaceBetween: 15 },
-            640: { slidesPerView: 3, spaceBetween: 15 },
-            768: { slidesPerView: 3, spaceBetween: 20 },
-            1024: { slidesPerView: 3, spaceBetween: 20 },
-            1280: { slidesPerView: 4, spaceBetween: 24 },
-          }}
-        >
+            640: { slidesPerView: 4, spaceBetween: 15 },
+            768: { slidesPerView: 4, spaceBetween: 20 },
+            1024: { slidesPerView: 4, spaceBetween: 20 },
+            1280: { slidesPerView: 5, spaceBetween: 10 },
+          }}>
           {products?.map((data, index) => (
             <SwiperSlide key={index} className="flex justify-center">
               {purchaseType === "wholesale" ?

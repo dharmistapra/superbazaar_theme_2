@@ -18,8 +18,6 @@ const SelectedFilters = ({ selectedAttributes, onFiltersChange, setSelectedAttri
     setSelectedAttributes({});
     fetchProducts();
   };
-
-  // check if any filter is active
   const hasFilters = Object.values(selectedAttributes).some(
     (items) => Array.isArray(items) && items.length > 0
   );

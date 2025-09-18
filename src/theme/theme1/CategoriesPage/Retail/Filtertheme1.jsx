@@ -8,6 +8,7 @@ const Filtertheme1 = ({ open, setOpen, filterData, onApply, setSelectedAttribute
   const [openSections, setOpenSections] = useState({});
   const [priceRange, setPriceRange] = useState([0, 0]);
   const [appliedPrice, setAppliedPrice] = useState([null, null]);
+
   useEffect(() => {
     if (!filterData) return;
 
@@ -31,6 +32,8 @@ const Filtertheme1 = ({ open, setOpen, filterData, onApply, setSelectedAttribute
   }, [filterData]);
 
 
+  
+
   const toggleSection = (key) =>
     setOpenSections((prev) => ({ ...prev, [key]: !prev[key] }));
 
@@ -51,11 +54,7 @@ const Filtertheme1 = ({ open, setOpen, filterData, onApply, setSelectedAttribute
   };
 
 
-  const handlePriceChange = (index, value) => {
-    const newRange = [...priceRange];
-    newRange[index] = Number(value);
-    setPriceRange(newRange);
-  };
+ 
 
   return (
     <>
@@ -144,9 +143,9 @@ const Filtertheme1 = ({ open, setOpen, filterData, onApply, setSelectedAttribute
                   }
                 >
                   {attr.value.map((val) => {
-                    const isSelected = selectedAttributes[attr.attribute.key]?.some(
-                      (item) => item.value === val.value
-                    );
+                   const isSelected = !!selectedAttributes[attr.attribute.key]?.some(
+  (item) => item.value === val.value
+);
 
                     return (
                       <label
@@ -156,16 +155,14 @@ const Filtertheme1 = ({ open, setOpen, filterData, onApply, setSelectedAttribute
                           : "space-x-2"
                           }`}
                       >
-                        <input
-                          type="checkbox"
-                          className={`
-    accent-black
-    ${attr.attribute.key.toLowerCase() === "color" ? "hidden" : ""}
-  `} checked={isSelected}
-                          onChange={() =>
-                            handleAttributeChange(attr.attribute.key, val.value, val.name)
-                          }
-                        />
+                     <input
+  type="checkbox"
+  className={`accent-black ${attr.attribute.key.toLowerCase() === "color" ? "hidden" : ""}`}
+  checked={!!selectedAttributes[attr.attribute.key]?.some(item => item.value === val.value)}
+  onChange={() => handleAttributeChange(attr.attribute.key, val.value, val.name)}
+/>
+
+
                         {attr.attribute.key.toLowerCase() === "color" ? (
                           <span
                             className={`w-7 h-7 rounded border ${isSelected ? "ring-2 ring-blue-500" : "border-gray-300"

@@ -1,6 +1,6 @@
 import dynamic from "next/dynamic";
 import Banner from "./components/Banner";
-import { getHomeBanners, getHomeContent, getHomeProductlist, getTestimonal } from "@/services/homeService";
+import { getCategorySlider, getHomeBanners, getHomeContent, getHomeProductlist, getTestimonal } from "@/services/homeService";
 import { getWebSetting } from "@/services/webSetting";
 import Popups from "@/components/Popups";
 const Topcategories = dynamic(() => import("./components/TopCategores"))
@@ -14,9 +14,10 @@ export default async function Home() {
   const [bannerdata,
     HomeContent,
     testimonal,
-    webSetting
+    webSetting,
+    categorySlider
   ] = await Promise.all(
-    [getHomeBanners(), getHomeContent(), getTestimonal(), getWebSetting()]);
+    [getHomeBanners(), getHomeContent(), getTestimonal(), getWebSetting(),getCategorySlider()]);
   const homeContentArray = Array.isArray(HomeContent) ? HomeContent : [];
   const productBlocks = homeContentArray.filter(
     (item) => item?.type === "product" && item.categoryId
@@ -43,7 +44,7 @@ export default async function Home() {
   return (
     <>
       <Banner bannerdata={bannerdata} />
-      <Topcategories />
+      <Topcategories category={categorySlider}/>
       {productTabsData.length > 0 && <Products tabsData={productTabsData} purchaseType={webSetting?.purchaseType} />}
       {homeContentArray.map((item) => {
         const renderFn = componentMap[item.type];

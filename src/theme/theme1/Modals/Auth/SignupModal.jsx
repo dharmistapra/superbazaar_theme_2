@@ -41,6 +41,10 @@ export default function SignupModal() {
           if (loginRes?.error) {
             setErrors(errors?.response?.data?.message || "Something went wrong")
           } else {
+             const session = await fetch("/api/auth/session").then(r => r.json());
+        if (session?.accessToken) {
+          localStorage.setItem("token", session.accessToken);
+        }
             close("signup");
           }
 

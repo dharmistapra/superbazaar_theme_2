@@ -137,8 +137,7 @@ const CheckoutPage = () => {
           <button
             onClick={handlePlaceOrder}
             disabled={loading}
-            className="w-full rounded-lg mt-5 text-white bg-zinc-900 p-3 disabled:opacity-50"
-          >
+            className="w-full rounded-lg mt-5 text-white bg-zinc-900 p-3 disabled:opacity-50">
             {loading ? "Placing Order..." : "Place Order"}
           </button>
         </div>

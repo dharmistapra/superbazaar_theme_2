@@ -11,19 +11,18 @@ const TwoBanner = ({ data }) => {
   }, []);
 
   return (
-    <div className="mx-auto px-4 mt-7  
-  w-full 
-  sm:max-w-[540px] 
-  md:max-w-[720px] 
-  lg:max-w-[960px] 
-  xl:max-w-[1240px]
-  2xl:max-w-[1320px]">
+    <div className="mx-auto px-4 mt-10 w-full
+      sm:max-w-[680px] 
+      md:max-w-[980px] 
+      lg:max-w-[980px] 
+      xl:max-w-[1280px] 
+      2xl:max-w-[1320px]">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {data?.length > 0 &&
           data.map((item, index) => (
             <div
               key={index}
-              className="relative overflow-hidden rounded-xl group h-[200px] sm:h-[200px] md:h-[300px] lg:h-[500px]"
+              className="relative overflow-hidden rounded-xl group h-[200px] sm:h-[200px] md:h-[300px] lg:h-[450px]"
             >
               <img
                 src={ImageUrl(item.image)}
@@ -44,8 +43,8 @@ const TwoBanner = ({ data }) => {
               >
                 {item?.title && (
                   <h2
-                    className={`text-2xl md:text-3xl font-normal mb-3 ${
-                     "text-zinc-900"
+                    className={`text-2xl  font-normal mb-3 ${
+                     "text-white"
                     }`}
                   >
                     {item.title}
@@ -54,7 +53,7 @@ const TwoBanner = ({ data }) => {
 
                 <p
                   className={`mb-4 text-sm md:text-base  ${
-                  "text-zinc-700"
+                  "text-white"
                   } line-clamp-2 sm:line-clamp-3 md:line-clamp-4`}
                 >
                   {item.description}
