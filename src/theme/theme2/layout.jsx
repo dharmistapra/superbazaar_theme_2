@@ -3,6 +3,9 @@ import { Kumbh_Sans } from 'next/font/google'
 import FooterLayout from './components/Footer/FooterLayout'
 import Navbar from './components/Header/Navbar'
 import MiniCart from '../theme1/Modals/Cart/MiniCart'
+import { getWebSetting } from '@/services/webSetting'
+import React from 'react'
+import Home from './Home/page'
 
 const kumbhSans = Kumbh_Sans({
     subsets: ['latin'],
@@ -10,12 +13,15 @@ const kumbhSans = Kumbh_Sans({
     variable: '--font-kumbh-sans'
 })
 
-const LayoutTheme2 = ({ children }) => {
+const LayoutTheme2 = async ({ children }) => {
+    const webSetting = await getWebSetting();
+
     return (
         <div className={kumbhSans.className}>
-            <Navbar />
+            <Navbar webSetting={webSetting} />
             <main>{children}</main>
-            <FooterLayout />
+
+            <FooterLayout webSetting={webSetting} />
             <MiniCart />
         </div>
     )

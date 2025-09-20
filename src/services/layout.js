@@ -31,7 +31,8 @@ export const getTheme = async () => {
     return res.data?.data || {};
   } catch (error) {
     const data = {
-      name: "theme2", config: {}
+      name: "", config: {}
+      // name: "theme2", config: {}
     }
     return data;
 

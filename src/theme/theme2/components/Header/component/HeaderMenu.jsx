@@ -21,7 +21,7 @@ import { openCart } from "@/store/slice/MiniCartSlice";
 import HeaderSearch from "./HeaderSearch";
 import { setCategoyData } from "@/store/slice/categorySlice";
 
-const HeaderMenu = ({ menudata, currencyData }) => {
+const HeaderMenu = ({ menudata, currencyData, webSetting }) => {
     const { data: session, } = useSession();
     const [openUser, setOpenUser] = useState(false)
     const [openMenu, setOpenMenu] = useState(false)
@@ -29,21 +29,10 @@ const HeaderMenu = ({ menudata, currencyData }) => {
     const userRef = useRef(null)
     const [isSticky, setIsSticky] = useState(false);
     const dispatch = useDispatch();
-    const webSetting = useSelector(state => state.webSetting.webSetting)
     const [showSearch, setShowSearch] = useState(false);
     const { list } = useSelector((state) => state.wishlist);
     const cartData = useSelector((state) => state.cartItem.CartData.data);
     const handleCartClick = () => dispatch(openCart());
-
-    const fetchData = async () => {
-        const data = await getWebSetting();
-        dispatch(setWebSetting(data));
-    }
-
-    useEffect(() => {
-        fetchData();
-    }, []);
-
 
     const fetchProtectedData = async () => {
         const [wishlist, cartItems] = await Promise.all([

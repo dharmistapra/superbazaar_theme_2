@@ -34,7 +34,6 @@ const MobileMenu = ({ open, handleMenu }) => {
         {data.map((item) => (
           <li key={item.id} className="px-4 py-2">
             <div className="flex justify-between items-center cursor-pointer px-2 py-2 rounded-lg hover:bg-gray-50 transition">
-
               {item.children.length === 0 ? (
                 <Link
                   href={item.url === "wholesale"
@@ -56,9 +55,7 @@ const MobileMenu = ({ open, handleMenu }) => {
                 >
                   <span className="font-medium text-gray-900">{item.name}</span>
                 </Link>
-
               )}
-
 
               {item.children.length > 0 && (
                 <button
@@ -73,7 +70,6 @@ const MobileMenu = ({ open, handleMenu }) => {
                 </button>
               )}
             </div>
-
 
             {item.children.length > 0 && (
               <div

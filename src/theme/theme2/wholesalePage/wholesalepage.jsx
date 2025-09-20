@@ -74,11 +74,14 @@ const WholeSalePage = ({ category }) => {
                 {loading ? (
                     [...Array(grid * 2)].map((_, i) => <ProductCardSkeleton key={i} />)
                 ) : Array.isArray(data) && data.length > 0 ? (
-                    data.map((item, index) => (
-                        <div key={index}>
-                            <CatalogCard product={item} grid={grid} category={category} />
-                        </div>
-                    ))
+                    data.map((item, index) => {
+                        const categoryUrl = item?.CatalogueCategory?.[0]?.category?.url || null;
+                        return (
+                            <div key={index}>
+                                <CatalogCard product={item} grid={grid} category={categoryUrl} />
+                            </div>
+                        )
+                    })
                 ) : (
                     <p className="col-span-full text-center text-gray-500">
                         No products found.

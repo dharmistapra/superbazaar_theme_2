@@ -81,13 +81,15 @@ const Footer = () => {
           </div>
           <div className={`transition-all duration-300 overflow-hidden ${openSection === 0 ? "max-h-screen py-2" : "max-h-0 md:max-h-none md:py-2"}`}>
             <ul className="space-y-2 text-sm text-gray-300">
-              {data && data?.length > 0 && data.map((item, i) => (
-                <li key={i}>
-                  <a href="#" className="hover:text-white transition-colors">
-                    {item?.name}
-                  </a>
-                </li>
-              ))}
+              {data && data?.length > 0 && data.map((item, i) => {
+                return (
+                  <li key={i}>
+                    <Link href={item.url === "wholesale" ? "/wholesale" : webSetting?.purchaseType === "wholesale" ? `/wholesale/${item.url}` : `/retail/${item.url}`} className="hover:text-white transition-colors">
+                      {item?.name}
+                    </Link>
+                  </li>
+                )
+              })}
             </ul>
           </div>
         </div>

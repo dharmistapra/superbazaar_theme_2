@@ -33,7 +33,7 @@ export const getThemeModules = (theme = "theme1") => {
         layout: load(() => import("./theme2/layout")),
         CategoryBanner: load(() => import("./theme2/CategoriesPage/CategoryBannertheme2")),
         Products: load(() => import("./theme2/CategoriesPage/Productstheme2")),
-        Home: load(() => import("./theme2/Home")),
+        Home: load(() => import("./theme2/Home/page")),
         AccountDetail: load(() => import("./theme2/Accounts/components/AccountDetailtheme2")),
         Address: load(() => import("./theme2/Accounts/components/Address")),
         OrderHistory: load(() => import("./theme2/Accounts/components/OrderHistory")),

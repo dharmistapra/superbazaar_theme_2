@@ -12,21 +12,9 @@ import { setWebSetting } from "@/store/slice/webSettingSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 
-const ProductCard = ({ product, pathname }) => {
+const ProductCard = ({ product, pathname, webSetting }) => {
     if (!product) return null;
     const { data: session } = useSession();
-    const dispatch = useDispatch();
-    const webSetting = useSelector(state => state.webSetting.webSetting)
-
-    const fetchData = async () => {
-        const data = await getWebSetting();
-        dispatch(setWebSetting(data));
-    }
-
-    useEffect(() => {
-        fetchData();
-    }, []);
-
     return (
         <div className="single-product-card bg-white rounded-md shadow hover:shadow-lg transition">
             <div className="product-image relative overflow-hidden">
@@ -88,19 +76,6 @@ const ProductCard = ({ product, pathname }) => {
                         Login To View Price
                     </Link>
                 )}
-
-
-                {/* Product Price */}
-                {/* {shouldShowPrice(session) ? <div className="product-price flex justify-between items-center gap-2">
-                    <span className="price text-red-600 font-bold text-xs">
-                        <PriceConverter price={product?.offer_price} />
-                    </span>
-                    {product?.price && product?.price > product?.offer_price && (
-                        <span className="line-through text-gray-500 text-xs">
-                            <PriceConverter price={product?.price} />
-                        </span>
-                    )}
-                </div> : <h2>Hello</h2>} */}
             </div>
         </div>
     );

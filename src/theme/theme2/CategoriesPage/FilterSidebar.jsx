@@ -45,7 +45,8 @@ const FilterSidebar = ({
         }
     }, [filterData]);
 
-    const toggleSection = (key) => setOpenSections((prev) => ({ ...prev, [key]: !prev[key] }));
+    const toggleSection = (key) =>
+        setOpenSections((prev) => ({ ...prev, [key]: !prev[key] }));
 
     const handleAttributeChange = (key, value, name) => {
         setSelectedAttributes((prev) => {
@@ -65,8 +66,9 @@ const FilterSidebar = ({
         if (mobile) setOpen(false);
     };
 
-    const renderSection = (title, name, children, key) => (
-        <div key={key} className="mb-4">
+    // 🚀 no key param here
+    const renderSection = (title, name, children) => (
+        <div className="mb-4">
             <div
                 className="flex justify-between items-center border-b border-gray-200 pb-2 mb-4 mt-5 cursor-pointer"
                 onClick={() => toggleSection(name)}
@@ -76,7 +78,6 @@ const FilterSidebar = ({
             <div>{children}</div>
         </div>
     );
-
 
     const content = (
         <div className="bg-white rounded-lg shadow p-4 space-y-6 h-full overflow-y-auto">
@@ -92,7 +93,10 @@ const FilterSidebar = ({
                         value={priceRange}
                         onChange={(val) => setPriceRange(val)}
                         trackStyle={[{ backgroundColor: "#3B82F6" }]}
-                        handleStyle={[{ borderColor: "#3B82F6" }, { borderColor: "#3B82F6" }]}
+                        handleStyle={[
+                            { borderColor: "#3B82F6" },
+                            { borderColor: "#3B82F6" },
+                        ]}
                         railStyle={{ backgroundColor: "#E5E7EB" }}
                     />
                     <div className="flex justify-between mt-3">
@@ -113,64 +117,119 @@ const FilterSidebar = ({
             )}
 
             {/* Dynamic Attributes */}
-            {filterData?.attributes?.map((att) =>
-                renderSection(
-                    att.attribute.name,
-                    att.attribute.key,
-                    att.attribute.name === "Color" ? (
-                        <ul className="flex flex-wrap gap-3">
-                            {att?.value?.map((color) => (
-                                <li key={`${att.attribute.key}-${color.value}`}>
-                                    <span
-                                        onClick={() => handleAttributeChange(att.attribute.key, color.value, color.name)}
-                                        className={`block w-8 h-8 rounded-md cursor-pointer relative group ${selectedAttributes[att.attribute.key]?.some((item) => item.value === color.value)
-                                            ? "ring-2 ring-blue-500"
-                                            : ""
-                                            }`}
-                                        style={{
-                                            backgroundColor: color.colour,
-                                            border: color.colour === "#FFFFFF" ? "1px solid #ccc" : "none",
-                                        }}
+            {filterData?.attributes?.map((att) => (
+                <React.Fragment key={att.attribute.key}>
+                    {renderSection(
+                        att.attribute.name,
+                        att.attribute.key,
+                        att.attribute.name === "Color" ? (
+                            <ul className="flex flex-wrap gap-3">
+                                {att?.value?.map((color) => (
+                                    <li
+                                        key={`${att.attribute.key}-${color.value}`}
                                     >
-                                        <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 bg-black text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap z-10">
-                                            {color.name}
+                                        <span
+                                            onClick={() =>
+                                                handleAttributeChange(
+                                                    att.attribute.key,
+                                                    color.value,
+                                                    color.name
+                                                )
+                                            }
+                                            className={`block w-8 h-8 rounded-md cursor-pointer relative group ${selectedAttributes[
+                                                att.attribute.key
+                                            ]?.some(
+                                                (item) =>
+                                                    item.value ===
+                                                    color.value
+                                            )
+                                                ? "ring-2 ring-blue-500"
+                                                : ""
+                                                }`}
+                                            style={{
+                                                backgroundColor: color.colour,
+                                                border:
+                                                    color.colour === "#FFFFFF"
+                                                        ? "1px solid #ccc"
+                                                        : "none",
+                                            }}
+                                        >
+                                            <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 bg-black text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap z-10">
+                                                {color.name}
+                                            </span>
                                         </span>
-                                    </span>
-                                </li>
-                            ))}
-                        </ul>
-                    ) : (
-                        <ul className="flex flex-col gap-2">
-                            {att.value.map((val) => (
-                                <li key={`${att.attribute.key}-${val.id || val.value}`} className="flex items-center gap-2">
-                                    <input
-                                        id={`${att.attribute.key}-${val.id || val.name}`}
-                                        type="checkbox"
-                                        value={val.name || val.value || ""}
-                                        checked={selectedAttributes[att.attribute.key]?.some(
-                                            (item) => item.value === val.value
-                                        )}
-                                        onChange={() => handleAttributeChange(att.attribute.key, val.value, val.name)}
-                                        className="w-4 h-4"
-                                    />
-                                    <label htmlFor={`${att.attribute.key}-${val.id || val.name}`} className="text-sm">
-                                        {val.name || val.value}
-                                    </label>
-                                </li>
-                            ))}
-                        </ul>
-                    )
-                )
-            )}
+                                    </li>
+                                ))}
+                            </ul>
+                        ) : (
+                            <ul className="flex flex-col gap-2">
+                                {att.value.map((val) => (
+                                    <li
+                                        key={`${att.attribute.key}-${val.id || val.value
+                                            }`}
+                                        className="flex items-center gap-2"
+                                    >
+                                        {/* <input
+                                            id={`${att.attribute.key}-${val.id || val.name
+                                                }`}
+                                            type="checkbox"
+                                            value={
+                                                val.name || val.value || ""
+                                            }
+                                            checked={selectedAttributes[
+                                                att.attribute.key
+                                            ]?.some(
+                                                (item) =>
+                                                    item.value === val.value
+                                            )}
+                                            onChange={() =>
+                                                handleAttributeChange(
+                                                    att.attribute.key,
+                                                    val.value,
+                                                    val.name
+                                                )
+                                            }
+                                            className="w-4 h-4"
+                                        /> */}
+                                        <input
+                                            id={`${att.attribute.key}-${val.id || val.name}`}
+                                            type="checkbox"
+                                            value={val.name || val.value || ""}
+                                            checked={!!selectedAttributes[att.attribute.key]?.some(
+                                                (item) => item.value === val.value
+                                            )}
+                                            onChange={() =>
+                                                handleAttributeChange(att.attribute.key, val.value, val.name)
+                                            }
+                                            className="w-4 h-4"
+                                        />
+
+                                        <label
+                                            htmlFor={`${att.attribute.key}-${val.id || val.name
+                                                }`}
+                                            className="text-sm"
+                                        >
+                                            {val.name || val.value}
+                                        </label>
+                                    </li>
+                                ))}
+                            </ul>
+                        )
+                    )}
+                </React.Fragment>
+            ))}
 
             {/* Brands */}
             {renderSection(
                 "Brands",
                 "brand",
                 <ul className="flex flex-col gap-2">
-                    {filterData?.brands?.map((brand, id) => (
-                        <li key={`brand-${brand.url}`} className="flex items-center gap-2">
-                            <input
+                    {filterData?.brands?.map((brand) => (
+                        <li
+                            key={`brand-${brand.url}`}
+                            className="flex items-center gap-2"
+                        >
+                            {/* <input
                                 id={brand.url}
                                 type="checkbox"
                                 checked={
@@ -179,24 +238,44 @@ const FilterSidebar = ({
                                     ) || false
                                 }
                                 onChange={() =>
+                                    handleAttributeChange(
+                                        "brand",
+                                        brand.url,
+                                        brand.name
+                                    )
+                                }
+                                className="w-4 h-4"
+                            /> */}
+                            <input
+                                id={brand.url}
+                                type="checkbox"
+                                checked={!!selectedAttributes["brand"]?.some(
+                                    (item) => item.value === brand.url
+                                )}
+                                onChange={() =>
                                     handleAttributeChange("brand", brand.url, brand.name)
                                 }
                                 className="w-4 h-4"
                             />
-                            <label htmlFor={brand.url} className="text-sm">
+
+                            <label
+                                htmlFor={brand.url}
+                                className="text-sm"
+                            >
                                 {brand.name}
                             </label>
                         </li>
                     ))}
                 </ul>
             )}
-        </div >
+        </div>
     );
 
     if (mobile) {
         return (
             <div
-                className={`fixed top-0 left-0 z-50 h-full w-full bg-black bg-opacity-50 transition-transform ${open ? "translate-x-0" : "-translate-x-full"}`}
+                className={`fixed top-0 left-0 z-50 h-full w-full bg-black bg-opacity-50 transition-transform ${open ? "translate-x-0" : "-translate-x-full"
+                    }`}
             >
                 <div className="bg-white w-3/4 h-full p-4 shadow-lg relative">
                     <button
@@ -212,7 +291,6 @@ const FilterSidebar = ({
     }
 
     return content;
-
 };
 
 export default FilterSidebar;

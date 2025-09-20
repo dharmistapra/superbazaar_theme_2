@@ -15,11 +15,7 @@ const CatalogueCard = ({ data, redirectUrl }) => {
     <div className="group relative w-full bg-white rounded-lg overflow-hidden transition-all duration-500 hover:-translate-y-1">
       <div className="relative w-full aspect-[4/6] overflow-hidden rounded-t-lg">
         <Link
-          href={
-            redirectUrl
-              ? `/${redirectUrl}/${data?.url}`
-              : `${pathname}/${data?.url || "/"}`
-          }
+          href={redirectUrl ? `/${redirectUrl}/${data?.url}` : `${pathname}/${data?.url || "/"}`}
         >
           <Image
             src={data?.coverImage ? ImageUrl(data?.coverImage) : "/banner1.webp"}

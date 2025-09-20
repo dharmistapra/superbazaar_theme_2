@@ -17,7 +17,7 @@ export default async function Home() {
     webSetting,
     categorySlider
   ] = await Promise.all(
-    [getHomeBanners(), getHomeContent(), getTestimonal(), getWebSetting(),getCategorySlider()]);
+    [getHomeBanners(), getHomeContent(), getTestimonal(), getWebSetting(), getCategorySlider()]);
   const homeContentArray = Array.isArray(HomeContent) ? HomeContent : [];
   const productBlocks = homeContentArray.filter(
     (item) => item?.type === "product" && item.categoryId
@@ -44,7 +44,7 @@ export default async function Home() {
   return (
     <>
       <Banner bannerdata={bannerdata} />
-      <Topcategories category={categorySlider}/>
+      <Topcategories category={categorySlider} />
       {productTabsData.length > 0 && <Products tabsData={productTabsData} purchaseType={webSetting?.purchaseType} />}
       {homeContentArray.map((item) => {
         const renderFn = componentMap[item.type];

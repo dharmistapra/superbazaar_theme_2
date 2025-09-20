@@ -2,22 +2,19 @@
 
 import { ImageUrl } from "@/helper/imageUrl";
 import { getPolicies, getSocialIcon } from "@/services/cmsService";
-import { getWebSetting } from "@/services/webSetting";
-import { setWebSetting } from "@/store/slice/webSettingSlice";
 import { Mail, MoveUp } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import * as LucideIcons from "lucide-react";
 
-const FooterLayout = () => {
-    const dispatch = useDispatch();
+const FooterLayout = ({ webSetting }) => {
     const [showScroll, setShowScroll] = useState(false);
     const { data } = useSelector((state) => state?.categorystore)
     const [cmsData, setCmsData] = useState([])
     const [socialIcons, setSocialIcons] = useState([])
-    const [webSetting, setWebSettingState] = useState({})
+
     const socialColors = {
         facebook: "bg-blue-600 text-white hover:bg-blue-700",
         twitter: "bg-sky-500 text-white hover:bg-sky-600",
@@ -27,15 +24,9 @@ const FooterLayout = () => {
     };
 
     const fetchData = async () => {
-        const [webData, cmsDataResp, socialIconData] = await Promise.all([
-            getWebSetting(),
-            getPolicies(),
-            getSocialIcon()
-        ])
+        const [cmsDataResp, socialIconData] = await Promise.all([getPolicies(), getSocialIcon()])
         setCmsData(cmsDataResp?.data)
         setSocialIcons(socialIconData?.data)
-        setWebSettingState(webData)
-        dispatch(setWebSetting(webData));
     }
 
     useEffect(() => {

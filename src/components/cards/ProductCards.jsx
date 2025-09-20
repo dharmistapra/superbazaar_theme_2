@@ -37,29 +37,31 @@ const ProductCard = ({ data, redirectUrl }) => {
             <div className="mt-4">
                 <Link href={`${pathname}/${data?.url || "/"}`}>
                     <h3 className="text-sm sm:text-base font-normal text-gray-800 hover:text-gray-900 line-clamp-2 overflow-hidden">
-                        {data?.name || ""}
+                        <span className="line-clamp-1 text-sm">
+                            {data?.name || ""}
+                        </span>
                     </h3>
                 </Link>
 
-<div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2 mt-1">
-  <span className="text-red-600 text-base sm:text-sm">
-    <PriceConverter price={data?.offer_price} />
-  </span>
+                <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2 mt-1">
+                    <span className="text-red-600 text-base sm:text-sm">
+                        <PriceConverter price={data?.offer_price} />
+                    </span>
 
-  {data?.retail_discount !== 0 && (
-    <span className="text-gray-400 line-through text-sm sm:text-sm">
-      <PriceConverter price={data?.retail_price} />
-    </span>
-  )}
+                    {data?.retail_discount !== 0 && (
+                        <span className="text-gray-400 line-through text-sm sm:text-sm">
+                            <PriceConverter price={data?.retail_price} />
+                        </span>
+                    )}
 
-  {data?.retail_discount !== 0 &&
-    data?.retail_price &&
-    data?.offer_price && (
-      <span className="inline-block bg-red-100 text-red-700 text-xs sm:text-sm px-2 py-0.5 rounded-md">
-        {data?.retail_discount}% OFF
-      </span>
-    )}
-</div>
+                    {data?.retail_discount !== 0 &&
+                        data?.retail_price &&
+                        data?.offer_price && (
+                            <span className="inline-block bg-red-100 text-red-700 text-xs sm:text-sm px-2 py-0.5 rounded-md">
+                                {data?.retail_discount}% OFF
+                            </span>
+                        )}
+                </div>
 
                 {/* <div className="flex items-start sm:items-center gap-1 sm:gap-2 mt-1">
                     <span className="text-red-600 font-normal text-base sm:text-md">

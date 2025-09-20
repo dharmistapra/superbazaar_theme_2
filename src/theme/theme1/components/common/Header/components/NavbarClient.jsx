@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Search,
   User,
@@ -127,7 +127,7 @@ const NavbarClient = ({ Menudata, currencyData }) => {
           </div>
         </div>
         <div
-          className="flex items-center gap-5 text-zinc-800 relative"
+          className="flex items-center gap-2 text-zinc-800 relative"
           ref={dropdownRef}
         >
           <CurrencySelector currencyData={currencyData} />

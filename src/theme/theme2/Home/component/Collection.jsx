@@ -5,12 +5,13 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { ImageUrl } from "@/helper/imageUrl";
 import CatalogCard from "../../ProductDetail/wholesale/component/CatalogCard";
-import FullSlider from "@/theme/theme1/Home/components/FulSlider";
-import CardsSlider3D from "@/theme/theme1/components/CardsSlider/CardsSlider3D";
-import TwoBanner from "@/theme/theme1/Home/components/TwoBanner";
-import ThreeFourBanner from "@/theme/theme1/Home/components/ThreeFourBanner";
-import NormalSliderCard from "@/theme/theme1/components/CardsSlider/NormalSlider";
+import dynamic from "next/dynamic";
 
+
+const ThreeFourBanner = dynamic(() => import("@/theme/theme1/Home/components/ThreeFourBanner"))
+const FullSlider = dynamic(() => import("@/theme/theme1/Home/components/FulSlider"))
+const TwoBanner = dynamic(() => import("@/theme/theme1/Home/components/TwoBanner"))
+const NormalSliderCard = dynamic(() => import("@/theme/theme1/components/CardsSlider/NormalSlider"))
 const componentMap = {
     "full slider": (item) => (
         <FullSlider key={item.id} slides={item.fullSlider} />
